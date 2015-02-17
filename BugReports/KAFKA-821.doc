@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>[#KAFKA-821] specifying a non-existent partition to ./bin/kafka-reassign-partitions.sh breaks all reassignment ops</title>
+    <meta http-equiv="Content-Type" Content="application/vnd.ms-word; charset=utf-8">
+        <style type="text/css">
+
+.tableBorder, .grid
+{
+    background-color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableBorder td, .grid td
+{
+    vertical-align: top;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+.noPadding
+{
+    padding: 0 !important;
+}
+
+h3 .subText
+{
+    font-size: 60%;
+    font-weight: normal;
+}
+
+.tabLabel
+{
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-bottom:none;
+    padding: 2px;
+    display: inline;
+}
+
+td.blank
+{
+    padding: 0;
+    margin: 0;
+}
+
+.blank td
+{
+    border: none;
+}
+
+#descriptionArea
+{
+    margin: 0;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+hr
+{
+    border-top:1px solid #aaa;
+}
+
+hr.fullcontent
+{
+  height: 15px;
+  padding: 10px 0;
+  background: #fff url('https://issues.apache.org/jira/images/icons/hr.gif') no-repeat scroll center;
+}
+
+</style>
+
+</head>
+<body>
+
+<table class="tableBorder" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" width="100%" colspan="2" valign="top">
+                            <b><a id="parent_issue_summary" href="https://issues.apache.org/jira/browse/KAFKA-822">Reassignment of partitions needs a cleanup</a></b>
+                <span style="font-size: 9px">(<a id="parent_issue_key" href="https://issues.apache.org/jira/browse/KAFKA-822">KAFKA-822</a>)</span>
+                <h3 class="formtitle"><img src="https://issues.apache.org/jira/images/icons/link_out_bot.gif" width="16" height="16" />
+                        [KAFKA-821]&nbsp;<a href="https://issues.apache.org/jira/browse/KAFKA-821">specifying a non-existent partition to ./bin/kafka-reassign-partitions.sh breaks all reassignment ops</a>
+            <span class="subText">
+               Created: 21/Mar/13                   &nbsp;Updated: 21/Mar/14
+
+                                                    &nbsp;Resolved: 21/Mar/14
+                            </span>
+            </h3>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Status:</b></td>
+        <td width="80%">Closed</td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Project:</b></td>
+        <td width="80%"><a href="https://issues.apache.org/jira/secure/BrowseProject.jspa?id=12311720">Kafka</a></td>
+    </tr>
+
+        <tr>
+            <td><b>Component/s:</b></td>
+            <td>
+                                        <a title="controller - distributed co-ordination controller"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12311720&component=12320321"
+            >controller</a>,                    <a title="tools - Kafka tools"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12311720&component=12320366"
+            >tools</a>                        </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Affects Version/s:</b></td>
+            <td>
+                                        <a title="0.8.0 - intra-cluster replication support"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12311720&version=12317244"
+            >0.8.0</a>                        </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Fix Version/s:</b></td>
+            <td>
+                            None
+                </td>
+    </tr>
+    
+    </table>
+
+<br />
+<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" valign="top" width="20%">
+            <b>Type:</b>
+        </td>
+        <td bgcolor="#ffffff" valign="top"  width="30%" >
+            Sub-task
+        </td>
+
+                    <td bgcolor="#f0f0f0">
+                <b>Priority:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap>
+                Blocker
+            </td>
+            </tr>
+    <tr>
+                        <td bgcolor="#f0f0f0" valign="top" width="20%">
+                <b>Reporter:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top"  width="30%" >
+                                            <a class="user-hover" rel="t1ckt0ck" id="word_reporter_t1ckt0ck" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=t1ckt0ck">Scott Clasen</a>
+                            </td>
+        
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Assignee:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap  width="30%" >
+                                            <a class="user-hover" rel="swapnilghike" id="word_assignee_swapnilghike" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=swapnilghike">Swapnil Ghike</a>
+                            </td>
+            </tr>
+    	<tr>
+		<td bgcolor="#f0f0f0" width="20%">
+			<b>Resolution:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                            Fixed
+                    </td>
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Votes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                0
+            </td>
+        
+    </tr>
+    
+        <tr>
+        <td bgcolor="#f0f0f0" width="20%">
+            <b>Labels:</b>
+        </td>
+        <td id="labels-12638385-value" class="value" bgcolor="#ffffff" valign="top" colspan="3" nowrap>
+                            kafka-0.8, p1                    </td>
+    </tr>
+    
+    	<tr>
+        		<td bgcolor="#f0f0f0" width="20%"><b>Remaining Estimate:</b></td>
+        <td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Time Spent:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+	</tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Original Estimate:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    
+    </table>
+
+
+
+    <br />
+
+    	<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+
+        
+    
+
+
+
+</table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Description</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td id="descriptionArea">
+            From my ML post...the workaround is to manually delete /admin/reassign_partitions from ZK, that node contained a json with an empty partitions array.<br/>
+<br/>
+Have 3 brokers running. Ids 25,26,27<br/>
+<br/>
+./bin/kafka-create-topic.sh --replica 3 --topic first-cluster-topic<br/>
+--zookeeper &lt;zk&gt;:2181/kafka<br/>
+<br/>
+Seems fine, can send/receive, etc..<br/>
+<br/>
+Kill 27, start 28. Try to reassign the single partition topic with the<br/>
+following json.<br/>
+<br/>
+Contains an error. partition should be 0 not 1.<br/>
+<br/>
+&nbsp;{&quot;partitions&quot;:<br/>
+&nbsp;[{&quot;topic&quot;: &quot;first-cluster-topic&quot;, &quot;partition&quot;: 1, &quot;replicas&quot;: [25,26,28] }]<br/>
+}<br/>
+<br/>
+./bin/kafka-reassign-partitions.sh  --zookeeper ... -path-to-json-file<br/>
+reassign.json<br/>
+<br/>
+2013-03-21 12:14:46,170] INFO zookeeper state changed (SyncConnected)<br/>
+(org.I0Itec.zkclient.ZkClient)<br/>
+[2013-03-21 12:14:46,310] ERROR Skipping reassignment of partition<br/>
+[first-cluster-topic,1] since it doesn&#39;t exist<br/>
+(kafka.admin.ReassignPartitionsCommand)<br/>
+Successfully started reassignment of partitions Map([first-cluster-topic,1]<br/>
+-&gt; List(25, 26, 28))<br/>
+[2013-03-21 12:14:46,665] INFO Terminate ZkClient event thread.<br/>
+(org.I0Itec.zkclient.ZkEventThread)<br/>
+[2013-03-21 12:14:46,780] INFO Session: 0x13d8a63a3760007 closed<br/>
+(org.apache.zookeeper.ZooKeeper)<br/>
+[2013-03-21 12:14:46,780] INFO EventThread shut down<br/>
+(org.apache.zookeeper.ClientCnxn)<br/>
+<br/>
+Ok, fix the JSON<br/>
+<br/>
+&nbsp;{&quot;partitions&quot;:<br/>
+&nbsp;[{&quot;topic&quot;: &quot;first-cluster-topic&quot;, &quot;partition&quot;: 0, &quot;replicas&quot;: [25,26,28] }]<br/>
+}<br/>
+<br/>
+./bin/kafka-reassign-partitions.sh  --zookeeper ... -path-to-json-file<br/>
+reassign.json<br/>
+<br/>
+<br/>
+[2013-03-21 12:17:34,367] INFO zookeeper state changed (SyncConnected)<br/>
+(org.I0Itec.zkclient.ZkClient)<br/>
+Partitions reassignment failed due to Partition reassignment currently in<br/>
+progress for Map(). Aborting operation<br/>
+kafka.common.AdminCommandFailedException: Partition reassignment currently<br/>
+in progress for Map(). Aborting operation<br/>
+at<br/>
+kafka.admin.ReassignPartitionsCommand.reassignPartitions(ReassignPartitionsCommand.scala:91)<br/>
+at<br/>
+kafka.admin.ReassignPartitionsCommand$.main(ReassignPartitionsCommand.scala:65)<br/>
+at<br/>
+kafka.admin.ReassignPartitionsCommand.main(ReassignPartitionsCommand.scala)<br/>
+<br/>
+&nbsp;./bin/kafka-check-reassignment-status.sh --zookeeper ...<br/>
+--path-to-json-file reassign.json<br/>
+<br/>
+<br/>
+[2013-03-21 12:20:40,607] INFO zookeeper state changed (SyncConnected)<br/>
+(org.I0Itec.zkclient.ZkClient)<br/>
+Exception in thread &quot;main&quot; java.lang.ClassCastException:<br/>
+scala.collection.immutable.Map$Map1 cannot be cast to<br/>
+[Lscala.collection.Map;<br/>
+at<br/>
+kafka.admin.CheckReassignmentStatus$.main(CheckReassignmentStatus.scala:44)<br/>
+at kafka.admin.CheckReassignmentStatus.main(CheckReassignmentStatus.scala)<br/>
+
+            <br/>
+        </td>
+    </tr>
+    </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Comments</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="grid" style="margin: 0;">
+                <tr id="comment-header-13609713"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="swapnilghike" id="word_commented_swapnilghike" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=swapnilghike">Swapnil Ghike</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Mar/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13609713"><td bgcolor="#ffffff">
+            <p>We can make this a sub-task of <a href="https://issues.apache.org/jira/browse/KAFKA-822" title="Reassignment of partitions needs a cleanup" class="issue-link" data-issue-key="KAFKA-822">KAFKA-822</a> if this does not need to be urgently fixed.</p>
+        </td></tr>
+                <tr id="comment-header-13610603"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="nehanarkhede" id="word_commented_nehanarkhede" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=nehanarkhede">Neha Narkhede</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">22/Mar/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13610603"><td bgcolor="#ffffff">
+            <p>Good suggestion since it will require the same cleanup you intend to do as part of <a href="https://issues.apache.org/jira/browse/KAFKA-822" title="Reassignment of partitions needs a cleanup" class="issue-link" data-issue-key="KAFKA-822">KAFKA-822</a></p>
+        </td></tr>
+                <tr id="comment-header-13942338"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jkreps" id="word_commented_jkreps" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jkreps">Jay Kreps</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">20/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13942338"><td bgcolor="#ffffff">
+            <p><a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=nehanarkhede" class="user-hover" rel="nehanarkhede">Neha Narkhede</a> Does this bug still exist?</p>
+        </td></tr>
+                <tr id="comment-header-13943224"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="nehanarkhede" id="word_commented_nehanarkhede" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=nehanarkhede">Neha Narkhede</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13943224"><td bgcolor="#ffffff">
+            <p>Nope, it's fixed. The tool mentions that the reassignment failed for just the non-existent partition and the rest succeed.</p>
+
+<div class="preformatted panel" style="border-width: 1px;"><div class="preformattedContent panelContent">
+<pre>nnarkhed-mn1:kafka-git-idea nnarkhed$ ./bin/kafka-reassign-partitions.sh --zookeeper localhost:2181 --reassignment-json-file new-assignment.json --verify
+
+Status of partition reassignment:
+ERROR: Assigned replicas () don't match the list of replicas for reassignment (0,1) for partition [test,2]
+Reassignment of partition [test,2] failed
+Reassignment of partition [test,0] completed successfully
+Reassignment of partition [test,1] completed successfully
+</pre>
+</div></div>
+        </td></tr>
+            </table>
+Generated at Sat Mar 22 13:36:02 UTC 2014 using JIRA 6.2#6252-sha1:aa343257d4ce030d9cb8c531be520be9fac1c996.
+
+</body>
+</html>

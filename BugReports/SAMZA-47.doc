@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>[#SAMZA-47] LevelDB and L1 cache use the same configuration value in KeyValueStorageEngine</title>
+    <meta http-equiv="Content-Type" Content="application/vnd.ms-word; charset=utf-8">
+        <style type="text/css">
+
+.tableBorder, .grid
+{
+    background-color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableBorder td, .grid td
+{
+    vertical-align: top;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+.noPadding
+{
+    padding: 0 !important;
+}
+
+h3 .subText
+{
+    font-size: 60%;
+    font-weight: normal;
+}
+
+.tabLabel
+{
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-bottom:none;
+    padding: 2px;
+    display: inline;
+}
+
+td.blank
+{
+    padding: 0;
+    margin: 0;
+}
+
+.blank td
+{
+    border: none;
+}
+
+#descriptionArea
+{
+    margin: 0;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+hr
+{
+    border-top:1px solid #aaa;
+}
+
+hr.fullcontent
+{
+  height: 15px;
+  padding: 10px 0;
+  background: #fff url('https://issues.apache.org/jira/images/icons/hr.gif') no-repeat scroll center;
+}
+
+</style>
+
+</head>
+<body>
+
+<table class="tableBorder" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" width="100%" colspan="2" valign="top">
+                            <h3 class="formtitle">
+                        [SAMZA-47]&nbsp;<a href="https://issues.apache.org/jira/browse/SAMZA-47">LevelDB and L1 cache use the same configuration value in KeyValueStorageEngine</a>
+            <span class="subText">
+               Created: 05/Sep/13                   &nbsp;Updated: 20/Mar/14
+
+                                                    &nbsp;Resolved: 21/Feb/14
+                            </span>
+            </h3>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Status:</b></td>
+        <td width="80%">Closed</td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Project:</b></td>
+        <td width="80%"><a href="https://issues.apache.org/jira/secure/BrowseProject.jspa?id=12314526">Samza</a></td>
+    </tr>
+
+        <tr>
+            <td><b>Component/s:</b></td>
+            <td>
+                            None
+                </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Affects Version/s:</b></td>
+            <td>
+                                        <a title="0.7.0"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12314526&version=12324906"
+            >0.7.0</a>                        </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Fix Version/s:</b></td>
+            <td>
+                                        <a title="0.7.0"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12314526&fixfor=12324906"
+            >0.7.0</a>                        </td>
+    </tr>
+    
+    </table>
+
+<br />
+<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" valign="top" width="20%">
+            <b>Type:</b>
+        </td>
+        <td bgcolor="#ffffff" valign="top"  width="30%" >
+            Bug
+        </td>
+
+                    <td bgcolor="#f0f0f0">
+                <b>Priority:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap>
+                Major
+            </td>
+            </tr>
+    <tr>
+                        <td bgcolor="#f0f0f0" valign="top" width="20%">
+                <b>Reporter:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top"  width="30%" >
+                                            <a class="user-hover" rel="jkreps" id="word_reporter_jkreps" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jkreps">Jay Kreps</a>
+                            </td>
+        
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Assignee:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap  width="30%" >
+                                            <a class="user-hover" rel="martinkl" id="word_assignee_martinkl" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=martinkl">Martin Kleppmann</a>
+                            </td>
+            </tr>
+    	<tr>
+		<td bgcolor="#f0f0f0" width="20%">
+			<b>Resolution:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                            Fixed
+                    </td>
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Votes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                0
+            </td>
+        
+    </tr>
+    
+        <tr>
+        <td bgcolor="#f0f0f0" width="20%">
+            <b>Labels:</b>
+        </td>
+        <td id="labels-12667125-value" class="value" bgcolor="#ffffff" valign="top" colspan="3" nowrap>
+                            None
+                    </td>
+    </tr>
+    
+    	<tr>
+        		<td bgcolor="#f0f0f0" width="20%"><b>Remaining Estimate:</b></td>
+        <td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Time Spent:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+	</tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Original Estimate:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    
+    </table>
+
+
+
+    <br />
+
+    	<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+
+                <tr>
+            <td bgcolor="#f0f0f0" width=20% valign=top>
+                <b>Attachments:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top">
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        SAMZA-47.patch &nbsp;&nbsp;&nbsp;
+                            </td>
+        </tr>
+        
+            <tr>
+            <td bgcolor="#f0f0f0" width="20%" valign="top">
+                <b>Issue Links:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" class="noPadding">
+                <table cellpadding="0" cellspacing="0" border="0" width="100%" class="blank">
+                                            <tr>
+                            <td colspan="4" bgcolor="#f0f0f0">
+                                <b>dependent</b><br/>
+                            </td>
+                        </tr>
+                                                                <tr>
+            <td>
+                is depended upon by
+            </td>
+            <td>
+                <a href="https://issues.apache.org/jira/browse/SAMZA-152">
+                     <strike>SAMZA-152</strike>                 </a>
+            </td>
+            <td>
+                Hello-samza should show how to use a ...
+            </td>
+            <td>
+                Closed
+            </td>
+        </tr>
+                                        </table>
+            </td>
+        </tr>
+    
+
+
+
+</table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Description</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td id="descriptionArea">
+            <p>Both seem to key off of<br/>
+  cache.size<br/>
+This is not right. The L1 cache is caching a number of objects and leveldb is allocating a number of bytes. In general the leveldb cache should be big (tens of MBs) and the L1 cache small (a few thousand).</p>
+            <br/>
+        </td>
+    </tr>
+    </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Comments</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="grid" style="margin: 0;">
+                <tr id="comment-header-13759175"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jkreps" id="word_commented_jkreps" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jkreps">Jay Kreps</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">05/Sep/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13759175"><td bgcolor="#ffffff">
+            <p>I think a reasonable fix would be to prefix all leveldb configurations with leveldb and change that configuration to leveldb.block.cache.size and the other cache to object.cache.size to clarify. Any objections?</p>
+        </td></tr>
+                <tr id="comment-header-13759217"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="criccomini" id="word_commented_criccomini" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=criccomini">Chris Riccomini</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">05/Sep/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13759217"><td bgcolor="#ffffff">
+            <p>Wouldn't LevelDB's configuration be set using:</p>
+
+<div class="preformatted panel" style="border-width: 1px;"><div class="preformattedContent panelContent">
+<pre>stores.mystore.cache.size
+</pre>
+</div></div>
+
+<p>Looking at the code, I see:</p>
+
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+    val storageConfig = config.subset(<span class="code-quote">"stores."</span> + storeName + <span class="code-quote">"."</span>, <span class="code-keyword">true</span>)
+    <span class="code-comment">// ...
+</span>    val levelDb = <span class="code-keyword">new</span> LevelDbKeyValueStore(storeDir, LevelDbKeyValueStore.options(storageConfig))
+</pre>
+</div></div>
+        </td></tr>
+                <tr id="comment-header-13759827"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jkreps" id="word_commented_jkreps" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jkreps">Jay Kreps</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">06/Sep/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13759827"><td bgcolor="#ffffff">
+            <p>Okay posted an rb:<br/>
+<a href="https://reviews.apache.org/r/14009" class="external-link" rel="nofollow">https://reviews.apache.org/r/14009</a></p>
+
+<p>This gives the following set of properties:</p>
+
+<p>    stores.my-store.write.batch.size=500<br/>
+    stores.my-store.object.cache.size=1000<br/>
+    stores.my-store.leveldb.block.cache.size=16777216<br/>
+    stores.my-store.leveldb.compress=true<br/>
+    stores.my-store.leveldb.block.size=4096<br/>
+    stores.my-store.leveldb.write.buffer.size=8388608</p>
+
+<p>I also changed the write.buffer.size to 8MB and the block cache to 16MB by default. The reason is because these are currently per-task (which I wasn't thinking of). Hence if you have 50 tasks the old default block cache of 64MB  would use 3.2GB, which is too much for a default.</p>
+
+<p>However I wonder if this approach is right at all. After all the user budgets memory at the CONTAINER level. So to get the math right here you need to multiply by the number of tasks in your container and keep updating these as this changes. Another approach would be to have the user specify these values and divide by the number of containers. This might be a little tricky since right now the task kind of stands alone but could be more intuitive when doing container memory arithmetic. In this model it is a little harder to say how much memory goes to each leveldb instance but you know the total used.</p>
+
+<p>Thoughts?</p>
+        </td></tr>
+                <tr id="comment-header-13894190"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jkreps" id="word_commented_jkreps" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jkreps">Jay Kreps</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">07/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13894190"><td bgcolor="#ffffff">
+            <p>Did this ever get addressed? It's kind of a blocker issue, no?</p>
+        </td></tr>
+                <tr id="comment-header-13894848"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="criccomini" id="word_commented_criccomini" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=criccomini">Chris Riccomini</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">07/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13894848"><td bgcolor="#ffffff">
+            <p>Hmm. I don't think so. Looks like this fell through the cracks. Your RB link (above) doesn't work. It says:</p>
+
+<div class="preformatted panel" style="border-width: 1px;"><div class="preformattedContent panelContent">
+<pre>You don't have access to this review request.
+
+This review request is private. You must be a requested reviewer, either directly or on a requested group, and have permission to access the repository in order to view this review request.
+</pre>
+</div></div>
+
+<p>Could you make it public, and I'll review and commit?</p>
+        </td></tr>
+                <tr id="comment-header-13894852"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="criccomini" id="word_commented_criccomini" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=criccomini">Chris Riccomini</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">07/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13894852"><td bgcolor="#ffffff">
+            <p>Also, I favor keeping the level DB settings per-partition right now, as opposed to a global size that we divide by internally. This is the pattern I think we follow for most other things, and I'd rather have less magic, even if it means multiplying numbers.</p>
+        </td></tr>
+                <tr id="comment-header-13894884"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jkreps" id="word_commented_jkreps" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jkreps">Jay Kreps</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">07/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13894884"><td bgcolor="#ffffff">
+            <p>Yeah I don't know what happened I think I just dropped the ball and never got the rb out or checked it in. Bottom line we are setting the cache totally wrong. I think I fixed the rb, let me know if you can see that.</p>
+        </td></tr>
+                <tr id="comment-header-13894888"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jkreps" id="word_commented_jkreps" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jkreps">Jay Kreps</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">07/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13894888"><td bgcolor="#ffffff">
+            <p>WRT how to set memory. If you think about it it actually isn't magic. Turn it around: how should you set your container size to ensure you won't run out of memory if you have per-partition caches and have no idea how many partitions you will be assigned? </p>
+        </td></tr>
+                <tr id="comment-header-13894982"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="criccomini" id="word_commented_criccomini" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=criccomini">Chris Riccomini</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">07/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13894982"><td bgcolor="#ffffff">
+            <p>I misunderstood what you were saying. I agree with you.</p>
+
+<p>We should update the patch to have something like stores.my-store.container.cache.size.bytes. This would define per-container LevelDB cache sizes. Thus, each partition in a container gets a byte cache computed by:</p>
+
+<p>  stores.my-store.container.cache.size.bytes / # of partitions in container.</p>
+
+<p>The # of partitions in container is already defined in SamzaContainer, and should be exposed to StorageEngineFactory. It seems a bit hacky to just add a specific parameter for this use case to the StorageEngineFactory. Maybe a better solution is to create a SamzaContainerContext object that has the container name, the partitions it's responsible for, etc. We could then give the whole container context to the StorageEngineFactory.</p>
+
+<p>Martin, do you want to have a look at this?</p>
+        </td></tr>
+                <tr id="comment-header-13894985"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="criccomini" id="word_commented_criccomini" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=criccomini">Chris Riccomini</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">07/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13894985"><td bgcolor="#ffffff">
+            <p>One other note: a nice thing about this feature is that it mimics Xmx's behavior. This means container memory usage can be calculated by:</p>
+
+<p>yarn.container.memory.mb = &lt;your -Xmx setting&gt; + stores.my-store.container.cache.size.bytes + &lt;extra padding for permgen, VM, etc&gt;</p>
+        </td></tr>
+                <tr id="comment-header-13905641"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="githubbot" id="word_commented_githubbot" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=githubbot">ASF GitHub Bot</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">19/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13905641"><td bgcolor="#ffffff">
+            <p>GitHub user ept opened a pull request:</p>
+
+<p>    <a href="https://github.com/apache/incubator-samza/pull/1" class="external-link" rel="nofollow">https://github.com/apache/incubator-samza/pull/1</a></p>
+
+<p>    <a href="https://issues.apache.org/jira/browse/SAMZA-47" title="LevelDB and L1 cache use the same configuration value in KeyValueStorageEngine" class="issue-link" data-issue-key="SAMZA-47"><del>SAMZA-47</del></a> Clean up configuration for key-value store</p>
+
+<ul>
+	<li>stores.my-store.cache.size is now split into two different properties,<br/>
+      stores.my-store.container.cache.size.bytes (LevelDB block cache size<br/>
+      in bytes, per container) and stores.my-store.object.cache.size (Samza<br/>
+      store cache size in number of objects, per task).</li>
+</ul>
+
+
+<ul>
+	<li>stores.my-store.write.buffer.size is now known as<br/>
+      stores.my-store.container.write.buffer.size.bytes (semantics changed: was<br/>
+      measured per-task, now measured per-container)</li>
+</ul>
+
+
+<ul>
+	<li>stores.my-store.compress is now known as<br/>
+      stores.my-store.leveldb.compression (semantics changed: was a boolean,<br/>
+      is now a string indicating the compression codec)</li>
+</ul>
+
+
+<ul>
+	<li>stores.my-store.batch.size is now known as<br/>
+      stores.my-store.write.batch.size (unchanged semantics)</li>
+</ul>
+
+
+<ul>
+	<li>stores.my-store.leveldb.block.size is now known as<br/>
+      stores.my-store.leveldb.block.size.bytes (unchanged semantics)</li>
+</ul>
+
+
+<p>    Also changed default values for the properties that are now<br/>
+    per-container.</p>
+
+<p>    Behaviour of the following configuration properties did not change (but<br/>
+    docs were brought up-to-date with the code):</p>
+
+<ul>
+	<li>stores.my-store.factory</li>
+	<li>stores.my-store.changelog</li>
+	<li>stores.my-store.key.serde</li>
+	<li>stores.my-store.msg.serde</li>
+	<li>stores.my-store.object.cache.size</li>
+</ul>
+
+
+<p>    Manually tested changes (using hello-samza). Not yet figured out how to<br/>
+    add automated tests for this.</p>
+
+<p>You can merge this pull request into a Git repository by running:</p>
+
+<p>    $ git pull <a href="https://github.com/ept/incubator-samza" class="external-link" rel="nofollow">https://github.com/ept/incubator-samza</a> <a href="https://issues.apache.org/jira/browse/SAMZA-47" title="LevelDB and L1 cache use the same configuration value in KeyValueStorageEngine" class="issue-link" data-issue-key="SAMZA-47"><del>SAMZA-47</del></a></p>
+
+<p>Alternatively you can review and apply these changes as the patch at:</p>
+
+<p>    <a href="https://github.com/apache/incubator-samza/pull/1.patch" class="external-link" rel="nofollow">https://github.com/apache/incubator-samza/pull/1.patch</a></p>
+
+<p>To close this pull request, make a commit to your master/trunk branch<br/>
+with (at least) the following in the commit message:</p>
+
+<p>    This closes #1</p>
+
+<hr />
+<p>commit fa9926a9810d997e5384a2def460faa41cced0fe<br/>
+Author: Martin Kleppmann &lt;mkleppmann@linkedin.com&gt;<br/>
+Date:   2014-02-18T21:55:17Z</p>
+
+<p>    <a href="https://issues.apache.org/jira/browse/SAMZA-47" title="LevelDB and L1 cache use the same configuration value in KeyValueStorageEngine" class="issue-link" data-issue-key="SAMZA-47"><del>SAMZA-47</del></a> Clean up configuration for key-value store</p>
+
+<ul>
+	<li>stores.my-store.cache.size is now split into two different properties,<br/>
+      stores.my-store.container.cache.size.bytes (LevelDB block cache size<br/>
+      in bytes, per container) and stores.my-store.object.cache.size (Samza<br/>
+      store cache size in number of objects, per task).</li>
+</ul>
+
+
+<ul>
+	<li>stores.my-store.write.buffer.size is now known as<br/>
+      stores.my-store.container.write.buffer.size.bytes (semantics changed: was<br/>
+      measured per-task, now measured per-container)</li>
+</ul>
+
+
+<ul>
+	<li>stores.my-store.compress is now known as<br/>
+      stores.my-store.leveldb.compression (semantics changed: was a boolean,<br/>
+      is now a string indicating the compression codec)</li>
+</ul>
+
+
+<ul>
+	<li>stores.my-store.batch.size is now known as<br/>
+      stores.my-store.write.batch.size (unchanged semantics)</li>
+</ul>
+
+
+<ul>
+	<li>stores.my-store.leveldb.block.size is now known as<br/>
+      stores.my-store.leveldb.block.size.bytes (unchanged semantics)</li>
+</ul>
+
+
+<p>    Also changed default values for the properties that are now<br/>
+    per-container.</p>
+
+<p>    Behaviour of the following configuration properties did not change (but<br/>
+    docs were brought up-to-date with the code):</p>
+
+<ul>
+	<li>stores.my-store.factory</li>
+	<li>stores.my-store.changelog</li>
+	<li>stores.my-store.key.serde</li>
+	<li>stores.my-store.msg.serde</li>
+	<li>stores.my-store.object.cache.size</li>
+</ul>
+
+
+<p>    Manually tested changes (using hello-samza). Not yet figured out how to<br/>
+    add automated tests for this.</p>
+
+<hr />
+        </td></tr>
+                <tr id="comment-header-13905651"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="martinkl" id="word_commented_martinkl" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=martinkl">Martin Kleppmann</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">19/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13905651"><td bgcolor="#ffffff">
+            <p>Testing out the Github integration (<a href="https://issues.apache.org/jira/browse/SAMZA-149" title="Try out Github integration" class="issue-link" data-issue-key="SAMZA-149"><del>SAMZA-149</del></a>!) with this pull request: <a href="https://github.com/apache/incubator-samza/pull/1" class="external-link" rel="nofollow">https://github.com/apache/incubator-samza/pull/1</a></p>
+
+<p>A few questions:</p>
+
+<ul>
+	<li>It seemed most natural to me to put SamzaContainerContext in the org.apache.samza.container package, even though that package didn't already exist in the samza-api module. Would you prefer it to be somewhere else?</li>
+	<li>I also tidied up a few other properties and brought the documentation up-to-date</li>
+	<li>Gave the write buffer size the same treatment as the cache size, since it's a similar off-heap, per-leveldb-instance allocation.</li>
+	<li>The change currently doesn't worry about backwards compatibility; any jobs using the old config properties will have them silently ignored. If that's a problem, we could try to preserve them (at the cost of messier code).</li>
+</ul>
+
+        </td></tr>
+                <tr id="comment-header-13905760"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="githubbot" id="word_commented_githubbot" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=githubbot">ASF GitHub Bot</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">19/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13905760"><td bgcolor="#ffffff">
+            <p>Github user criccomini commented on a diff in the pull request:</p>
+
+<p>    <a href="https://github.com/apache/incubator-samza/pull/1#discussion_r9874945" class="external-link" rel="nofollow">https://github.com/apache/incubator-samza/pull/1#discussion_r9874945</a></p>
+
+<p>    &#8212; Diff: samza-api/src/main/java/org/apache/samza/storage/StorageEngineFactory.java &#8212;<br/>
+    @@ -21,7 +21,7 @@</p>
+
+<p>     import java.io.File;</p>
+
+<p>    -import org.apache.samza.config.Config;<br/>
+    +import org.apache.samza.container.SamzaContainerContext;<br/>
+    &#8212; End diff &#8211;</p>
+
+<p>    I'm not seeing the SamzaContainerContext class. Did it get picked up in your pull request?</p>
+        </td></tr>
+                <tr id="comment-header-13905763"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="githubbot" id="word_commented_githubbot" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=githubbot">ASF GitHub Bot</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">19/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13905763"><td bgcolor="#ffffff">
+            <p>Github user criccomini commented on a diff in the pull request:</p>
+
+<p>    <a href="https://github.com/apache/incubator-samza/pull/1#discussion_r9875033" class="external-link" rel="nofollow">https://github.com/apache/incubator-samza/pull/1#discussion_r9875033</a></p>
+
+<p>    &#8212; Diff: samza-kv/src/main/scala/org/apache/samza/storage/kv/LevelDbKeyValueStore.scala &#8212;<br/>
+    @@ -27,17 +27,32 @@ import java.io._<br/>
+     import java.util.Iterator<br/>
+     import java.lang.Iterable<br/>
+     import org.apache.samza.config.Config<br/>
+    -import grizzled.slf4j.Logging<br/>
+    +import org.apache.samza.container.SamzaContainerContext<br/>
+    +import grizzled.slf4j.</p>
+{Logger, Logging}
+
+<p>     object LevelDbKeyValueStore {</p>
+<ul class="alternate" type="square">
+	<li>def options(config: Config) = {<br/>
+    +  private lazy val logger = Logger(classOf<span class="error">&#91;LevelDbKeyValueStore&#93;</span>)<br/>
+    +<br/>
+    +  def options(config: Config, containerContext: SamzaContainerContext) = {
+	<ul class="alternate" type="square">
+		<li>
+		<ul class="alternate" type="square">
+			<li>End diff &#8211;</li>
+		</ul>
+		</li>
+	</ul>
+	</li>
+</ul>
+
+
+<p>    containerContext contains config, so we don't need both</p>
+        </td></tr>
+                <tr id="comment-header-13905771"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="criccomini" id="word_commented_criccomini" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=criccomini">Chris Riccomini</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">19/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13905771"><td bgcolor="#ffffff">
+            <p>Overall, looks good. Few things noted in JIRA above. I took a look at samza-test's .samza files, and they all don't seem to touch any of the changed configs, so should be good there. Same with TestStatefulTask and </p>
+        </td></tr>
+                <tr id="comment-header-13905777"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="criccomini" id="word_commented_criccomini" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=criccomini">Chris Riccomini</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">19/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13905777"><td bgcolor="#ffffff">
+            <blockquote><p>It seemed most natural to me to put SamzaContainerContext in the org.apache.samza.container package, even though that package didn't already exist in the samza-api module. Would you prefer it to be somewhere else?</p></blockquote>
+
+<p>I don't see this guy in the pull request. Once it exists, yeah I think samza-api + org.apache.samza.container is reasonable.</p>
+
+<blockquote><p>I also tidied up a few other properties and brought the documentation up-to-date</p></blockquote>
+
+<p>Sounds good.</p>
+
+<blockquote><p>Gave the write buffer size the same treatment as the cache size, since it's a similar off-heap, per-leveldb-instance allocation.</p></blockquote>
+
+<p>Sounds good.</p>
+
+<blockquote><p>The change currently doesn't worry about backwards compatibility; any jobs using the old config properties will have them silently ignored. If that's a problem, we could try to preserve them (at the cost of messier code).</p></blockquote>
+
+<p>Sounds good. Shouldn't be a problem (yet). Once we cut a release, we should start caring about it more.</p>
+        </td></tr>
+                <tr id="comment-header-13906168"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="githubbot" id="word_commented_githubbot" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=githubbot">ASF GitHub Bot</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">19/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13906168"><td bgcolor="#ffffff">
+            <p>Github user ept commented on a diff in the pull request:</p>
+
+<p>    <a href="https://github.com/apache/incubator-samza/pull/1#discussion_r9885554" class="external-link" rel="nofollow">https://github.com/apache/incubator-samza/pull/1#discussion_r9885554</a></p>
+
+<p>    &#8212; Diff: samza-api/src/main/java/org/apache/samza/storage/StorageEngineFactory.java &#8212;<br/>
+    @@ -21,7 +21,7 @@</p>
+
+<p>     import java.io.File;</p>
+
+<p>    -import org.apache.samza.config.Config;<br/>
+    +import org.apache.samza.container.SamzaContainerContext;<br/>
+    &#8212; End diff &#8211;</p>
+
+<p>    Apologies, I'm such a noob. Updated the pull request to include the missing file.</p>
+        </td></tr>
+                <tr id="comment-header-13906177"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="githubbot" id="word_commented_githubbot" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=githubbot">ASF GitHub Bot</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">19/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13906177"><td bgcolor="#ffffff">
+            <p>Github user ept commented on a diff in the pull request:</p>
+
+<p>    <a href="https://github.com/apache/incubator-samza/pull/1#discussion_r9885664" class="external-link" rel="nofollow">https://github.com/apache/incubator-samza/pull/1#discussion_r9885664</a></p>
+
+<p>    &#8212; Diff: samza-kv/src/main/scala/org/apache/samza/storage/kv/LevelDbKeyValueStore.scala &#8212;<br/>
+    @@ -27,17 +27,32 @@ import java.io._<br/>
+     import java.util.Iterator<br/>
+     import java.lang.Iterable<br/>
+     import org.apache.samza.config.Config<br/>
+    -import grizzled.slf4j.Logging<br/>
+    +import org.apache.samza.container.SamzaContainerContext<br/>
+    +import grizzled.slf4j.</p>
+{Logger, Logging}
+
+<p>     object LevelDbKeyValueStore {</p>
+<ul class="alternate" type="square">
+	<li>def options(config: Config) = {<br/>
+    +  private lazy val logger = Logger(classOf<span class="error">&#91;LevelDbKeyValueStore&#93;</span>)<br/>
+    +<br/>
+    +  def options(config: Config, containerContext: SamzaContainerContext) = {
+	<ul class="alternate" type="square">
+		<li>
+		<ul class="alternate" type="square">
+			<li>End diff &#8211;</li>
+		</ul>
+		</li>
+	</ul>
+	</li>
+</ul>
+
+
+<p>    I also got caught out by that one. The config here isn't the entire job config, but only the subset of the config for that particular store &#8211; so if we don't pass in that subset config, we'd still have to at least pass in the store name so that LevelDbKeyValueStore knows which store we're talking about. I thought it would be better to continue passing in the subset of the config instead.</p>
+
+<p>    Perhaps we should call the parameter `storeConfig` to prevent such confusion?</p>
+        </td></tr>
+                <tr id="comment-header-13908475"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="martinkl" id="word_commented_martinkl" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=martinkl">Martin Kleppmann</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13908475"><td bgcolor="#ffffff">
+            <p>Since the Github experiment didn't work out, here's the same as the pull request, in Reviewboard form: <a href="https://reviews.apache.org/r/18357/" class="external-link" rel="nofollow">https://reviews.apache.org/r/18357/</a></p>
+
+<p>I changed one thing since the pull request: in LevelDbKeyValueStore, renamed the <tt>config</tt> parameter to <tt>storeConfig</tt> (to clarify that it's just the configuration of that particular store, not the entire job config).</p>
+
+<p>Also attaching the latest version as a patch.</p>
+        </td></tr>
+                <tr id="comment-header-13908622"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="criccomini" id="word_commented_criccomini" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=criccomini">Chris Riccomini</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13908622"><td bgcolor="#ffffff">
+            <p>+1 Looks good to me!</p>
+        </td></tr>
+                <tr id="comment-header-13908650"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="criccomini" id="word_commented_criccomini" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=criccomini">Chris Riccomini</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13908650"><td bgcolor="#ffffff">
+            <p>+1 Merged and committed. Rebuilding docs now.</p>
+        </td></tr>
+                <tr id="comment-header-13942541"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="githubbot" id="word_commented_githubbot" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=githubbot">ASF GitHub Bot</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">20/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13942541"><td bgcolor="#ffffff">
+            <p>Github user ept closed the pull request at:</p>
+
+<p>    <a href="https://github.com/apache/incubator-samza/pull/1" class="external-link" rel="nofollow">https://github.com/apache/incubator-samza/pull/1</a></p>
+        </td></tr>
+                <tr id="comment-header-13942551"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="githubbot" id="word_commented_githubbot" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=githubbot">ASF GitHub Bot</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">20/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13942551"><td bgcolor="#ffffff">
+            <p>Github user ept commented on the pull request:</p>
+
+<p>    <a href="https://github.com/apache/incubator-samza/pull/1#issuecomment-38235144" class="external-link" rel="nofollow">https://github.com/apache/incubator-samza/pull/1#issuecomment-38235144</a></p>
+
+<p>    Closing this old pull request as we're not using Github pull requests. <a href="https://issues.apache.org/jira/browse/SAMZA-47" class="external-link" rel="nofollow">https://issues.apache.org/jira/browse/SAMZA-47</a> has the discussion and code.</p>
+        </td></tr>
+            </table>
+Generated at Sat Mar 22 13:34:05 UTC 2014 using JIRA 6.2#6252-sha1:aa343257d4ce030d9cb8c531be520be9fac1c996.
+
+</body>
+</html>

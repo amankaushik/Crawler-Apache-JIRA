@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>[#DELTASPIKE-382] mask out passwords and other credentials in our Configuration logs</title>
+    <meta http-equiv="Content-Type" Content="application/vnd.ms-word; charset=utf-8">
+        <style type="text/css">
+
+.tableBorder, .grid
+{
+    background-color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableBorder td, .grid td
+{
+    vertical-align: top;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+.noPadding
+{
+    padding: 0 !important;
+}
+
+h3 .subText
+{
+    font-size: 60%;
+    font-weight: normal;
+}
+
+.tabLabel
+{
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-bottom:none;
+    padding: 2px;
+    display: inline;
+}
+
+td.blank
+{
+    padding: 0;
+    margin: 0;
+}
+
+.blank td
+{
+    border: none;
+}
+
+#descriptionArea
+{
+    margin: 0;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+hr
+{
+    border-top:1px solid #aaa;
+}
+
+hr.fullcontent
+{
+  height: 15px;
+  padding: 10px 0;
+  background: #fff url('https://issues.apache.org/jira/images/icons/hr.gif') no-repeat scroll center;
+}
+
+</style>
+
+</head>
+<body>
+
+<table class="tableBorder" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" width="100%" colspan="2" valign="top">
+                            <h3 class="formtitle">
+                        [DELTASPIKE-382]&nbsp;<a href="https://issues.apache.org/jira/browse/DELTASPIKE-382">mask out passwords and other credentials in our Configuration logs</a>
+            <span class="subText">
+               Created: 13/Jun/13                   &nbsp;Updated: 20/Mar/14
+
+                                                    &nbsp;Resolved: 03/Jul/13
+                            </span>
+            </h3>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Status:</b></td>
+        <td width="80%">Closed</td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Project:</b></td>
+        <td width="80%"><a href="https://issues.apache.org/jira/secure/BrowseProject.jspa?id=12312820">DeltaSpike</a></td>
+    </tr>
+
+        <tr>
+            <td><b>Component/s:</b></td>
+            <td>
+                                        <a title="Configuration - CDI Configuration from Seam XML Config (Solder)"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12312820&component=12319648"
+            >Configuration</a>                        </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Affects Version/s:</b></td>
+            <td>
+                                        <a title="0.4"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12312820&version=12319863"
+            >0.4</a>                        </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Fix Version/s:</b></td>
+            <td>
+                                        <a title="0.5"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12312820&fixfor=12320947"
+            >0.5</a>                        </td>
+    </tr>
+    
+    </table>
+
+<br />
+<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" valign="top" width="20%">
+            <b>Type:</b>
+        </td>
+        <td bgcolor="#ffffff" valign="top"  width="30%" >
+            New Feature
+        </td>
+
+                    <td bgcolor="#f0f0f0">
+                <b>Priority:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap>
+                Major
+            </td>
+            </tr>
+    <tr>
+                        <td bgcolor="#f0f0f0" valign="top" width="20%">
+                <b>Reporter:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top"  width="30%" >
+                                            <a class="user-hover" rel="struberg" id="word_reporter_struberg" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=struberg">Mark Struberg</a>
+                            </td>
+        
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Assignee:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap  width="30%" >
+                                            <a class="user-hover" rel="struberg" id="word_assignee_struberg" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=struberg">Mark Struberg</a>
+                            </td>
+            </tr>
+    	<tr>
+		<td bgcolor="#f0f0f0" width="20%">
+			<b>Resolution:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                            Fixed
+                    </td>
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Votes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                0
+            </td>
+        
+    </tr>
+    
+        <tr>
+        <td bgcolor="#f0f0f0" width="20%">
+            <b>Labels:</b>
+        </td>
+        <td id="labels-12652662-value" class="value" bgcolor="#ffffff" valign="top" colspan="3" nowrap>
+                            None
+                    </td>
+    </tr>
+    
+    	<tr>
+        		<td bgcolor="#f0f0f0" width="20%"><b>Remaining Estimate:</b></td>
+        <td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Time Spent:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+	</tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Original Estimate:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    
+    </table>
+
+
+
+    <br />
+
+    	<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+
+        
+    
+
+
+
+</table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Description</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td id="descriptionArea">
+            Our configuration mechanism currently logs all the configured values.<br/>
+This makes it hard to use it for passwords and stuff.<br/>
+<br/>
+I suggest we introduce some specific prefix property to configure configs which contain sensitive information.<br/>
+<br/>
+For the key &#39;some.random.password&#39; this could look like:<br/>
+<br/>
+deltaspike_config.mask.some.random.password=true<br/>
+<br/>
+In the log we would in this case just output the information whether and where we did find some value, but not print the details for all configs which start with all of the configured masks.<br/>
+<br/>
+I&#39;m not yet sure though how to configure this best. Suggestions appreciated!
+            <br/>
+        </td>
+    </tr>
+    </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Comments</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="grid" style="margin: 0;">
+                <tr id="comment-header-13682315"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="romain.manni-bucau" id="word_commented_romain.manni-bucau" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=romain.manni-bucau">Romain Manni-Bucau</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">13/Jun/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13682315"><td bgcolor="#ffffff">
+            <p>i'd see a SPI "PropertyMasker" or sthg like that called before logging (isLoggable). By default the impl would be: if key contains pwd or password return false; return true;</p>
+        </td></tr>
+                <tr id="comment-header-13682413"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">13/Jun/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13682413"><td bgcolor="#ffffff">
+            <p>i would never store passwords as plain text</p>
+        </td></tr>
+                <tr id="comment-header-13682485"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="struberg" id="word_commented_struberg" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=struberg">Mark Struberg</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">13/Jun/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13682485"><td bgcolor="#ffffff">
+            <p>Gerhard, what are the other options?<br/>
+It's not perfect but it's fine for most cases to store credentials, etc in JNDI.<br/>
+If there is some foreign bytecode running on your server, then you <em>never</em> will have 100% safety.<br/>
+For DB one should e.g. use a DataSource provided by the Server, but for other connectors it's not as easy.</p>
+
+<p><a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=romain.manni-bucau" class="user-hover" rel="romain.manni-bucau">Romain Manni-Bucau</a> I like the SPI idea.</p>
+        </td></tr>
+                <tr id="comment-header-13682490"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="denis.forveille" id="word_commented_denis.forveille" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=denis.forveille">Denis Forveille</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">13/Jun/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13682490"><td bgcolor="#ffffff">
+            <p>I agree with Gerhard. never store a pwd in plain text. at a minimun, encrypt it and decrypt (3DES..) it when needed, at least those are not immediately readable by anyone..</p>
+        </td></tr>
+                <tr id="comment-header-13682519"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="struberg" id="word_commented_struberg" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=struberg">Mark Struberg</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">13/Jun/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13682519"><td bgcolor="#ffffff">
+            <p>Denis, this all is hopefully stored in JNDI thus only maintained by system administrators and only readable by the code on this box. And if someone manages to execute code on your box, then you have much heavier problems than a password.<br/>
+This whole masking is to make sure we don't output some sensitive information (might be other stuff than passwords as well) into some random log file which might be read by many other users.</p>
+        </td></tr>
+                <tr id="comment-header-13682520"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">13/Jun/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13682520"><td bgcolor="#ffffff">
+            <p>@denis: yes (or a hash-code created by a cryptographic hash-function)<br/>
+imo we shouldn't support such very questionable approaches.</p>
+        </td></tr>
+                <tr id="comment-header-13682556"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">13/Jun/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13682556"><td bgcolor="#ffffff">
+            <p>@mark: i know what you mean, but i can't agree - the same is true for logs. if you store a password in plain text (in db, jndi,...), anybody who would/should get access to the logs could also read and expose the password manually. if you expose your logs to external people, you have to check them anyway.</p>
+        </td></tr>
+                <tr id="comment-header-13682675"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="romain.manni-bucau" id="word_commented_romain.manni-bucau" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=romain.manni-bucau">Romain Manni-Bucau</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">13/Jun/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13682675"><td bgcolor="#ffffff">
+            <p>in openejb we support encryption. Basically i think you are both right so we need to handle it. That said a custom log category should be enough to prevent it to be logged in not dev environment.</p>
+        </td></tr>
+                <tr id="comment-header-13683445"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="chkal" id="word_commented_chkal" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=chkal">Christian Kaltepoth</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">14/Jun/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13683445"><td bgcolor="#ffffff">
+            <p>I think we should support some way of preventing passwords to be logged. Of cause it would be great if everyone uses encryption, but that's not realistic. And even if you use encryption, you have to take special care to keep the key secret, which is difficult without something like a HSM. If the key isn't safe (for example compiled into the source), even encrypted passwords are insecure and shouldn't be logged.</p>
+
+<p>I like the idea of an SPI for that. </p>
+
+<p>Just one thought: What about an SPI instead that tells which config properties shouldn't be logged at all (instead of just masking them). This could be useful even in other situations. For example if people have MANY config entries and only want to log a subset of them. Just a thought. <img class="emoticon" src="https://issues.apache.org/jira/images/icons/emoticons/smile.gif" height="16" width="16" align="absmiddle" alt="" border="0"/></p>
+        </td></tr>
+                <tr id="comment-header-13683624"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">14/Jun/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13683624"><td bgcolor="#ffffff">
+            <p>the only thing which sounds useful to me is a thin logging facade/factory/... to integrate any logging framework (or such questionable concepts) without additional dependency.<br/>
+imo if users don't care about their passwords/logs/..., most of them also don't care about masking configs and/or don't check if they get logged.<br/>
+or just a custom category as mentioned by romain.</p>
+        </td></tr>
+                <tr id="comment-header-13683633"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="struberg" id="word_commented_struberg" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=struberg">Mark Struberg</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">14/Jun/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13683633"><td bgcolor="#ffffff">
+            <p>Gerhard, SOME don't care but others DO!</p>
+
+<p>Also your argument is really not well funded. There is only 1 solution to be completely safe: to let the OS take care about security ans use a trusted key infrastructure. But once someone can inject/run foreign code on your server, then ALL bets are off. </p>
+
+<p>Sometimes you do need to keep a password around for your application to log in into another system. And regardless whether you do use a synchronous encryption or not - there is always a way to reconstruct this password. Storing it into JNDI should be sufficiently safe for most users. If it's not enough for them then they shall not use it, but for most people I've talked it it's really sufficient. The only important thing is that this configuration must never leave the server. And this is not guaranteed if we log it natively.</p>
+        </td></tr>
+                <tr id="comment-header-13683651"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">14/Jun/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13683651"><td bgcolor="#ffffff">
+            <p>i agree with romain and that also solves the cases you mentioned. or we don't log the config per default and just log it based on a system property (which is also easy enough to enable).<br/>
+i also know lots of people who agree with me, since we had this topic several times in environments of different security levels. you will never get an approach everybody agrees with, if you enable it per default.</p>
+
+<p>storing passwords as plain text and at the same time don't secure your logs and/or check them before exposing them is highly careless since projects usually use x libs as direct dependency or shipped in the server. if only one just logs all values of system-properties/jndi/... and you don't check the content of your logs before you expose them, you have the same issue.</p>
+        </td></tr>
+                <tr id="comment-header-13684587"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="struberg" id="word_commented_struberg" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=struberg">Mark Struberg</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">16/Jun/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13684587"><td bgcolor="#ffffff">
+            <p>Logging the configured values is something all my operations guy ever wanted. I don't agree with the X libs argument. If those other X libs read deltaspike configuration, well then that's up to them... </p>
+
+<p>In practice there is NO way to hide this info from code which is running on your server. Well you could activate the SecurityManager, but then 99% of all apps would even refuse to start... It doesn't care at all whether you have it store symmetrically encrypted or not. At some point in time you need to uncrypt it. End then you have all the pwd in plaintext as well. </p>
+
+<p>Once again: the only way which would technologically be valid is to use Java PKI and just utilize the private key stored in the OS or some HSM. But this would need the transport to support it. It would work for https, but e.g. not for SOAP WS-Security (regardless if https or http), nor for many other login mechanism.</p>
+
+<p>Proposed solution: <br/>
+I like Romains idea with the SPI. What about an interface 'ConfigFilter' which provides 2 different methods, one for 'real' and the other one for 'logged'/'masked' values?<br/>
+This ConfigFilter class could e.g. also used to transparently do the symmetric decryption for configuration which gets stored encrypted.</p>
+        </td></tr>
+                <tr id="comment-header-13684601"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="johndament" id="word_commented_johndament" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=johndament">John D. Ament</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">16/Jun/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13684601"><td bgcolor="#ffffff">
+            <p>What if it were even simpler?</p>
+
+<p>public interface ConfigPrintChecker </p>
+{ //or some other name 
+public boolean displayKey(String key);
+public boolean displayMasked(String key);
+}
+
+<p>Then let whoever create an implementation that matches their needs</p>
+        </td></tr>
+                <tr id="comment-header-13684609"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">16/Jun/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13684609"><td bgcolor="#ffffff">
+            <p>@mark:<br/>
+in config-sources like jndi you don't only have values configured via/for deltaspike.<br/>
+exposing info from jndi is way more "common", because it doesn't even have to be the goal to expose sensitive info.<br/>
+like you said - if e.g. an operations guy is interested in all config-values (not just configured via/for ds) and just logs everything, any masking done in ds is useless.</p>
+
+<p>-&gt; i don't agree because (again):<br/>
+checking logs before exposing them is imo by no way optional esp. if you store passwords as plain text in a common config-source which might be logged for many other reasons.<br/>
+that would be just highly careless, since there might be even other logged confidential info which isn't stored in a config.</p>
+        </td></tr>
+                <tr id="comment-header-13684626"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="struberg" id="word_commented_struberg" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=struberg">Mark Struberg</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">16/Jun/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13684626"><td bgcolor="#ffffff">
+            <p><a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek" class="user-hover" rel="gpetracek">Gerhard Petracek</a><br/>
+&gt; checking logs before exposing them is imo by no way optional<br/>
+sorry that's crap. I'm not talking about <em>externally</em> exposing them, but in a well setup scenario all Developers have access to the logs. This is one of the main parts all the DevOps movement is about: to care about all those logs TOGETHER with the operations team. Thus the developers must take care that sensitive info doesn't end up in the log at all.</p>
+
+<p>I think the ConfigFilter would provide all this and even more functionality like on the fly decryption.</p>
+
+<p><a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=johndament" class="user-hover" rel="johndament">John D. Ament</a><br/>
+Kind of, but instead I'd return the filtered Strings </p>
+
+<p>public interface ConfigFilter </p>
+{
+ String filterValue(String key, String value);
+ String filterValueForLog(String key, String value);
+}
+
+<p>plus provide a default impl wich does only return value for the first method and the logic Romain suggested in the ForLog method.</p>
+        </td></tr>
+                <tr id="comment-header-13684633"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="romain.manni-bucau" id="word_commented_romain.manni-bucau" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=romain.manni-bucau">Romain Manni-Bucau</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">16/Jun/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13684633"><td bgcolor="#ffffff">
+            <p>Guys couldn't we simply get:</p>
+
+<p>public interface SecretPropertySelector </p>
+{
+    boolean isSecret(String key);
+}
+
+<p>then handle 2 properties object: properties (like today) and secretProperties (with parent = properties). We add a method getSecretProperty() in ConfigResolver and that's all.</p>
+
+<p>The logging and all safe operations are done only on properties.</p>
+        </td></tr>
+                <tr id="comment-header-13684635"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="romain.manni-bucau" id="word_commented_romain.manni-bucau" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=romain.manni-bucau">Romain Manni-Bucau</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">16/Jun/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13684635"><td bgcolor="#ffffff">
+            <p>An alternative would be to fire an event when container is started and log with an observer at this moment, the observer would be overridable so deactivable</p>
+        </td></tr>
+                <tr id="comment-header-13684641"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">16/Jun/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13684641"><td bgcolor="#ffffff">
+            <p>@mark:<br/>
+so far i haven't said something about the spi (that would be a different jira-ticket). i just don't agree with the out-of-the-box masking which actively supports a questionable approach.</p>
+
+<p>yes - depending on the use-case you might need to decrypt a password at some point, but without code-reviews, security audits,... you have to trust your developers anyway.<br/>
+-&gt; ensure security in a better way. there are enough approaches &gt;like&lt; <a href="https://wiki.jenkins-ci.org/display/JENKINS/Mask+Passwords+Plugin" class="external-link" rel="nofollow">https://wiki.jenkins-ci.org/display/JENKINS/Mask+Passwords+Plugin</a> which do that in a general fashion on a higher or lower level and not only within ds.<br/>
+(this one for sure not for prod. - it's just an open example which shows that you have to do it on a different level and not in a single ds-api. i can't ref. closed examples like specific handlers which would be for sure more appropriate.) </p>
+
+<p>btw. using strong language doesn't make anything more accurate and i refuse such a style in any discussion here.</p>
+        </td></tr>
+                <tr id="comment-header-13684642"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="romain.manni-bucau" id="word_commented_romain.manni-bucau" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=romain.manni-bucau">Romain Manni-Bucau</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">16/Jun/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13684642"><td bgcolor="#ffffff">
+            <p>@Gerhard: the point is: we can't by default let pwd be logged. It is simple enough to be done by default today (ConfigurableDS will surely rely on it pretty quickly). We can't encourage no security so we need to handle it. I agree it should be only "good practices" but we can't only hope it as library providers. Jenkins mask pwd plugin is generic only on jenkins, if you have the same for any app (maybe a custom JUL handler?) it would work, without it this jira needs to be solved.</p>
+        </td></tr>
+                <tr id="comment-header-13684643"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">16/Jun/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13684643"><td bgcolor="#ffffff">
+            <p>@romain:<br/>
+yes - if we change the default logging, we don't have an issue with that. i haven't said that there is nothing to change. as i said before, i haven't said something about the suggested spi which is a different story (and doesn't fit to the topic of this ticket which is about masking something out-of-the-box). i just don't agree with the need to mask something which would be only masked for accessing it via ds-apis.<br/>
+(i just can't point to closed solutions out there and so the jenkins plugin was just one of many examples how things can be done in a general fashion instead of relying on a specific api of one framework. for sure it wouldn't be active on your prod. system and a custom handler makes more sense, but i don't have a ref. to an open implementation out there.)</p>
+        </td></tr>
+                <tr id="comment-header-13684702"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">16/Jun/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13684702"><td bgcolor="#ffffff">
+            <p>to summarize it:<br/>
+#1 i don't agree with masking values for the access via a single ds-api (because it needs to be solved on a different level)<br/>
+#2 i agree that we can improve the current default handling<br/>
+#3 i agree that it should be possible to skip logging (and not masking) in some cases/stages/... (without agreeing with the password use-case -&gt; i don't agree with the title of this ticket and the initially used use-case - see #1)<br/>
+#4 if someone uses it for use-cases not everybody here agrees with, they are responsible for it (but imo we shouldn't actively support/document it)</p>
+        </td></tr>
+                <tr id="comment-header-13684728"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="struberg" id="word_commented_struberg" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=struberg">Mark Struberg</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">16/Jun/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13684728"><td bgcolor="#ffffff">
+            <p>parsing ALL log output in production is imo not a good idea. This is way too expensive and could seriously blast performance in many situations. For jenkins it doesn't harm anyone, but in a production environment this is a no-go from a performance pov.</p>
+
+<p>ad #1: it's not a single DS method, it really affects the whole configuration area.<br/>
+ad #3: don't see it as a pure password issue, the solution with the SPI is much more flexible. As outlined above you could e.g. also use it for a decryption handler.<br/>
+ad #4: yes, I'll hack it and maintain it.</p>
+        </td></tr>
+                <tr id="comment-header-13684740"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">16/Jun/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13684740"><td bgcolor="#ffffff">
+            <p>again: i never said something (pro or con) about the spi. i just don't agree with masking values in our case. skipping the log in some cases is by far enough.<br/>
+and yes - it's a single api since the ConfigResolver api is affected. a proper approach for the initial use-case would handle it on a different level, because it allows to keep the logs clean (independent of the part which produces it).<br/>
+it's your responsibility, if you are using it in your project/s for passwords. skipping logging (instead of masking) without even implying a security context for other users should be enough (even for whatever you are going to do in your project).</p>
+
+<p>(it isn't about who is doing it - it's about how it's done and which message is transported to users actively via docs/supported syntax/... .)</p>
+        </td></tr>
+            </table>
+Generated at Sat Mar 22 13:36:17 UTC 2014 using JIRA 6.2#6252-sha1:aa343257d4ce030d9cb8c531be520be9fac1c996.
+
+</body>
+</html>

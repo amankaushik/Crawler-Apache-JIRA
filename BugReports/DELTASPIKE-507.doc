@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>[#DELTASPIKE-507] UserTransaction not available in WAS 8.0 and 8.5 during EJB CMT call</title>
+    <meta http-equiv="Content-Type" Content="application/vnd.ms-word; charset=utf-8">
+        <style type="text/css">
+
+.tableBorder, .grid
+{
+    background-color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableBorder td, .grid td
+{
+    vertical-align: top;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+.noPadding
+{
+    padding: 0 !important;
+}
+
+h3 .subText
+{
+    font-size: 60%;
+    font-weight: normal;
+}
+
+.tabLabel
+{
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-bottom:none;
+    padding: 2px;
+    display: inline;
+}
+
+td.blank
+{
+    padding: 0;
+    margin: 0;
+}
+
+.blank td
+{
+    border: none;
+}
+
+#descriptionArea
+{
+    margin: 0;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+hr
+{
+    border-top:1px solid #aaa;
+}
+
+hr.fullcontent
+{
+  height: 15px;
+  padding: 10px 0;
+  background: #fff url('https://issues.apache.org/jira/images/icons/hr.gif') no-repeat scroll center;
+}
+
+</style>
+
+</head>
+<body>
+
+<table class="tableBorder" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" width="100%" colspan="2" valign="top">
+                            <h3 class="formtitle">
+                        [DELTASPIKE-507]&nbsp;<a href="https://issues.apache.org/jira/browse/DELTASPIKE-507">UserTransaction not available in WAS 8.0 and 8.5 during EJB CMT call</a>
+            <span class="subText">
+               Created: 20/Jan/14                   &nbsp;Updated: 20/Mar/14
+
+                                                    &nbsp;Resolved: 21/Jan/14
+                            </span>
+            </h3>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Status:</b></td>
+        <td width="80%">Closed</td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Project:</b></td>
+        <td width="80%"><a href="https://issues.apache.org/jira/secure/BrowseProject.jspa?id=12312820">DeltaSpike</a></td>
+    </tr>
+
+        <tr>
+            <td><b>Component/s:</b></td>
+            <td>
+                                        <a title="JPA-Module"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12312820&component=12317204"
+            >JPA-Module</a>                        </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Affects Version/s:</b></td>
+            <td>
+                                        <a title="0.5"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12312820&version=12320947"
+            >0.5</a>                        </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Fix Version/s:</b></td>
+            <td>
+                                        <a title="0.6"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12312820&fixfor=12320948"
+            >0.6</a>                        </td>
+    </tr>
+    
+    </table>
+
+<br />
+<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" valign="top" width="20%">
+            <b>Type:</b>
+        </td>
+        <td bgcolor="#ffffff" valign="top"  width="30%" >
+            Bug
+        </td>
+
+                    <td bgcolor="#f0f0f0">
+                <b>Priority:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap>
+                Minor
+            </td>
+            </tr>
+    <tr>
+                        <td bgcolor="#f0f0f0" valign="top" width="20%">
+                <b>Reporter:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top"  width="30%" >
+                                            <a class="user-hover" rel="sstrobl" id="word_reporter_sstrobl" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=sstrobl">Stefan Strobl</a>
+                            </td>
+        
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Assignee:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap  width="30%" >
+                                            <a class="user-hover" rel="struberg" id="word_assignee_struberg" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=struberg">Mark Struberg</a>
+                            </td>
+            </tr>
+    	<tr>
+		<td bgcolor="#f0f0f0" width="20%">
+			<b>Resolution:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                            Fixed
+                    </td>
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Votes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                0
+            </td>
+        
+    </tr>
+    
+        <tr>
+        <td bgcolor="#f0f0f0" width="20%">
+            <b>Labels:</b>
+        </td>
+        <td id="labels-12689818-value" class="value" bgcolor="#ffffff" valign="top" colspan="3" nowrap>
+                            None
+                    </td>
+    </tr>
+    
+    	<tr>
+        		<td bgcolor="#f0f0f0" width="20%"><b>Remaining Estimate:</b></td>
+        <td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Time Spent:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+	</tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Original Estimate:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    
+    	<tr>
+
+		<td bgcolor="#f0f0f0" width="20%" valign="top">
+			<b>Environment:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" colspan="3">
+            IBM Websphere 8.0.0.6 and 8.5.5.1
+		</td>
+	</tr>
+    </table>
+
+
+
+    <br />
+
+    	<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+
+                <tr>
+            <td bgcolor="#f0f0f0" width=20% valign=top>
+                <b>Attachments:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top">
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        DELTASPIKE-507_with_cleanup_01.patch &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        DS_509_tested_on_was.patch &nbsp;&nbsp;&nbsp;
+                            </td>
+        </tr>
+        
+            <tr>
+            <td bgcolor="#f0f0f0" width="20%" valign="top">
+                <b>Issue Links:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" class="noPadding">
+                <table cellpadding="0" cellspacing="0" border="0" width="100%" class="blank">
+                                            <tr>
+                            <td colspan="4" bgcolor="#f0f0f0">
+                                <b>Reference</b><br/>
+                            </td>
+                        </tr>
+                                                                <tr>
+            <td>
+                is related to
+            </td>
+            <td>
+                <a href="https://issues.apache.org/jira/browse/DELTASPIKE-462">
+                     DELTASPIKE-462                 </a>
+            </td>
+            <td>
+                BeanManagedUserTransactionStrategy cl...
+            </td>
+            <td>
+                Open
+            </td>
+        </tr>
+            <tr>
+            <td>
+                is related to
+            </td>
+            <td>
+                <a href="https://issues.apache.org/jira/browse/DELTASPIKE-458">
+                     <strike>DELTASPIKE-458</strike>                 </a>
+            </td>
+            <td>
+                UserTransaction is not always availab...
+            </td>
+            <td>
+                Closed
+            </td>
+        </tr>
+                                        </table>
+            </td>
+        </tr>
+    
+
+
+
+</table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Description</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td id="descriptionArea">
+            It seems that due to different interpretations of the EE Spec WAS behaves differently when calling a CDI bean from a CMT EJB. While TomEE for example gives access to the UserTransaction, WAS will not (@Resource inject fails as well as lookup via JNDI &quot;java:comp/UserTransaction&quot;. This behavior currently (0.6-SNAPSHOT) results in a NameNotFoundException in BeanManagedUserTransactionStrategy#resolveUserTransaction()<br/>
+<br/>
+To provide a workaround for WAS the idea would be to resort back to TransactionSynchronisationRegistry which also exposes the current Transaction Status (even on WAS) and should therefore be sufficient to implicitely &quot;join&quot; the currently ongoing transaction. A Status != ACTIVE should probably still result in an error indicating probably a misconfigured RESOURCE_LOCAL Datasource
+            <br/>
+        </td>
+    </tr>
+    </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Comments</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="grid" style="margin: 0;">
+                <tr id="comment-header-13876610"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">20/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13876610"><td bgcolor="#ffffff">
+            <p>changed to minor because there is a workaround (a specialized (custom) BeanManagedUserTransactionStrategy which provides a custom implementation of #resolveUserTransaction)</p>
+        </td></tr>
+                <tr id="comment-header-13877497"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="sstrobl" id="word_commented_sstrobl" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=sstrobl">Stefan Strobl</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13877497"><td bgcolor="#ffffff">
+            <p>This is a first rough patch that utilizes TransactionSynchronizationRegistry - however still plenty of TODOs. I successfully tested it on WAS 8.0 (just a short click through). </p>
+
+<p><span class="nobr"><a href="https://issues.apache.org/jira/secure/attachment/12624133/12624133_DS_509_tested_on_was.patch" title="DS_509_tested_on_was.patch attached to DELTASPIKE-507">DS_509_tested_on_was.patch<sup><img class="rendericon" src="https://issues.apache.org/jira/images/icons/link_attachment_7.gif" height="7" width="7" align="absmiddle" alt="" border="0"/></sup></a></span></p>
+        </td></tr>
+                <tr id="comment-header-13877611"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="struberg" id="word_commented_struberg" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=struberg">Mark Struberg</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13877611"><td bgcolor="#ffffff">
+            <p>txs for the patch, Stefan!<br/>
+Also txs to David Blevins for the hint to TransactionSynchronisationRegistry!</p>
+        </td></tr>
+            </table>
+Generated at Sat Mar 22 13:33:09 UTC 2014 using JIRA 6.2#6252-sha1:aa343257d4ce030d9cb8c531be520be9fac1c996.
+
+</body>
+</html>

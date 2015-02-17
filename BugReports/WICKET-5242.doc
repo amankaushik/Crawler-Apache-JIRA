@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>[#WICKET-5242] Disable escaping of html tag attributes</title>
+    <meta http-equiv="Content-Type" Content="application/vnd.ms-word; charset=utf-8">
+        <style type="text/css">
+
+.tableBorder, .grid
+{
+    background-color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableBorder td, .grid td
+{
+    vertical-align: top;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+.noPadding
+{
+    padding: 0 !important;
+}
+
+h3 .subText
+{
+    font-size: 60%;
+    font-weight: normal;
+}
+
+.tabLabel
+{
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-bottom:none;
+    padding: 2px;
+    display: inline;
+}
+
+td.blank
+{
+    padding: 0;
+    margin: 0;
+}
+
+.blank td
+{
+    border: none;
+}
+
+#descriptionArea
+{
+    margin: 0;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+hr
+{
+    border-top:1px solid #aaa;
+}
+
+hr.fullcontent
+{
+  height: 15px;
+  padding: 10px 0;
+  background: #fff url('https://issues.apache.org/jira/images/icons/hr.gif') no-repeat scroll center;
+}
+
+</style>
+
+</head>
+<body>
+
+<table class="tableBorder" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" width="100%" colspan="2" valign="top">
+                            <h3 class="formtitle">
+                        [WICKET-5242]&nbsp;<a href="https://issues.apache.org/jira/browse/WICKET-5242">Disable escaping of html tag attributes</a>
+            <span class="subText">
+               Created: 19/Jun/13                   &nbsp;Updated: 20/Mar/14
+
+                                                    &nbsp;Resolved: 12/Jul/13
+                            </span>
+            </h3>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Status:</b></td>
+        <td width="80%">Closed</td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Project:</b></td>
+        <td width="80%"><a href="https://issues.apache.org/jira/secure/BrowseProject.jspa?id=12310561">Wicket</a></td>
+    </tr>
+
+        <tr>
+            <td><b>Component/s:</b></td>
+            <td>
+                                        <a title="wicket"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310561&component=12311420"
+            >wicket</a>                        </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Affects Version/s:</b></td>
+            <td>
+                                        <a title="6.7.0 - Minor release for 6.x (new additions only, no API breaks)"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310561&version=12323964"
+            >6.7.0</a>                        </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Fix Version/s:</b></td>
+            <td>
+                            None
+                </td>
+    </tr>
+    
+    </table>
+
+<br />
+<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" valign="top" width="20%">
+            <b>Type:</b>
+        </td>
+        <td bgcolor="#ffffff" valign="top"  width="30%" >
+            Improvement
+        </td>
+
+                    <td bgcolor="#f0f0f0">
+                <b>Priority:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap>
+                Major
+            </td>
+            </tr>
+    <tr>
+                        <td bgcolor="#f0f0f0" valign="top" width="20%">
+                <b>Reporter:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top"  width="30%" >
+                                            <a class="user-hover" rel="berniegp" id="word_reporter_berniegp" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=berniegp">Bertrand Guay-Paquet</a>
+                            </td>
+        
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Assignee:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap  width="30%" >
+                                    Unassigned
+                            </td>
+            </tr>
+    	<tr>
+		<td bgcolor="#f0f0f0" width="20%">
+			<b>Resolution:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                            Cannot Reproduce
+                    </td>
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Votes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                0
+            </td>
+        
+    </tr>
+    
+        <tr>
+        <td bgcolor="#f0f0f0" width="20%">
+            <b>Labels:</b>
+        </td>
+        <td id="labels-12653714-value" class="value" bgcolor="#ffffff" valign="top" colspan="3" nowrap>
+                            escaping, html, tags                    </td>
+    </tr>
+    
+    	<tr>
+        		<td bgcolor="#f0f0f0" width="20%"><b>Remaining Estimate:</b></td>
+        <td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Time Spent:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+	</tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Original Estimate:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    
+    </table>
+
+
+
+    <br />
+
+    	<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+
+        
+            <tr>
+            <td bgcolor="#f0f0f0" width="20%" valign="top">
+                <b>Issue Links:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" class="noPadding">
+                <table cellpadding="0" cellspacing="0" border="0" width="100%" class="blank">
+                                            <tr>
+                            <td colspan="4" bgcolor="#f0f0f0">
+                                <b>Reference</b><br/>
+                            </td>
+                        </tr>
+                                                                <tr>
+            <td>
+                is related to
+            </td>
+            <td>
+                <a href="https://issues.apache.org/jira/browse/WICKET-2829">
+                     <strike>WICKET-2829</strike>                 </a>
+            </td>
+            <td>
+                Tag attributes values are not escaped...
+            </td>
+            <td>
+                Resolved
+            </td>
+        </tr>
+                                        </table>
+            </td>
+        </tr>
+    
+
+
+
+</table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Description</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td id="descriptionArea">
+            Currently, all component tag attributes are escaped.With html5 data- attributes, much more values can be considered valid depending on the tag attribute and some should not be escaped.<br/>
+<br/>
+For example, bootstrap tooltips use the &quot;data-title&quot; attribute to set the content of a tooltip. Using Wicket&#39;s tag attributes, it&#39;s not possible to set the value &quot;&lt;b&gt;hello world&lt;/b&gt;&quot; as the data-title since it is escaped.<br/>
+<br/>
+ComponentTag#writeOutput() is the method which calls Strings.escapeMarkup(value); and escapes tag values. This is called by Component#renderComponentTag().<br/>
+<br/>
+There should be a way to disable component tag escaping either per-tag or per-component.<br/>
+<br/>
+Reference email thread:<br/>
+<a href="http://apache-wicket.1842946.n4.nabble.com/AttributeModifier-with-html-in-the-attribute-tp4659206.html">http://apache-wicket.1842946.n4.nabble.com/AttributeModifier-with-html-in-the-attribute-tp4659206.html</a>
+            <br/>
+        </td>
+    </tr>
+    </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Comments</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="grid" style="margin: 0;">
+                <tr id="comment-header-13688025"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="mgrigorov" id="word_commented_mgrigorov" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=mgrigorov">Martin Grigorov</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">19/Jun/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13688025"><td bgcolor="#ffffff">
+            <p>Can you point to an official reference that says that &lt;,&gt;," and &amp; are allowed in attribute values in HTML(5) ?<br/>
+Thanks!</p>
+        </td></tr>
+                <tr id="comment-header-13688188"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="berniegp" id="word_commented_berniegp" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=berniegp">Bertrand Guay-Paquet</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">19/Jun/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13688188"><td bgcolor="#ffffff">
+            <p>I found this:<br/>
+<a href="http://www.w3.org/html/wg/drafts/html/master/dom.html#attributes" class="external-link" rel="nofollow">http://www.w3.org/html/wg/drafts/html/master/dom.html#attributes</a></p>
+
+<p>"Except where otherwise specified, attributes on HTML elements may have any string value, including the empty string. Except where explicitly stated, there is no restriction on what text can be specified in such attributes."</p>
+
+<p>Also, a related stack overflow question with more discussion:<br/>
+<a href="http://stackoverflow.com/questions/4699276/can-data-attribute-contain-html-tags" class="external-link" rel="nofollow">http://stackoverflow.com/questions/4699276/can-data-attribute-contain-html-tags</a></p>
+        </td></tr>
+                <tr id="comment-header-13696356"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="cedricgatay" id="word_commented_cedricgatay" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=cedricgatay">Cedric Gatay</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">30/Jun/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13696356"><td bgcolor="#ffffff">
+            <p>Hi,<br/>
+I've done an implementation using an internal string to boolean map : you can review it here <a href="https://github.com/CedricGatay/wicket/compare/WICKET-5242?expand=1" class="external-link" rel="nofollow">https://github.com/CedricGatay/wicket/compare/WICKET-5242?expand=1</a></p>
+
+<p>Regards,</p>
+        </td></tr>
+                <tr id="comment-header-13705811"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="mgrigorov" id="word_commented_mgrigorov" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=mgrigorov">Martin Grigorov</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">11/Jul/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13705811"><td bgcolor="#ffffff">
+            <p>I've experimented a bit and with:<br/>
+&lt;a id="tooltip" href="#" data-toggle="tooltip" data-html="true" data-title="first &amp;&lt;strong&gt;B&lt;/strong&gt; tooltip"&gt;hover over me&lt;/a&gt;<br/>
+or<br/>
+&lt;a id="tooltip" href="#" data-toggle="tooltip" data-html="true" data-title="first &amp;&lt;strong&gt;B&lt;/strong&gt; tooltip"&gt;hover over me&lt;/a&gt;</p>
+
+<p>I get the same result in the browser: "first &amp;B tooltip" (and B is bold).</p>
+
+<p>So with or without escaping the final result is the same.</p>
+
+<p>Can you attach a markup that fails for you ?</p>
+        </td></tr>
+                <tr id="comment-header-13706932"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="mgrigorov" id="word_commented_mgrigorov" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=mgrigorov">Martin Grigorov</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">12/Jul/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13706932"><td bgcolor="#ffffff">
+            <p>Closing as "Cannot reproduce".<br/>
+We will reopen it when you provide a show case.</p>
+        </td></tr>
+                <tr id="comment-header-13709009"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="berniegp" id="word_commented_berniegp" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=berniegp">Bertrand Guay-Paquet</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">15/Jul/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13709009"><td bgcolor="#ffffff">
+            <p>Well I'm pretty sure I had a usecase, but I can't reproduce any problem either across 4 browsers... I also don't understand why the referenced email thread was started if this wasn't a problem. I'll close the issue for now.</p>
+        </td></tr>
+                <tr id="comment-header-13940847"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="christinec" id="word_commented_christinec" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=christinec">Christine Chan</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">19/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13940847"><td bgcolor="#ffffff">
+            <p>I may have a use case for this unless there is a workaround.</p>
+
+<p>Currently I am using the AttributeModifier class to replace some javascript in the onclick tag of a element.</p>
+
+<p>The problem is that with the escaping, the single quotes within my javascript are being escaped and I can no longer get the javascript to work correctly.</p>
+
+<p>I am applying </p>
+
+<p>AttributeModifer("onclick", "showDetailedMsg('This is a detailed message'); return false");<br/>
+to the tag below.<br/>
+&lt;a wicket:id="status" href="#" id="ok"&gt;ERROR&lt;/a&gt;</p>
+
+<p>However this becomes:</p>
+
+<p>&lt;a wicket:id="status" href="#" id="ok" onclick="showDetailedMsg(&#039;This is a detailed message&#039;); return false"&gt;ERROR&lt;/a&gt;</p>
+        </td></tr>
+                <tr id="comment-header-13940854"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="christinec" id="word_commented_christinec" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=christinec">Christine Chan</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">19/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13940854"><td bgcolor="#ffffff">
+            <p>Sorry, I forgot to escape in the comment, it turns into </p>
+
+<p>&lt;a wicket:id="status" href="#" id="ok" onclick="showDetailedMsg(&amp;#039;This is a detailed message&amp;#039; ); return false"&gt;ERROR&lt;/a&gt;</p>
+        </td></tr>
+                <tr id="comment-header-13941811"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="mgrigorov" id="word_commented_mgrigorov" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=mgrigorov">Martin Grigorov</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">20/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13941811"><td bgcolor="#ffffff">
+            <p>&lt;html&gt;<br/>
+	&lt;head&gt;<br/>
+		&lt;script&gt;<br/>
+				function showDetailedMsg(msg) </p>
+{
+					console.log("MSG: " + msg);
+				}
+<p>		&lt;/script<br/>
+	&lt;/head&gt;</p>
+
+<p>	&lt;body&gt;<br/>
+			&lt;a wicket:id="status" href="#" id="ok" onclick="showDetailedMsg(&#039;This is a detailed message&#039;); return false"&gt;ERROR&lt;/a&gt;<br/>
+	&lt;/body&gt;<br/>
+&lt;/html&gt;</p>
+
+
+<p>is a valid HTML that works fine. Clicking on the link writes "MSG: This is a detailed message" to the console.</p>
+        </td></tr>
+                <tr id="comment-header-13941814"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="mgrigorov" id="word_commented_mgrigorov" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=mgrigorov">Martin Grigorov</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">20/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13941814"><td bgcolor="#ffffff">
+            <p>For some reason I cannot edit my comment above - I have used &amp;#039; instead of ' in the HTML. Try it.</p>
+        </td></tr>
+                <tr id="comment-header-13941872"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="christinec" id="word_commented_christinec" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=christinec">Christine Chan</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">20/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13941872"><td bgcolor="#ffffff">
+            <p>Thank you, it works!</p>
+        </td></tr>
+            </table>
+Generated at Sat Mar 22 13:35:03 UTC 2014 using JIRA 6.2#6252-sha1:aa343257d4ce030d9cb8c531be520be9fac1c996.
+
+</body>
+</html>

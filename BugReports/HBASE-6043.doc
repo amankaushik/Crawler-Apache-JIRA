@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>[#HBASE-6043] Add Increment Coalescing in thrift.</title>
+    <meta http-equiv="Content-Type" Content="application/vnd.ms-word; charset=utf-8">
+        <style type="text/css">
+
+.tableBorder, .grid
+{
+    background-color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableBorder td, .grid td
+{
+    vertical-align: top;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+.noPadding
+{
+    padding: 0 !important;
+}
+
+h3 .subText
+{
+    font-size: 60%;
+    font-weight: normal;
+}
+
+.tabLabel
+{
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-bottom:none;
+    padding: 2px;
+    display: inline;
+}
+
+td.blank
+{
+    padding: 0;
+    margin: 0;
+}
+
+.blank td
+{
+    border: none;
+}
+
+#descriptionArea
+{
+    margin: 0;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+hr
+{
+    border-top:1px solid #aaa;
+}
+
+hr.fullcontent
+{
+  height: 15px;
+  padding: 10px 0;
+  background: #fff url('https://issues.apache.org/jira/images/icons/hr.gif') no-repeat scroll center;
+}
+
+</style>
+
+</head>
+<body>
+
+<table class="tableBorder" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" width="100%" colspan="2" valign="top">
+                            <h3 class="formtitle">
+                        [HBASE-6043]&nbsp;<a href="https://issues.apache.org/jira/browse/HBASE-6043">Add Increment Coalescing in thrift.</a>
+            <span class="subText">
+               Created: 18/May/12                   &nbsp;Updated: 21/Mar/14
+
+                                                    &nbsp;Resolved: 29/May/12
+                            </span>
+            </h3>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Status:</b></td>
+        <td width="80%">Closed</td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Project:</b></td>
+        <td width="80%"><a href="https://issues.apache.org/jira/secure/BrowseProject.jspa?id=12310753">HBase</a></td>
+    </tr>
+
+        <tr>
+            <td><b>Component/s:</b></td>
+            <td>
+                            None
+                </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Affects Version/s:</b></td>
+            <td>
+                            None
+                </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Fix Version/s:</b></td>
+            <td>
+                                        <a title="0.95.0 - First in the 0.95 &quot;Development&quot; Series of releases.  Serves as a &quot;rough cut&quot; preview of what is coming in 0.96.0.  Not for production."
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310753&fixfor=12324094"
+            >0.95.0</a>                        </td>
+    </tr>
+    
+    </table>
+
+<br />
+<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" valign="top" width="20%">
+            <b>Type:</b>
+        </td>
+        <td bgcolor="#ffffff" valign="top"  width="30%" >
+            Improvement
+        </td>
+
+                    <td bgcolor="#f0f0f0">
+                <b>Priority:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap>
+                Major
+            </td>
+            </tr>
+    <tr>
+                        <td bgcolor="#f0f0f0" valign="top" width="20%">
+                <b>Reporter:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top"  width="30%" >
+                                            <a class="user-hover" rel="eclark" id="word_reporter_eclark" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=eclark">Elliott Clark</a>
+                            </td>
+        
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Assignee:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap  width="30%" >
+                                            <a class="user-hover" rel="eclark" id="word_assignee_eclark" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=eclark">Elliott Clark</a>
+                            </td>
+            </tr>
+    	<tr>
+		<td bgcolor="#f0f0f0" width="20%">
+			<b>Resolution:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                            Fixed
+                    </td>
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Votes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                0
+            </td>
+        
+    </tr>
+    
+        <tr>
+        <td bgcolor="#f0f0f0" width="20%">
+            <b>Labels:</b>
+        </td>
+        <td id="labels-12556320-value" class="value" bgcolor="#ffffff" valign="top" colspan="3" nowrap>
+                            None
+                    </td>
+    </tr>
+    
+    	<tr>
+        		<td bgcolor="#f0f0f0" width="20%"><b>Remaining Estimate:</b></td>
+        <td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Time Spent:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+	</tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Original Estimate:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    
+    </table>
+
+
+
+    <br />
+
+    	<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+
+                <tr>
+            <td bgcolor="#f0f0f0" width=20% valign=top>
+                <b>Attachments:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top">
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HBASE-6043-0.patch &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HBASE-6043-1.patch &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HBASE-6043-10.patch &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HBASE-6043-2.patch &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HBASE-6043-3.patch &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HBASE-6043-4.patch &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HBASE-6043-5.patch &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HBASE-6043-6.patch &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HBASE-6043-7.patch &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HBASE-6043-8.patch &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HBASE-6043-9.patch &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HBASE-6043-ADD.patch &nbsp;&nbsp;&nbsp;
+                            </td>
+        </tr>
+        
+    
+
+
+
+                        <tr>
+                <td bgcolor="#f0f0f0" width="20%" valign="top"><b>Hadoop Flags:</b></td>
+                <td id="customfield_12310191-12556320-value" class="value" bgcolor="#ffffff" width="80%">
+
+
+    <div class="shorten" id="customfield_12310191-field">
+        							<span>Reviewed</span>			            </div>
+</td>
+            </tr>
+            </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Description</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td id="descriptionArea">
+            <p>Since the thrift server uses the client api reducing the number of rpc's greatly speeds up increments.</p>
+            <br/>
+        </td>
+    </tr>
+    </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Comments</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="grid" style="margin: 0;">
+                <tr id="comment-header-13280440"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="eclark" id="word_commented_eclark" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=eclark">Elliott Clark</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/May/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13280440"><td bgcolor="#ffffff">
+            <p>Not sure why Phabricator isn't posting diffs but the review is up at <a href="https://reviews.facebook.net/D3315" class="external-link" rel="nofollow">https://reviews.facebook.net/D3315</a>.</p>
+        </td></tr>
+                <tr id="comment-header-13280627"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="eclark" id="word_commented_eclark" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=eclark">Elliott Clark</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">22/May/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13280627"><td bgcolor="#ffffff">
+            <p>Trying to keep the patches up to date with whats on phabricator.</p>
+
+<p>Addressed comments by JD.<br/>
+Added stats.<br/>
+Moved creation of increments into a ThriftUtilies.</p>
+        </td></tr>
+                <tr id="comment-header-13280643"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hadoopqa" id="word_commented_hadoopqa" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hadoopqa">Hadoop QA</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">22/May/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13280643"><td bgcolor="#ffffff">
+            <p>-1 overall.  Here are the results of testing the latest attachment <br/>
+  <a href="http://issues.apache.org/jira/secure/attachment/12528531/HBASE-6043-1.patch" class="external-link" rel="nofollow">http://issues.apache.org/jira/secure/attachment/12528531/HBASE-6043-1.patch</a><br/>
+  against trunk revision .</p>
+
+<p>    +1 @author.  The patch does not contain any @author tags.</p>
+
+<p>    +1 tests included.  The patch appears to include 3 new or modified tests.</p>
+
+<p>    +1 hadoop23.  The patch compiles against the hadoop 0.23.x profile.</p>
+
+<p>    +1 javadoc.  The javadoc tool did not generate any warning messages.</p>
+
+<p>    +1 javac.  The applied patch does not increase the total number of javac compiler warnings.</p>
+
+<p>    -1 findbugs.  The patch appears to introduce 35 new Findbugs (version 1.3.9) warnings.</p>
+
+<p>    +1 release audit.  The applied patch does not increase the total number of release audit warnings.</p>
+
+<p>     -1 core tests.  The patch failed these unit tests:<br/>
+                       org.apache.hadoop.hbase.replication.TestReplication<br/>
+                  org.apache.hadoop.hbase.replication.TestMultiSlaveReplication<br/>
+                  org.apache.hadoop.hbase.replication.TestMasterReplication</p>
+
+<p>Test results: <a href="https://builds.apache.org/job/PreCommit-HBASE-Build/1952//testReport/" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HBASE-Build/1952//testReport/</a><br/>
+Findbugs warnings: <a href="https://builds.apache.org/job/PreCommit-HBASE-Build/1952//artifact/trunk/patchprocess/newPatchFindbugsWarnings.html" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HBASE-Build/1952//artifact/trunk/patchprocess/newPatchFindbugsWarnings.html</a><br/>
+Console output: <a href="https://builds.apache.org/job/PreCommit-HBASE-Build/1952//console" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HBASE-Build/1952//console</a></p>
+
+<p>This message is automatically generated.</p>
+        </td></tr>
+                <tr id="comment-header-13280657"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="eclark" id="word_commented_eclark" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=eclark">Elliott Clark</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">22/May/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13280657"><td bgcolor="#ffffff">
+            <p>Looks like those tests are failing on trunk right now.</p>
+        </td></tr>
+                <tr id="comment-header-13280676"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hadoopqa" id="word_commented_hadoopqa" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hadoopqa">Hadoop QA</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">22/May/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13280676"><td bgcolor="#ffffff">
+            <p>-1 overall.  Here are the results of testing the latest attachment <br/>
+  <a href="http://issues.apache.org/jira/secure/attachment/12528534/HBASE-6043-2.patch" class="external-link" rel="nofollow">http://issues.apache.org/jira/secure/attachment/12528534/HBASE-6043-2.patch</a><br/>
+  against trunk revision .</p>
+
+<p>    +1 @author.  The patch does not contain any @author tags.</p>
+
+<p>    +1 tests included.  The patch appears to include 3 new or modified tests.</p>
+
+<p>    +1 hadoop23.  The patch compiles against the hadoop 0.23.x profile.</p>
+
+<p>    +1 javadoc.  The javadoc tool did not generate any warning messages.</p>
+
+<p>    +1 javac.  The applied patch does not increase the total number of javac compiler warnings.</p>
+
+<p>    +1 findbugs.  The patch does not introduce any new Findbugs (version 1.3.9) warnings.</p>
+
+<p>    +1 release audit.  The applied patch does not increase the total number of release audit warnings.</p>
+
+<p>     -1 core tests.  The patch failed these unit tests:<br/>
+                       org.apache.hadoop.hbase.replication.TestMasterReplication<br/>
+                  org.apache.hadoop.hbase.replication.TestMultiSlaveReplication<br/>
+                  org.apache.hadoop.hbase.regionserver.TestServerCustomProtocol<br/>
+                  org.apache.hadoop.hbase.replication.TestReplication</p>
+
+<p>Test results: <a href="https://builds.apache.org/job/PreCommit-HBASE-Build/1953//testReport/" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HBASE-Build/1953//testReport/</a><br/>
+Console output: <a href="https://builds.apache.org/job/PreCommit-HBASE-Build/1953//console" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HBASE-Build/1953//console</a></p>
+
+<p>This message is automatically generated.</p>
+        </td></tr>
+                <tr id="comment-header-13281226"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="eclark" id="word_commented_eclark" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=eclark">Elliott Clark</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">22/May/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13281226"><td bgcolor="#ffffff">
+            <p>updating to keep up with phabricator.</p>
+        </td></tr>
+                <tr id="comment-header-13281250"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hadoopqa" id="word_commented_hadoopqa" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hadoopqa">Hadoop QA</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">22/May/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13281250"><td bgcolor="#ffffff">
+            <p>-1 overall.  Here are the results of testing the latest attachment <br/>
+  <a href="http://issues.apache.org/jira/secure/attachment/12528654/HBASE-6043-3.patch" class="external-link" rel="nofollow">http://issues.apache.org/jira/secure/attachment/12528654/HBASE-6043-3.patch</a><br/>
+  against trunk revision .</p>
+
+<p>    +1 @author.  The patch does not contain any @author tags.</p>
+
+<p>    +1 tests included.  The patch appears to include 3 new or modified tests.</p>
+
+<p>    +1 hadoop23.  The patch compiles against the hadoop 0.23.x profile.</p>
+
+<p>    +1 javadoc.  The javadoc tool did not generate any warning messages.</p>
+
+<p>    +1 javac.  The applied patch does not increase the total number of javac compiler warnings.</p>
+
+<p>    -1 findbugs.  The patch appears to introduce 35 new Findbugs (version 1.3.9) warnings.</p>
+
+<p>    +1 release audit.  The applied patch does not increase the total number of release audit warnings.</p>
+
+<p>     -1 core tests.  The patch failed these unit tests:<br/>
+                       org.apache.hadoop.hbase.replication.TestReplication<br/>
+                  org.apache.hadoop.hbase.replication.TestMultiSlaveReplication<br/>
+                  org.apache.hadoop.hbase.replication.TestMasterReplication<br/>
+                  org.apache.hadoop.hbase.master.TestSplitLogManager</p>
+
+<p>Test results: <a href="https://builds.apache.org/job/PreCommit-HBASE-Build/1959//testReport/" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HBASE-Build/1959//testReport/</a><br/>
+Findbugs warnings: <a href="https://builds.apache.org/job/PreCommit-HBASE-Build/1959//artifact/trunk/patchprocess/newPatchFindbugsWarnings.html" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HBASE-Build/1959//artifact/trunk/patchprocess/newPatchFindbugsWarnings.html</a><br/>
+Console output: <a href="https://builds.apache.org/job/PreCommit-HBASE-Build/1959//console" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HBASE-Build/1959//console</a></p>
+
+<p>This message is automatically generated.</p>
+        </td></tr>
+                <tr id="comment-header-13281855"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="eclark" id="word_commented_eclark" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=eclark">Elliott Clark</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">23/May/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13281855"><td bgcolor="#ffffff">
+            <p>Smaller sleep for the tests.  I ran it 20 times and never saw a failure.  Not sure why I needed the 6 seconds before but seems like this is long enough.</p>
+        </td></tr>
+                <tr id="comment-header-13281905"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hadoopqa" id="word_commented_hadoopqa" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hadoopqa">Hadoop QA</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">23/May/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13281905"><td bgcolor="#ffffff">
+            <p>-1 overall.  Here are the results of testing the latest attachment <br/>
+  <a href="http://issues.apache.org/jira/secure/attachment/12528771/HBASE-6043-4.patch" class="external-link" rel="nofollow">http://issues.apache.org/jira/secure/attachment/12528771/HBASE-6043-4.patch</a><br/>
+  against trunk revision .</p>
+
+<p>    +1 @author.  The patch does not contain any @author tags.</p>
+
+<p>    +1 tests included.  The patch appears to include 3 new or modified tests.</p>
+
+<p>    +1 hadoop23.  The patch compiles against the hadoop 0.23.x profile.</p>
+
+<p>    +1 javadoc.  The javadoc tool did not generate any warning messages.</p>
+
+<p>    +1 javac.  The applied patch does not increase the total number of javac compiler warnings.</p>
+
+<p>    -1 findbugs.  The patch appears to introduce 35 new Findbugs (version 1.3.9) warnings.</p>
+
+<p>    +1 release audit.  The applied patch does not increase the total number of release audit warnings.</p>
+
+<p>     -1 core tests.  The patch failed these unit tests:<br/>
+                       org.apache.hadoop.hbase.replication.TestReplication<br/>
+                  org.apache.hadoop.hbase.replication.TestMultiSlaveReplication<br/>
+                  org.apache.hadoop.hbase.replication.TestMasterReplication<br/>
+                  org.apache.hadoop.hbase.master.TestSplitLogManager</p>
+
+<p>Test results: <a href="https://builds.apache.org/job/PreCommit-HBASE-Build/1966//testReport/" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HBASE-Build/1966//testReport/</a><br/>
+Findbugs warnings: <a href="https://builds.apache.org/job/PreCommit-HBASE-Build/1966//artifact/trunk/patchprocess/newPatchFindbugsWarnings.html" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HBASE-Build/1966//artifact/trunk/patchprocess/newPatchFindbugsWarnings.html</a><br/>
+Console output: <a href="https://builds.apache.org/job/PreCommit-HBASE-Build/1966//console" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HBASE-Build/1966//console</a></p>
+
+<p>This message is automatically generated.</p>
+        </td></tr>
+                <tr id="comment-header-13281909"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="eclark" id="word_commented_eclark" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=eclark">Elliott Clark</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">23/May/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13281909"><td bgcolor="#ffffff">
+            <p>Added comments about potential data loss if thrift server crashes with coalescing increment turned on.</p>
+        </td></tr>
+                <tr id="comment-header-13281961"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hadoopqa" id="word_commented_hadoopqa" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hadoopqa">Hadoop QA</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">23/May/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13281961"><td bgcolor="#ffffff">
+            <p>-1 overall.  Here are the results of testing the latest attachment <br/>
+  <a href="http://issues.apache.org/jira/secure/attachment/12528780/HBASE-6043-5.patch" class="external-link" rel="nofollow">http://issues.apache.org/jira/secure/attachment/12528780/HBASE-6043-5.patch</a><br/>
+  against trunk revision .</p>
+
+<p>    +1 @author.  The patch does not contain any @author tags.</p>
+
+<p>    +1 tests included.  The patch appears to include 3 new or modified tests.</p>
+
+<p>    +1 hadoop23.  The patch compiles against the hadoop 0.23.x profile.</p>
+
+<p>    +1 javadoc.  The javadoc tool did not generate any warning messages.</p>
+
+<p>    +1 javac.  The applied patch does not increase the total number of javac compiler warnings.</p>
+
+<p>    -1 findbugs.  The patch appears to introduce 35 new Findbugs (version 1.3.9) warnings.</p>
+
+<p>    +1 release audit.  The applied patch does not increase the total number of release audit warnings.</p>
+
+<p>     -1 core tests.  The patch failed these unit tests:<br/>
+                       org.apache.hadoop.hbase.replication.TestReplication<br/>
+                  org.apache.hadoop.hbase.replication.TestMultiSlaveReplication<br/>
+                  org.apache.hadoop.hbase.replication.TestMasterReplication</p>
+
+<p>Test results: <a href="https://builds.apache.org/job/PreCommit-HBASE-Build/1969//testReport/" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HBASE-Build/1969//testReport/</a><br/>
+Findbugs warnings: <a href="https://builds.apache.org/job/PreCommit-HBASE-Build/1969//artifact/trunk/patchprocess/newPatchFindbugsWarnings.html" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HBASE-Build/1969//artifact/trunk/patchprocess/newPatchFindbugsWarnings.html</a><br/>
+Console output: <a href="https://builds.apache.org/job/PreCommit-HBASE-Build/1969//console" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HBASE-Build/1969//console</a></p>
+
+<p>This message is automatically generated.</p>
+        </td></tr>
+                <tr id="comment-header-13282017"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="eclark" id="word_commented_eclark" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=eclark">Elliott Clark</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">23/May/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13282017"><td bgcolor="#ffffff">
+            <p>More comments and turn the default to off.</p>
+        </td></tr>
+                <tr id="comment-header-13282038"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="eclark" id="word_commented_eclark" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=eclark">Elliott Clark</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">24/May/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13282038"><td bgcolor="#ffffff">
+            <p>Missed a default</p>
+        </td></tr>
+                <tr id="comment-header-13282046"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="eclark" id="word_commented_eclark" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=eclark">Elliott Clark</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">24/May/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13282046"><td bgcolor="#ffffff">
+            <p>Turn on coalescing in the tests so taht is tested well.</p>
+        </td></tr>
+                <tr id="comment-header-13282080"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hadoopqa" id="word_commented_hadoopqa" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hadoopqa">Hadoop QA</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">24/May/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13282080"><td bgcolor="#ffffff">
+            <p>-1 overall.  Here are the results of testing the latest attachment <br/>
+  <a href="http://issues.apache.org/jira/secure/attachment/12528811/HBASE-6043-6.patch" class="external-link" rel="nofollow">http://issues.apache.org/jira/secure/attachment/12528811/HBASE-6043-6.patch</a><br/>
+  against trunk revision .</p>
+
+<p>    +1 @author.  The patch does not contain any @author tags.</p>
+
+<p>    +1 tests included.  The patch appears to include 3 new or modified tests.</p>
+
+<p>    +1 hadoop23.  The patch compiles against the hadoop 0.23.x profile.</p>
+
+<p>    +1 javadoc.  The javadoc tool did not generate any warning messages.</p>
+
+<p>    +1 javac.  The applied patch does not increase the total number of javac compiler warnings.</p>
+
+<p>    -1 findbugs.  The patch appears to introduce 35 new Findbugs (version 1.3.9) warnings.</p>
+
+<p>    +1 release audit.  The applied patch does not increase the total number of release audit warnings.</p>
+
+<p>     -1 core tests.  The patch failed these unit tests:<br/>
+                       org.apache.hadoop.hbase.replication.TestMasterReplication<br/>
+                  org.apache.hadoop.hbase.replication.TestMultiSlaveReplication<br/>
+                  org.apache.hadoop.hbase.replication.TestReplication</p>
+
+<p>Test results: <a href="https://builds.apache.org/job/PreCommit-HBASE-Build/1975//testReport/" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HBASE-Build/1975//testReport/</a><br/>
+Findbugs warnings: <a href="https://builds.apache.org/job/PreCommit-HBASE-Build/1975//artifact/trunk/patchprocess/newPatchFindbugsWarnings.html" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HBASE-Build/1975//artifact/trunk/patchprocess/newPatchFindbugsWarnings.html</a><br/>
+Console output: <a href="https://builds.apache.org/job/PreCommit-HBASE-Build/1975//console" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HBASE-Build/1975//console</a></p>
+
+<p>This message is automatically generated.</p>
+        </td></tr>
+                <tr id="comment-header-13282084"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hadoopqa" id="word_commented_hadoopqa" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hadoopqa">Hadoop QA</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">24/May/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13282084"><td bgcolor="#ffffff">
+            <p>-1 overall.  Here are the results of testing the latest attachment <br/>
+  <a href="http://issues.apache.org/jira/secure/attachment/12528822/HBASE-6043-9.patch" class="external-link" rel="nofollow">http://issues.apache.org/jira/secure/attachment/12528822/HBASE-6043-9.patch</a><br/>
+  against trunk revision .</p>
+
+<p>    +1 @author.  The patch does not contain any @author tags.</p>
+
+<p>    +1 tests included.  The patch appears to include 3 new or modified tests.</p>
+
+<p>    +1 hadoop23.  The patch compiles against the hadoop 0.23.x profile.</p>
+
+<p>    +1 javadoc.  The javadoc tool did not generate any warning messages.</p>
+
+<p>    +1 javac.  The applied patch does not increase the total number of javac compiler warnings.</p>
+
+<p>    -1 findbugs.  The patch appears to introduce 35 new Findbugs (version 1.3.9) warnings.</p>
+
+<p>    +1 release audit.  The applied patch does not increase the total number of release audit warnings.</p>
+
+<p>     -1 core tests.  The patch failed these unit tests:<br/>
+                       org.apache.hadoop.hbase.regionserver.TestSplitTransactionOnCluster</p>
+
+<p>Test results: <a href="https://builds.apache.org/job/PreCommit-HBASE-Build/1976//testReport/" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HBASE-Build/1976//testReport/</a><br/>
+Findbugs warnings: <a href="https://builds.apache.org/job/PreCommit-HBASE-Build/1976//artifact/trunk/patchprocess/newPatchFindbugsWarnings.html" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HBASE-Build/1976//artifact/trunk/patchprocess/newPatchFindbugsWarnings.html</a><br/>
+Console output: <a href="https://builds.apache.org/job/PreCommit-HBASE-Build/1976//console" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HBASE-Build/1976//console</a></p>
+
+<p>This message is automatically generated.</p>
+        </td></tr>
+                <tr id="comment-header-13285153"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="eclark" id="word_commented_eclark" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=eclark">Elliott Clark</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">29/May/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13285153"><td bgcolor="#ffffff">
+            <p>Copy of what's on phabricator.</p>
+        </td></tr>
+                <tr id="comment-header-13285200"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="stack" id="word_commented_stack" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=stack">stack</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">29/May/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13285200"><td bgcolor="#ffffff">
+            <p>Committed to trunk.  Thanks Elliott.</p>
+
+<p>(This patch has been running at SU for ~ a year now)</p>
+        </td></tr>
+                <tr id="comment-header-13285245"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="stack" id="word_commented_stack" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=stack">stack</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">30/May/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13285245"><td bgcolor="#ffffff">
+            <p>The patch added new files to src instead of to hbase-server/src.  I just fixed this.</p>
+        </td></tr>
+                <tr id="comment-header-13285270"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hudson" id="word_commented_hudson" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hudson">Hudson</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">30/May/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13285270"><td bgcolor="#ffffff">
+            <p>Integrated in HBase-TRUNK #2947 (See <a href="https://builds.apache.org/job/HBase-TRUNK/2947/" class="external-link" rel="nofollow">https://builds.apache.org/job/HBase-TRUNK/2947/</a>)<br/>
+    <a href="https://issues.apache.org/jira/browse/HBASE-6043" title="Add Increment Coalescing in thrift." class="issue-link" data-issue-key="HBASE-6043"><del>HBASE-6043</del></a> Add Increment Coalescing in thrift. (Revision 1344043)<br/>
+<a href="https://issues.apache.org/jira/browse/HBASE-6043" title="Add Increment Coalescing in thrift." class="issue-link" data-issue-key="HBASE-6043"><del>HBASE-6043</del></a> Add Increment Coalescing in thrift. (Revision 1344034)</p>
+
+<p>     Result = FAILURE<br/>
+stack : <br/>
+Files : </p>
+<ul>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/thrift/IncrementCoalescer.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/thrift/IncrementCoalescerMBean.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/thrift/generated/TIncrement.java</li>
+</ul>
+
+
+<p>stack : <br/>
+Files : </p>
+<ul>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/thrift/ThriftServerRunner.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/thrift/ThriftUtilities.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/thrift/generated/Hbase.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/thrift/generated/TRowResult.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/resources/org/apache/hadoop/hbase/thrift/Hbase.thrift</li>
+	<li>/hbase/trunk/hbase-server/src/test/java/org/apache/hadoop/hbase/thrift/TestThriftServer.java</li>
+</ul>
+
+        </td></tr>
+                <tr id="comment-header-13285277"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hudson" id="word_commented_hudson" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hudson">Hudson</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">30/May/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13285277"><td bgcolor="#ffffff">
+            <p>Integrated in HBase-TRUNK-on-Hadoop-2.0.0 #31 (See <a href="https://builds.apache.org/job/HBase-TRUNK-on-Hadoop-2.0.0/31/" class="external-link" rel="nofollow">https://builds.apache.org/job/HBase-TRUNK-on-Hadoop-2.0.0/31/</a>)<br/>
+    <a href="https://issues.apache.org/jira/browse/HBASE-6043" title="Add Increment Coalescing in thrift." class="issue-link" data-issue-key="HBASE-6043"><del>HBASE-6043</del></a> Add Increment Coalescing in thrift. (Revision 1344043)<br/>
+<a href="https://issues.apache.org/jira/browse/HBASE-6043" title="Add Increment Coalescing in thrift." class="issue-link" data-issue-key="HBASE-6043"><del>HBASE-6043</del></a> Add Increment Coalescing in thrift. (Revision 1344034)</p>
+
+<p>     Result = FAILURE<br/>
+stack : <br/>
+Files : </p>
+<ul>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/thrift/IncrementCoalescer.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/thrift/IncrementCoalescerMBean.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/thrift/generated/TIncrement.java</li>
+</ul>
+
+
+<p>stack : <br/>
+Files : </p>
+<ul>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/thrift/ThriftServerRunner.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/thrift/ThriftUtilities.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/thrift/generated/Hbase.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/thrift/generated/TRowResult.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/resources/org/apache/hadoop/hbase/thrift/Hbase.thrift</li>
+	<li>/hbase/trunk/hbase-server/src/test/java/org/apache/hadoop/hbase/thrift/TestThriftServer.java</li>
+</ul>
+
+        </td></tr>
+                <tr id="comment-header-13285298"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="eclark" id="word_commented_eclark" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=eclark">Elliott Clark</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">30/May/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13285298"><td bgcolor="#ffffff">
+            <p>Add header for files to make rat happy.</p>
+        </td></tr>
+                <tr id="comment-header-13285360"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="stack" id="word_commented_stack" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=stack">stack</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">30/May/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13285360"><td bgcolor="#ffffff">
+            <p>I applied the addendum to trunk.  Thanks Elliott.</p>
+        </td></tr>
+                <tr id="comment-header-13285377"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hudson" id="word_commented_hudson" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hudson">Hudson</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">30/May/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13285377"><td bgcolor="#ffffff">
+            <p>Integrated in HBase-TRUNK #2950 (See <a href="https://builds.apache.org/job/HBase-TRUNK/2950/" class="external-link" rel="nofollow">https://builds.apache.org/job/HBase-TRUNK/2950/</a>)<br/>
+    <a href="https://issues.apache.org/jira/browse/HBASE-6043" title="Add Increment Coalescing in thrift." class="issue-link" data-issue-key="HBASE-6043"><del>HBASE-6043</del></a> Add Increment Coalescing in thrift. (Revision 1344086)</p>
+
+<p>     Result = FAILURE<br/>
+stack : <br/>
+Files : </p>
+<ul>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/thrift/IncrementCoalescer.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/thrift/IncrementCoalescerMBean.java</li>
+</ul>
+
+        </td></tr>
+                <tr id="comment-header-13285603"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hudson" id="word_commented_hudson" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hudson">Hudson</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">30/May/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13285603"><td bgcolor="#ffffff">
+            <p>Integrated in HBase-TRUNK-on-Hadoop-2.0.0 #32 (See <a href="https://builds.apache.org/job/HBase-TRUNK-on-Hadoop-2.0.0/32/" class="external-link" rel="nofollow">https://builds.apache.org/job/HBase-TRUNK-on-Hadoop-2.0.0/32/</a>)<br/>
+    <a href="https://issues.apache.org/jira/browse/HBASE-6043" title="Add Increment Coalescing in thrift." class="issue-link" data-issue-key="HBASE-6043"><del>HBASE-6043</del></a> Add Increment Coalescing in thrift. (Revision 1344086)</p>
+
+<p>     Result = FAILURE<br/>
+stack : <br/>
+Files : </p>
+<ul>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/thrift/IncrementCoalescer.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/thrift/IncrementCoalescerMBean.java</li>
+</ul>
+
+        </td></tr>
+                <tr id="comment-header-13775232"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="stack" id="word_commented_stack" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=stack">stack</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">23/Sep/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13775232"><td bgcolor="#ffffff">
+            <p>Marking closed.</p>
+        </td></tr>
+                <tr id="comment-header-13943712"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="phabricator@reviews.facebook.net" id="word_commented_phabricator@reviews.facebook.net" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=phabricator%40reviews.facebook.net">Phabricator</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13943712"><td bgcolor="#ffffff">
+            <p>eclark has abandoned the revision "<a href="https://issues.apache.org/jira/browse/HBASE-6043" title="Add Increment Coalescing in thrift." class="issue-link" data-issue-key="HBASE-6043"><del>HBASE-6043</del></a> <span class="error">&#91;jira&#93;</span> Add Increment Coalescing in thrift.".</p>
+
+<p>REVISION DETAIL<br/>
+  <a href="https://reviews.facebook.net/D3315" class="external-link" rel="nofollow">https://reviews.facebook.net/D3315</a></p>
+
+<p>To: JIRA, eclark<br/>
+Cc: jdcryans</p>
+        </td></tr>
+            </table>
+Generated at Sat Mar 22 13:34:37 UTC 2014 using JIRA 6.2#6252-sha1:aa343257d4ce030d9cb8c531be520be9fac1c996.
+
+</body>
+</html>

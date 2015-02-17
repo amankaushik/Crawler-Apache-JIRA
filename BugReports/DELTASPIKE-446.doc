@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>[#DELTASPIKE-446] Current windowhandler.js is incompatible with PrimeFaces</title>
+    <meta http-equiv="Content-Type" Content="application/vnd.ms-word; charset=utf-8">
+        <style type="text/css">
+
+.tableBorder, .grid
+{
+    background-color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableBorder td, .grid td
+{
+    vertical-align: top;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+.noPadding
+{
+    padding: 0 !important;
+}
+
+h3 .subText
+{
+    font-size: 60%;
+    font-weight: normal;
+}
+
+.tabLabel
+{
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-bottom:none;
+    padding: 2px;
+    display: inline;
+}
+
+td.blank
+{
+    padding: 0;
+    margin: 0;
+}
+
+.blank td
+{
+    border: none;
+}
+
+#descriptionArea
+{
+    margin: 0;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+hr
+{
+    border-top:1px solid #aaa;
+}
+
+hr.fullcontent
+{
+  height: 15px;
+  padding: 10px 0;
+  background: #fff url('https://issues.apache.org/jira/images/icons/hr.gif') no-repeat scroll center;
+}
+
+</style>
+
+</head>
+<body>
+
+<table class="tableBorder" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" width="100%" colspan="2" valign="top">
+                            <h3 class="formtitle">
+                        [DELTASPIKE-446]&nbsp;<a href="https://issues.apache.org/jira/browse/DELTASPIKE-446">Current windowhandler.js is incompatible with PrimeFaces</a>
+            <span class="subText">
+               Created: 21/Nov/13                   &nbsp;Updated: 20/Mar/14
+
+                                                    &nbsp;Resolved: 19/Jan/14
+                            </span>
+            </h3>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Status:</b></td>
+        <td width="80%">Closed</td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Project:</b></td>
+        <td width="80%"><a href="https://issues.apache.org/jira/secure/BrowseProject.jspa?id=12312820">DeltaSpike</a></td>
+    </tr>
+
+        <tr>
+            <td><b>Component/s:</b></td>
+            <td>
+                                        <a title="JSF-Module"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12312820&component=12319206"
+            >JSF-Module</a>                        </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Affects Version/s:</b></td>
+            <td>
+                                        <a title="0.5"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12312820&version=12320947"
+            >0.5</a>                        </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Fix Version/s:</b></td>
+            <td>
+                                        <a title="0.6"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12312820&fixfor=12320948"
+            >0.6</a>                        </td>
+    </tr>
+    
+    </table>
+
+<br />
+<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" valign="top" width="20%">
+            <b>Type:</b>
+        </td>
+        <td bgcolor="#ffffff" valign="top"  width="30%" >
+            Bug
+        </td>
+
+                    <td bgcolor="#f0f0f0">
+                <b>Priority:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap>
+                Major
+            </td>
+            </tr>
+    <tr>
+                        <td bgcolor="#f0f0f0" valign="top" width="20%">
+                <b>Reporter:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top"  width="30%" >
+                                            <a class="user-hover" rel="gturner" id="word_reporter_gturner" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gturner">Gerald Turner</a>
+                            </td>
+        
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Assignee:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap  width="30%" >
+                                            <a class="user-hover" rel="tandraschko" id="word_assignee_tandraschko" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=tandraschko">Thomas Andraschko</a>
+                            </td>
+            </tr>
+    	<tr>
+		<td bgcolor="#f0f0f0" width="20%">
+			<b>Resolution:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                            Fixed
+                    </td>
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Votes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                0
+            </td>
+        
+    </tr>
+    
+        <tr>
+        <td bgcolor="#f0f0f0" width="20%">
+            <b>Labels:</b>
+        </td>
+        <td id="labels-12680608-value" class="value" bgcolor="#ffffff" valign="top" colspan="3" nowrap>
+                            None
+                    </td>
+    </tr>
+    
+    	<tr>
+        		<td bgcolor="#f0f0f0" width="20%"><b>Remaining Estimate:</b></td>
+        <td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Time Spent:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+	</tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Original Estimate:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    
+    	<tr>
+
+		<td bgcolor="#f0f0f0" width="20%" valign="top">
+			<b>Environment:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" colspan="3">
+            JBoss AS 7.2 / EAP 6.1
+		</td>
+	</tr>
+    </table>
+
+
+
+    <br />
+
+    	<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+
+                <tr>
+            <td bgcolor="#f0f0f0" width=20% valign=top>
+                <b>Attachments:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top">
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/file.gif" height="16" width="16" alt="File" />
+                                        DS-PF-Workaround.js &nbsp;&nbsp;&nbsp;
+                            </td>
+        </tr>
+        
+    
+
+
+
+</table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Description</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td id="descriptionArea">
+            I get the exception &quot;org.jboss.weld.context.ContextNotActiveException: WELD-001303 No active contexts for scope type org.apache.deltaspike.core.api.scope.WindowScoped&quot; from a commandButton ajax call that is nested in a form that had been updated by another commandLink ajax call.<br/>
+<br/>
+These pages had been working with CODI.<br/>
+<br/>
+Scenario is a &quot;delete confirmation&quot; dialog, using PrimeFaces (p:dialog dynamic=&quot;true&quot; may be the culprit):<br/>
+<br/>
+I have a p:dataTable, with a column with a p:commandLink (&quot;Delete&quot;), this link updates a p:dialog (&quot;Are you sure?&quot;).  The p:dialog contains a p:commandButton (&quot;Yes&quot;).<br/>
+<br/>
+Both the contents of the dialog and the actionListener of the commandButton access a @WindowScoped bean.<br/>
+<br/>
+Tracing the XHR POSTs, I see dsPostWindowId being sent when the first delete button is click, and it is not present with the final confirmation button is clicked.<br/>
+<br/>
+Scrutinizing over windowhandler.js, I can imagine that when the page is first loaded, &#39;jsf.ajax.addOnEvent(ajaxOnClick)&#39; works it&#39;s magic and &#39;applyWindowId()&#39; is effective for the first ajax call, but then the page has new elements which have not been decorated, so the second/nested ajax call doesn&#39;t have the dsPostWindowId parameter.
+            <br/>
+        </td>
+    </tr>
+    </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Comments</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="grid" style="margin: 0;">
+                <tr id="comment-header-13829382"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gturner" id="word_commented_gturner" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gturner">Gerald Turner</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Nov/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13829382"><td bgcolor="#ffffff">
+            <p>I had thought that perhaps &lt;p:dialog dynamic="true".../&gt; may had been the culprit.  The attribute is described as "lazy loading of the content with ajax", sure enough there's an extra XHR request when the dialog is updated (and does include the dsPostWindowId param).  However when disabling this feature, the bug still remains.</p>
+        </td></tr>
+                <tr id="comment-header-13829409"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gturner" id="word_commented_gturner" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gturner">Gerald Turner</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Nov/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13829409"><td bgcolor="#ffffff">
+            <p>Comparing two separate applications, both having the same "delete confirmation" mechanism, but one using CODI, and other DeltaSpike, I see one glaring difference: all the XHR POST's from the CODI app have ?windowId=n on their request URI's, whereas the DeltaSpike app POST request URI's are bare of any parameters.</p>
+        </td></tr>
+                <tr id="comment-header-13869585"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="tandraschko" id="word_commented_tandraschko" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=tandraschko">Thomas Andraschko</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">13/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13869585"><td bgcolor="#ffffff">
+            <p>It's related how DS handles the windowId.<br/>
+It automatically attachs a hiddenInput in each form.</p>
+
+<p>2 possible failures:</p>
+<ul class="alternate" type="square">
+	<li>the hiddenInput won't be posted when PF partialSubmit is activated</li>
+	<li>after the ajax update, the registered handler for readding the windowId to the form won't be called, as jsf.ajax.addOnEvent doesn't work with PF</li>
+</ul>
+
+
+<p>I will take care of this.</p>
+        </td></tr>
+                <tr id="comment-header-13869586"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="tandraschko" id="word_commented_tandraschko" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=tandraschko">Thomas Andraschko</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">13/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13869586"><td bgcolor="#ffffff">
+            <p>I will talk with Cagatay and propably fix it in PrimeFaces. PrimeFaces should IMO handle both cases better.</p>
+        </td></tr>
+                <tr id="comment-header-13869592"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="tandraschko" id="word_commented_tandraschko" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=tandraschko">Thomas Andraschko</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">13/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13869592"><td bgcolor="#ffffff">
+            <p>A workaround would be:<br/>
+&lt;p:ajaxStatus oncomplete="applyWindowId()" /&gt;</p>
+
+<p>The problem is that you can't just call applyWindowId as all methods in windowhandler.js are private scoped.</p>
+
+        </td></tr>
+                <tr id="comment-header-13869771"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gturner" id="word_commented_gturner" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gturner">Gerald Turner</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">13/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13869771"><td bgcolor="#ffffff">
+            <p>What about &lt;ds:windowId/&gt;, any way to nest that in &lt;p:ajaxStatus/&gt; or something similar?</p>
+        </td></tr>
+                <tr id="comment-header-13869874"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="tandraschko" id="word_commented_tandraschko" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=tandraschko">Thomas Andraschko</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">13/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13869874"><td bgcolor="#ffffff">
+            <p>Currently not, sorry!</p>
+        </td></tr>
+                <tr id="comment-header-13870531"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="tandraschko" id="word_commented_tandraschko" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=tandraschko">Thomas Andraschko</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">14/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13870531"><td bgcolor="#ffffff">
+            <p>Something like this should work. I didn't test it.<br/>
+Could you give it a try?</p>
+        </td></tr>
+                <tr id="comment-header-13875857"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="tandraschko" id="word_commented_tandraschko" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=tandraschko">Thomas Andraschko</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">19/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13875857"><td bgcolor="#ffffff">
+            <p>Fixed it on DS side.<br/>
+For PF 4.0.6 and 5.0, i will add a check for the dsPostWindowId in PF to support partialSubmit.</p>
+        </td></tr>
+            </table>
+Generated at Sat Mar 22 13:35:28 UTC 2014 using JIRA 6.2#6252-sha1:aa343257d4ce030d9cb8c531be520be9fac1c996.
+
+</body>
+</html>

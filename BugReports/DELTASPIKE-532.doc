@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>[#DELTASPIKE-532] DeltaSpikeFacesContextFactory construction issue in non EE </title>
+    <meta http-equiv="Content-Type" Content="application/vnd.ms-word; charset=utf-8">
+        <style type="text/css">
+
+.tableBorder, .grid
+{
+    background-color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableBorder td, .grid td
+{
+    vertical-align: top;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+.noPadding
+{
+    padding: 0 !important;
+}
+
+h3 .subText
+{
+    font-size: 60%;
+    font-weight: normal;
+}
+
+.tabLabel
+{
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-bottom:none;
+    padding: 2px;
+    display: inline;
+}
+
+td.blank
+{
+    padding: 0;
+    margin: 0;
+}
+
+.blank td
+{
+    border: none;
+}
+
+#descriptionArea
+{
+    margin: 0;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+hr
+{
+    border-top:1px solid #aaa;
+}
+
+hr.fullcontent
+{
+  height: 15px;
+  padding: 10px 0;
+  background: #fff url('https://issues.apache.org/jira/images/icons/hr.gif') no-repeat scroll center;
+}
+
+</style>
+
+</head>
+<body>
+
+<table class="tableBorder" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" width="100%" colspan="2" valign="top">
+                            <h3 class="formtitle">
+                        [DELTASPIKE-532]&nbsp;<a href="https://issues.apache.org/jira/browse/DELTASPIKE-532">DeltaSpikeFacesContextFactory construction issue in non EE </a>
+            <span class="subText">
+               Created: 03/Mar/14                   &nbsp;Updated: 20/Mar/14
+
+                                                    &nbsp;Resolved: 03/Mar/14
+                            </span>
+            </h3>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Status:</b></td>
+        <td width="80%">Closed</td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Project:</b></td>
+        <td width="80%"><a href="https://issues.apache.org/jira/secure/BrowseProject.jspa?id=12312820">DeltaSpike</a></td>
+    </tr>
+
+        <tr>
+            <td><b>Component/s:</b></td>
+            <td>
+                                        <a title="JSF-Module"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12312820&component=12319206"
+            >JSF-Module</a>                        </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Affects Version/s:</b></td>
+            <td>
+                                        <a title="0.6"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12312820&version=12320948"
+            >0.6</a>                        </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Fix Version/s:</b></td>
+            <td>
+                                        <a title="0.6"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12312820&fixfor=12320948"
+            >0.6</a>                        </td>
+    </tr>
+    
+    </table>
+
+<br />
+<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" valign="top" width="20%">
+            <b>Type:</b>
+        </td>
+        <td bgcolor="#ffffff" valign="top"  width="30%" >
+            Bug
+        </td>
+
+                    <td bgcolor="#f0f0f0">
+                <b>Priority:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap>
+                Major
+            </td>
+            </tr>
+    <tr>
+                        <td bgcolor="#f0f0f0" valign="top" width="20%">
+                <b>Reporter:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top"  width="30%" >
+                                            <a class="user-hover" rel="bryncooke" id="word_reporter_bryncooke" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=bryncooke">Bryn Cooke</a>
+                            </td>
+        
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Assignee:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap  width="30%" >
+                                            <a class="user-hover" rel="tandraschko" id="word_assignee_tandraschko" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=tandraschko">Thomas Andraschko</a>
+                            </td>
+            </tr>
+    	<tr>
+		<td bgcolor="#f0f0f0" width="20%">
+			<b>Resolution:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                            Fixed
+                    </td>
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Votes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                0
+            </td>
+        
+    </tr>
+    
+        <tr>
+        <td bgcolor="#f0f0f0" width="20%">
+            <b>Labels:</b>
+        </td>
+        <td id="labels-12698401-value" class="value" bgcolor="#ffffff" valign="top" colspan="3" nowrap>
+                            None
+                    </td>
+    </tr>
+    
+    	<tr>
+        		<td bgcolor="#f0f0f0" width="20%"><b>Remaining Estimate:</b></td>
+        <td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Time Spent:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+	</tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Original Estimate:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    
+    	<tr>
+
+		<td bgcolor="#f0f0f0" width="20%" valign="top">
+			<b>Environment:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" colspan="3">
+            Tomcat
+		</td>
+	</tr>
+    </table>
+
+
+
+    <br />
+
+    	<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+
+        
+    
+
+
+
+</table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Description</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td id="descriptionArea">
+            In non-EE environments you may be using Weld Servlet to initialize CDI. <br/>
+However because of JSF zeroconfig you cannot guarantee that weld servlet will be started before JSF. <br/>
+During JSF startup DeltaSpikeFacesContextFactory is created and clientWindow is populated, but it throws an exception because the following will only work once the CDI container is started: <br/>
+this.clientWindow = BeanProvider.getContextualReference(ClientWindow.class, true);<br/>
+<br/>
+Recommend not caching the clientWindow.<br/>
+<br/>
+I can confirm that JSF seems to load OK after this is fixed.
+            <br/>
+        </td>
+    </tr>
+    </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Comments</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="grid" style="margin: 0;">
+                <tr id="comment-header-13917999"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="tandraschko" id="word_commented_tandraschko" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=tandraschko">Thomas Andraschko</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">03/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13917999"><td bgcolor="#ffffff">
+            <p>I will fix it with an lazy init</p>
+        </td></tr>
+                <tr id="comment-header-13918339"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="tandraschko" id="word_commented_tandraschko" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=tandraschko">Thomas Andraschko</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">03/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13918339"><td bgcolor="#ffffff">
+            <p>fixed - please give it a try.</p>
+        </td></tr>
+                <tr id="comment-header-13919334"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="bryncooke" id="word_commented_bryncooke" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=bryncooke">Bryn Cooke</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">04/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13919334"><td bgcolor="#ffffff">
+            <p>DeltaSpikeViewHandler also has this issue. I think that because the order of context initializers is non-determinitsic sometime it is working for me and sometime it doesn't.</p>
+
+<p>I have gone through the classes in deltaaspike faces-config.xml and can't see any other obvious references to the bean manager in their constructors.</p>
+
+<p>Shall I open a separate issue for DeltaSpikeViewHandler?</p>
+
+        </td></tr>
+                <tr id="comment-header-13919337"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="tandraschko" id="word_commented_tandraschko" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=tandraschko">Thomas Andraschko</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">04/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13919337"><td bgcolor="#ffffff">
+            <p>Yep, create an issue please.</p>
+        </td></tr>
+            </table>
+Generated at Sat Mar 22 13:33:55 UTC 2014 using JIRA 6.2#6252-sha1:aa343257d4ce030d9cb8c531be520be9fac1c996.
+
+</body>
+</html>

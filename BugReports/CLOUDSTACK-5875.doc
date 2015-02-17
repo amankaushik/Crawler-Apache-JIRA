@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>[#CLOUDSTACK-5875] No templates in simulator run</title>
+    <meta http-equiv="Content-Type" Content="application/vnd.ms-word; charset=utf-8">
+        <style type="text/css">
+
+.tableBorder, .grid
+{
+    background-color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableBorder td, .grid td
+{
+    vertical-align: top;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+.noPadding
+{
+    padding: 0 !important;
+}
+
+h3 .subText
+{
+    font-size: 60%;
+    font-weight: normal;
+}
+
+.tabLabel
+{
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-bottom:none;
+    padding: 2px;
+    display: inline;
+}
+
+td.blank
+{
+    padding: 0;
+    margin: 0;
+}
+
+.blank td
+{
+    border: none;
+}
+
+#descriptionArea
+{
+    margin: 0;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+hr
+{
+    border-top:1px solid #aaa;
+}
+
+hr.fullcontent
+{
+  height: 15px;
+  padding: 10px 0;
+  background: #fff url('https://issues.apache.org/jira/images/icons/hr.gif') no-repeat scroll center;
+}
+
+</style>
+
+</head>
+<body>
+
+<table class="tableBorder" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" width="100%" colspan="2" valign="top">
+                            <h3 class="formtitle">
+                        [CLOUDSTACK-5875]&nbsp;<a href="https://issues.apache.org/jira/browse/CLOUDSTACK-5875">No templates in simulator run</a>
+            <span class="subText">
+               Created: 15/Jan/14                   &nbsp;Updated: 21/Mar/14
+
+                                                    &nbsp;Resolved: 23/Jan/14
+                            </span>
+            </h3>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Status:</b></td>
+        <td width="80%">Closed</td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Project:</b></td>
+        <td width="80%"><a href="https://issues.apache.org/jira/secure/BrowseProject.jspa?id=12313920">CloudStack</a></td>
+    </tr>
+
+        <tr>
+            <td><b>Component/s:</b></td>
+            <td>
+                                        <a title="marvin - CloudStack Marvin Test Framework"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12313920&component=12321015"
+            >marvin</a>                        </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Affects Version/s:</b></td>
+            <td>
+                                        <a title="4.2.1 - Bugfix for 4.2 series."
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12313920&version=12324940"
+            >4.2.1</a>,                    <a title="4.3.0 - 4.3 Feature release"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12313920&version=12325262"
+            >4.3.0</a>                        </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Fix Version/s:</b></td>
+            <td>
+                                        <a title="4.3.0 - 4.3 Feature release"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12313920&fixfor=12325262"
+            >4.3.0</a>                        </td>
+    </tr>
+    
+            <tr>
+            <td><b>Security Level:</b></td>
+            <td>
+                Public
+                                    <font size=1> (Anyone can view this level - this is the default.)</font>
+                            </td>
+       </tr>
+    </table>
+
+<br />
+<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" valign="top" width="20%">
+            <b>Type:</b>
+        </td>
+        <td bgcolor="#ffffff" valign="top"  width="30%" >
+            Bug
+        </td>
+
+                    <td bgcolor="#f0f0f0">
+                <b>Priority:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap>
+                Major
+            </td>
+            </tr>
+    <tr>
+                        <td bgcolor="#f0f0f0" valign="top" width="20%">
+                <b>Reporter:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top"  width="30%" >
+                                            <a class="user-hover" rel="sebgoa" id="word_reporter_sebgoa" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=sebgoa">sebastien goasguen</a>
+                            </td>
+        
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Assignee:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap  width="30%" >
+                                            <a class="user-hover" rel="santhoshe" id="word_assignee_santhoshe" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=santhoshe">Santhosh Kumar Edukulla</a>
+                            </td>
+            </tr>
+    	<tr>
+		<td bgcolor="#f0f0f0" width="20%">
+			<b>Resolution:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                            Fixed
+                    </td>
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Votes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                0
+            </td>
+        
+    </tr>
+    
+        <tr>
+        <td bgcolor="#f0f0f0" width="20%">
+            <b>Labels:</b>
+        </td>
+        <td id="labels-12688981-value" class="value" bgcolor="#ffffff" valign="top" colspan="3" nowrap>
+                            None
+                    </td>
+    </tr>
+    
+    	<tr>
+        		<td bgcolor="#f0f0f0" width="20%"><b>Remaining Estimate:</b></td>
+        <td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Time Spent:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+	</tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Original Estimate:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    
+    </table>
+
+
+
+    <br />
+
+    	<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+
+        
+    
+
+
+
+</table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Description</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td id="descriptionArea">
+            1. When running the simulator and configuring a zone with marvin, there is no template available hence trying to start instances won&#39;t work.<br/>
+<br/>
+See <a href="https://reviews.apache.org/r/16856/">https://reviews.apache.org/r/16856/</a> for additional related discussions<br/>
+<br/>
+2. Exception Issue seen  when running with simulator:at com.cloud.resource.ResourceManagerImpl.discoverHostsFull(ResourceManagerImpl.java:595)<br/>
+	at com.cloud.resource.ResourceManagerImpl.discoverHosts(ResourceManagerImpl.java:582)<br/>
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)<br/>
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br/>
+	at java.lang.reflect.Method.invoke(Method.java:616)<br/>
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:317)<br/>
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:183)<br/>
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:150)<br/>
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:91)<br/>
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:172)<br/>
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:204)<br/>
+	at sun.proxy.$Proxy158.discoverHosts(Unknown Source)<br/>
+	at com.cloud.agent.manager.MockAgentManagerImpl$SystemVMHandler.run(MockAgentManagerImpl.java:363)<br/>
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1146)<br/>
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)<br/>
+	at java.lang.Thread.run(Thread.java:679)
+            <br/>
+        </td>
+    </tr>
+    </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Comments</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="grid" style="margin: 0;">
+                <tr id="comment-header-13879500"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="santhoshe" id="word_commented_santhoshe" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=santhoshe">Santhosh Kumar Edukulla</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">23/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13879500"><td bgcolor="#ffffff">
+            <p>1. The crash issue happens because of  null value for CallContext.current() under discoverHostsFull, when called from thread for SystemVMHandler. Currently, there is no call context set for this thread.  Currently, as part of MockAgentManagerImpl.java, SystemVMHandler implements Runnable, but when it calls discoverHosts, it does not have any call context set and  it is crashing. Because of which agent was not coming up and template sync and resource discovery failed. Added a register and unregister of callcontext of system user  for this thread.</p>
+
+<p>2. There was a new column added by name "state" under "vm_templates" table. The value of this column for "Active" was checked for listing the templates if there was no removed attribute set for list templates api. This column was not present in 4.2. Added a column value "Active" for simulator install.  The value of this column was not Active earlier and so listing failed. </p>
+
+
+<p>Testing:<br/>
+1. Built the CS using the changes. Tested the column value, post deploydb and it was now set to "Active". Deployed a DC and list template works. <br/>
+2. Deploy DC worked fine with simulator . Created an instance using the template and it worked to start. Agent for systemvm was coming up.<br/>
+Note: <br/>
+1. For listing templates, a hypervisor in the zone need to be present because listtemplates api is looking for it. Use the  list templates post the deployDC and it works.<br/>
+2. We need to set router.version.check to false under global properties of CS post run using simulator. Otherwise you may see errors related to router upgrade etc. This i believe is a known issue and nothing to do with simulator.<br/>
+3. Post the changes, tested only with simulator.<br/>
+4. Also, please change the component field for this bug. AS such it is not related to Marvin and falls under Simulator. </p>
+        </td></tr>
+                <tr id="comment-header-13879870"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jira-bot" id="word_commented_jira-bot" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jira-bot">ASF subversion and git services</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">23/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13879870"><td bgcolor="#ffffff">
+            <p>Commit d31fa09c7e5bb04fcc4594c0352d9b91171e9d1a in branch refs/heads/4.3-forward from <a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=santhoshe" class="user-hover" rel="santhoshe">Santhosh Kumar Edukulla</a><br/>
+[ <a href="https://git-wip-us.apache.org/repos/asf?p=cloudstack.git;h=d31fa09" class="external-link" rel="nofollow">https://git-wip-us.apache.org/repos/asf?p=cloudstack.git;h=d31fa09</a> ]</p>
+
+<p>Added Fix for <a href="https://issues.apache.org/jira/browse/CLOUDSTACK-5875" title="No templates in simulator run" class="issue-link" data-issue-key="CLOUDSTACK-5875"><del>CLOUDSTACK-5875</del></a></p>
+
+<p>Added fix for exception and listing. Mentioned details under bug.<br/>
+Post the fix, simulator works fine.</p>
+
+<p>Signed-off-by: Santhosh Edukulla &lt;Santhosh.Edukulla@citrix.com&gt;<br/>
+Signed-off-by: Koushik Das &lt;koushik@apache.org&gt;</p>
+        </td></tr>
+                <tr id="comment-header-13879877"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jira-bot" id="word_commented_jira-bot" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jira-bot">ASF subversion and git services</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">23/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13879877"><td bgcolor="#ffffff">
+            <p>Commit f999a01837e60f0c51ef0eb4ad19c29e43ca3037 in branch refs/heads/master from <a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=santhoshe" class="user-hover" rel="santhoshe">Santhosh Kumar Edukulla</a><br/>
+[ <a href="https://git-wip-us.apache.org/repos/asf?p=cloudstack.git;h=f999a01" class="external-link" rel="nofollow">https://git-wip-us.apache.org/repos/asf?p=cloudstack.git;h=f999a01</a> ]</p>
+
+<p>Added Fix for <a href="https://issues.apache.org/jira/browse/CLOUDSTACK-5875" title="No templates in simulator run" class="issue-link" data-issue-key="CLOUDSTACK-5875"><del>CLOUDSTACK-5875</del></a></p>
+
+<p>Added fix for exception and listing. Mentioned details under bug.<br/>
+Post the fix, simulator works fine.</p>
+
+<p>Signed-off-by: Santhosh Edukulla &lt;Santhosh.Edukulla@citrix.com&gt;<br/>
+Signed-off-by: Koushik Das &lt;koushik@apache.org&gt;</p>
+        </td></tr>
+                <tr id="comment-header-13880057"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="santhoshe" id="word_commented_santhoshe" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=santhoshe">Santhosh Kumar Edukulla</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">23/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13880057"><td bgcolor="#ffffff">
+            <p>Added the fix to 4.3-forward and master. The fix version drop down does not show up 4.3-forward, so mentioning it as 4.3</p>
+        </td></tr>
+                <tr id="comment-header-13895117"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jira-bot" id="word_commented_jira-bot" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jira-bot">ASF subversion and git services</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">07/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13895117"><td bgcolor="#ffffff">
+            <p>Commit c1af92fcbbc183873d6519f0660b68acfb33bd44 in branch refs/heads/4.3 from <a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=santhoshe" class="user-hover" rel="santhoshe">Santhosh Kumar Edukulla</a><br/>
+[ <a href="https://git-wip-us.apache.org/repos/asf?p=cloudstack.git;h=c1af92f" class="external-link" rel="nofollow">https://git-wip-us.apache.org/repos/asf?p=cloudstack.git;h=c1af92f</a> ]</p>
+
+<p>Added Fix for <a href="https://issues.apache.org/jira/browse/CLOUDSTACK-5875" title="No templates in simulator run" class="issue-link" data-issue-key="CLOUDSTACK-5875"><del>CLOUDSTACK-5875</del></a></p>
+
+<p>Added fix for exception and listing. Mentioned details under bug.<br/>
+Post the fix, simulator works fine.</p>
+
+<p>Signed-off-by: Santhosh Edukulla &lt;Santhosh.Edukulla@citrix.com&gt;<br/>
+Signed-off-by: Koushik Das &lt;koushik@apache.org&gt;<br/>
+(cherry picked from commit d31fa09c7e5bb04fcc4594c0352d9b91171e9d1a)</p>
+
+<p>Signed-off-by: Animesh Chaturvedi &lt;animesh@apache.org&gt;</p>
+        </td></tr>
+            </table>
+Generated at Sat Mar 22 13:35:36 UTC 2014 using JIRA 6.2#6252-sha1:aa343257d4ce030d9cb8c531be520be9fac1c996.
+
+</body>
+</html>

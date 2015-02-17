@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>[#FALCON-98] starting embedded hadoop fails sometimes</title>
+    <meta http-equiv="Content-Type" Content="application/vnd.ms-word; charset=utf-8">
+        <style type="text/css">
+
+.tableBorder, .grid
+{
+    background-color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableBorder td, .grid td
+{
+    vertical-align: top;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+.noPadding
+{
+    padding: 0 !important;
+}
+
+h3 .subText
+{
+    font-size: 60%;
+    font-weight: normal;
+}
+
+.tabLabel
+{
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-bottom:none;
+    padding: 2px;
+    display: inline;
+}
+
+td.blank
+{
+    padding: 0;
+    margin: 0;
+}
+
+.blank td
+{
+    border: none;
+}
+
+#descriptionArea
+{
+    margin: 0;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+hr
+{
+    border-top:1px solid #aaa;
+}
+
+hr.fullcontent
+{
+  height: 15px;
+  padding: 10px 0;
+  background: #fff url('https://issues.apache.org/jira/images/icons/hr.gif') no-repeat scroll center;
+}
+
+</style>
+
+</head>
+<body>
+
+<table class="tableBorder" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" width="100%" colspan="2" valign="top">
+                            <h3 class="formtitle">
+                        [FALCON-98]&nbsp;<a href="https://issues.apache.org/jira/browse/FALCON-98">starting embedded hadoop fails sometimes</a>
+            <span class="subText">
+               Created: 26/Aug/13                   &nbsp;Updated: 20/Mar/14
+
+                                                    &nbsp;Resolved: 20/Mar/14
+                            </span>
+            </h3>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Status:</b></td>
+        <td width="80%">Closed</td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Project:</b></td>
+        <td width="80%"><a href="https://issues.apache.org/jira/secure/BrowseProject.jspa?id=12314429">Falcon</a></td>
+    </tr>
+
+        <tr>
+            <td><b>Component/s:</b></td>
+            <td>
+                            None
+                </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Affects Version/s:</b></td>
+            <td>
+                                        <a title="0.4 - Hadoop 2 and Hive Integration"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12314429&version=12324424"
+            >0.4</a>                        </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Fix Version/s:</b></td>
+            <td>
+                                        <a title="0.5 - Kerberos Security, Dashboard &amp; Designer Preview, Lineage"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12314429&fixfor=12325583"
+            >0.5</a>                        </td>
+    </tr>
+    
+    </table>
+
+<br />
+<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" valign="top" width="20%">
+            <b>Type:</b>
+        </td>
+        <td bgcolor="#ffffff" valign="top"  width="30%" >
+            Bug
+        </td>
+
+                    <td bgcolor="#f0f0f0">
+                <b>Priority:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap>
+                Major
+            </td>
+            </tr>
+    <tr>
+                        <td bgcolor="#f0f0f0" valign="top" width="20%">
+                <b>Reporter:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top"  width="30%" >
+                                            <a class="user-hover" rel="shwethags" id="word_reporter_shwethags" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=shwethags">Shwetha G S</a>
+                            </td>
+        
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Assignee:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap  width="30%" >
+                                            <a class="user-hover" rel="shwethags" id="word_assignee_shwethags" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=shwethags">Shwetha G S</a>
+                            </td>
+            </tr>
+    	<tr>
+		<td bgcolor="#f0f0f0" width="20%">
+			<b>Resolution:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                            Fixed
+                    </td>
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Votes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                0
+            </td>
+        
+    </tr>
+    
+        <tr>
+        <td bgcolor="#f0f0f0" width="20%">
+            <b>Labels:</b>
+        </td>
+        <td id="labels-12665502-value" class="value" bgcolor="#ffffff" valign="top" colspan="3" nowrap>
+                            None
+                    </td>
+    </tr>
+    
+    	<tr>
+        		<td bgcolor="#f0f0f0" width="20%"><b>Remaining Estimate:</b></td>
+        <td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Time Spent:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+	</tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Original Estimate:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    
+    </table>
+
+
+
+    <br />
+
+    	<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+
+                <tr>
+            <td bgcolor="#f0f0f0" width=20% valign=top>
+                <b>Attachments:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top">
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        FALCON-98.patch &nbsp;&nbsp;&nbsp;
+                            </td>
+        </tr>
+        
+    
+
+
+
+</table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Description</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td id="descriptionArea">
+            <p>2013-08-26 11:52:15.509:WARN::failed ContextHandlerCollection@5450093a: java.lang.IllegalAccessError: tried to access field org.slf4j.impl.StaticLoggerBinder.SINGLETON from class org.slf4j.LoggerFactory<br/>
+2013-08-26 11:52:15.510:WARN::failed HandlerCollection@528dea14: java.lang.IllegalAccessError: tried to access field org.slf4j.impl.StaticLoggerBinder.SINGLETON from class org.slf4j.LoggerFactory<br/>
+2013-08-26 11:52:15.510:WARN::Error starting handlers<br/>
+java.lang.IllegalAccessError: tried to access field org.slf4j.impl.StaticLoggerBinder.SINGLETON from class org.slf4j.LoggerFactory<br/>
+	at org.slf4j.LoggerFactory.&lt;clinit&gt;(LoggerFactory.java:65)<br/>
+	at org.apache.hadoop.security.authentication.server.AuthenticationFilter.&lt;clinit&gt;(AuthenticationFilter.java:74)<br/>
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)<br/>
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:39)<br/>
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:27)<br/>
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:513)<br/>
+	at java.lang.Class.newInstance0(Class.java:355)<br/>
+	at java.lang.Class.newInstance(Class.java:308)<br/>
+	at org.mortbay.jetty.servlet.Holder.newInstance(Holder.java:153)<br/>
+	at org.mortbay.jetty.servlet.FilterHolder.doStart(FilterHolder.java:92)<br/>
+	at org.mortbay.component.AbstractLifeCycle.start(AbstractLifeCycle.java:50)<br/>
+	at org.mortbay.jetty.servlet.ServletHandler.initialize(ServletHandler.java:713)<br/>
+	at org.mortbay.jetty.servlet.Context.startContext(Context.java:140)<br/>
+	at org.mortbay.jetty.webapp.WebAppContext.startContext(WebAppContext.java:1282)<br/>
+	at org.mortbay.jetty.handler.ContextHandler.doStart(ContextHandler.java:518)<br/>
+	at org.mortbay.jetty.webapp.WebAppContext.doStart(WebAppContext.java:499)<br/>
+	at org.mortbay.component.AbstractLifeCycle.start(AbstractLifeCycle.java:50)<br/>
+	at org.mortbay.jetty.handler.HandlerCollection.doStart(HandlerCollection.java:152)<br/>
+	at org.mortbay.jetty.handler.ContextHandlerCollection.doStart(ContextHandlerCollection.java:156)<br/>
+	at org.mortbay.component.AbstractLifeCycle.start(AbstractLifeCycle.java:50)<br/>
+	at org.mortbay.jetty.handler.HandlerCollection.doStart(HandlerCollection.java:152)<br/>
+	at org.mortbay.component.AbstractLifeCycle.start(AbstractLifeCycle.java:50)<br/>
+	at org.mortbay.jetty.handler.HandlerWrapper.doStart(HandlerWrapper.java:130)</p>
+            <br/>
+        </td>
+    </tr>
+    </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Comments</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="grid" style="margin: 0;">
+                <tr id="comment-header-13813282"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="svenkat" id="word_commented_svenkat" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=svenkat">Venkatesh Seetharam</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">04/Nov/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13813282"><td bgcolor="#ffffff">
+            <p><a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=shwethags" class="user-hover" rel="shwethags">Shwetha G S</a> Is there more work to be done on this? if not, can you mark it patch available? Thanks!</p>
+        </td></tr>
+                <tr id="comment-header-13872174"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jbonofre" id="word_commented_jbonofre" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jbonofre">Jean-Baptiste Onofré</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">15/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13872174"><td bgcolor="#ffffff">
+            <p>I think the exclusions added by the patch are OK, and so the Jira can be marked as resolved (or at least "Patch Available").</p>
+        </td></tr>
+                <tr id="comment-header-13873095"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="shwethags" id="word_commented_shwethags" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=shwethags">Shwetha G S</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">16/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13873095"><td bgcolor="#ffffff">
+            <p>Something was failing with this patch. Will verify and then make it available</p>
+        </td></tr>
+                <tr id="comment-header-13941494"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="suhas.ysr" id="word_commented_suhas.ysr" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=suhas.ysr">Suhas Vasu</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">20/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13941494"><td bgcolor="#ffffff">
+            <p>+1</p>
+        </td></tr>
+                <tr id="comment-header-13941560"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="shwethags" id="word_commented_shwethags" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=shwethags">Shwetha G S</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">20/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13941560"><td bgcolor="#ffffff">
+            <p>Committed to trunk. Thanks Suhas for reviewing</p>
+        </td></tr>
+            </table>
+Generated at Sat Mar 22 13:34:33 UTC 2014 using JIRA 6.2#6252-sha1:aa343257d4ce030d9cb8c531be520be9fac1c996.
+
+</body>
+</html>

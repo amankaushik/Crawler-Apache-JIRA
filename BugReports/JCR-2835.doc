@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>[#JCR-2835] Poor performance of ISDESCENDANTNODE on SQL 2 queries</title>
+    <meta http-equiv="Content-Type" Content="application/vnd.ms-word; charset=utf-8">
+        <style type="text/css">
+
+.tableBorder, .grid
+{
+    background-color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableBorder td, .grid td
+{
+    vertical-align: top;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+.noPadding
+{
+    padding: 0 !important;
+}
+
+h3 .subText
+{
+    font-size: 60%;
+    font-weight: normal;
+}
+
+.tabLabel
+{
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-bottom:none;
+    padding: 2px;
+    display: inline;
+}
+
+td.blank
+{
+    padding: 0;
+    margin: 0;
+}
+
+.blank td
+{
+    border: none;
+}
+
+#descriptionArea
+{
+    margin: 0;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+hr
+{
+    border-top:1px solid #aaa;
+}
+
+hr.fullcontent
+{
+  height: 15px;
+  padding: 10px 0;
+  background: #fff url('https://issues.apache.org/jira/images/icons/hr.gif') no-repeat scroll center;
+}
+
+</style>
+
+</head>
+<body>
+
+<table class="tableBorder" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" width="100%" colspan="2" valign="top">
+                            <h3 class="formtitle">
+                        [JCR-2835]&nbsp;<a href="https://issues.apache.org/jira/browse/JCR-2835">Poor performance of ISDESCENDANTNODE on SQL 2 queries</a>
+            <span class="subText">
+               Created: 08/Dec/10                   &nbsp;Updated: 21/Mar/14
+
+                                                    &nbsp;Resolved: 03/Jan/11
+                            </span>
+            </h3>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Status:</b></td>
+        <td width="80%">Closed</td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Project:</b></td>
+        <td width="80%"><a href="https://issues.apache.org/jira/secure/BrowseProject.jspa?id=10591">Jackrabbit Content Repository</a></td>
+    </tr>
+
+        <tr>
+            <td><b>Component/s:</b></td>
+            <td>
+                                        <a title="jackrabbit-core - Jackrabbit Core"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=10591&component=12310114"
+            >jackrabbit-core</a>,                    <a title="query"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=10591&component=11656"
+            >query</a>                        </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Affects Version/s:</b></td>
+            <td>
+                                        <a title="2.2 - Apache Jackrabbit 2.2.0"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=10591&version=12314844"
+            >2.2</a>,                    <a title="2.2.1 - Apache Jackrabbit 2.2.1"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=10591&version=12315965"
+            >2.2.1</a>,                    <a title="2.3 - Apache Jackrabbit 2.3.0"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=10591&version=12315901"
+            >2.3</a>                        </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Fix Version/s:</b></td>
+            <td>
+                                        <a title="2.2.1 - Apache Jackrabbit 2.2.1"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=10591&fixfor=12315965"
+            >2.2.1</a>,                    <a title="2.3 - Apache Jackrabbit 2.3.0"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=10591&fixfor=12315901"
+            >2.3</a>                        </td>
+    </tr>
+    
+    </table>
+
+<br />
+<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" valign="top" width="20%">
+            <b>Type:</b>
+        </td>
+        <td bgcolor="#ffffff" valign="top"  width="30%" >
+            Improvement
+        </td>
+
+                    <td bgcolor="#f0f0f0">
+                <b>Priority:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap>
+                Major
+            </td>
+            </tr>
+    <tr>
+                        <td bgcolor="#f0f0f0" valign="top" width="20%">
+                <b>Reporter:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top"  width="30%" >
+                                            <a class="user-hover" rel="bhillou" id="word_reporter_bhillou" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=bhillou">Serge Huber</a>
+                            </td>
+        
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Assignee:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap  width="30%" >
+                                    Unassigned
+                            </td>
+            </tr>
+    	<tr>
+		<td bgcolor="#f0f0f0" width="20%">
+			<b>Resolution:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                            Fixed
+                    </td>
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Votes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                0
+            </td>
+        
+    </tr>
+    
+        <tr>
+        <td bgcolor="#f0f0f0" width="20%">
+            <b>Labels:</b>
+        </td>
+        <td id="labels-12492705-value" class="value" bgcolor="#ffffff" valign="top" colspan="3" nowrap>
+                            None
+                    </td>
+    </tr>
+    
+    	<tr>
+        		<td bgcolor="#f0f0f0" width="20%"><b>Remaining Estimate:</b></td>
+        <td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Time Spent:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+	</tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Original Estimate:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    
+    </table>
+
+
+
+    <br />
+
+    	<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+
+                <tr>
+            <td bgcolor="#f0f0f0" width=20% valign=top>
+                <b>Attachments:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top">
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/image.gif" height="16" width="16" alt="PNG File" />
+                                        DescendantSearchTest.png &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        JCR-2835-use-DescendantSelfAxisQuery.patch &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        JCR-2835_PerformanceTests.patch &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        JCR-2835_Poor_performance_on_ISDESCENDANTNODE_constraint_v1.patch &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/image.gif" height="16" width="16" alt="PNG File" />
+                                        SQL2DescendantSearchTest.png &nbsp;&nbsp;&nbsp;
+                            </td>
+        </tr>
+        
+            <tr>
+            <td bgcolor="#f0f0f0" width="20%" valign="top">
+                <b>Issue Links:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" class="noPadding">
+                <table cellpadding="0" cellspacing="0" border="0" width="100%" class="blank">
+                                            <tr>
+                            <td colspan="4" bgcolor="#f0f0f0">
+                                <b>Reference</b><br/>
+                            </td>
+                        </tr>
+                                    <tr>
+            <td>
+                relates to
+            </td>
+            <td>
+                <a href="https://issues.apache.org/jira/browse/JCR-3423">
+                     JCR-3423                 </a>
+            </td>
+            <td>
+                SQL2 Query Runs Slower Than XPath/SQL1
+            </td>
+            <td>
+                Open
+            </td>
+        </tr>
+                                                                    </table>
+            </td>
+        </tr>
+    
+
+
+
+</table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Description</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td id="descriptionArea">
+            Using the latest source code, I have noticed very bad performance on SQL-2 queries that use the ISDESCENDANTNODE constraint on a large sub-tree. For example, the query : <br/>
+<br/>
+select * from [jnt:news] as news where ISDESCENDANTNODE(news,&#39;/root/site&#39;) order by news.[date] desc <br/>
+<br/>
+executes in 600ms <br/>
+<br/>
+select * from [jnt:news] as news order by news.[date] desc<br/>
+<br/>
+executes in 4ms<br/>
+<br/>
+From looking at the problem in the Yourkit profiler, it seems that the culprit is the constraint building, that uses recursive Lucene searches to build the list of descendant node IDs : <br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;private Query getDescendantNodeQuery(<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DescendantNode dn, JackrabbitIndexSearcher searcher)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throws RepositoryException, IOException {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BooleanQuery query = new BooleanQuery();<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;try {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LinkedList&lt;NodeId&gt; ids = new LinkedList&lt;NodeId&gt;();<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NodeImpl ancestor = (NodeImpl) session.getNode(dn.getAncestorPath());<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ids.add(ancestor.getNodeId());<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;while (!ids.isEmpty()) {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String id = ids.removeFirst().toString();<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Query q = new JackrabbitTermQuery(new Term(FieldNames.PARENT, id));<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;QueryHits hits = searcher.evaluate(q);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ScoreNode sn = hits.nextScoreNode();<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (sn != null) {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;query.add(q, SHOULD);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;do {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ids.add(sn.getNodeId());<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sn = hits.nextScoreNode();<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} while (sn != null);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} catch (PathNotFoundException e) {<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;query.add(new JackrabbitTermQuery(new Term(<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FieldNames.UUID, &quot;invalid-node-id&quot;)), // never matches<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SHOULD);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return query;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+<br/>
+In the above example this generates over 2800 Lucene queries, which is the culprit. I wonder if it wouldn&#39;t be faster to retrieve the IDs by using the JCR to retrieve the list of child IDs ?<br/>
+<br/>
+This was probably also missed because I didn&#39;t seem to find any performance tests on this constraint.
+            <br/>
+        </td>
+    </tr>
+    </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Comments</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="grid" style="margin: 0;">
+                <tr id="comment-header-12969329"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="bhillou" id="word_commented_bhillou" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=bhillou">Serge Huber</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">08/Dec/10</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-12969329"><td bgcolor="#ffffff">
+            <p>Added fix version, please correct if needed.</p>
+        </td></tr>
+                <tr id="comment-header-12969331"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="bhillou" id="word_commented_bhillou" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=bhillou">Serge Huber</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">08/Dec/10</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-12969331"><td bgcolor="#ffffff">
+            
+<p>I am attaching a patch to the LuceneQueryFactory that replaces the recursive Lucene queries with JCR sub-tree traversing. This seems to yield a little bit better performance (x3) in my tests, but this is still slow if the sub-tree has a lot of nodes.</p>
+
+<p>I welcome any feedback you may have. I am also ready to commit this if you'd like.</p>
+
+<p>Best regards,<br/>
+  Serge Huber.</p>
+        </td></tr>
+                <tr id="comment-header-12969432"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jukkaz" id="word_commented_jukkaz" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jukkaz">Jukka Zitting</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">08/Dec/10</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-12969432"><td bgcolor="#ffffff">
+            <p>This probably won't make it in the 2.2 timeframe, so targetting just 2.3 for now.</p>
+
+<p>When fixing this, we should start by adding a test case to the peformance test suite (possibly with an option to compare SQL2 against XPath). That way we'll have solid numbers to back any improvement ideas.</p>
+
+<p>In general subtree queries are troublesome even for XPath, but there's still a lot we can do to bring SQL2 at least close to that level. One idea I had (but didn't yet have time to implement) was to collect the parent UUIDs of the entire subtree not by traversing each node separately, but by per-level queries like 1) parent-id=&lt;uuid-of-ancestor&gt;, 2) parent-id=&lt;uuid-of-child1&gt; parent-id=&lt;uuid-of-child2&gt; ..., 3) same for grandchildren, etc. That way we'd only need to execute a handful of Lucene queries per one subtree constraint.</p>
+        </td></tr>
+                <tr id="comment-header-12969649"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="bhillou" id="word_commented_bhillou" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=bhillou">Serge Huber</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">09/Dec/10</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-12969649"><td bgcolor="#ffffff">
+            <p>Hello Jukka, </p>
+
+<p>Thanks again for your quick answer.</p>
+
+<p>Yes agreed we should provide a test case. Where should this be included ? I might have the opportunity to help develop this but I don't really know the best place to add such a case ?</p>
+
+<p>Interesting approach for the levels, this would indeed reduce the number of queries, although the clauses could get quite large, not sure if that's an issue for Lucene.</p>
+
+<p>Best regards,<br/>
+  Serge Huber.</p>
+        </td></tr>
+                <tr id="comment-header-12969700"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jukkaz" id="word_commented_jukkaz" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jukkaz">Jukka Zitting</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">09/Dec/10</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-12969700"><td bgcolor="#ffffff">
+            <p>See the ./test/performance directory within Jackrabbit trunk. I just added some instructions in the README.txt file for adding new tests. The simplest way to get started is to copy and adapt the SimpleSearchTest and SQL2SearchTest classes to something like DescendantSearchTest and SQL2DescendantSearchTest classes.</p>
+
+<p>Re: large clauses; Yes, we'd probably need some extra code that automatically splits the queries into smaller subqueries, like is currently being done by the QueryEngine.execute() method for large joins.</p>
+        </td></tr>
+                <tr id="comment-header-12969792"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="bhillou" id="word_commented_bhillou" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=bhillou">Serge Huber</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">09/Dec/10</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-12969792"><td bgcolor="#ffffff">
+            <p>I am attaching a first pass at the descendant search tests. <br/>
+These tests were performed on the trunk WITHOUT the proposed patch. I will work on implementing Jukka's proposal now that I have the tests.</p>
+
+<p>Please review the XPath one as I am not that fluent in those queries. </p>
+
+<p>The current difference is huge (provided my tests are correct) : </p>
+
+<p>XPath : </p>
+<ol>
+	<li>DescendantSearchTest                   min     10%     50%     90%     max<br/>
+2.2                                       25      34      43      59     265</li>
+</ol>
+
+
+<p>SQL-2 : </p>
+
+<ol>
+	<li>SQL2DescendantSearchTest               min     10%     50%     90%     max<br/>
+2.2                                   395318  395318  395318  395318  395318</li>
+</ol>
+
+
+<p>If the test implementations look ok, I can commit them once reviewed. </p>
+
+<p>Best regards,<br/>
+   Serge Huber.</p>
+        </td></tr>
+                <tr id="comment-header-12969838"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="bhillou" id="word_commented_bhillou" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=bhillou">Serge Huber</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">09/Dec/10</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-12969838"><td bgcolor="#ffffff">
+            <p>I just tested with the patch I proposed here, the results are slightly better, but still very far from the XPath implementation : </p>
+
+<ol>
+	<li>SQL2DescendantSearchTest               min     10%     50%     90%     max<br/>
+2.2                                   224662  224662  224662  224662  224662</li>
+</ol>
+
+
+<p>Best regards,<br/>
+  Serge Huber.</p>
+        </td></tr>
+                <tr id="comment-header-12970024"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jukkaz" id="word_commented_jukkaz" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jukkaz">Jukka Zitting</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">10/Dec/10</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-12970024"><td bgcolor="#ffffff">
+            <p>Thanks for adding the test! Feel free to commit it.</p>
+        </td></tr>
+                <tr id="comment-header-12970100"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="bhillou" id="word_commented_bhillou" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=bhillou">Serge Huber</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">10/Dec/10</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-12970100"><td bgcolor="#ffffff">
+            <p>Ok I have committed the perf tests in revision 1044239. </p>
+
+<p>I will be working on trying out your suggestion today.</p>
+
+<p>Best regards,<br/>
+  Serge Huber.</p>
+        </td></tr>
+                <tr id="comment-header-12970436"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jukkaz" id="word_commented_jukkaz" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jukkaz">Jukka Zitting</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">11/Dec/10</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-12970436"><td bgcolor="#ffffff">
+            <p>BTW, when adding new files, remember to always include the Apache license header. I added the header to the new test classes in revision 1044613 to fix the Hudson failure caused by this.</p>
+        </td></tr>
+                <tr id="comment-header-12970715"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="bhillou" id="word_commented_bhillou" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=bhillou">Serge Huber</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">13/Dec/10</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-12970715"><td bgcolor="#ffffff">
+            <p>Sorry about that Jukka, my bad. Didn't know this could cause Hudson to fail.</p>
+
+<p>Btw unfortunately I didn't have the time to test your proposal. I was working on comparing the Lucene queries between the XPath and SQL-2 tests, and saw that the DescendantChildNodeQuery is being used in the case of XPath but not in the case of SQL-2. I'm not (yet) an expert at Lucene, but maybe that's a place to start ? </p>
+
+<p>I also notice that the SimpleQueryResult does not support result fetch size as the other SingleColumnQueryResult and MultipleColumnQueryResult do. I realize this is because of the join merging, but maybe we should look at being able to do "progressive" merging alongside with merges in order to reduce the number of results being loaded systematically. Again I haven't thought this through completely and maybe there is some limitation on doing so.</p>
+
+<p>These query problems are difficult because we are basically rewriting a full-fledged SQL optimizer, and maybe we should look at how databases perform these ?</p>
+
+<p>Regards,<br/>
+  Serge Huber.</p>
+        </td></tr>
+                <tr id="comment-header-12971692"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="draier" id="word_commented_draier" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=draier">Thomas Draier</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">15/Dec/10</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-12971692"><td bgcolor="#ffffff">
+            <p>Hi,</p>
+
+<p>I just made some improvements in the DescendantNode constraint, using the same kind of subquery we do in XPATH (DescendantSelfAxisQuery)</p>
+
+<p>First I had to slightly change the XPath test in order to make it more comparable with the one SQL-2, as the current query in DescendantSearchTest does not return any result <img class="emoticon" src="https://issues.apache.org/jira/images/icons/emoticons/smile.gif" height="16" width="16" align="absmiddle" alt="" border="0"/></p>
+
+<p>So instead of : /testroot//*<span class="error">&#91;@testcount=&quot; + i + &quot;&#93;</span>"  <br/>
+I used :  /jcr:root/testroot//element(*,nt:base)<span class="error">&#91;@testcount=&quot; + i + &quot;&#93;</span>"<br/>
+(added a the jcr:root , and an nt:base constraint to have the same constraint as in sql-2 - btw this could also be improved, as a constraint on nt:base does not make much sense and does not need to be expanded to all sub types)</p>
+
+<p>Before patching, i had theses figures - similar to what serge got before</p>
+
+<ol>
+	<li>DescendantSearchTest                   min     10%     50%     90%     max<br/>
+2.2                                      411     416     430     450     690</li>
+	<li>SQL2DescendantSearchTest               min     10%     50%     90%     max<br/>
+2.2                                   203530  203530  203530  203530  203530</li>
+</ol>
+
+
+<p>After  patching :</p>
+
+<ol>
+	<li>DescendantSearchTest                   min     10%     50%     90%     max<br/>
+2.3                                      420     429     448     479    1208</li>
+	<li>SQL2DescendantSearchTest               min     10%     50%     90%     max<br/>
+2.3                                      319     327     339     351     375</li>
+</ol>
+
+
+<p>Which make the SQL2 queries even faster than the XPATH one. Basically, I use a DescendantSelfAxisQuery with subqueries when possible. Compared to Xpath, the context query is simpler ( the one that gets the ancestor node ), as it is based on nodeid instead of nested ChildAxisQuery queries - which can explain that sql-2 is slightly faster.</p>
+
+<p>For example, an xpath query like : " /jcr:root/folder1/folder2//element(*,nt:type) "<br/>
+Is translated to :</p>
+
+<p>+DescendantSelfAxisQuery(<br/>
+      +ChildAxisQuery(<br/>
+            +ChildAxisQuery(<br/>
+                 _:PARENT:, <br/>
+                 {}folder1), <br/>
+            {}folder2), <br/>
+      +_:PROPERTIES:1570322:primaryType[14877513:type, <br/>
+      1)</p>
+
+<p>Where an equivalent " select * from <span class="error">&#91;nt:type&#93;</span> as obj where ISDESCENDANTNODE(obj, '/folder1/folder2') " gives :</p>
+
+<p>DescendantSelfAxisQuery(_:UUID:a4137e73-6a16-4148-9d61-2353230a15d0, <br/>
+      +_:PROPERTIES:1570322:primaryType[14877513:type, <br/>
+      1)</p>
+
+<p>Note that it currently only works in the first level of constraint - an isDescendantNode constraint inside an OR / NOT boolean query won't use the subquery. I don't think it's a big issue for the OR - but it can be for the NOT .. </p>
+
+<p>The patch is attached ..</p>
+
+<p>Regards</p>
+        </td></tr>
+                <tr id="comment-header-12972379"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="bhillou" id="word_commented_bhillou" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=bhillou">Serge Huber</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">17/Dec/10</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-12972379"><td bgcolor="#ffffff">
+            <p>I have generated the performance graphs and indeed this patch looks really good !</p>
+
+<p>Btw I had a lot of trouble generating the graphs under Mac OS X. It took me a while to understand that I needed to install the following packages from fink : </p>
+
+<p>imagemagick2-svg<br/>
+gnuplot</p>
+
+<p>I have added to the README.txt instructions on how to use the script under Mac OS X to generate the graphs.</p>
+
+<p>If nobody has any objections, I'd like to commit this patch since the results are really much better ?</p>
+
+<p>Best regards,<br/>
+  Serge Huber.</p>
+        </td></tr>
+                <tr id="comment-header-12972384"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="bhillou" id="word_commented_bhillou" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=bhillou">Serge Huber</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">17/Dec/10</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-12972384"><td bgcolor="#ffffff">
+            <p>Also, maybe we should port this to 2.2.1 ? </p>
+
+<p>Regards,<br/>
+  Serge Huber.</p>
+
+        </td></tr>
+                <tr id="comment-header-12972436"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jukkaz" id="word_commented_jukkaz" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jukkaz">Jukka Zitting</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">17/Dec/10</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-12972436"><td bgcolor="#ffffff">
+            <p>+1 Looks great!</p>
+
+<p>Re: 2.2.1; Yes, I think it would be a good idea to backport this even though strictly speaking it's not just a bug fix. We don't introduce any externally visible API or behaviour changes, and this change should also fix the "too many clauses" problem already reported on users@.</p>
+        </td></tr>
+                <tr id="comment-header-12972440"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="bhillou" id="word_commented_bhillou" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=bhillou">Serge Huber</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">17/Dec/10</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-12972440"><td bgcolor="#ffffff">
+            <p>Thanks Jukka, will you take care of the backport or should I do it ?</p>
+
+<p>Regards,<br/>
+  Serge... </p>
+        </td></tr>
+                <tr id="comment-header-12972444"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="bhillou" id="word_commented_bhillou" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=bhillou">Serge Huber</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">17/Dec/10</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-12972444"><td bgcolor="#ffffff">
+            <p>Ok I have committed this in the trunk, as revision 1050346</p>
+
+<p>Regards,<br/>
+  Serge Huber.</p>
+        </td></tr>
+                <tr id="comment-header-12976897"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jukkaz" id="word_commented_jukkaz" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jukkaz">Jukka Zitting</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">03/Jan/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-12976897"><td bgcolor="#ffffff">
+            <p>Merged to the 2.2 branch in revision 1054716.</p>
+        </td></tr>
+            </table>
+Generated at Sat Mar 22 13:35:05 UTC 2014 using JIRA 6.2#6252-sha1:aa343257d4ce030d9cb8c531be520be9fac1c996.
+
+</body>
+</html>

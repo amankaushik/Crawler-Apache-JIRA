@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>[#DELTASPIKE-386] PropertyFileUtils.getResourceBundle() fails in EAR</title>
+    <meta http-equiv="Content-Type" Content="application/vnd.ms-word; charset=utf-8">
+        <style type="text/css">
+
+.tableBorder, .grid
+{
+    background-color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableBorder td, .grid td
+{
+    vertical-align: top;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+.noPadding
+{
+    padding: 0 !important;
+}
+
+h3 .subText
+{
+    font-size: 60%;
+    font-weight: normal;
+}
+
+.tabLabel
+{
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-bottom:none;
+    padding: 2px;
+    display: inline;
+}
+
+td.blank
+{
+    padding: 0;
+    margin: 0;
+}
+
+.blank td
+{
+    border: none;
+}
+
+#descriptionArea
+{
+    margin: 0;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+hr
+{
+    border-top:1px solid #aaa;
+}
+
+hr.fullcontent
+{
+  height: 15px;
+  padding: 10px 0;
+  background: #fff url('https://issues.apache.org/jira/images/icons/hr.gif') no-repeat scroll center;
+}
+
+</style>
+
+</head>
+<body>
+
+<table class="tableBorder" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" width="100%" colspan="2" valign="top">
+                            <h3 class="formtitle">
+                        [DELTASPIKE-386]&nbsp;<a href="https://issues.apache.org/jira/browse/DELTASPIKE-386">PropertyFileUtils.getResourceBundle() fails in EAR</a>
+            <span class="subText">
+               Created: 21/Jun/13                   &nbsp;Updated: 20/Mar/14
+
+                                                    &nbsp;Resolved: 26/Oct/13
+                            </span>
+            </h3>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Status:</b></td>
+        <td width="80%">Closed</td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Project:</b></td>
+        <td width="80%"><a href="https://issues.apache.org/jira/secure/BrowseProject.jspa?id=12312820">DeltaSpike</a></td>
+    </tr>
+
+        <tr>
+            <td><b>Component/s:</b></td>
+            <td>
+                                        <a title="Core"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12312820&component=12317002"
+            >Core</a>                        </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Affects Version/s:</b></td>
+            <td>
+                                        <a title="0.4"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12312820&version=12319863"
+            >0.4</a>                        </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Fix Version/s:</b></td>
+            <td>
+                                        <a title="0.5"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12312820&fixfor=12320947"
+            >0.5</a>                        </td>
+    </tr>
+    
+    </table>
+
+<br />
+<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" valign="top" width="20%">
+            <b>Type:</b>
+        </td>
+        <td bgcolor="#ffffff" valign="top"  width="30%" >
+            Bug
+        </td>
+
+                    <td bgcolor="#f0f0f0">
+                <b>Priority:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap>
+                Major
+            </td>
+            </tr>
+    <tr>
+                        <td bgcolor="#f0f0f0" valign="top" width="20%">
+                <b>Reporter:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top"  width="30%" >
+                                            <a class="user-hover" rel="rcd" id="word_reporter_rcd" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=rcd">Richard DiCroce</a>
+                            </td>
+        
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Assignee:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap  width="30%" >
+                                            <a class="user-hover" rel="struberg" id="word_assignee_struberg" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=struberg">Mark Struberg</a>
+                            </td>
+            </tr>
+    	<tr>
+		<td bgcolor="#f0f0f0" width="20%">
+			<b>Resolution:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                            Fixed
+                    </td>
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Votes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                0
+            </td>
+        
+    </tr>
+    
+        <tr>
+        <td bgcolor="#f0f0f0" width="20%">
+            <b>Labels:</b>
+        </td>
+        <td id="labels-12654195-value" class="value" bgcolor="#ffffff" valign="top" colspan="3" nowrap>
+                            None
+                    </td>
+    </tr>
+    
+    	<tr>
+        		<td bgcolor="#f0f0f0" width="20%"><b>Remaining Estimate:</b></td>
+        <td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Time Spent:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+	</tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Original Estimate:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    
+    	<tr>
+
+		<td bgcolor="#f0f0f0" width="20%" valign="top">
+			<b>Environment:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" colspan="3">
+            JBoss AS 7.2.0.Final (EAP 6.1.0.Alpha1)
+		</td>
+	</tr>
+    </table>
+
+
+
+    <br />
+
+    	<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+
+        
+            <tr>
+            <td bgcolor="#f0f0f0" width="20%" valign="top">
+                <b>Issue Links:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" class="noPadding">
+                <table cellpadding="0" cellspacing="0" border="0" width="100%" class="blank">
+                                            <tr>
+                            <td colspan="4" bgcolor="#f0f0f0">
+                                <b>Blocker</b><br/>
+                            </td>
+                        </tr>
+                                                                <tr>
+            <td>
+                is blocked by
+            </td>
+            <td>
+                <a href="https://issues.apache.org/jira/browse/DELTASPIKE-335">
+                     DELTASPIKE-335                 </a>
+            </td>
+            <td>
+                re-visit support of EARs
+            </td>
+            <td>
+                Open
+            </td>
+        </tr>
+                                        </table>
+            </td>
+        </tr>
+    
+
+
+
+</table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Description</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td id="descriptionArea">
+            The method PropertyFileUtils.getResourceBundle(String bundleName, Locale locale) doesn&#39;t work correctly in an EAR.<br/>
+<br/>
+I have the DS core JARs in the EAR /lib and I&#39;m trying to use the JsfMessage feature in one of my WARs. Because getResourceBundle() calls ResourceBundle.getBundle(String bundleName, Locale locale), Java attempts to load the resource bundle using the classloader that was used to load PropertyFileUtils, which is the EAR&#39;s classloader. The property files are in the WAR, so Java can&#39;t find them.<br/>
+<br/>
+Changing<br/>
+<br/>
+return ResourceBundle.getBundle(bundleName, locale);<br/>
+<br/>
+to<br/>
+<br/>
+return ResourceBundle.getBundle(bundleName, locale, Thread.currentThread().getContextClassLoader());<br/>
+<br/>
+fixes the problem.
+            <br/>
+        </td>
+    </tr>
+    </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Comments</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="grid" style="margin: 0;">
+                <tr id="comment-header-13690494"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="lightguard" id="word_commented_lightguard" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=lightguard">Jason Porter</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Jun/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13690494"><td bgcolor="#ffffff">
+            <p>With such a small change, would you like to attach a patch or send a pull request?</p>
+        </td></tr>
+                <tr id="comment-header-13690495"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="lightguard" id="word_commented_lightguard" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=lightguard">Jason Porter</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Jun/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13690495"><td bgcolor="#ffffff">
+            <p>Larger patches require an iCLA to be on file, but with small patches we should be okay w/o one.</p>
+        </td></tr>
+                <tr id="comment-header-13690547"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="rcd" id="word_commented_rcd" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=rcd">Richard DiCroce</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Jun/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13690547"><td bgcolor="#ffffff">
+            <p>I will do that when I have more time, probably next week.</p>
+        </td></tr>
+                <tr id="comment-header-13694102"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="rcd" id="word_commented_rcd" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=rcd">Richard DiCroce</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">26/Jun/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13694102"><td bgcolor="#ffffff">
+            <p>Just got back around to this. Looks like Mark Struberg already took care of it: <a href="https://git-wip-us.apache.org/repos/asf?p=deltaspike.git;a=commit;h=01b87451db42627e908f3f9c900aba9a7620f891" class="external-link" rel="nofollow">https://git-wip-us.apache.org/repos/asf?p=deltaspike.git;a=commit;h=01b87451db42627e908f3f9c900aba9a7620f891</a></p>
+        </td></tr>
+            </table>
+Generated at Sat Mar 22 13:36:24 UTC 2014 using JIRA 6.2#6252-sha1:aa343257d4ce030d9cb8c531be520be9fac1c996.
+
+</body>
+</html>

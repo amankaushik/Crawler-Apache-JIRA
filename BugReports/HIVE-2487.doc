@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>[#HIVE-2487] Bug from HIVE-2446, the code that calls client stats publishers run() methods is in wrong place, should be in the same method but inside of while (!rj.isComplete()) {} loop</title>
+    <meta http-equiv="Content-Type" Content="application/vnd.ms-word; charset=utf-8">
+        <style type="text/css">
+
+.tableBorder, .grid
+{
+    background-color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableBorder td, .grid td
+{
+    vertical-align: top;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+.noPadding
+{
+    padding: 0 !important;
+}
+
+h3 .subText
+{
+    font-size: 60%;
+    font-weight: normal;
+}
+
+.tabLabel
+{
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-bottom:none;
+    padding: 2px;
+    display: inline;
+}
+
+td.blank
+{
+    padding: 0;
+    margin: 0;
+}
+
+.blank td
+{
+    border: none;
+}
+
+#descriptionArea
+{
+    margin: 0;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+hr
+{
+    border-top:1px solid #aaa;
+}
+
+hr.fullcontent
+{
+  height: 15px;
+  padding: 10px 0;
+  background: #fff url('https://issues.apache.org/jira/images/icons/hr.gif') no-repeat scroll center;
+}
+
+</style>
+
+</head>
+<body>
+
+<table class="tableBorder" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" width="100%" colspan="2" valign="top">
+                            <h3 class="formtitle">
+                        [HIVE-2487]&nbsp;<a href="https://issues.apache.org/jira/browse/HIVE-2487">Bug from HIVE-2446, the code that calls client stats publishers run() methods is in wrong place, should be in the same method but inside of while (!rj.isComplete()) {} loop</a>
+            <span class="subText">
+               Created: 05/Oct/11                   &nbsp;Updated: 21/Mar/14
+
+                                                    &nbsp;Resolved: 19/Oct/11
+                            </span>
+            </h3>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Status:</b></td>
+        <td width="80%">Closed</td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Project:</b></td>
+        <td width="80%"><a href="https://issues.apache.org/jira/secure/BrowseProject.jspa?id=12310843">Hive</a></td>
+    </tr>
+
+        <tr>
+            <td><b>Component/s:</b></td>
+            <td>
+                            None
+                </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Affects Version/s:</b></td>
+            <td>
+                            None
+                </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Fix Version/s:</b></td>
+            <td>
+                                        <a title="0.8.0 - released"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310843&fixfor=12316178"
+            >0.8.0</a>                        </td>
+    </tr>
+    
+    </table>
+
+<br />
+<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" valign="top" width="20%">
+            <b>Type:</b>
+        </td>
+        <td bgcolor="#ffffff" valign="top"  width="30%" >
+            Bug
+        </td>
+
+                    <td bgcolor="#f0f0f0">
+                <b>Priority:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap>
+                Trivial
+            </td>
+            </tr>
+    <tr>
+                        <td bgcolor="#f0f0f0" valign="top" width="20%">
+                <b>Reporter:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top"  width="30%" >
+                                            <a class="user-hover" rel="rsurowka" id="word_reporter_rsurowka" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=rsurowka">Robert Surówka</a>
+                            </td>
+        
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Assignee:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap  width="30%" >
+                                            <a class="user-hover" rel="rsurowka" id="word_assignee_rsurowka" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=rsurowka">Robert Surówka</a>
+                            </td>
+            </tr>
+    	<tr>
+		<td bgcolor="#f0f0f0" width="20%">
+			<b>Resolution:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                            Fixed
+                    </td>
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Votes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                0
+            </td>
+        
+    </tr>
+    
+        <tr>
+        <td bgcolor="#f0f0f0" width="20%">
+            <b>Labels:</b>
+        </td>
+        <td id="labels-12525977-value" class="value" bgcolor="#ffffff" valign="top" colspan="3" nowrap>
+                            None
+                    </td>
+    </tr>
+    
+    	<tr>
+        		<td bgcolor="#f0f0f0" width="20%"><b>Remaining Estimate:</b></td>
+        <td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Time Spent:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+	</tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Original Estimate:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    
+    </table>
+
+
+
+    <br />
+
+    	<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+
+                <tr>
+            <td bgcolor="#f0f0f0" width=20% valign=top>
+                <b>Attachments:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top">
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HIVE-2487.1.patch &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HIVE-2487.1.patch &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HIVE-2487.2.patch &nbsp;&nbsp;&nbsp;
+                            </td>
+        </tr>
+        
+            <tr>
+            <td bgcolor="#f0f0f0" width="20%" valign="top">
+                <b>Issue Links:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" class="noPadding">
+                <table cellpadding="0" cellspacing="0" border="0" width="100%" class="blank">
+                                            <tr>
+                            <td colspan="4" bgcolor="#f0f0f0">
+                                <b>Reference</b><br/>
+                            </td>
+                        </tr>
+                                    <tr>
+            <td>
+                relates to
+            </td>
+            <td>
+                <a href="https://issues.apache.org/jira/browse/HIVE-2446">
+                     <strike>HIVE-2446</strike>                 </a>
+            </td>
+            <td>
+                Introduction of client statistics pub...
+            </td>
+            <td>
+                Closed
+            </td>
+        </tr>
+                                                                    </table>
+            </td>
+        </tr>
+    
+
+
+
+</table>
+
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Comments</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="grid" style="margin: 0;">
+                <tr id="comment-header-13121520"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="rsurowka" id="word_commented_rsurowka" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=rsurowka">Robert Surówka</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">05/Oct/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13121520"><td bgcolor="#ffffff">
+            <p>current version (previous was diffed from not most up to date branch)</p>
+        </td></tr>
+                <tr id="comment-header-13121526"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="rsurowka" id="word_commented_rsurowka" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=rsurowka">Robert Surówka</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">05/Oct/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13121526"><td bgcolor="#ffffff">
+            <p>Diff request at <a href="https://reviews.apache.org/r/2234/diff/#index_header" class="external-link" rel="nofollow">https://reviews.apache.org/r/2234/diff/#index_header</a></p>
+        </td></tr>
+                <tr id="comment-header-13121553"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="rsurowka" id="word_commented_rsurowka" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=rsurowka">Robert Surówka</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">05/Oct/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13121553"><td bgcolor="#ffffff">
+            <p>See updated diff request at <a href="https://reviews.apache.org/r/2234/diff/2/" class="external-link" rel="nofollow">https://reviews.apache.org/r/2234/diff/2/</a> (added runtime exception handling)</p>
+        </td></tr>
+                <tr id="comment-header-13126895"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="he yongqiang" id="word_commented_he yongqiang" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=he+yongqiang">He Yongqiang</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">13/Oct/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13126895"><td bgcolor="#ffffff">
+            <p>+1, will commit after tests pass</p>
+        </td></tr>
+                <tr id="comment-header-13130110"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hudson" id="word_commented_hudson" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hudson">Hudson</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">19/Oct/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13130110"><td bgcolor="#ffffff">
+            <p>Integrated in Hive-trunk-h0.21 #1019 (See <a href="https://builds.apache.org/job/Hive-trunk-h0.21/1019/" class="external-link" rel="nofollow">https://builds.apache.org/job/Hive-trunk-h0.21/1019/</a>)<br/>
+    <a href="https://issues.apache.org/jira/browse/HIVE-2487" title="Bug from HIVE-2446, the code that calls client stats publishers run() methods is in wrong place, should be in the same method but inside of while (!rj.isComplete()) {} loop" class="issue-link" data-issue-key="HIVE-2487"><del>HIVE-2487</del></a>: Bug from <a href="https://issues.apache.org/jira/browse/HIVE-2446" title="Introduction of client statistics publishers possibility" class="issue-link" data-issue-key="HIVE-2446"><del>HIVE-2446</del></a>, the code that calls client stats publishers should be inside the while loop (Robert Surówka via He Yongqiang)</p>
+
+<p>heyongqiang : <a href="http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1185767" class="external-link" rel="nofollow">http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1185767</a><br/>
+Files : </p>
+<ul>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/exec/HadoopJobExecHelper.java</li>
+</ul>
+
+        </td></tr>
+                <tr id="comment-header-13130873"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="nzhang" id="word_commented_nzhang" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=nzhang">Ning Zhang</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">19/Oct/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13130873"><td bgcolor="#ffffff">
+            <p>Yongqiang, it seems you have committed this patch? Can you close this JIRA if so? </p>
+        </td></tr>
+                <tr id="comment-header-13130884"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="he yongqiang" id="word_commented_he yongqiang" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=he+yongqiang">He Yongqiang</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">19/Oct/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13130884"><td bgcolor="#ffffff">
+            <p>committed, thanks Robert!</p>
+        </td></tr>
+            </table>
+Generated at Sat Mar 22 13:33:29 UTC 2014 using JIRA 6.2#6252-sha1:aa343257d4ce030d9cb8c531be520be9fac1c996.
+
+</body>
+</html>

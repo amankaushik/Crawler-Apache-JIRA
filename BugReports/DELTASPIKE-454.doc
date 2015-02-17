@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>[#DELTASPIKE-454] Provide a ClientWindowRenderMode similiar to CODI</title>
+    <meta http-equiv="Content-Type" Content="application/vnd.ms-word; charset=utf-8">
+        <style type="text/css">
+
+.tableBorder, .grid
+{
+    background-color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableBorder td, .grid td
+{
+    vertical-align: top;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+.noPadding
+{
+    padding: 0 !important;
+}
+
+h3 .subText
+{
+    font-size: 60%;
+    font-weight: normal;
+}
+
+.tabLabel
+{
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-bottom:none;
+    padding: 2px;
+    display: inline;
+}
+
+td.blank
+{
+    padding: 0;
+    margin: 0;
+}
+
+.blank td
+{
+    border: none;
+}
+
+#descriptionArea
+{
+    margin: 0;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+hr
+{
+    border-top:1px solid #aaa;
+}
+
+hr.fullcontent
+{
+  height: 15px;
+  padding: 10px 0;
+  background: #fff url('https://issues.apache.org/jira/images/icons/hr.gif') no-repeat scroll center;
+}
+
+</style>
+
+</head>
+<body>
+
+<table class="tableBorder" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" width="100%" colspan="2" valign="top">
+                            <h3 class="formtitle">
+                        [DELTASPIKE-454]&nbsp;<a href="https://issues.apache.org/jira/browse/DELTASPIKE-454">Provide a ClientWindowRenderMode similiar to CODI</a>
+            <span class="subText">
+               Created: 28/Nov/13                   &nbsp;Updated: 20/Mar/14
+
+                                                    &nbsp;Resolved: 19/Jan/14
+                            </span>
+            </h3>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Status:</b></td>
+        <td width="80%">Closed</td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Project:</b></td>
+        <td width="80%"><a href="https://issues.apache.org/jira/secure/BrowseProject.jspa?id=12312820">DeltaSpike</a></td>
+    </tr>
+
+        <tr>
+            <td><b>Component/s:</b></td>
+            <td>
+                                        <a title="JSF-Module"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12312820&component=12319206"
+            >JSF-Module</a>                        </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Affects Version/s:</b></td>
+            <td>
+                            None
+                </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Fix Version/s:</b></td>
+            <td>
+                                        <a title="0.6"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12312820&fixfor=12320948"
+            >0.6</a>                        </td>
+    </tr>
+    
+    </table>
+
+<br />
+<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" valign="top" width="20%">
+            <b>Type:</b>
+        </td>
+        <td bgcolor="#ffffff" valign="top"  width="30%" >
+            New Feature
+        </td>
+
+                    <td bgcolor="#f0f0f0">
+                <b>Priority:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap>
+                Major
+            </td>
+            </tr>
+    <tr>
+                        <td bgcolor="#f0f0f0" valign="top" width="20%">
+                <b>Reporter:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top"  width="30%" >
+                                            <a class="user-hover" rel="tandraschko" id="word_reporter_tandraschko" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=tandraschko">Thomas Andraschko</a>
+                            </td>
+        
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Assignee:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap  width="30%" >
+                                            <a class="user-hover" rel="tandraschko" id="word_assignee_tandraschko" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=tandraschko">Thomas Andraschko</a>
+                            </td>
+            </tr>
+    	<tr>
+		<td bgcolor="#f0f0f0" width="20%">
+			<b>Resolution:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                            Fixed
+                    </td>
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Votes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                1
+            </td>
+        
+    </tr>
+    
+        <tr>
+        <td bgcolor="#f0f0f0" width="20%">
+            <b>Labels:</b>
+        </td>
+        <td id="labels-12681747-value" class="value" bgcolor="#ffffff" valign="top" colspan="3" nowrap>
+                            None
+                    </td>
+    </tr>
+    
+    	<tr>
+        		<td bgcolor="#f0f0f0" width="20%"><b>Remaining Estimate:</b></td>
+        <td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Time Spent:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+	</tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Original Estimate:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    
+    </table>
+
+
+
+    <br />
+
+    	<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+
+        
+    
+
+
+
+</table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Description</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td id="descriptionArea">
+            Without LoadingScreen, JS, HTML and else.<br/>
+Its stable and works fine.
+            <br/>
+        </td>
+    </tr>
+    </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Comments</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="grid" style="margin: 0;">
+                <tr id="comment-header-13848418"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="ova" id="word_commented_ova" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=ova">Oleg Varaksin</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">14/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13848418"><td bgcolor="#ffffff">
+            <p>Every full page request causes displaying a "Loading..." page. This is quite strange. We don't want to see this page. I also noticed, full page requests are very slow in comparison to CODI (have a big web app). Please, don't show this "Loading..." page.</p>
+
+<p>Even worst. DeltaSpike always shows "Loading..." when you download a binary content (e.g. PDF) too. That means, if the content-disposition for the content streaming is "attachment" (set in response header), the original page disappears! That's a bug. The original page should stay displayed.</p>
+
+<p>So, I switched to CODI for now again.</p>
+        </td></tr>
+                <tr id="comment-header-13861044"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">03/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13861044"><td bgcolor="#ffffff">
+            <p>@thomas: +1<br/>
+imo: for most users it's better to have the default approach from codi as default for deltaspike. it doesn't cover all edge-cases, but it's easier to use, solid in combination with several component-libraries,... -&gt; the current approach should be optional (like with codi).</p>
+        </td></tr>
+                <tr id="comment-header-13867128"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="tandraschko" id="word_commented_tandraschko" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=tandraschko">Thomas Andraschko</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">09/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13867128"><td bgcolor="#ffffff">
+            <p>already done but i will add a playground testing app for better testing in the next days</p>
+        </td></tr>
+                <tr id="comment-header-13875852"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="tandraschko" id="word_commented_tandraschko" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=tandraschko">Thomas Andraschko</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">19/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13875852"><td bgcolor="#ffffff">
+            <p>It's called LAZY -&gt; same as the old CODI approach</p>
+        </td></tr>
+            </table>
+Generated at Sat Mar 22 13:34:50 UTC 2014 using JIRA 6.2#6252-sha1:aa343257d4ce030d9cb8c531be520be9fac1c996.
+
+</body>
+</html>

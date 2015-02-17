@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>[#HIVE-2446] Introduction of client statistics publishers possibility</title>
+    <meta http-equiv="Content-Type" Content="application/vnd.ms-word; charset=utf-8">
+        <style type="text/css">
+
+.tableBorder, .grid
+{
+    background-color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableBorder td, .grid td
+{
+    vertical-align: top;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+.noPadding
+{
+    padding: 0 !important;
+}
+
+h3 .subText
+{
+    font-size: 60%;
+    font-weight: normal;
+}
+
+.tabLabel
+{
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-bottom:none;
+    padding: 2px;
+    display: inline;
+}
+
+td.blank
+{
+    padding: 0;
+    margin: 0;
+}
+
+.blank td
+{
+    border: none;
+}
+
+#descriptionArea
+{
+    margin: 0;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+hr
+{
+    border-top:1px solid #aaa;
+}
+
+hr.fullcontent
+{
+  height: 15px;
+  padding: 10px 0;
+  background: #fff url('https://issues.apache.org/jira/images/icons/hr.gif') no-repeat scroll center;
+}
+
+</style>
+
+</head>
+<body>
+
+<table class="tableBorder" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" width="100%" colspan="2" valign="top">
+                            <h3 class="formtitle">
+                        [HIVE-2446]&nbsp;<a href="https://issues.apache.org/jira/browse/HIVE-2446">Introduction of client statistics publishers possibility</a>
+            <span class="subText">
+               Created: 14/Sep/11                   &nbsp;Updated: 21/Mar/14
+
+                                                    &nbsp;Resolved: 05/Oct/11
+                            </span>
+            </h3>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Status:</b></td>
+        <td width="80%">Closed</td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Project:</b></td>
+        <td width="80%"><a href="https://issues.apache.org/jira/secure/BrowseProject.jspa?id=12310843">Hive</a></td>
+    </tr>
+
+        <tr>
+            <td><b>Component/s:</b></td>
+            <td>
+                                        <a title="Clients - Tracks issues dealing with CLI, Webclient, JDBC clients or other such clients."
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310843&component=12312587"
+            >Clients</a>,                    <a title="Statistics"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310843&component=12314312"
+            >Statistics</a>                        </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Affects Version/s:</b></td>
+            <td>
+                            None
+                </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Fix Version/s:</b></td>
+            <td>
+                                        <a title="0.8.0 - released"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310843&fixfor=12316178"
+            >0.8.0</a>                        </td>
+    </tr>
+    
+    </table>
+
+<br />
+<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" valign="top" width="20%">
+            <b>Type:</b>
+        </td>
+        <td bgcolor="#ffffff" valign="top"  width="30%" >
+            Improvement
+        </td>
+
+                    <td bgcolor="#f0f0f0">
+                <b>Priority:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap>
+                Minor
+            </td>
+            </tr>
+    <tr>
+                        <td bgcolor="#f0f0f0" valign="top" width="20%">
+                <b>Reporter:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top"  width="30%" >
+                                            <a class="user-hover" rel="rsurowka" id="word_reporter_rsurowka" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=rsurowka">Robert Surówka</a>
+                            </td>
+        
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Assignee:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap  width="30%" >
+                                            <a class="user-hover" rel="rsurowka" id="word_assignee_rsurowka" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=rsurowka">Robert Surówka</a>
+                            </td>
+            </tr>
+    	<tr>
+		<td bgcolor="#f0f0f0" width="20%">
+			<b>Resolution:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                            Fixed
+                    </td>
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Votes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                0
+            </td>
+        
+    </tr>
+    
+        <tr>
+        <td bgcolor="#f0f0f0" width="20%">
+            <b>Labels:</b>
+        </td>
+        <td id="labels-12523108-value" class="value" bgcolor="#ffffff" valign="top" colspan="3" nowrap>
+                            None
+                    </td>
+    </tr>
+    
+    	<tr>
+        		<td bgcolor="#f0f0f0" width="20%"><b>Remaining Estimate:</b></td>
+        <td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            1h
+            		</td>
+    </tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Time Spent:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+	</tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Original Estimate:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            1h
+            		</td>
+    </tr>
+    
+    </table>
+
+
+
+    <br />
+
+    	<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+
+                <tr>
+            <td bgcolor="#f0f0f0" width=20% valign=top>
+                <b>Attachments:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top">
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HIVE-2446.1.patch &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HIVE-2446.1.patch &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HIVE-2446.2.patch &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HIVE-2446.2.patch &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HIVE-2446.3.patch &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HIVE-2446.3.patch &nbsp;&nbsp;&nbsp;
+                            </td>
+        </tr>
+        
+            <tr>
+            <td bgcolor="#f0f0f0" width="20%" valign="top">
+                <b>Issue Links:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" class="noPadding">
+                <table cellpadding="0" cellspacing="0" border="0" width="100%" class="blank">
+                                            <tr>
+                            <td colspan="4" bgcolor="#f0f0f0">
+                                <b>Reference</b><br/>
+                            </td>
+                        </tr>
+                                                                <tr>
+            <td>
+                is related to
+            </td>
+            <td>
+                <a href="https://issues.apache.org/jira/browse/HIVE-2522">
+                     <strike>HIVE-2522</strike>                 </a>
+            </td>
+            <td>
+                HIVE-2446 bug (next one) - If constru...
+            </td>
+            <td>
+                Closed
+            </td>
+        </tr>
+            <tr>
+            <td>
+                is related to
+            </td>
+            <td>
+                <a href="https://issues.apache.org/jira/browse/HIVE-2487">
+                     <strike>HIVE-2487</strike>                 </a>
+            </td>
+            <td>
+                Bug from HIVE-2446, the code that cal...
+            </td>
+            <td>
+                Closed
+            </td>
+        </tr>
+                                        </table>
+            </td>
+        </tr>
+    
+
+
+
+                        <tr>
+                <td bgcolor="#f0f0f0" width="20%" valign="top"><b>Release Note:</b></td>
+                <td id="customfield_12310192-12523108-value" class="value" bgcolor="#ffffff" width="80%">      See <a href="https://reviews.apache.org/r/2182/diff/#index_header">https://reviews.apache.org/r/2182/diff/#index_header</a>
+  </td>
+            </tr>
+            </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Description</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td id="descriptionArea">
+            <p>The purpose of this change is to allow publication or storage of counters while the job is running.</p>
+
+<p>Introduced two new variables to hive-default.xml and HiveConf.java: "hive.client.stats.publishers" and "hive.client.stats.counters". First one specifies classes names, whose instances will be executed by HadoopJobExecHelper.java (similarly as hooks are) in its method progress(ExecDriverTaskHandle): MapRedStats. Second one specifies list of counters that any client stat publishers should publish or stored. Details regarding format of this list is up to a specific deployment (it is up to client stats publishers to parse it), yet it is required to use display names of counter groups and counters.</p>
+
+<p>Added interface ClientStatsPublishers in org.apache.hadoop.hive.ql.stats package, that must be implemented by all stats publishers.</p>
+
+<p>Added code to progress(ExecDriverTaskHandle): MapRedStats from HadoopJobExecHelper.java that puts counters' values to a Java map and then executes registered client stats publishers giving them that map and running job id. Added two new methods to HadoopJobExecHelper: extractAllCounterValues(Counters) and getClientStatsPublishers() that are used by code from previous sentence.</p>
+
+<p>Made cosmetic changes in two other classes</p>
+
+
+
+
+            <br/>
+        </td>
+    </tr>
+    </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Comments</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="grid" style="margin: 0;">
+                <tr id="comment-header-13104910"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="rsurowka" id="word_commented_rsurowka" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=rsurowka">Robert Surówka</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">14/Sep/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13104910"><td bgcolor="#ffffff">
+            <p>solution</p>
+        </td></tr>
+                <tr id="comment-header-13104944"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jiraposter@reviews.apache.org" id="word_commented_jiraposter@reviews.apache.org" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jiraposter%40reviews.apache.org">jiraposter@reviews.apache.org</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">14/Sep/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13104944"><td bgcolor="#ffffff">
+            
+<p>-----------------------------------------------------------<br/>
+This is an automatically generated e-mail. To reply, visit:<br/>
+<a href="https://reviews.apache.org/r/1909/" class="external-link" rel="nofollow">https://reviews.apache.org/r/1909/</a><br/>
+-----------------------------------------------------------</p>
+
+<p>Review request for hive and Ning Zhang.</p>
+
+
+<p>Summary<br/>
+-------</p>
+
+<p>The purpose of this change is to allow publication or storage of counters while the job is running.</p>
+
+<p>Introduced two new variables to hive-default.xml and HiveConf.java: "hive.client.stats.publishers" and "hive.client.stats.counters". First one specifies classes names, whose instances will be executed by HadoopJobExecHelper.java (similarly as hooks are) in its method progress(ExecDriverTaskHandle): MapRedStats. Second one specifies list of counters that any client stat publishers should publish or stored. Details regarding format of this list is up to a specific deployment (it is up to client stats publishers to parse it), yet it is required to use display names of counter groups and counters.</p>
+
+<p>Added interface ClientStatsPublishers in org.apache.hadoop.hive.ql.stats package, that must be implemented by all stats publishers.</p>
+
+<p>Added code to progress(ExecDriverTaskHandle): MapRedStats from HadoopJobExecHelper.java that puts counters' values to a Java map and then executes registered client stats publishers giving them that map and running job id. Added two new methods to HadoopJobExecHelper: extractAllCounterValues(Counters) and getClientStatsPublishers() that are used by code from previous sentence.</p>
+
+<p>Made cosmetic changes in two other classes</p>
+
+
+<p>This addresses bug <a href="https://issues.apache.org/jira/browse/HIVE-2446" title="Introduction of client statistics publishers possibility" class="issue-link" data-issue-key="HIVE-2446"><del>HIVE-2446</del></a>.<br/>
+    <a href="https://issues.apache.org/jira/browse/HIVE-2446" class="external-link" rel="nofollow">https://issues.apache.org/jira/browse/HIVE-2446</a></p>
+
+
+<p>Diffs</p>
+<hr />
+
+<p>  trunk/common/src/java/org/apache/hadoop/hive/conf/HiveConf.java 1170867 <br/>
+  trunk/conf/hive-default.xml 1170867 <br/>
+  trunk/metastore/src/test/org/apache/hadoop/hive/metastore/TestMarkPartition.java 1170867 <br/>
+  trunk/ql/src/java/org/apache/hadoop/hive/ql/exec/HadoopJobExecHelper.java 1170867 <br/>
+  trunk/ql/src/java/org/apache/hadoop/hive/ql/history/HiveHistory.java 1170867 <br/>
+  trunk/ql/src/java/org/apache/hadoop/hive/ql/stats/ClientStatsPublisher.java PRE-CREATION </p>
+
+<p>Diff: <a href="https://reviews.apache.org/r/1909/diff" class="external-link" rel="nofollow">https://reviews.apache.org/r/1909/diff</a></p>
+
+
+<p>Testing<br/>
+-------</p>
+
+<p>Run some random tests, and still running the unit tests.</p>
+
+
+<p>Thanks,</p>
+
+<p>Robert</p>
+
+        </td></tr>
+                <tr id="comment-header-13105710"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jiraposter@reviews.apache.org" id="word_commented_jiraposter@reviews.apache.org" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jiraposter%40reviews.apache.org">jiraposter@reviews.apache.org</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">15/Sep/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13105710"><td bgcolor="#ffffff">
+            
+<p>-----------------------------------------------------------<br/>
+This is an automatically generated e-mail. To reply, visit:<br/>
+<a href="https://reviews.apache.org/r/1909/#review1918" class="external-link" rel="nofollow">https://reviews.apache.org/r/1909/#review1918</a><br/>
+-----------------------------------------------------------</p>
+
+
+
+<p>trunk/ql/src/java/org/apache/hadoop/hive/ql/exec/HadoopJobExecHelper.java<br/>
+&lt;<a href="https://reviews.apache.org/r/1909/#comment4399" class="external-link" rel="nofollow">https://reviews.apache.org/r/1909/#comment4399</a>&gt;</p>
+
+<p>    should -1 be replaced by 0 here? </p>
+
+
+
+<p>trunk/ql/src/java/org/apache/hadoop/hive/ql/exec/HadoopJobExecHelper.java<br/>
+&lt;<a href="https://reviews.apache.org/r/1909/#comment4400" class="external-link" rel="nofollow">https://reviews.apache.org/r/1909/#comment4400</a>&gt;</p>
+
+<p>    I've thought it over again and feel it's better to use the counter "name" here rather than "display name". Display name has the benefit that the users see the same name at the JT page and the metrics page, but display name could be too long (sometimes may contain special characters) and it could be changed over time. I think "name" should be a better ID here. The only caveat is that the person who's looking at the metrics need to know how it is translated to the display name in JT page. </p>
+
+
+
+<p>trunk/ql/src/java/org/apache/hadoop/hive/ql/exec/HadoopJobExecHelper.java<br/>
+&lt;<a href="https://reviews.apache.org/r/1909/#comment4398" class="external-link" rel="nofollow">https://reviews.apache.org/r/1909/#comment4398</a>&gt;</p>
+
+<p>    Is this line too long? Hive's line length shouldn't exceed 100 chars. </p>
+
+
+
+<p>trunk/ql/src/java/org/apache/hadoop/hive/ql/stats/ClientStatsPublisher.java<br/>
+&lt;<a href="https://reviews.apache.org/r/1909/#comment4401" class="external-link" rel="nofollow">https://reviews.apache.org/r/1909/#comment4401</a>&gt;</p>
+
+<p>    Rather than passing JobID, it would be more flexible to pass a String converted from jobID. This is the approach that StatsPublisher interface is using. </p>
+
+
+<ul class="alternate" type="square">
+	<li>Ning</li>
+</ul>
+
+
+
+<p>On 2011-09-14 22:19:21, Robert Surówka wrote:</p>
+<blockquote><p></p></blockquote>
+<blockquote><p>-----------------------------------------------------------</p></blockquote>
+<blockquote><p>This is an automatically generated e-mail. To reply, visit:</p></blockquote>
+<blockquote><p><a href="https://reviews.apache.org/r/1909/" class="external-link" rel="nofollow">https://reviews.apache.org/r/1909/</a></p></blockquote>
+<blockquote><p>-----------------------------------------------------------</p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p>(Updated 2011-09-14 22:19:21)</p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p>Review request for hive and Ning Zhang.</p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p>Summary</p></blockquote>
+<blockquote><p>-------</p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p>The purpose of this change is to allow publication or storage of counters while the job is running.</p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p>Introduced two new variables to hive-default.xml and HiveConf.java: "hive.client.stats.publishers" and "hive.client.stats.counters". First one specifies classes names, whose instances will be executed by HadoopJobExecHelper.java (similarly as hooks are) in its method progress(ExecDriverTaskHandle): MapRedStats. Second one specifies list of counters that any client stat publishers should publish or stored. Details regarding format of this list is up to a specific deployment (it is up to client stats publishers to parse it), yet it is required to use display names of counter groups and counters.</p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p>Added interface ClientStatsPublishers in org.apache.hadoop.hive.ql.stats package, that must be implemented by all stats publishers.</p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p>Added code to progress(ExecDriverTaskHandle): MapRedStats from HadoopJobExecHelper.java that puts counters' values to a Java map and then executes registered client stats publishers giving them that map and running job id. Added two new methods to HadoopJobExecHelper: extractAllCounterValues(Counters) and getClientStatsPublishers() that are used by code from previous sentence.</p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p>Made cosmetic changes in two other classes</p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p>This addresses bug <a href="https://issues.apache.org/jira/browse/HIVE-2446" title="Introduction of client statistics publishers possibility" class="issue-link" data-issue-key="HIVE-2446"><del>HIVE-2446</del></a>.</p></blockquote>
+<blockquote><p><a href="https://issues.apache.org/jira/browse/HIVE-2446" class="external-link" rel="nofollow">https://issues.apache.org/jira/browse/HIVE-2446</a></p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p>Diffs</p></blockquote>
+<blockquote><p>-----</p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p>trunk/common/src/java/org/apache/hadoop/hive/conf/HiveConf.java 1170867 </p></blockquote>
+<blockquote><p>trunk/conf/hive-default.xml 1170867 </p></blockquote>
+<blockquote><p>trunk/metastore/src/test/org/apache/hadoop/hive/metastore/TestMarkPartition.java 1170867 </p></blockquote>
+<blockquote><p>trunk/ql/src/java/org/apache/hadoop/hive/ql/exec/HadoopJobExecHelper.java 1170867 </p></blockquote>
+<blockquote><p>trunk/ql/src/java/org/apache/hadoop/hive/ql/history/HiveHistory.java 1170867 </p></blockquote>
+<blockquote><p>trunk/ql/src/java/org/apache/hadoop/hive/ql/stats/ClientStatsPublisher.java PRE-CREATION </p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p>Diff: <a href="https://reviews.apache.org/r/1909/diff" class="external-link" rel="nofollow">https://reviews.apache.org/r/1909/diff</a></p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p>Testing</p></blockquote>
+<blockquote><p>-------</p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p>Run some random tests, and still running the unit tests.</p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p>Thanks,</p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p>Robert</p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p></p></blockquote>
+
+        </td></tr>
+                <tr id="comment-header-13106620"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jiraposter@reviews.apache.org" id="word_commented_jiraposter@reviews.apache.org" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jiraposter%40reviews.apache.org">jiraposter@reviews.apache.org</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">16/Sep/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13106620"><td bgcolor="#ffffff">
+            
+<p>-----------------------------------------------------------<br/>
+This is an automatically generated e-mail. To reply, visit:<br/>
+<a href="https://reviews.apache.org/r/1909/" class="external-link" rel="nofollow">https://reviews.apache.org/r/1909/</a><br/>
+-----------------------------------------------------------</p>
+
+<p>(Updated 2011-09-16 17:35:58.909415)</p>
+
+
+<p>Review request for hive and Ning Zhang.</p>
+
+
+<p>Changes<br/>
+-------</p>
+
+<p>Changed interface of ClientStatsPublisher, made instantiation of Client Stats Publishers more efficient, this diff no longer removes some unused imports</p>
+
+
+<p>Summary (updated)<br/>
+-------</p>
+
+<p>The purpose of this change is to allow publication or storage of counters while the job is running.</p>
+
+<p>Introduced two new variables to hive-default.xml and HiveConf.java: "hive.client.stats.publishers" and "hive.client.stats.counters". First one specifies classes names, whose instances will be executed by HadoopJobExecHelper.java (similarly as hooks are) in its method progress(ExecDriverTaskHandle): MapRedStats. Second one specifies list of counters that any client stat publishers should publish or stored. Details regarding format of this list is up to a specific deployment (it is up to client stats publishers to parse it), yet it is required to use display names of counter groups and counters.</p>
+
+<p>Added interface ClientStatsPublishers in org.apache.hadoop.hive.ql.stats package, that must be implemented by all stats publishers.</p>
+
+<p>Added code to progress(ExecDriverTaskHandle): MapRedStats from HadoopJobExecHelper.java that puts counters' values to a Java map and then executes registered client stats publishers giving them that map and running job id. Added two new methods to HadoopJobExecHelper: extractAllCounterValues(Counters) and getClientStatsPublishers() that are used by code from previous sentence.</p>
+
+<p>Made cosmetic changes in one other class</p>
+
+
+<p>This addresses bug <a href="https://issues.apache.org/jira/browse/HIVE-2446" title="Introduction of client statistics publishers possibility" class="issue-link" data-issue-key="HIVE-2446"><del>HIVE-2446</del></a>.<br/>
+    <a href="https://issues.apache.org/jira/browse/HIVE-2446" class="external-link" rel="nofollow">https://issues.apache.org/jira/browse/HIVE-2446</a></p>
+
+
+<p>Diffs (updated)</p>
+<hr />
+
+<p>  trunk/common/src/java/org/apache/hadoop/hive/conf/HiveConf.java 1171283 <br/>
+  trunk/conf/hive-default.xml 1171283 <br/>
+  trunk/ql/src/java/org/apache/hadoop/hive/ql/exec/HadoopJobExecHelper.java 1171283 <br/>
+  trunk/ql/src/java/org/apache/hadoop/hive/ql/history/HiveHistory.java 1171283 <br/>
+  trunk/ql/src/java/org/apache/hadoop/hive/ql/stats/ClientStatsPublisher.java PRE-CREATION </p>
+
+<p>Diff: <a href="https://reviews.apache.org/r/1909/diff" class="external-link" rel="nofollow">https://reviews.apache.org/r/1909/diff</a></p>
+
+
+<p>Testing<br/>
+-------</p>
+
+<p>Run some random tests, and still running the unit tests.</p>
+
+
+<p>Thanks,</p>
+
+<p>Robert</p>
+
+        </td></tr>
+                <tr id="comment-header-13106625"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jiraposter@reviews.apache.org" id="word_commented_jiraposter@reviews.apache.org" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jiraposter%40reviews.apache.org">jiraposter@reviews.apache.org</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">16/Sep/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13106625"><td bgcolor="#ffffff">
+            
+<p>-----------------------------------------------------------<br/>
+This is an automatically generated e-mail. To reply, visit:<br/>
+<a href="https://reviews.apache.org/r/1909/#review1935" class="external-link" rel="nofollow">https://reviews.apache.org/r/1909/#review1935</a><br/>
+-----------------------------------------------------------</p>
+
+<p>Ship it!</p>
+
+
+<ul class="alternate" type="square">
+	<li>Ning</li>
+</ul>
+
+
+
+<p>On 2011-09-16 17:35:58, Robert Surówka wrote:</p>
+<blockquote><p></p></blockquote>
+<blockquote><p>-----------------------------------------------------------</p></blockquote>
+<blockquote><p>This is an automatically generated e-mail. To reply, visit:</p></blockquote>
+<blockquote><p><a href="https://reviews.apache.org/r/1909/" class="external-link" rel="nofollow">https://reviews.apache.org/r/1909/</a></p></blockquote>
+<blockquote><p>-----------------------------------------------------------</p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p>(Updated 2011-09-16 17:35:58)</p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p>Review request for hive and Ning Zhang.</p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p>Summary</p></blockquote>
+<blockquote><p>-------</p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p>The purpose of this change is to allow publication or storage of counters while the job is running.</p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p>Introduced two new variables to hive-default.xml and HiveConf.java: "hive.client.stats.publishers" and "hive.client.stats.counters". First one specifies classes names, whose instances will be executed by HadoopJobExecHelper.java (similarly as hooks are) in its method progress(ExecDriverTaskHandle): MapRedStats. Second one specifies list of counters that any client stat publishers should publish or stored. Details regarding format of this list is up to a specific deployment (it is up to client stats publishers to parse it), yet it is required to use display names of counter groups and counters.</p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p>Added interface ClientStatsPublishers in org.apache.hadoop.hive.ql.stats package, that must be implemented by all stats publishers.</p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p>Added code to progress(ExecDriverTaskHandle): MapRedStats from HadoopJobExecHelper.java that puts counters' values to a Java map and then executes registered client stats publishers giving them that map and running job id. Added two new methods to HadoopJobExecHelper: extractAllCounterValues(Counters) and getClientStatsPublishers() that are used by code from previous sentence.</p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p>Made cosmetic changes in one other class</p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p>This addresses bug <a href="https://issues.apache.org/jira/browse/HIVE-2446" title="Introduction of client statistics publishers possibility" class="issue-link" data-issue-key="HIVE-2446"><del>HIVE-2446</del></a>.</p></blockquote>
+<blockquote><p><a href="https://issues.apache.org/jira/browse/HIVE-2446" class="external-link" rel="nofollow">https://issues.apache.org/jira/browse/HIVE-2446</a></p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p>Diffs</p></blockquote>
+<blockquote><p>-----</p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p>trunk/common/src/java/org/apache/hadoop/hive/conf/HiveConf.java 1171283 </p></blockquote>
+<blockquote><p>trunk/conf/hive-default.xml 1171283 </p></blockquote>
+<blockquote><p>trunk/ql/src/java/org/apache/hadoop/hive/ql/exec/HadoopJobExecHelper.java 1171283 </p></blockquote>
+<blockquote><p>trunk/ql/src/java/org/apache/hadoop/hive/ql/history/HiveHistory.java 1171283 </p></blockquote>
+<blockquote><p>trunk/ql/src/java/org/apache/hadoop/hive/ql/stats/ClientStatsPublisher.java PRE-CREATION </p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p>Diff: <a href="https://reviews.apache.org/r/1909/diff" class="external-link" rel="nofollow">https://reviews.apache.org/r/1909/diff</a></p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p>Testing</p></blockquote>
+<blockquote><p>-------</p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p>Run some random tests, and still running the unit tests.</p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p>Thanks,</p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p>Robert</p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p></p></blockquote>
+
+        </td></tr>
+                <tr id="comment-header-13106633"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="nzhang" id="word_commented_nzhang" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=nzhang">Ning Zhang</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">16/Sep/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13106633"><td bgcolor="#ffffff">
+            <p>+1. Will commit if tests pass. </p>
+        </td></tr>
+                <tr id="comment-header-13106754"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="rsurowka" id="word_commented_rsurowka" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=rsurowka">Robert Surówka</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">16/Sep/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13106754"><td bgcolor="#ffffff">
+            <p>The final version of this patch, that was reviewed</p>
+        </td></tr>
+                <tr id="comment-header-13107047"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="nzhang" id="word_commented_nzhang" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=nzhang">Ning Zhang</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">17/Sep/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13107047"><td bgcolor="#ffffff">
+            <p>Committed. Thanks Robert! </p>
+        </td></tr>
+                <tr id="comment-header-13107098"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hudson" id="word_commented_hudson" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hudson">Hudson</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">17/Sep/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13107098"><td bgcolor="#ffffff">
+            <p>Integrated in Hive-trunk-h0.21 #960 (See <a href="https://builds.apache.org/job/Hive-trunk-h0.21/960/" class="external-link" rel="nofollow">https://builds.apache.org/job/Hive-trunk-h0.21/960/</a>)<br/>
+    <a href="https://issues.apache.org/jira/browse/HIVE-2446" title="Introduction of client statistics publishers possibility" class="issue-link" data-issue-key="HIVE-2446"><del>HIVE-2446</del></a>. Introduction of client statistics publishers possibility (Robert Surówka via Ning Zhang)</p>
+
+<p>nzhang : <a href="http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1171917" class="external-link" rel="nofollow">http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1171917</a><br/>
+Files : </p>
+<ul>
+	<li>/hive/trunk/common/src/java/org/apache/hadoop/hive/conf/HiveConf.java</li>
+	<li>/hive/trunk/conf/hive-default.xml</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/exec/HadoopJobExecHelper.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/history/HiveHistory.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/stats/ClientStatsPublisher.java</li>
+</ul>
+
+        </td></tr>
+                <tr id="comment-header-13120473"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="rsurowka" id="word_commented_rsurowka" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=rsurowka">Robert Surówka</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">04/Oct/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13120473"><td bgcolor="#ffffff">
+            <p>Client stat's publishers run() methods are called only once per HadoopJobExecHelper's progress method being called, whereas they should be called inside of while (!rj.isComplete()) {} loop.</p>
+        </td></tr>
+                <tr id="comment-header-13121499"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="he yongqiang" id="word_commented_he yongqiang" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=he+yongqiang">He Yongqiang</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">05/Oct/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13121499"><td bgcolor="#ffffff">
+            <p>move the fix to a new jira ticket</p>
+        </td></tr>
+                <tr id="comment-header-13130109"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hudson" id="word_commented_hudson" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hudson">Hudson</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">19/Oct/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13130109"><td bgcolor="#ffffff">
+            <p>Integrated in Hive-trunk-h0.21 #1019 (See <a href="https://builds.apache.org/job/Hive-trunk-h0.21/1019/" class="external-link" rel="nofollow">https://builds.apache.org/job/Hive-trunk-h0.21/1019/</a>)<br/>
+    <a href="https://issues.apache.org/jira/browse/HIVE-2487" title="Bug from HIVE-2446, the code that calls client stats publishers run() methods is in wrong place, should be in the same method but inside of while (!rj.isComplete()) {} loop" class="issue-link" data-issue-key="HIVE-2487"><del>HIVE-2487</del></a>: Bug from <a href="https://issues.apache.org/jira/browse/HIVE-2446" title="Introduction of client statistics publishers possibility" class="issue-link" data-issue-key="HIVE-2446"><del>HIVE-2446</del></a>, the code that calls client stats publishers should be inside the while loop (Robert Surówka via He Yongqiang)</p>
+
+<p>heyongqiang : <a href="http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1185767" class="external-link" rel="nofollow">http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1185767</a><br/>
+Files : </p>
+<ul>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/exec/HadoopJobExecHelper.java</li>
+</ul>
+
+        </td></tr>
+                <tr id="comment-header-13135498"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hudson" id="word_commented_hudson" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hudson">Hudson</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">25/Oct/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13135498"><td bgcolor="#ffffff">
+            <p>Integrated in Hive-trunk-h0.21 #1033 (See <a href="https://builds.apache.org/job/Hive-trunk-h0.21/1033/" class="external-link" rel="nofollow">https://builds.apache.org/job/Hive-trunk-h0.21/1033/</a>)<br/>
+    <a href="https://issues.apache.org/jira/browse/HIVE-2446" title="Introduction of client statistics publishers possibility" class="issue-link" data-issue-key="HIVE-2446"><del>HIVE-2446</del></a>. bug (next one) - If constructor of ClientStatsPublisher throws runtime exception it will be propagated to HadoopJobExecHelper progress method and beyond, whereas it shouldnot</p>
+
+<p>nzhang : <a href="http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1188796" class="external-link" rel="nofollow">http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1188796</a><br/>
+Files : </p>
+<ul>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/exec/HadoopJobExecHelper.java</li>
+</ul>
+
+        </td></tr>
+            </table>
+Generated at Sat Mar 22 13:35:25 UTC 2014 using JIRA 6.2#6252-sha1:aa343257d4ce030d9cb8c531be520be9fac1c996.
+
+</body>
+</html>

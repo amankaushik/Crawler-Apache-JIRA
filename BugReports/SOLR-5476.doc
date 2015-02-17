@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>[#SOLR-5476] Overseer Role for nodes</title>
+    <meta http-equiv="Content-Type" Content="application/vnd.ms-word; charset=utf-8">
+        <style type="text/css">
+
+.tableBorder, .grid
+{
+    background-color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableBorder td, .grid td
+{
+    vertical-align: top;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+.noPadding
+{
+    padding: 0 !important;
+}
+
+h3 .subText
+{
+    font-size: 60%;
+    font-weight: normal;
+}
+
+.tabLabel
+{
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-bottom:none;
+    padding: 2px;
+    display: inline;
+}
+
+td.blank
+{
+    padding: 0;
+    margin: 0;
+}
+
+.blank td
+{
+    border: none;
+}
+
+#descriptionArea
+{
+    margin: 0;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+hr
+{
+    border-top:1px solid #aaa;
+}
+
+hr.fullcontent
+{
+  height: 15px;
+  padding: 10px 0;
+  background: #fff url('https://issues.apache.org/jira/images/icons/hr.gif') no-repeat scroll center;
+}
+
+</style>
+
+</head>
+<body>
+
+<table class="tableBorder" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" width="100%" colspan="2" valign="top">
+                            <b><a id="parent_issue_summary" href="https://issues.apache.org/jira/browse/SOLR-5381">Split Clusterstate and scale </a></b>
+                <span style="font-size: 9px">(<a id="parent_issue_key" href="https://issues.apache.org/jira/browse/SOLR-5381">SOLR-5381</a>)</span>
+                <h3 class="formtitle"><img src="https://issues.apache.org/jira/images/icons/link_out_bot.gif" width="16" height="16" />
+                        [SOLR-5476]&nbsp;<a href="https://issues.apache.org/jira/browse/SOLR-5476">Overseer Role for nodes</a>
+            <span class="subText">
+               Created: 20/Nov/13                   &nbsp;Updated: 21/Mar/14
+
+                                                    &nbsp;Resolved: 26/Feb/14
+                            </span>
+            </h3>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Status:</b></td>
+        <td width="80%">Closed</td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Project:</b></td>
+        <td width="80%"><a href="https://issues.apache.org/jira/secure/BrowseProject.jspa?id=12310230">Solr</a></td>
+    </tr>
+
+        <tr>
+            <td><b>Component/s:</b></td>
+            <td>
+                                        <a title="SolrCloud"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310230&component=12313841"
+            >SolrCloud</a>                        </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Affects Version/s:</b></td>
+            <td>
+                            None
+                </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Fix Version/s:</b></td>
+            <td>
+                                        <a title="4.7 - Major release after 4.6"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310230&fixfor=12325573"
+            >4.7</a>,                    <a title="5.0 - Current trunk"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310230&fixfor=12321664"
+            >5.0</a>                        </td>
+    </tr>
+    
+    </table>
+
+<br />
+<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" valign="top" width="20%">
+            <b>Type:</b>
+        </td>
+        <td bgcolor="#ffffff" valign="top"  width="30%" >
+            Sub-task
+        </td>
+
+                    <td bgcolor="#f0f0f0">
+                <b>Priority:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap>
+                Major
+            </td>
+            </tr>
+    <tr>
+                        <td bgcolor="#f0f0f0" valign="top" width="20%">
+                <b>Reporter:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top"  width="30%" >
+                                            <a class="user-hover" rel="noble.paul" id="word_reporter_noble.paul" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul">Noble Paul</a>
+                            </td>
+        
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Assignee:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap  width="30%" >
+                                            <a class="user-hover" rel="noble.paul" id="word_assignee_noble.paul" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul">Noble Paul</a>
+                            </td>
+            </tr>
+    	<tr>
+		<td bgcolor="#f0f0f0" width="20%">
+			<b>Resolution:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                            Fixed
+                    </td>
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Votes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                0
+            </td>
+        
+    </tr>
+    
+        <tr>
+        <td bgcolor="#f0f0f0" width="20%">
+            <b>Labels:</b>
+        </td>
+        <td id="labels-12680297-value" class="value" bgcolor="#ffffff" valign="top" colspan="3" nowrap>
+                            None
+                    </td>
+    </tr>
+    
+    	<tr>
+        		<td bgcolor="#f0f0f0" width="20%"><b>Remaining Estimate:</b></td>
+        <td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Time Spent:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+	</tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Original Estimate:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    
+    </table>
+
+
+
+    <br />
+
+    	<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+
+                <tr>
+            <td bgcolor="#f0f0f0" width=20% valign=top>
+                <b>Attachments:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top">
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        SOLR-5476.patch &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        SOLR-5476.patch &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        SOLR-5476.patch &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        SOLR-5476.patch &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        SOLR-5476.patch &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        SOLR-5476.patch &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        SOLR-5476.patch &nbsp;&nbsp;&nbsp;
+                            </td>
+        </tr>
+        
+            <tr>
+            <td bgcolor="#f0f0f0" width="20%" valign="top">
+                <b>Issue Links:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" class="noPadding">
+                <table cellpadding="0" cellspacing="0" border="0" width="100%" class="blank">
+                                            <tr>
+                            <td colspan="4" bgcolor="#f0f0f0">
+                                <b>Reference</b><br/>
+                            </td>
+                        </tr>
+                                    <tr>
+            <td>
+                relates to
+            </td>
+            <td>
+                <a href="https://issues.apache.org/jira/browse/SOLR-5859">
+                     SOLR-5859                 </a>
+            </td>
+            <td>
+                Harden the Overseer restart mechanism
+            </td>
+            <td>
+                Open
+            </td>
+        </tr>
+            <tr>
+            <td>
+                relates to
+            </td>
+            <td>
+                <a href="https://issues.apache.org/jira/browse/SOLR-5893">
+                     <strike>SOLR-5893</strike>                 </a>
+            </td>
+            <td>
+                On restarting overseer designate , mo...
+            </td>
+            <td>
+                Resolved
+            </td>
+        </tr>
+                                                                    </table>
+            </td>
+        </tr>
+    
+
+
+
+</table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Description</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td id="descriptionArea">
+            <p>In a very large cluster the Overseer is likely to be overloaded.If the same node is a serving a few other shards it can lead to OverSeer getting slowed down due to GC pauses , or simply too much of work  . If the cluster is really large , it is possible to dedicate high end h/w for OverSeers</p>
+
+<p>It works as a new collection admin command</p>
+
+<p>command=addrole&amp;role=overseer&amp;node=192.168.1.5:8983_solr</p>
+
+<p>This results in the creation of a entry in the /roles.json in ZK which would look like the following</p>
+
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-javascript">
+{
+"overseer" : ["192.168.1.5:8983_solr"]
+}
+</pre>
+</div></div>
+<p>If a node is designated for overseer it gets preference over others when overseer election takes place. If no designated servers are available another random node would become the Overseer.</p>
+
+<p>Later on, if one of the designated nodes are brought up ,it would take over the Overseer role from the current Overseer to become the Overseer of the system</p>
+
+            <br/>
+        </td>
+    </tr>
+    </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Comments</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="grid" style="margin: 0;">
+                <tr id="comment-header-13856797"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="noble.paul" id="word_commented_noble.paul" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul">Noble Paul</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">26/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13856797"><td bgcolor="#ffffff">
+            <p>The strategy to implement this is as follows</p>
+
+<p>Prioritization logic run at Overseer node</p>
+<ul>
+	<li>Any Overseer elect would first check for the presence of /roles.json in ZK. If not return</li>
+	<li>lookup the children of /overseer_elect node and see if there are nodes with Overseer roles among children. If not return</li>
+	<li>All nodes whose seq number is smaller than that of the first Overseer role node is asked to disconnect and reconnect . So that those nodes will append themselves to the tail of the list and the Overseer role node would come up at the head</li>
+	<li>After this process , the Overseer checks if it is itself  an Overseer role node , If not ,relinquish it's Overseer position and go back to election</li>
+</ul>
+
+
+<p>If a new node comes up who is assigned an Overseer role, it has to ensure that it is at the head of the election queue ,</p>
+<ul>
+	<li>If any new node comes up, it checks for the /roles.json . If present , checks if it is assigned an overseer role, if yes , it checks if the head of the election queue is a node with Overseer role. If not, send a message to the current Overseer to run the prioritization logic</li>
+</ul>
+
+        </td></tr>
+                <tr id="comment-header-13858713"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="noble.paul" id="word_commented_noble.paul" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul">Noble Paul</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">30/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13858713"><td bgcolor="#ffffff">
+            <p>New command implemented addrole and removerole . The only supported role now is overseer</p>
+        </td></tr>
+                <tr id="comment-header-13861496"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="noble.paul" id="word_commented_noble.paul" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul">Noble Paul</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">03/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13861496"><td bgcolor="#ffffff">
+            <p>added a testcase</p>
+        </td></tr>
+                <tr id="comment-header-13863057"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="noble.paul" id="word_commented_noble.paul" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul">Noble Paul</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">06/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13863057"><td bgcolor="#ffffff">
+            <p>some errors fixed</p>
+        </td></tr>
+                <tr id="comment-header-13873167"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="noble.paul" id="word_commented_noble.paul" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul">Noble Paul</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">16/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13873167"><td bgcolor="#ffffff">
+            <p>patch with more logging</p>
+        </td></tr>
+                <tr id="comment-header-13873269"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="noble.paul" id="word_commented_noble.paul" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul">Noble Paul</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">16/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13873269"><td bgcolor="#ffffff">
+            <p>code made more robust</p>
+        </td></tr>
+                <tr id="comment-header-13873289"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jira-bot" id="word_commented_jira-bot" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jira-bot">ASF subversion and git services</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">16/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13873289"><td bgcolor="#ffffff">
+            <p>Commit 1558760 from <a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul" class="user-hover" rel="noble.paul">Noble Paul</a> in branch 'dev/trunk'<br/>
+[ <a href="https://svn.apache.org/r1558760" class="external-link" rel="nofollow">https://svn.apache.org/r1558760</a> ]</p>
+
+<p><a href="https://issues.apache.org/jira/browse/SOLR-5476" title="Overseer Role for nodes" class="issue-link" data-issue-key="SOLR-5476"><del>SOLR-5476</del></a> Overseer Role for nodes</p>
+        </td></tr>
+                <tr id="comment-header-13873330"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jira-bot" id="word_commented_jira-bot" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jira-bot">ASF subversion and git services</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">16/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13873330"><td bgcolor="#ffffff">
+            <p>Commit 1558776 from <a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul" class="user-hover" rel="noble.paul">Noble Paul</a> in branch 'dev/branches/branch_4x'<br/>
+[ <a href="https://svn.apache.org/r1558776" class="external-link" rel="nofollow">https://svn.apache.org/r1558776</a> ]</p>
+
+<p><a href="https://issues.apache.org/jira/browse/SOLR-5476" title="Overseer Role for nodes" class="issue-link" data-issue-key="SOLR-5476"><del>SOLR-5476</del></a> Overseer Role for nodes</p>
+        </td></tr>
+                <tr id="comment-header-13873479"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jira-bot" id="word_commented_jira-bot" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jira-bot">ASF subversion and git services</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">16/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13873479"><td bgcolor="#ffffff">
+            <p>Commit 1558829 from <a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul" class="user-hover" rel="noble.paul">Noble Paul</a> in branch 'dev/trunk'<br/>
+[ <a href="https://svn.apache.org/r1558829" class="external-link" rel="nofollow">https://svn.apache.org/r1558829</a> ]</p>
+
+<p><a href="https://issues.apache.org/jira/browse/SOLR-5476" title="Overseer Role for nodes" class="issue-link" data-issue-key="SOLR-5476"><del>SOLR-5476</del></a> , logging added</p>
+        </td></tr>
+                <tr id="comment-header-13873483"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jira-bot" id="word_commented_jira-bot" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jira-bot">ASF subversion and git services</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">16/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13873483"><td bgcolor="#ffffff">
+            <p>Commit 1558830 from <a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul" class="user-hover" rel="noble.paul">Noble Paul</a> in branch 'dev/branches/branch_4x'<br/>
+[ <a href="https://svn.apache.org/r1558830" class="external-link" rel="nofollow">https://svn.apache.org/r1558830</a> ]</p>
+
+<p><a href="https://issues.apache.org/jira/browse/SOLR-5476" title="Overseer Role for nodes" class="issue-link" data-issue-key="SOLR-5476"><del>SOLR-5476</del></a> , logging added</p>
+        </td></tr>
+                <tr id="comment-header-13873562"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jira-bot" id="word_commented_jira-bot" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jira-bot">ASF subversion and git services</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">16/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13873562"><td bgcolor="#ffffff">
+            <p>Commit 1558846 from <a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul" class="user-hover" rel="noble.paul">Noble Paul</a> in branch 'dev/trunk'<br/>
+[ <a href="https://svn.apache.org/r1558846" class="external-link" rel="nofollow">https://svn.apache.org/r1558846</a> ]</p>
+
+<p><a href="https://issues.apache.org/jira/browse/SOLR-5476" title="Overseer Role for nodes" class="issue-link" data-issue-key="SOLR-5476"><del>SOLR-5476</del></a> removing forbidden API usage</p>
+        </td></tr>
+                <tr id="comment-header-13873563"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jira-bot" id="word_commented_jira-bot" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jira-bot">ASF subversion and git services</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">16/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13873563"><td bgcolor="#ffffff">
+            <p>Commit 1558847 from <a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul" class="user-hover" rel="noble.paul">Noble Paul</a> in branch 'dev/branches/branch_4x'<br/>
+[ <a href="https://svn.apache.org/r1558847" class="external-link" rel="nofollow">https://svn.apache.org/r1558847</a> ]</p>
+
+<p><a href="https://issues.apache.org/jira/browse/SOLR-5476" title="Overseer Role for nodes" class="issue-link" data-issue-key="SOLR-5476"><del>SOLR-5476</del></a> removing forbidden API usage</p>
+        </td></tr>
+                <tr id="comment-header-13874550"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jira-bot" id="word_commented_jira-bot" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jira-bot">ASF subversion and git services</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">17/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13874550"><td bgcolor="#ffffff">
+            <p>Commit 1559043 from <a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=thetaphi" class="user-hover" rel="thetaphi">Uwe Schindler</a> in branch 'dev/trunk'<br/>
+[ <a href="https://svn.apache.org/r1559043" class="external-link" rel="nofollow">https://svn.apache.org/r1559043</a> ]</p>
+
+<p><a href="https://issues.apache.org/jira/browse/SOLR-5476" title="Overseer Role for nodes" class="issue-link" data-issue-key="SOLR-5476"><del>SOLR-5476</del></a>: Fix forbidden.</p>
+
+<p>PLEASE RUN "ant precommit" (root) or alternatively the faster "ant check-forbidden-apis" (in your module folder) before committing!</p>
+        </td></tr>
+                <tr id="comment-header-13874555"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jira-bot" id="word_commented_jira-bot" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jira-bot">ASF subversion and git services</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">17/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13874555"><td bgcolor="#ffffff">
+            <p>Commit 1559044 from <a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=thetaphi" class="user-hover" rel="thetaphi">Uwe Schindler</a> in branch 'dev/branches/branch_4x'<br/>
+[ <a href="https://svn.apache.org/r1559044" class="external-link" rel="nofollow">https://svn.apache.org/r1559044</a> ]</p>
+
+<p>Merged revision(s) 1559043 from lucene/dev/trunk:<br/>
+<a href="https://issues.apache.org/jira/browse/SOLR-5476" title="Overseer Role for nodes" class="issue-link" data-issue-key="SOLR-5476"><del>SOLR-5476</del></a>: Fix forbidden.</p>
+
+<p>PLEASE RUN "ant precommit" (root) or alternatively the faster "ant check-forbidden-apis" (in your module folder) before committing!</p>
+        </td></tr>
+                <tr id="comment-header-13874785"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jira-bot" id="word_commented_jira-bot" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jira-bot">ASF subversion and git services</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">17/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13874785"><td bgcolor="#ffffff">
+            <p>Commit 1559100 from <a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul" class="user-hover" rel="noble.paul">Noble Paul</a> in branch 'dev/trunk'<br/>
+[ <a href="https://svn.apache.org/r1559100" class="external-link" rel="nofollow">https://svn.apache.org/r1559100</a> ]</p>
+
+<p><a href="https://issues.apache.org/jira/browse/SOLR-5476" title="Overseer Role for nodes" class="issue-link" data-issue-key="SOLR-5476"><del>SOLR-5476</del></a> logging added</p>
+        </td></tr>
+                <tr id="comment-header-13874881"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="markrmiller@gmail.com" id="word_commented_markrmiller@gmail.com" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=markrmiller%40gmail.com">Mark Miller</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">17/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13874881"><td bgcolor="#ffffff">
+            <p>Have you actually run into issues with this? Seems like premature optimization...the overseer simply fires http commands and simple zk stuff...you really think 'special hardware' overseers are going to matter and not just complicate the code?</p>
+        </td></tr>
+                <tr id="comment-header-13875493"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="noble.paul" id="word_commented_noble.paul" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul">Noble Paul</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">18/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13875493"><td bgcolor="#ffffff">
+            <p>It is not really about special H/W , but mostly about 'dedicated' H/W.</p>
+
+<p>If the same Overseer node is used for normal cores there is a good chance that those nodes do some CPU intensive operations or GC pauses which would delay Overseer operations. This can cause piling up of messages in large clusters</p>
+        </td></tr>
+                <tr id="comment-header-13875729"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jira-bot" id="word_commented_jira-bot" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jira-bot">ASF subversion and git services</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">18/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13875729"><td bgcolor="#ffffff">
+            <p>Commit 1559399 from <a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul" class="user-hover" rel="noble.paul">Noble Paul</a> in branch 'dev/trunk'<br/>
+[ <a href="https://svn.apache.org/r1559399" class="external-link" rel="nofollow">https://svn.apache.org/r1559399</a> ]</p>
+
+<p><a href="https://issues.apache.org/jira/browse/SOLR-5476" title="Overseer Role for nodes" class="issue-link" data-issue-key="SOLR-5476"><del>SOLR-5476</del></a> ftests are being fixed . SO ignore for the time being</p>
+        </td></tr>
+                <tr id="comment-header-13875732"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jira-bot" id="word_commented_jira-bot" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jira-bot">ASF subversion and git services</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">18/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13875732"><td bgcolor="#ffffff">
+            <p>Commit 1559402 from <a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul" class="user-hover" rel="noble.paul">Noble Paul</a> in branch 'dev/branches/branch_4x'<br/>
+[ <a href="https://svn.apache.org/r1559402" class="external-link" rel="nofollow">https://svn.apache.org/r1559402</a> ]</p>
+
+<p><a href="https://issues.apache.org/jira/browse/SOLR-5476" title="Overseer Role for nodes" class="issue-link" data-issue-key="SOLR-5476"><del>SOLR-5476</del></a> ftests are being fixed . SO ignore for the time being</p>
+        </td></tr>
+                <tr id="comment-header-13875733"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jira-bot" id="word_commented_jira-bot" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jira-bot">ASF subversion and git services</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">18/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13875733"><td bgcolor="#ffffff">
+            <p>Commit 1559405 from <a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul" class="user-hover" rel="noble.paul">Noble Paul</a> in branch 'dev/branches/branch_4x'<br/>
+[ <a href="https://svn.apache.org/r1559405" class="external-link" rel="nofollow">https://svn.apache.org/r1559405</a> ]</p>
+
+<p><a href="https://issues.apache.org/jira/browse/SOLR-5476" title="Overseer Role for nodes" class="issue-link" data-issue-key="SOLR-5476"><del>SOLR-5476</del></a> ftests are being fixed . SO ignore for the time being</p>
+        </td></tr>
+                <tr id="comment-header-13876419"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jira-bot" id="word_commented_jira-bot" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jira-bot">ASF subversion and git services</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">20/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13876419"><td bgcolor="#ffffff">
+            <p>Commit 1559677 from <a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul" class="user-hover" rel="noble.paul">Noble Paul</a> in branch 'dev/trunk'<br/>
+[ <a href="https://svn.apache.org/r1559677" class="external-link" rel="nofollow">https://svn.apache.org/r1559677</a> ]</p>
+
+<p><a href="https://issues.apache.org/jira/browse/SOLR-5476" title="Overseer Role for nodes" class="issue-link" data-issue-key="SOLR-5476"><del>SOLR-5476</del></a> tests passing</p>
+        </td></tr>
+                <tr id="comment-header-13876427"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jira-bot" id="word_commented_jira-bot" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jira-bot">ASF subversion and git services</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">20/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13876427"><td bgcolor="#ffffff">
+            <p>Commit 1559680 from <a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul" class="user-hover" rel="noble.paul">Noble Paul</a> in branch 'dev/branches/branch_4x'<br/>
+[ <a href="https://svn.apache.org/r1559680" class="external-link" rel="nofollow">https://svn.apache.org/r1559680</a> ]</p>
+
+<p><a href="https://issues.apache.org/jira/browse/SOLR-5476" title="Overseer Role for nodes" class="issue-link" data-issue-key="SOLR-5476"><del>SOLR-5476</del></a> tests passing</p>
+        </td></tr>
+                <tr id="comment-header-13877329"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jira-bot" id="word_commented_jira-bot" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jira-bot">ASF subversion and git services</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13877329"><td bgcolor="#ffffff">
+            <p>Commit 1559936 from <a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul" class="user-hover" rel="noble.paul">Noble Paul</a> in branch 'dev/trunk'<br/>
+[ <a href="https://svn.apache.org/r1559936" class="external-link" rel="nofollow">https://svn.apache.org/r1559936</a> ]</p>
+
+<p><a href="https://issues.apache.org/jira/browse/SOLR-5476" title="Overseer Role for nodes" class="issue-link" data-issue-key="SOLR-5476"><del>SOLR-5476</del></a> handle nonode exception</p>
+        </td></tr>
+                <tr id="comment-header-13877331"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jira-bot" id="word_commented_jira-bot" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jira-bot">ASF subversion and git services</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13877331"><td bgcolor="#ffffff">
+            <p>Commit 1559937 from <a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul" class="user-hover" rel="noble.paul">Noble Paul</a> in branch 'dev/branches/branch_4x'<br/>
+[ <a href="https://svn.apache.org/r1559937" class="external-link" rel="nofollow">https://svn.apache.org/r1559937</a> ]</p>
+
+<p><a href="https://issues.apache.org/jira/browse/SOLR-5476" title="Overseer Role for nodes" class="issue-link" data-issue-key="SOLR-5476"><del>SOLR-5476</del></a> handle nonode exception</p>
+        </td></tr>
+                <tr id="comment-header-13877964"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="markrmiller@gmail.com" id="word_commented_markrmiller@gmail.com" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=markrmiller%40gmail.com">Mark Miller</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13877964"><td bgcolor="#ffffff">
+            <p>This test is still failing on almost all of my local test runs.</p>
+        </td></tr>
+                <tr id="comment-header-13878403"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jira-bot" id="word_commented_jira-bot" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jira-bot">ASF subversion and git services</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">22/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13878403"><td bgcolor="#ffffff">
+            <p>Commit 1560279 from <a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul" class="user-hover" rel="noble.paul">Noble Paul</a> in branch 'dev/trunk'<br/>
+[ <a href="https://svn.apache.org/r1560279" class="external-link" rel="nofollow">https://svn.apache.org/r1560279</a> ]</p>
+
+<p><a href="https://issues.apache.org/jira/browse/SOLR-5476" title="Overseer Role for nodes" class="issue-link" data-issue-key="SOLR-5476"><del>SOLR-5476</del></a> hardened a bit</p>
+        </td></tr>
+                <tr id="comment-header-13878405"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jira-bot" id="word_commented_jira-bot" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jira-bot">ASF subversion and git services</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">22/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13878405"><td bgcolor="#ffffff">
+            <p>Commit 1560280 from <a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul" class="user-hover" rel="noble.paul">Noble Paul</a> in branch 'dev/branches/branch_4x'<br/>
+[ <a href="https://svn.apache.org/r1560280" class="external-link" rel="nofollow">https://svn.apache.org/r1560280</a> ]</p>
+
+<p><a href="https://issues.apache.org/jira/browse/SOLR-5476" title="Overseer Role for nodes" class="issue-link" data-issue-key="SOLR-5476"><del>SOLR-5476</del></a> hardened a bit</p>
+        </td></tr>
+                <tr id="comment-header-13878407"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="noble.paul" id="word_commented_noble.paul" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul">Noble Paul</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">22/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13878407"><td bgcolor="#ffffff">
+            <p> <a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=markrmiller%40gmail.com" class="user-hover" rel="markrmiller@gmail.com">Mark Miller</a> What is the sure shot way for Overseer/OverseerCollectionProcessor to quit and somebody else take its place? The failures are due to the leader not giving up</p>
+        </td></tr>
+                <tr id="comment-header-13878453"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="shalinmangar" id="word_commented_shalinmangar" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=shalinmangar">Shalin Shekhar Mangar</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">22/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13878453"><td bgcolor="#ffffff">
+            <p>Perhaps you can create your own instance of overseer and force election just like OverseerTest does with OverseerRestarter?</p>
+        </td></tr>
+                <tr id="comment-header-13878534"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jira-bot" id="word_commented_jira-bot" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jira-bot">ASF subversion and git services</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">22/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13878534"><td bgcolor="#ffffff">
+            <p>Commit 1560314 from <a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul" class="user-hover" rel="noble.paul">Noble Paul</a> in branch 'dev/trunk'<br/>
+[ <a href="https://svn.apache.org/r1560314" class="external-link" rel="nofollow">https://svn.apache.org/r1560314</a> ]</p>
+
+<p><a href="https://issues.apache.org/jira/browse/SOLR-5476" title="Overseer Role for nodes" class="issue-link" data-issue-key="SOLR-5476"><del>SOLR-5476</del></a> ignored till there is a reliable way to restart Overseer</p>
+        </td></tr>
+                <tr id="comment-header-13878537"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jira-bot" id="word_commented_jira-bot" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jira-bot">ASF subversion and git services</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">22/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13878537"><td bgcolor="#ffffff">
+            <p>Commit 1560315 from <a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul" class="user-hover" rel="noble.paul">Noble Paul</a> in branch 'dev/branches/branch_4x'<br/>
+[ <a href="https://svn.apache.org/r1560315" class="external-link" rel="nofollow">https://svn.apache.org/r1560315</a> ]</p>
+
+<p><a href="https://issues.apache.org/jira/browse/SOLR-5476" title="Overseer Role for nodes" class="issue-link" data-issue-key="SOLR-5476"><del>SOLR-5476</del></a> needs a reliable way to restart Overseer</p>
+        </td></tr>
+                <tr id="comment-header-13885321"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jira-bot" id="word_commented_jira-bot" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jira-bot">ASF subversion and git services</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">29/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13885321"><td bgcolor="#ffffff">
+            <p>Commit 1562434 from <a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul" class="user-hover" rel="noble.paul">Noble Paul</a> in branch 'dev/trunk'<br/>
+[ <a href="https://svn.apache.org/r1562434" class="external-link" rel="nofollow">https://svn.apache.org/r1562434</a> ]</p>
+
+<p><a href="https://issues.apache.org/jira/browse/SOLR-5476" title="Overseer Role for nodes" class="issue-link" data-issue-key="SOLR-5476"><del>SOLR-5476</del></a> tests were failing earlier</p>
+        </td></tr>
+                <tr id="comment-header-13885325"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jira-bot" id="word_commented_jira-bot" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jira-bot">ASF subversion and git services</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">29/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13885325"><td bgcolor="#ffffff">
+            <p>Commit 1562435 from <a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul" class="user-hover" rel="noble.paul">Noble Paul</a> in branch 'dev/branches/branch_4x'<br/>
+[ <a href="https://svn.apache.org/r1562435" class="external-link" rel="nofollow">https://svn.apache.org/r1562435</a> ]</p>
+
+<p><a href="https://issues.apache.org/jira/browse/SOLR-5476" title="Overseer Role for nodes" class="issue-link" data-issue-key="SOLR-5476"><del>SOLR-5476</del></a> tests were failing earlier</p>
+        </td></tr>
+                <tr id="comment-header-13892587"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="markrmiller@gmail.com" id="word_commented_markrmiller@gmail.com" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=markrmiller%40gmail.com">Mark Miller</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">05/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13892587"><td bgcolor="#ffffff">
+            <p>See common jenkins test fail - something is off here, with the impl or the test. An Overseer reading the queue can run into another Overseer having already removed the distrib queue node being looked at.</p>
+        </td></tr>
+                <tr id="comment-header-13892595"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="markrmiller@gmail.com" id="word_commented_markrmiller@gmail.com" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=markrmiller%40gmail.com">Mark Miller</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">05/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13892595"><td bgcolor="#ffffff">
+            <p>I don't think this is right. Where do you ensure the old Overseer is stopped first? You can't just force a new one by deleting the election node and doing the run leader process.</p>
+        </td></tr>
+                <tr id="comment-header-13892603"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="markrmiller@gmail.com" id="word_commented_markrmiller@gmail.com" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=markrmiller%40gmail.com">Mark Miller</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">05/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13892603"><td bgcolor="#ffffff">
+            <p>Trying to force a leader like that is complicated, and I think there are a bunch of holes here. </p>
+        </td></tr>
+                <tr id="comment-header-13892644"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="markrmiller@gmail.com" id="word_commented_markrmiller@gmail.com" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=markrmiller%40gmail.com">Mark Miller</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">05/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13892644"><td bgcolor="#ffffff">
+            <p>I think the tests are too light as well. You want strong testing around this special overseer takeover - there are so many things that could go wrong - you need to make sure things continue merrily after several disaster scenario. And it needs to ensure that there are never more than one Overseer running at a time.</p>
+
+<p>I think this was committed before it was ready.</p>
+        </td></tr>
+                <tr id="comment-header-13892653"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="markrmiller@gmail.com" id="word_commented_markrmiller@gmail.com" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=markrmiller%40gmail.com">Mark Miller</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">05/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13892653"><td bgcolor="#ffffff">
+            <p>I've worked a little to try and do some of the right things along the current approach, but I'm starting to feel I'm -1 on this approach to leader prioritization. I think if there was proper testing here, no way doing things this way would survive it, and I'm not sure I can make this idea work.</p>
+
+<p>A better first approach probably involves having prospective leaders give up there position in line if they see a better candidate behind them. The trick then being to look out for how to deal with a node that looks like a better candidate but for some reason keeps failing to be leader.</p>
+        </td></tr>
+                <tr id="comment-header-13892950"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="noble.paul" id="word_commented_noble.paul" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul">Noble Paul</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">06/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13892950"><td bgcolor="#ffffff">
+            <blockquote><p>A better first approach probably involves having prospective leaders give up there position in line if they see a better candidate behind them.</p></blockquote>
+
+<p>That can also be done too. But it is generally better to keep the Overseer designates line up first and second (if there are more than one) in the queue to avoid delay and it is easy to do also. Usually the command is invoked to assign an overseer after the Overseer is already elected and running. In that scenario we need to force the current Overseer to give up their position .</p>
+        </td></tr>
+                <tr id="comment-header-13892975"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="markrmiller@gmail.com" id="word_commented_markrmiller@gmail.com" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=markrmiller%40gmail.com">Mark Miller</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">06/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13892975"><td bgcolor="#ffffff">
+            <p>The problem is the reliance on the isLeader checks in the over seer threads to kill the previous overseer. It's a race, and the tests are showing how easy it is for multiple overseers to interfere with each other. We have to avoid those races, both because the current impls require it, but also because who knows what future things the overseer may do. The Overseer must be a mutually exclusive process 100%.</p>
+
+<p>I'm not sure that we can bullet proof this approach. Perhaps. But I wouldn't believe it until we had some much stronger testing. The current test fails almost every run for me when I run it in eclipse because Overseers interfere with each other.</p>
+
+<p>I'm also a little scared of the way this messes with the election process, but that appears like it should be okay.</p>
+        </td></tr>
+                <tr id="comment-header-13893111"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="noble.paul" id="word_commented_noble.paul" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul">Noble Paul</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">06/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13893111"><td bgcolor="#ffffff">
+            <p>The problem of race condition happens on the first time ADDROLE is invoked . Once you have  added a couple of Overseers designate it won't happen again because the Overseer designates are always in the front for election and then there is no need to kill a running overseer</p>
+        </td></tr>
+                <tr id="comment-header-13894630"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="markrmiller@gmail.com" id="word_commented_markrmiller@gmail.com" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=markrmiller%40gmail.com">Mark Miller</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">07/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13894630"><td bgcolor="#ffffff">
+            <p>It's a huge problem. As you can see from the extremely common test fails. Currently, you see a fail were it kills the processing thread. That race is a big deal. I'm -1 on this for 4.7 given the problems with it. Something has to be done that doesn't compromise the Overseer running mutually exclusively. This is important now and for the future.</p>
+
+<p>We need to ensure the Overseer cannot possibly step on itself, and this feature pretty much ensures that it will.</p>
+
+<p>I'm -1 on the feature until the implementation is fixed.</p>
+
+        </td></tr>
+                <tr id="comment-header-13894673"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="noble.paul" id="word_commented_noble.paul" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul">Noble Paul</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">07/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13894673"><td bgcolor="#ffffff">
+            <p>What is the best strategy to kill an existing overseer? Once we agree upon that it is easy to fix it </p>
+        </td></tr>
+                <tr id="comment-header-13894675"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="noble.paul" id="word_commented_noble.paul" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul">Noble Paul</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">07/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13894675"><td bgcolor="#ffffff">
+            <p>The test does not fail . It errors out . Because I forcefully kill the overseer. </p>
+        </td></tr>
+                <tr id="comment-header-13895564"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="noble.paul" id="word_commented_noble.paul" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul">Noble Paul</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">08/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13895564"><td bgcolor="#ffffff">
+            <p>This is to avoid the race condition</p>
+
+<p>In this patch</p>
+<ul>
+	<li>The new overseer is asked to wait for the STATE_UPDATE_DELAY before processing the queue items</li>
+	<li>STATE_UPDATE_DELAY is the maximum interval between the Overseer checks for amILeader().</li>
+</ul>
+
+        </td></tr>
+                <tr id="comment-header-13895610"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="markrmiller@gmail.com" id="word_commented_markrmiller@gmail.com" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=markrmiller%40gmail.com">Mark Miller</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">08/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13895610"><td bgcolor="#ffffff">
+            <p>I don't know that that is a great solution either though.</p>
+
+<p>For one, future overseer tasks may have nothing to do with the state delay.</p>
+
+<p>For two, you don't know how long any overseer job will take - you might wait that delay, but the overseer may be taking 30 seconds or more to run a command and then when it done it removes a queue item out from the new overseer, killing the thread. I can't work out how this protects against Overseers completely from overlapping.</p>
+
+<p>I've thought through a lot of this type of thing, and it just seems like there are lots of holes that are very hard to fill on this path. </p>
+        </td></tr>
+                <tr id="comment-header-13895613"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="noble.paul" id="word_commented_noble.paul" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul">Noble Paul</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">08/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13895613"><td bgcolor="#ffffff">
+            <p>The in-flight operations for Overseer are really short running.  Keeping the delay slightly longer than STATE_UPDATE_DELAY would not hurt. </p>
+
+<p>Again , the problem of Overlap because of long running operations is no just restricted to the Overseer Roles feature it can happen otherwise too.</p>
+        </td></tr>
+                <tr id="comment-header-13895614"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="markrmiller@gmail.com" id="word_commented_markrmiller@gmail.com" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=markrmiller%40gmail.com">Mark Miller</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">08/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13895614"><td bgcolor="#ffffff">
+            <blockquote><p>Again , the problem of Overlap because of long running operations is no just restricted to the Overseer Roles feature it can happen otherwise too.</p></blockquote>
+
+<p>It's not likely to happen otherwise. Those checks that you are now using like a feature are really just fail safes. Emergency shutoffs to minimize damage in a bad situation. They are not meant to be hit. Normally an Overseer will be an Overseer until it dies, crashes, cases to exist. There will be no overlap in any normal circumstances. </p>
+
+<p>This patch changes that.</p>
+        </td></tr>
+                <tr id="comment-header-13895848"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jira-bot" id="word_commented_jira-bot" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jira-bot">ASF subversion and git services</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">09/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13895848"><td bgcolor="#ffffff">
+            <p>Commit 1566247 from <a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul" class="user-hover" rel="noble.paul">Noble Paul</a> in branch 'dev/trunk'<br/>
+[ <a href="https://svn.apache.org/r1566247" class="external-link" rel="nofollow">https://svn.apache.org/r1566247</a> ]</p>
+
+<p><a href="https://issues.apache.org/jira/browse/SOLR-5476" title="Overseer Role for nodes" class="issue-link" data-issue-key="SOLR-5476"><del>SOLR-5476</del></a> avoiding race condition</p>
+        </td></tr>
+                <tr id="comment-header-13895850"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jira-bot" id="word_commented_jira-bot" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jira-bot">ASF subversion and git services</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">09/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13895850"><td bgcolor="#ffffff">
+            <p>Commit 1566248 from <a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul" class="user-hover" rel="noble.paul">Noble Paul</a> in branch 'dev/branches/branch_4x'<br/>
+[ <a href="https://svn.apache.org/r1566248" class="external-link" rel="nofollow">https://svn.apache.org/r1566248</a> ]</p>
+
+<p><a href="https://issues.apache.org/jira/browse/SOLR-5476" title="Overseer Role for nodes" class="issue-link" data-issue-key="SOLR-5476"><del>SOLR-5476</del></a> avoiding race condition</p>
+        </td></tr>
+                <tr id="comment-header-13895929"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="markrmiller@gmail.com" id="word_commented_markrmiller@gmail.com" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=markrmiller%40gmail.com">Mark Miller</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">09/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13895929"><td bgcolor="#ffffff">
+            <p>I just saw this fail again locally with the latest commit.</p>
+        </td></tr>
+                <tr id="comment-header-13895936"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="noble.paul" id="word_commented_noble.paul" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul">Noble Paul</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">09/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13895936"><td bgcolor="#ffffff">
+            <p>I ran it around 20 times on my local box and could not get an error/failure . I'll look at jenkins for failures</p>
+        </td></tr>
+                <tr id="comment-header-13895940"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="markrmiller@gmail.com" id="word_commented_markrmiller@gmail.com" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=markrmiller%40gmail.com">Mark Miller</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">09/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13895940"><td bgcolor="#ffffff">
+            <p>I've seen it fail a couple times already - something about failing to reorder.</p>
+        </td></tr>
+                <tr id="comment-header-13896024"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="markrmiller@gmail.com" id="word_commented_markrmiller@gmail.com" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=markrmiller%40gmail.com">Mark Miller</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">09/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13896024"><td bgcolor="#ffffff">
+            <p>To sum up an offline conversation Noble and I had about this:</p>
+
+<p>I'm not happy with the approach, I think it's dangerous, and I'm worried about making more and more of these types of exceptions.</p>
+
+<p>However, I will withdraw my -1 on it if the testing is significantly beefed up and it can be proved the current approach is usually not going to screw you. I think the current test is an absolute minimum test and it has regularly failed on jenkins (and for me locally even more fequently) since it was committed.</p>
+
+<p>We also agreed on a JIRA issue to come up with a better approach at some point.</p>
+
+<p>I also think we need to add some defensive programming. If we try and remove a queue item that is not there, we should assume another overseer already ate it rather than letting the Overseer thread die.</p>
+        </td></tr>
+                <tr id="comment-header-13896492"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="noble.paul" id="word_commented_noble.paul" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul">Noble Paul</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">10/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13896492"><td bgcolor="#ffffff">
+            <p>Another testcase to kill an existing overseer and checking for another one to takeover</p>
+        </td></tr>
+                <tr id="comment-header-13896496"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jira-bot" id="word_commented_jira-bot" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jira-bot">ASF subversion and git services</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">10/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13896496"><td bgcolor="#ffffff">
+            <p>Commit 1566620 from <a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul" class="user-hover" rel="noble.paul">Noble Paul</a> in branch 'dev/trunk'<br/>
+[ <a href="https://svn.apache.org/r1566620" class="external-link" rel="nofollow">https://svn.apache.org/r1566620</a> ]</p>
+
+<p><a href="https://issues.apache.org/jira/browse/SOLR-5476" title="Overseer Role for nodes" class="issue-link" data-issue-key="SOLR-5476"><del>SOLR-5476</del></a> added testcase</p>
+        </td></tr>
+                <tr id="comment-header-13896513"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jira-bot" id="word_commented_jira-bot" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jira-bot">ASF subversion and git services</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">10/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13896513"><td bgcolor="#ffffff">
+            <p>Commit 1566624 from <a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul" class="user-hover" rel="noble.paul">Noble Paul</a> in branch 'dev/branches/branch_4x'<br/>
+[ <a href="https://svn.apache.org/r1566624" class="external-link" rel="nofollow">https://svn.apache.org/r1566624</a> ]</p>
+
+<p><a href="https://issues.apache.org/jira/browse/SOLR-5476" title="Overseer Role for nodes" class="issue-link" data-issue-key="SOLR-5476"><del>SOLR-5476</del></a> added testcase</p>
+        </td></tr>
+                <tr id="comment-header-13897642"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jira-bot" id="word_commented_jira-bot" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jira-bot">ASF subversion and git services</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">11/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13897642"><td bgcolor="#ffffff">
+            <p>Commit 1567012 from <a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul" class="user-hover" rel="noble.paul">Noble Paul</a> in branch 'dev/trunk'<br/>
+[ <a href="https://svn.apache.org/r1567012" class="external-link" rel="nofollow">https://svn.apache.org/r1567012</a> ]</p>
+
+<p><a href="https://issues.apache.org/jira/browse/SOLR-5476" title="Overseer Role for nodes" class="issue-link" data-issue-key="SOLR-5476"><del>SOLR-5476</del></a> added testcase</p>
+        </td></tr>
+                <tr id="comment-header-13900165"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="andyetitmoves" id="word_commented_andyetitmoves" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=andyetitmoves">Ramkumar Aiyengar</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">13/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13900165"><td bgcolor="#ffffff">
+            <p>Will this feature lend itself to dynamically updating the role of a node &#8211; so depending on the state of the environment, I can grant or revoke the Overseer role? I guess the collection admin will technically allow for it, but just wanted to check if that's something that can be routinely done when the cluster is live without any performance or stability impact.</p>
+        </td></tr>
+                <tr id="comment-header-13900173"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="noble.paul" id="word_commented_noble.paul" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul">Noble Paul</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">13/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13900173"><td bgcolor="#ffffff">
+            <p>Yes, you can invoke the collection API on a live system. The performance impact will be there for overseer operations for a few seconds . Regular read /write should not be impacted at all</p>
+        </td></tr>
+                <tr id="comment-header-13913304"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="markrmiller@gmail.com" id="word_commented_markrmiller@gmail.com" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=markrmiller%40gmail.com">Mark Miller</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">26/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13913304"><td bgcolor="#ffffff">
+            <p>The testing for this is still super minimal. Also the following was not addressed:</p>
+
+<div class="preformatted panel" style="border-width: 1px;"><div class="preformattedContent panelContent">
+<pre>I also think we need to add some defensive programming. If we try and remove a queue item that is not there, we should assume another overseer already ate it rather than letting the Overseer thread die.
+</pre>
+</div></div>
+
+<p>I don't think much of what I was concerned about was addressed. The test can also still fail because two Overseers are running at the same time (Mike just saw this).</p>
+
+<p>If this didn't go out in 4.7 I would bring back the -1.</p>
+
+<p>This is why I said on the phone that I would prefer we mark it as experimental - so that it could still be vetoed after release if the problems were not addressed.</p>
+        </td></tr>
+                <tr id="comment-header-13914110"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="noble.paul" id="word_commented_noble.paul" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul">Noble Paul</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">27/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13914110"><td bgcolor="#ffffff">
+            <blockquote><p>I also think we need to add some defensive programming. If we try and remove a queue item that is not there, we should assume another overseer already ate it rather than letting the Overseer thread die.</p></blockquote>
+
+
+<p>We are trying to kill an overseer safely.</p>
+
+<p>What is being done is  wait for STATE_UPDATE_DELAY+100 ms and then start the next Overseer . I agree that this is not 100% foolproof (but I have not seen OverseerRolesTest fail for quite sometime) </p>
+
+<p>We can definitely add more checks to ensure a proper handing over of overseer role. I didn't quite get the above suggestion clearly. Please elaborate . I'll be glad to implement that </p>
+
+<p>I think this should be an issue in itself rather than confusing with the "Roles" issue.</p>
+
+<blockquote><p>This is why I said on the phone that I would prefer we mark it as experimental </p></blockquote>
+
+<p>Where do I need to sign?</p>
+
+<p>BTW , I would say the users of this feature are very unlikely to hit this issue</p>
+        </td></tr>
+                <tr id="comment-header-13933447"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="noble.paul" id="word_commented_noble.paul" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=noble.paul">Noble Paul</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">13/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13933447"><td bgcolor="#ffffff">
+            <p>I'll open another issue for Overseer restart and I will work on hardening that. This probably is not the right place </p>
+        </td></tr>
+            </table>
+Generated at Sat Mar 22 13:35:54 UTC 2014 using JIRA 6.2#6252-sha1:aa343257d4ce030d9cb8c531be520be9fac1c996.
+
+</body>
+</html>

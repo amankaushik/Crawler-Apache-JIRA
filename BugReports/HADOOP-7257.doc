@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>[#HADOOP-7257] A client side mount table to give per-application/per-job file system view</title>
+    <meta http-equiv="Content-Type" Content="application/vnd.ms-word; charset=utf-8">
+        <style type="text/css">
+
+.tableBorder, .grid
+{
+    background-color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableBorder td, .grid td
+{
+    vertical-align: top;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+.noPadding
+{
+    padding: 0 !important;
+}
+
+h3 .subText
+{
+    font-size: 60%;
+    font-weight: normal;
+}
+
+.tabLabel
+{
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-bottom:none;
+    padding: 2px;
+    display: inline;
+}
+
+td.blank
+{
+    padding: 0;
+    margin: 0;
+}
+
+.blank td
+{
+    border: none;
+}
+
+#descriptionArea
+{
+    margin: 0;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+hr
+{
+    border-top:1px solid #aaa;
+}
+
+hr.fullcontent
+{
+  height: 15px;
+  padding: 10px 0;
+  background: #fff url('https://issues.apache.org/jira/images/icons/hr.gif') no-repeat scroll center;
+}
+
+</style>
+
+</head>
+<body>
+
+<table class="tableBorder" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" width="100%" colspan="2" valign="top">
+                            <h3 class="formtitle">
+                        [HADOOP-7257]&nbsp;<a href="https://issues.apache.org/jira/browse/HADOOP-7257">A client side mount table to give per-application/per-job file system view</a>
+            <span class="subText">
+               Created: 19/Mar/10                   &nbsp;Updated: 20/Mar/14
+
+                                                    &nbsp;Resolved: 10/May/11
+                            </span>
+            </h3>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Status:</b></td>
+        <td width="80%">Closed</td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Project:</b></td>
+        <td width="80%"><a href="https://issues.apache.org/jira/secure/BrowseProject.jspa?id=12310240">Hadoop Common</a></td>
+    </tr>
+
+        <tr>
+            <td><b>Component/s:</b></td>
+            <td>
+                            None
+                </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Affects Version/s:</b></td>
+            <td>
+                                        <a title="0.23.0"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310240&version=12315569"
+            >0.23.0</a>                        </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Fix Version/s:</b></td>
+            <td>
+                                        <a title="0.23.0"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310240&fixfor=12315569"
+            >0.23.0</a>                        </td>
+    </tr>
+    
+    </table>
+
+<br />
+<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" valign="top" width="20%">
+            <b>Type:</b>
+        </td>
+        <td bgcolor="#ffffff" valign="top"  width="30%" >
+            New Feature
+        </td>
+
+                    <td bgcolor="#f0f0f0">
+                <b>Priority:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap>
+                Major
+            </td>
+            </tr>
+    <tr>
+                        <td bgcolor="#f0f0f0" valign="top" width="20%">
+                <b>Reporter:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top"  width="30%" >
+                                            <a class="user-hover" rel="sanjay.radia" id="word_reporter_sanjay.radia" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=sanjay.radia">Sanjay Radia</a>
+                            </td>
+        
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Assignee:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap  width="30%" >
+                                            <a class="user-hover" rel="sanjay.radia" id="word_assignee_sanjay.radia" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=sanjay.radia">Sanjay Radia</a>
+                            </td>
+            </tr>
+    	<tr>
+		<td bgcolor="#f0f0f0" width="20%">
+			<b>Resolution:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                            Fixed
+                    </td>
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Votes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                0
+            </td>
+        
+    </tr>
+    
+        <tr>
+        <td bgcolor="#f0f0f0" width="20%">
+            <b>Labels:</b>
+        </td>
+        <td id="labels-12459728-value" class="value" bgcolor="#ffffff" valign="top" colspan="3" nowrap>
+                            None
+                    </td>
+    </tr>
+    
+    	<tr>
+        		<td bgcolor="#f0f0f0" width="20%"><b>Remaining Estimate:</b></td>
+        <td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Time Spent:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+	</tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Original Estimate:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    
+    </table>
+
+
+
+    <br />
+
+    	<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+
+                <tr>
+            <td bgcolor="#f0f0f0" width=20% valign=top>
+                <b>Attachments:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top">
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/pdf.gif" height="16" width="16" alt="PDF File" />
+                                        ViewFs - javdoc2.pdf &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/pdf.gif" height="16" width="16" alt="PDF File" />
+                                        ViewFsJavaDoc.pdf &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        viewFs2.patch &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        viewFs3.patch &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        viewFs4.patch &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        viewFs5.patch &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        viewfs1.patch &nbsp;&nbsp;&nbsp;
+                            </td>
+        </tr>
+        
+            <tr>
+            <td bgcolor="#f0f0f0" width="20%" valign="top">
+                <b>Issue Links:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" class="noPadding">
+                <table cellpadding="0" cellspacing="0" border="0" width="100%" class="blank">
+                                            <tr>
+                            <td colspan="4" bgcolor="#f0f0f0">
+                                <b>Reference</b><br/>
+                            </td>
+                        </tr>
+                                    <tr>
+            <td>
+                relates to
+            </td>
+            <td>
+                <a href="https://issues.apache.org/jira/browse/HDFS-1052">
+                     <strike>HDFS-1052</strike>                 </a>
+            </td>
+            <td>
+                HDFS scalability with multiple namenodes
+            </td>
+            <td>
+                Resolved
+            </td>
+        </tr>
+            <tr>
+            <td>
+                relates to
+            </td>
+            <td>
+                <a href="https://issues.apache.org/jira/browse/HADOOP-7953">
+                     <strike>HADOOP-7953</strike>                 </a>
+            </td>
+            <td>
+                Viewfs needs documentation
+            </td>
+            <td>
+                Resolved
+            </td>
+        </tr>
+                                        <tr>
+            <td>
+                is related to
+            </td>
+            <td>
+                <a href="https://issues.apache.org/jira/browse/HADOOP-10191">
+                     <strike>HADOOP-10191</strike>                 </a>
+            </td>
+            <td>
+                Missing executable permission on view...
+            </td>
+            <td>
+                Resolved
+            </td>
+        </tr>
+            <tr>
+            <td>
+                is related to
+            </td>
+            <td>
+                <a href="https://issues.apache.org/jira/browse/HADOOP-8298">
+                     HADOOP-8298                 </a>
+            </td>
+            <td>
+                ViewFs merge mounts 
+            </td>
+            <td>
+                Open
+            </td>
+        </tr>
+                                                <tr>
+                            <td colspan="4" bgcolor="#f0f0f0">
+                                <b>dependent</b><br/>
+                            </td>
+                        </tr>
+                                                                <tr>
+            <td>
+                is depended upon by
+            </td>
+            <td>
+                <a href="https://issues.apache.org/jira/browse/HDFS-1911">
+                     <strike>HDFS-1911</strike>                 </a>
+            </td>
+            <td>
+                HDFS tests for viewfs
+            </td>
+            <td>
+                Closed
+            </td>
+        </tr>
+                                        </table>
+            </td>
+        </tr>
+    
+
+
+
+                        <tr>
+                <td bgcolor="#f0f0f0" width="20%" valign="top"><b>Hadoop Flags:</b></td>
+                <td id="customfield_12310191-12459728-value" class="value" bgcolor="#ffffff" width="80%">
+
+
+    <div class="shorten" id="customfield_12310191-field">
+        							<span>Reviewed</span>			            </div>
+</td>
+            </tr>
+                                <tr>
+                <td bgcolor="#f0f0f0" width="20%" valign="top"><b>Release Note:</b></td>
+                <td id="customfield_12310192-12459728-value" class="value" bgcolor="#ffffff" width="80%">      viewfs - client-side mount table.
+  </td>
+            </tr>
+            </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Description</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td id="descriptionArea">
+            <p>This jira proposes a client side mount table to allow application-centric (or job-centric) filesystem views. </p>
+            <br/>
+        </td>
+    </tr>
+    </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Comments</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="grid" style="margin: 0;">
+                <tr id="comment-header-12847660"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="sanjay.radia" id="word_commented_sanjay.radia" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=sanjay.radia">Sanjay Radia</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">20/Mar/10</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-12847660"><td bgcolor="#ffffff">
+            <p>A client side mount table allows application centric filesystem view. Such a feature is very useful<br/>
+in an environment that contains multiple namspaces. These can arise today with multiple independent HDFS clusters. It can also arise when a HDFS cluster has muitiple namenodes/namepsaced as proposed in <a href="https://issues.apache.org/jira/browse/HDFS-1052" title="HDFS scalability with multiple namenodes" class="issue-link" data-issue-key="HDFS-1052"><del>HDFS-1052</del></a>.</p>
+
+<p>Several file systems/naming systems have provided this in the past, especially in an environment of <br/>
+remote execution.</p>
+<ul>
+	<li>Plan 9: <a href="http://portal.acm.org/citation.cfm?id=506413&amp;dl=GUIDE&amp;coll=GUIDE&amp;CFID=82715774&amp;CFTOKEN=20109739" class="external-link" rel="nofollow">http://portal.acm.org/citation.cfm?id=506413&amp;dl=GUIDE&amp;coll=GUIDE&amp;CFID=82715774&amp;CFTOKEN=20109739</a></li>
+	<li>The Per-Process View of Naming and Remote Execution: <a href="http://portal.acm.org/citation.cfm?id=613822" class="external-link" rel="nofollow">http://portal.acm.org/citation.cfm?id=613822</a></li>
+	<li>The Spring system: <a href="http://www2.informatik.hu-berlin.de/~mint/Library/Spring/spring-namingpolicy.pshttp://www2.informatik.hu-berlin.de/~mint/Library/Spring/spring-namingpolicy.ps" class="external-link" rel="nofollow">http://www2.informatik.hu-berlin.de/~mint/Library/Spring/spring-namingpolicy.pshttp://www2.informatik.hu-berlin.de/~mint/Library/Spring/spring-namingpolicy.ps</a></li>
+</ul>
+
+        </td></tr>
+                <tr id="comment-header-12866371"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="milindb" id="word_commented_milindb" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=milindb">Milind Bhandarkar</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">11/May/10</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-12866371"><td bgcolor="#ffffff">
+            <p>Sanjay, do you have a proposal / requirements doc for this ?</p>
+        </td></tr>
+                <tr id="comment-header-12888206"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="sanjay.radia" id="word_commented_sanjay.radia" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=sanjay.radia">Sanjay Radia</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">14/Jul/10</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-12888206"><td bgcolor="#ffffff">
+            <p>BTW this jira should be in hadoop common, not hdfs.</p>
+
+<p>See attached patch which provides an implementation of the mount table called ViewFs. See the JavaDoc for ViewFs.</p>
+
+<p>ViewFs extends AbstractFileSystem which implements the mount table in memory in the client side. It reads the<br/>
+mountable from the config. This allows the mount table to be passed to jobs easily.</p>
+
+<p>I still need to implement ViewFileSystem which extends FileSystem - this will allow one to have mount tables with the old file system.</p>
+
+<p>The mount table is implemented as in-memory inode tree (see InodeTreeImpl&lt;T&gt; where T is AbstractFileSystem or FileSystem</p>
+<ul class="alternate" type="square">
+	<li>ie both can shared the core impl). The ViewFs javadoc  gives some config examples.</li>
+</ul>
+
+
+<p>As part of this I have implemented Chrooted file system - see ChRootedFs; it is used to represent the target of a mount link.</p>
+
+<p>FAQ.<br/>
+1) Why didn't you use symbolic links?<br/>
+Answer: <br/>
+1a) We (Yahoo) need an impl for FileSystem that we plan to use for release 20.x  FileSystem does not have sym links.<br/>
+1b) Symlinks would require all resolutions to go through a central HDFS making it a central point of failure even when the target<br/>
+file systems are up. </p>
+        </td></tr>
+                <tr id="comment-header-13027248"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="sanjay.radia" id="word_commented_sanjay.radia" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=sanjay.radia">Sanjay Radia</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">30/Apr/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13027248"><td bgcolor="#ffffff">
+            <p>The patch provides an implementation for viewfs ie. client-side mount tables. <br/>
+They are implemented as Hadoop file systems and hence can be transparently used where ever a Hadoop file systems is used.<br/>
+(e.g. all the commandline tools work with it).<br/>
+The patch has an implementation for both FileSystem and AbstractFileSystem called ViewFileSystem and ViewFs<br/>
+I have attach the pdf of the javadoc for viewfs which explains how to use this feature.<br/>
+I will later post a user guide document. </p>
+
+<p>The patch contains a large number of additional tests and improves some of the existing file system tests.<br/>
+It also fixes a bug in AbstractFileSystem in how it deals with URIs.</p>
+
+        </td></tr>
+                <tr id="comment-header-13027276"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="cos" id="word_commented_cos" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=cos">Konstantin Boudnik</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">30/Apr/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13027276"><td bgcolor="#ffffff">
+            <p>Quickly skimming over the patch I have noticed that assertions in the tests do not have any messages which will result in Assert(null) error messages if tests fail. This makes failure analyze harder. Please have them added.</p>
+        </td></tr>
+                <tr id="comment-header-13027770"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="sureshms" id="word_commented_sureshms" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=sureshms">Suresh Srinivas</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">02/May/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13027770"><td bgcolor="#ffffff">
+            <p>&gt; result in Assert(null) error messages if tests fail<br/>
+I am not sure if this makes analysis any harder. One needs to look at the stack trace, go to the place where the exception happened, understand what is going on and fix the issue.</p>
+
+<p>If this was an exception seen by the user and not a developer, adding text makes sense. Given that this is in unit tests, I am not sure about the value of this.</p>
+        </td></tr>
+                <tr id="comment-header-13027785"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="cos" id="word_commented_cos" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=cos">Konstantin Boudnik</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">02/May/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13027785"><td bgcolor="#ffffff">
+            <p>The value of this is that every time out "unit" tests are failing in the Hudson ppl need to go and do exactly as you said - look into the code, dig the context, etc. Messages are easy to add and facilitate test failure analysis.</p>
+        </td></tr>
+                <tr id="comment-header-13027812"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="sureshms" id="word_commented_sureshms" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=sureshms">Suresh Srinivas</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">02/May/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13027812"><td bgcolor="#ffffff">
+            <p>I am not sure I understand what you mean here. Say, I have a descriptive message, say it says, "file exists() must return true". Can you describe how this will facilitate test failure analysis.</p>
+
+<p>I think this adds unnecessary bloat to the code, because you have to look at the code any way to understand the failure. I do not mind if people have added this kind of messages in their patch. However, I think mandating that it needs to be added seems unnecessary.</p>
+        </td></tr>
+                <tr id="comment-header-13027997"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="sanjay.radia" id="word_commented_sanjay.radia" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=sanjay.radia">Sanjay Radia</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">03/May/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13027997"><td bgcolor="#ffffff">
+            <p>Attach patch addresses the Assert error message issue that cos raised. Also a minor improvement in the javadoc.</p>
+        </td></tr>
+                <tr id="comment-header-13028001"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hadoopqa" id="word_commented_hadoopqa" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hadoopqa">Hadoop QA</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">03/May/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13028001"><td bgcolor="#ffffff">
+            <p>-1 overall.  Here are the results of testing the latest attachment <br/>
+  <a href="http://issues.apache.org/jira/secure/attachment/12478021/viewFs3.patch" class="external-link" rel="nofollow">http://issues.apache.org/jira/secure/attachment/12478021/viewFs3.patch</a><br/>
+  against trunk revision 1098888.</p>
+
+<p>    +1 @author.  The patch does not contain any @author tags.</p>
+
+<p>    +1 tests included.  The patch appears to include 54 new or modified tests.</p>
+
+<p>    -1 patch.  The patch command could not apply the patch.</p>
+
+<p>Console output: <a href="https://builds.apache.org/hudson/job/PreCommit-HDFS-Build/447//console" class="external-link" rel="nofollow">https://builds.apache.org/hudson/job/PreCommit-HDFS-Build/447//console</a></p>
+
+<p>This message is automatically generated.</p>
+        </td></tr>
+                <tr id="comment-header-13028356"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hadoopqa" id="word_commented_hadoopqa" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hadoopqa">Hadoop QA</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">03/May/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13028356"><td bgcolor="#ffffff">
+            <p>-1 overall.  Here are the results of testing the latest attachment <br/>
+  <a href="http://issues.apache.org/jira/secure/attachment/12478021/viewFs3.patch" class="external-link" rel="nofollow">http://issues.apache.org/jira/secure/attachment/12478021/viewFs3.patch</a><br/>
+  against trunk revision 1098840.</p>
+
+<p>    +1 @author.  The patch does not contain any @author tags.</p>
+
+<p>    +1 tests included.  The patch appears to include 54 new or modified tests.</p>
+
+<p>    +1 javadoc.  The javadoc tool did not generate any warning messages.</p>
+
+<p>    -1 javac.  The applied patch generated 1077 javac compiler warnings (more than the trunk's current 1070 warnings).</p>
+
+<p>    -1 findbugs.  The patch appears to introduce 8 new Findbugs (version 1.3.9) warnings.</p>
+
+<p>    -1 release audit.  The applied patch generated 8 release audit warnings (more than the trunk's current 1 warnings).</p>
+
+<p>    +1 core tests.  The patch passed core unit tests.</p>
+
+<p>    +1 contrib tests.  The patch passed contrib unit tests.</p>
+
+<p>    +1 system test framework.  The patch passed system test framework compile.</p>
+
+<p>Test results: <a href="https://builds.apache.org/hudson/job/PreCommit-HADOOP-Build/395//testReport/" class="external-link" rel="nofollow">https://builds.apache.org/hudson/job/PreCommit-HADOOP-Build/395//testReport/</a><br/>
+Release audit warnings: <a href="https://builds.apache.org/hudson/job/PreCommit-HADOOP-Build/395//artifact/trunk/patchprocess/patchReleaseAuditProblems.txt" class="external-link" rel="nofollow">https://builds.apache.org/hudson/job/PreCommit-HADOOP-Build/395//artifact/trunk/patchprocess/patchReleaseAuditProblems.txt</a><br/>
+Findbugs warnings: <a href="https://builds.apache.org/hudson/job/PreCommit-HADOOP-Build/395//artifact/trunk/build/test/findbugs/newPatchFindbugsWarnings.html" class="external-link" rel="nofollow">https://builds.apache.org/hudson/job/PreCommit-HADOOP-Build/395//artifact/trunk/build/test/findbugs/newPatchFindbugsWarnings.html</a><br/>
+Console output: <a href="https://builds.apache.org/hudson/job/PreCommit-HADOOP-Build/395//console" class="external-link" rel="nofollow">https://builds.apache.org/hudson/job/PreCommit-HADOOP-Build/395//console</a></p>
+
+<p>This message is automatically generated.</p>
+        </td></tr>
+                <tr id="comment-header-13028915"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="sanjay.radia" id="word_commented_sanjay.radia" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=sanjay.radia">Sanjay Radia</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">04/May/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13028915"><td bgcolor="#ffffff">
+            <p>Updated patch: Fixed findbug and compiler warnings</p>
+        </td></tr>
+                <tr id="comment-header-13028924"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hadoopqa" id="word_commented_hadoopqa" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hadoopqa">Hadoop QA</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">04/May/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13028924"><td bgcolor="#ffffff">
+            <p>-1 overall.  Here are the results of testing the latest attachment <br/>
+  <a href="http://issues.apache.org/jira/secure/attachment/12478200/viewFs4.patch" class="external-link" rel="nofollow">http://issues.apache.org/jira/secure/attachment/12478200/viewFs4.patch</a><br/>
+  against trunk revision 1099284.</p>
+
+<p>    +1 @author.  The patch does not contain any @author tags.</p>
+
+<p>    +1 tests included.  The patch appears to include 54 new or modified tests.</p>
+
+<p>    +1 javadoc.  The javadoc tool did not generate any warning messages.</p>
+
+<p>    -1 javac.  The applied patch generated 1072 javac compiler warnings (more than the trunk's current 1070 warnings).</p>
+
+<p>    -1 findbugs.  The patch appears to introduce 2 new Findbugs (version 1.3.9) warnings.</p>
+
+<p>    +1 release audit.  The applied patch does not increase the total number of release audit warnings.</p>
+
+<p>    +1 core tests.  The patch passed core unit tests.</p>
+
+<p>    +1 contrib tests.  The patch passed contrib unit tests.</p>
+
+<p>    +1 system test framework.  The patch passed system test framework compile.</p>
+
+<p>Test results: <a href="https://builds.apache.org/hudson/job/PreCommit-HADOOP-Build/398//testReport/" class="external-link" rel="nofollow">https://builds.apache.org/hudson/job/PreCommit-HADOOP-Build/398//testReport/</a><br/>
+Findbugs warnings: <a href="https://builds.apache.org/hudson/job/PreCommit-HADOOP-Build/398//artifact/trunk/build/test/findbugs/newPatchFindbugsWarnings.html" class="external-link" rel="nofollow">https://builds.apache.org/hudson/job/PreCommit-HADOOP-Build/398//artifact/trunk/build/test/findbugs/newPatchFindbugsWarnings.html</a><br/>
+Console output: <a href="https://builds.apache.org/hudson/job/PreCommit-HADOOP-Build/398//console" class="external-link" rel="nofollow">https://builds.apache.org/hudson/job/PreCommit-HADOOP-Build/398//console</a></p>
+
+<p>This message is automatically generated.</p>
+        </td></tr>
+                <tr id="comment-header-13029099"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hadoopqa" id="word_commented_hadoopqa" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hadoopqa">Hadoop QA</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">05/May/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13029099"><td bgcolor="#ffffff">
+            <p>+1 overall.  Here are the results of testing the latest attachment <br/>
+  <a href="http://issues.apache.org/jira/secure/attachment/12478238/viewFs5.patch" class="external-link" rel="nofollow">http://issues.apache.org/jira/secure/attachment/12478238/viewFs5.patch</a><br/>
+  against trunk revision 1099633.</p>
+
+<p>    +1 @author.  The patch does not contain any @author tags.</p>
+
+<p>    +1 tests included.  The patch appears to include 54 new or modified tests.</p>
+
+<p>    +1 javadoc.  The javadoc tool did not generate any warning messages.</p>
+
+<p>    +1 javac.  The applied patch does not increase the total number of javac compiler warnings.</p>
+
+<p>    +1 findbugs.  The patch does not introduce any new Findbugs (version 1.3.9) warnings.</p>
+
+<p>    +1 release audit.  The applied patch does not increase the total number of release audit warnings.</p>
+
+<p>    +1 core tests.  The patch passed core unit tests.</p>
+
+<p>    +1 contrib tests.  The patch passed contrib unit tests.</p>
+
+<p>    +1 system test framework.  The patch passed system test framework compile.</p>
+
+<p>Test results: <a href="https://builds.apache.org/hudson/job/PreCommit-HADOOP-Build/402//testReport/" class="external-link" rel="nofollow">https://builds.apache.org/hudson/job/PreCommit-HADOOP-Build/402//testReport/</a><br/>
+Findbugs warnings: <a href="https://builds.apache.org/hudson/job/PreCommit-HADOOP-Build/402//artifact/trunk/build/test/findbugs/newPatchFindbugsWarnings.html" class="external-link" rel="nofollow">https://builds.apache.org/hudson/job/PreCommit-HADOOP-Build/402//artifact/trunk/build/test/findbugs/newPatchFindbugsWarnings.html</a><br/>
+Console output: <a href="https://builds.apache.org/hudson/job/PreCommit-HADOOP-Build/402//console" class="external-link" rel="nofollow">https://builds.apache.org/hudson/job/PreCommit-HADOOP-Build/402//console</a></p>
+
+<p>This message is automatically generated.</p>
+        </td></tr>
+                <tr id="comment-header-13029613"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jnp" id="word_commented_jnp" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jnp">Jitendra Nath Pandey</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">05/May/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13029613"><td bgcolor="#ffffff">
+            <p>+1 for the patch.</p>
+        </td></tr>
+                <tr id="comment-header-13029699"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hudson" id="word_commented_hudson" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hudson">Hudson</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">06/May/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13029699"><td bgcolor="#ffffff">
+            <p>Integrated in Hadoop-Common-trunk-Commit #573 (See <a href="https://builds.apache.org/hudson/job/Hadoop-Common-trunk-Commit/573/" class="external-link" rel="nofollow">https://builds.apache.org/hudson/job/Hadoop-Common-trunk-Commit/573/</a>)<br/>
+    <a href="https://issues.apache.org/jira/browse/HADOOP-7257" title="A client side mount table to give per-application/per-job file system view" class="issue-link" data-issue-key="HADOOP-7257"><del>HADOOP-7257</del></a> Client side mount tables (sanjay)</p>
+        </td></tr>
+                <tr id="comment-header-13029890"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hudson" id="word_commented_hudson" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hudson">Hudson</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">06/May/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13029890"><td bgcolor="#ffffff">
+            <p>Integrated in Hadoop-Common-trunk #680 (See <a href="https://builds.apache.org/hudson/job/Hadoop-Common-trunk/680/" class="external-link" rel="nofollow">https://builds.apache.org/hudson/job/Hadoop-Common-trunk/680/</a>)<br/>
+    <a href="https://issues.apache.org/jira/browse/HADOOP-7257" title="A client side mount table to give per-application/per-job file system view" class="issue-link" data-issue-key="HADOOP-7257"><del>HADOOP-7257</del></a> Client side mount tables (sanjay)</p>
+        </td></tr>
+                <tr id="comment-header-13135063"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="raviprak" id="word_commented_raviprak" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=raviprak">Ravi Prakash</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">25/Oct/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13135063"><td bgcolor="#ffffff">
+            <p>@Sanjay: ViewFs.java:624</p>
+<div class="preformatted panel" style="border-width: 1px;"><div class="preformattedContent panelContent">
+<pre>    static private void checkPathIsSlash(final Path f) throws IOException {
+      if (f != InodeTree.SlashPath) {
+        throw new IOException (
+        "Internal implementation error: expected file name to be /" );
+      }
+    }
+</pre>
+</div></div>
+
+<p>Should the condition be </p>
+<div class="preformatted panel" style="border-width: 1px;"><div class="preformattedContent panelContent">
+<pre>if (f.equals(Inode.SlashPath)
+</pre>
+</div></div>
+
+<p>My small program</p>
+<div class="preformatted panel" style="border-width: 1px;"><div class="preformattedContent panelContent">
+<pre>	Path p = new Path("/");
+	Path q = new Path("/");
+	System.out.println("Equals? " + (p == q) );
+</pre>
+</div></div>
+<p>Prints "Equals? false"</p>
+        </td></tr>
+                <tr id="comment-header-13179679"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="eli" id="word_commented_eli" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=eli">Eli Collins</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">04/Jan/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13179679"><td bgcolor="#ffffff">
+            <blockquote><p>I have attach the pdf of the javadoc for viewfs which explains how to use this feature. I will later post a user guide document.</p></blockquote>
+
+<p>Filed <a href="https://issues.apache.org/jira/browse/HADOOP-7953" title="Viewfs needs documentation" class="issue-link" data-issue-key="HADOOP-7953"><del>HADOOP-7953</del></a>.</p>
+        </td></tr>
+            </table>
+Generated at Sat Mar 22 13:33:48 UTC 2014 using JIRA 6.2#6252-sha1:aa343257d4ce030d9cb8c531be520be9fac1c996.
+
+</body>
+</html>

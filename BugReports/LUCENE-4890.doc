@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>[#LUCENE-4890] QueryTreeBuilder.getBuilder() only finds interfaces on the most derived class</title>
+    <meta http-equiv="Content-Type" Content="application/vnd.ms-word; charset=utf-8">
+        <style type="text/css">
+
+.tableBorder, .grid
+{
+    background-color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableBorder td, .grid td
+{
+    vertical-align: top;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+.noPadding
+{
+    padding: 0 !important;
+}
+
+h3 .subText
+{
+    font-size: 60%;
+    font-weight: normal;
+}
+
+.tabLabel
+{
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-bottom:none;
+    padding: 2px;
+    display: inline;
+}
+
+td.blank
+{
+    padding: 0;
+    margin: 0;
+}
+
+.blank td
+{
+    border: none;
+}
+
+#descriptionArea
+{
+    margin: 0;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+hr
+{
+    border-top:1px solid #aaa;
+}
+
+hr.fullcontent
+{
+  height: 15px;
+  padding: 10px 0;
+  background: #fff url('https://issues.apache.org/jira/images/icons/hr.gif') no-repeat scroll center;
+}
+
+</style>
+
+</head>
+<body>
+
+<table class="tableBorder" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" width="100%" colspan="2" valign="top">
+                            <h3 class="formtitle">
+                        [LUCENE-4890]&nbsp;<a href="https://issues.apache.org/jira/browse/LUCENE-4890">QueryTreeBuilder.getBuilder() only finds interfaces on the most derived class</a>
+            <span class="subText">
+               Created: 27/Mar/13                   &nbsp;Updated: 20/Mar/14
+
+                                                    &nbsp;Resolved: 22/Jun/13
+                            </span>
+            </h3>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Status:</b></td>
+        <td width="80%">Closed</td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Project:</b></td>
+        <td width="80%"><a href="https://issues.apache.org/jira/secure/BrowseProject.jspa?id=12310110">Lucene - Core</a></td>
+    </tr>
+
+        <tr>
+            <td><b>Component/s:</b></td>
+            <td>
+                                        <a title="core/queryparser - issues with QueryParser code under core"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310110&component=12310234"
+            >core/queryparser</a>                        </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Affects Version/s:</b></td>
+            <td>
+                                        <a title="2.9 - Last release (barring major bugs) before migrating to 3.0 and JDK 1.5"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310110&version=12312682"
+            >2.9</a>,                    <a title="2.9.1 - bug fix release"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310110&version=12314295"
+            >2.9.1</a>,                    <a title="2.9.2 - Bugfixes for 2.9.1"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310110&version=12314342"
+            >2.9.2</a>,                    <a title="2.9.3 - Bugfixes of 2.9.2"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310110&version=12314799"
+            >2.9.3</a>,                    <a title="2.9.4 - Bugfixes for 2.9.3"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310110&version=12315148"
+            >2.9.4</a>,                    <a title="3.0 - Migration to JDK 1.5"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310110&version=12312889"
+            >3.0</a>,                    <a title="3.0.1 - Bugfixes for 3.0"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310110&version=12314401"
+            >3.0.1</a>,                    <a title="3.0.2 - Bugfixes for 3.0.1"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310110&version=12314798"
+            >3.0.2</a>,                    <a title="3.0.3 - Bugfixes for 3.0.2"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310110&version=12315147"
+            >3.0.3</a>,                    <a title="3.1 - Major release after 3.x"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310110&version=12314822"
+            >3.1</a>,                    <a title="3.2 - Major release after 3.1"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310110&version=12316070"
+            >3.2</a>,                    <a title="3.3 - Major release after 3.2"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310110&version=12316470"
+            >3.3</a>,                    <a title="3.4 - Major release after 3.3"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310110&version=12316675"
+            >3.4</a>,                    <a title="3.5 - Major release after 3.4"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310110&version=12317877"
+            >3.5</a>,                    <a title="3.6 - Major release after 3.5"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310110&version=12319070"
+            >3.6</a>,                    <a title="3.6.1 - Bug fix release after 3.6"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310110&version=12320752"
+            >3.6.1</a>,                    <a title="3.6.2 - Bug fix release after 3.6.1"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310110&version=12322474"
+            >3.6.2</a>                        </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Fix Version/s:</b></td>
+            <td>
+                                        <a title="3.6.3 - Bug fix release after 3.6.2"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310110&fixfor=12323887"
+            >3.6.3</a>,                    <a title="4.4 - Major release after 4.3"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310110&fixfor=12324323"
+            >4.4</a>,                    <a title="5.0 - Current trunk"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310110&fixfor=12321663"
+            >5.0</a>                        </td>
+    </tr>
+    
+    </table>
+
+<br />
+<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" valign="top" width="20%">
+            <b>Type:</b>
+        </td>
+        <td bgcolor="#ffffff" valign="top"  width="30%" >
+            Bug
+        </td>
+
+                    <td bgcolor="#f0f0f0">
+                <b>Priority:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap>
+                Minor
+            </td>
+            </tr>
+    <tr>
+                        <td bgcolor="#f0f0f0" valign="top" width="20%">
+                <b>Reporter:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top"  width="30%" >
+                                            <a class="user-hover" rel="philip.searle" id="word_reporter_philip.searle" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=philip.searle">Philip Searle</a>
+                            </td>
+        
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Assignee:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap  width="30%" >
+                                            <a class="user-hover" rel="adriano_crestani" id="word_assignee_adriano_crestani" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=adriano_crestani">Adriano Crestani</a>
+                            </td>
+            </tr>
+    	<tr>
+		<td bgcolor="#f0f0f0" width="20%">
+			<b>Resolution:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                            Fixed
+                    </td>
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Votes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                0
+            </td>
+        
+    </tr>
+    
+        <tr>
+        <td bgcolor="#f0f0f0" width="20%">
+            <b>Labels:</b>
+        </td>
+        <td id="labels-12639385-value" class="value" bgcolor="#ffffff" valign="top" colspan="3" nowrap>
+                            None
+                    </td>
+    </tr>
+    
+    	<tr>
+        		<td bgcolor="#f0f0f0" width="20%"><b>Remaining Estimate:</b></td>
+        <td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Time Spent:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+	</tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Original Estimate:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    
+    	<tr>
+
+		<td bgcolor="#f0f0f0" width="20%" valign="top">
+			<b>Environment:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" colspan="3">
+            <p>Lucene 3.3.0 on Win32</p>
+		</td>
+	</tr>
+    </table>
+
+
+
+    <br />
+
+    	<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+
+                <tr>
+            <td bgcolor="#f0f0f0" width=20% valign=top>
+                <b>Attachments:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top">
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        LUCENE-4890_2013_05_25.patch &nbsp;&nbsp;&nbsp;
+                            </td>
+        </tr>
+        
+    
+
+
+
+                        <tr>
+                <td bgcolor="#f0f0f0" width="20%" valign="top"><b>Lucene Fields:</b></td>
+                <td id="customfield_12310120-12639385-value" class="value" bgcolor="#ffffff" width="80%">
+
+
+    <div class="shorten" id="customfield_12310120-field">
+        							<span>New</span>			            </div>
+</td>
+            </tr>
+            </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Description</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td id="descriptionArea">
+            <p>QueryBuilder implementations registered with QueryTreeBuilder.setBuilder() are not recognized by QueryTreeBuilder.getBuilder() if they are registered for an interface implemented by a superclass. Registering them for a concrete query node class or an interface implemented by the most-derived class do work.</p>
+
+<div class="code panel" style="border-style: solid;border-width: 1px;"><div class="codeHeader panelHeader" style="border-bottom-width: 1px;border-bottom-style: solid;"><b>example.java</b></div><div class="codeContent panelContent">
+<pre class="code-java">
+/* Our custom query builder */
+class CustomQueryTreeBuilder <span class="code-keyword">extends</span> QueryTreeBuilder {
+  <span class="code-keyword">public</span> CustomQueryTreeBuilder() {
+    /* Turn field:<span class="code-quote">"value"</span> into an application-specific object */
+    setBuilder(FieldQueryNode.class, <span class="code-keyword">new</span> QueryBuilder() {
+      @Override
+      <span class="code-keyword">public</span> <span class="code-object">Object</span> build(QueryNode queryNode) {
+        FieldQueryNode node = (FieldQueryNode) queryNode;
+        <span class="code-keyword">return</span> <span class="code-keyword">new</span> ApplicationSpecificClass(node.getFieldAsString());
+      }
+    });
+    /* Ignore all other query node types */
+    setBuilder(QueryNode.class, <span class="code-keyword">new</span>  QueryBuilder() {
+      @Override
+      <span class="code-keyword">public</span> <span class="code-object">Object</span> build(QueryNode queryNode) {
+        <span class="code-keyword">return</span> <span class="code-keyword">null</span>;
+      }
+    });
+  }
+}
+
+/* Assume <span class="code-keyword">this</span> is in the main program: */
+StandardQueryParser queryParser = <span class="code-keyword">new</span> StandardQueryParser();
+queryParser.setQueryBuilder(<span class="code-keyword">new</span> CustomQueryTreeBuilder());
+
+/* The following line will <span class="code-keyword">throw</span> an exception because it can't find a builder <span class="code-keyword">for</span> BooleanQueryNode.class */
+<span class="code-object">Object</span> queryObject = queryParser.parse(<span class="code-quote">"field:\"</span>value\<span class="code-quote">" field2:\"</span>value2\<span class="code-quote">"", "</span>field");
+</pre>
+</div></div>
+            <br/>
+        </td>
+    </tr>
+    </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Comments</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="grid" style="margin: 0;">
+                <tr id="comment-header-13615469"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="philip.searle" id="word_commented_philip.searle" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=philip.searle">Philip Searle</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">27/Mar/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13615469"><td bgcolor="#ffffff">
+            <p>Improved example formatting.</p>
+        </td></tr>
+                <tr id="comment-header-13615472"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="philip.searle" id="word_commented_philip.searle" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=philip.searle">Philip Searle</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">27/Mar/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13615472"><td bgcolor="#ffffff">
+            <p>The issue appears to be due to the code that walks the query node's class hierarchy incorrectly getting the list of implemented interfaces from the most-derived class, instead of the class currently being processed.</p>
+
+<p>It can be fixed by changing the following line in QueryTreeBuilder.java from:<br/>
+<tt>Class&lt;?&gt;[] classes = node.getClass().getInterfaces();</tt><br/>
+to:<br/>
+<tt>Class&lt;?&gt;[] classes = clazz.getInterfaces();</tt></p>
+        </td></tr>
+                <tr id="comment-header-13666961"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="adriano_crestani" id="word_commented_adriano_crestani" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=adriano_crestani">Adriano Crestani</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">25/May/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13666961"><td bgcolor="#ffffff">
+            <p>Thanks Philip!</p>
+
+<p>Your logic sounds right! I created a test case and it ran just like you said.</p>
+
+<p>Here is the fix. I plan to commit in the next couple of days.</p>
+        </td></tr>
+                <tr id="comment-header-13716712"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="steve_rowe" id="word_commented_steve_rowe" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=steve_rowe">Steve Rowe</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">23/Jul/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13716712"><td bgcolor="#ffffff">
+            <p>Bulk close resolved 4.4 issues</p>
+        </td></tr>
+                <tr id="comment-header-13942162"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jira-bot" id="word_commented_jira-bot" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jira-bot">ASF subversion and git services</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">20/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13942162"><td bgcolor="#ffffff">
+            <p>Commit 1579717 from <a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=mikemccand" class="user-hover" rel="mikemccand">Michael McCandless</a> in branch 'dev/branches/lucene_solr_3_6'<br/>
+[ <a href="https://svn.apache.org/r1579717" class="external-link" rel="nofollow">https://svn.apache.org/r1579717</a> ]</p>
+
+<p><a href="https://issues.apache.org/jira/browse/LUCENE-4890" title="QueryTreeBuilder.getBuilder() only finds interfaces on the most derived class" class="issue-link" data-issue-key="LUCENE-4890"><del>LUCENE-4890</del></a>: get this test passing again</p>
+        </td></tr>
+            </table>
+Generated at Sat Mar 22 13:35:23 UTC 2014 using JIRA 6.2#6252-sha1:aa343257d4ce030d9cb8c531be520be9fac1c996.
+
+</body>
+</html>

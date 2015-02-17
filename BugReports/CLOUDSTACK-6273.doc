@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>[#CLOUDSTACK-6273] Confirmation text improvement in Create-Zone Wizard</title>
+    <meta http-equiv="Content-Type" Content="application/vnd.ms-word; charset=utf-8">
+        <style type="text/css">
+
+.tableBorder, .grid
+{
+    background-color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableBorder td, .grid td
+{
+    vertical-align: top;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+.noPadding
+{
+    padding: 0 !important;
+}
+
+h3 .subText
+{
+    font-size: 60%;
+    font-weight: normal;
+}
+
+.tabLabel
+{
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-bottom:none;
+    padding: 2px;
+    display: inline;
+}
+
+td.blank
+{
+    padding: 0;
+    margin: 0;
+}
+
+.blank td
+{
+    border: none;
+}
+
+#descriptionArea
+{
+    margin: 0;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+hr
+{
+    border-top:1px solid #aaa;
+}
+
+hr.fullcontent
+{
+  height: 15px;
+  padding: 10px 0;
+  background: #fff url('https://issues.apache.org/jira/images/icons/hr.gif') no-repeat scroll center;
+}
+
+</style>
+
+</head>
+<body>
+
+<table class="tableBorder" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" width="100%" colspan="2" valign="top">
+                            <h3 class="formtitle">
+                        [CLOUDSTACK-6273]&nbsp;<a href="https://issues.apache.org/jira/browse/CLOUDSTACK-6273">Confirmation text improvement in Create-Zone Wizard</a>
+            <span class="subText">
+               Created: 22/Mar/14                   &nbsp;Updated: 22/Mar/14
+
+                                                    &nbsp;Resolved: 22/Mar/14
+                            </span>
+            </h3>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Status:</b></td>
+        <td width="80%">Closed</td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Project:</b></td>
+        <td width="80%"><a href="https://issues.apache.org/jira/secure/BrowseProject.jspa?id=12313920">CloudStack</a></td>
+    </tr>
+
+        <tr>
+            <td><b>Component/s:</b></td>
+            <td>
+                                        <a title="UI"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12313920&component=12319629"
+            >UI</a>                        </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Affects Version/s:</b></td>
+            <td>
+                                        <a title="Future - This is the project&#39;s unscheduled, but triaged, release bucket"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12313920&version=12323850"
+            >Future</a>                        </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Fix Version/s:</b></td>
+            <td>
+                                        <a title="Future - This is the project&#39;s unscheduled, but triaged, release bucket"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12313920&fixfor=12323850"
+            >Future</a>                        </td>
+    </tr>
+    
+            <tr>
+            <td><b>Security Level:</b></td>
+            <td>
+                Public
+                                    <font size=1> (Anyone can view this level - this is the default.)</font>
+                            </td>
+       </tr>
+    </table>
+
+<br />
+<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" valign="top" width="20%">
+            <b>Type:</b>
+        </td>
+        <td bgcolor="#ffffff" valign="top"  width="30%" >
+            Improvement
+        </td>
+
+                    <td bgcolor="#f0f0f0">
+                <b>Priority:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap>
+                Minor
+            </td>
+            </tr>
+    <tr>
+                        <td bgcolor="#f0f0f0" valign="top" width="20%">
+                <b>Reporter:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top"  width="30%" >
+                                            <a class="user-hover" rel="mike-tutkowski" id="word_reporter_mike-tutkowski" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=mike-tutkowski">Mike Tutkowski</a>
+                            </td>
+        
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Assignee:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap  width="30%" >
+                                            <a class="user-hover" rel="mike-tutkowski" id="word_assignee_mike-tutkowski" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=mike-tutkowski">Mike Tutkowski</a>
+                            </td>
+            </tr>
+    	<tr>
+		<td bgcolor="#f0f0f0" width="20%">
+			<b>Resolution:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                            Fixed
+                    </td>
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Votes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                0
+            </td>
+        
+    </tr>
+    
+        <tr>
+        <td bgcolor="#f0f0f0" width="20%">
+            <b>Labels:</b>
+        </td>
+        <td id="labels-12703003-value" class="value" bgcolor="#ffffff" valign="top" colspan="3" nowrap>
+                            None
+                    </td>
+    </tr>
+    
+    	<tr>
+        		<td bgcolor="#f0f0f0" width="20%"><b>Remaining Estimate:</b></td>
+        <td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Time Spent:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+	</tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Original Estimate:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    
+    </table>
+
+
+
+    <br />
+
+    	<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+
+        
+    
+
+
+
+</table>
+
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Comments</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="grid" style="margin: 0;">
+                <tr id="comment-header-13943813"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="mike-tutkowski" id="word_commented_mike-tutkowski" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=mike-tutkowski">Mike Tutkowski</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">22/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13943813"><td bgcolor="#ffffff">
+            <p>From an e-mail I sent to dev@:</p>
+
+<p>Hi,</p>
+
+<p>While creating a Basic Zone that can use local storage tonight, I read the following dialog:</p>
+
+<p><a href="http://i.imgur.com/hV0bp6r.png" class="external-link" rel="nofollow">http://i.imgur.com/hV0bp6r.png</a></p>
+
+<p>Unless I'm mistaken, it seems that the paragraph labeled with a 1 should refer to shared primary storage instead of just primary storage, right?</p>
+
+<p>Point 2 talks about local storage, but that is just another type of primary storage.</p>
+
+<p>The "moral" of the story is I think we should add the word "shared" to point 1 when we refer to primary storage.</p>
+
+<p>What do you think?</p>
+
+<p>Thanks!</p>
+        </td></tr>
+                <tr id="comment-header-13943821"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jira-bot" id="word_commented_jira-bot" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jira-bot">ASF subversion and git services</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">22/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13943821"><td bgcolor="#ffffff">
+            <p>Commit 5e3d4aebac22b59e0cefa2b11c935145dc4c9cff in cloudstack's branch refs/heads/master from <a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=mike-tutkowski" class="user-hover" rel="mike-tutkowski">Mike Tutkowski</a><br/>
+[ <a href="https://git-wip-us.apache.org/repos/asf?p=cloudstack.git;h=5e3d4ae" class="external-link" rel="nofollow">https://git-wip-us.apache.org/repos/asf?p=cloudstack.git;h=5e3d4ae</a> ]</p>
+
+<p><a href="https://issues.apache.org/jira/browse/CLOUDSTACK-6273" title="Confirmation text improvement in Create-Zone Wizard" class="issue-link" data-issue-key="CLOUDSTACK-6273"><del>CLOUDSTACK-6273</del></a> (Text changed slightly for a confirmation dialog)</p>
+        </td></tr>
+            </table>
+Generated at Sat Mar 22 13:36:46 UTC 2014 using JIRA 6.2#6252-sha1:aa343257d4ce030d9cb8c531be520be9fac1c996.
+
+</body>
+</html>

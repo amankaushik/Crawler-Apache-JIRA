@@ -1,0 +1,1983 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>[#HIVE-1362] Optimizer statistics on columns in tables and partitions</title>
+    <meta http-equiv="Content-Type" Content="application/vnd.ms-word; charset=utf-8">
+        <style type="text/css">
+
+.tableBorder, .grid
+{
+    background-color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableBorder td, .grid td
+{
+    vertical-align: top;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+.noPadding
+{
+    padding: 0 !important;
+}
+
+h3 .subText
+{
+    font-size: 60%;
+    font-weight: normal;
+}
+
+.tabLabel
+{
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-bottom:none;
+    padding: 2px;
+    display: inline;
+}
+
+td.blank
+{
+    padding: 0;
+    margin: 0;
+}
+
+.blank td
+{
+    border: none;
+}
+
+#descriptionArea
+{
+    margin: 0;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+hr
+{
+    border-top:1px solid #aaa;
+}
+
+hr.fullcontent
+{
+  height: 15px;
+  padding: 10px 0;
+  background: #fff url('https://issues.apache.org/jira/images/icons/hr.gif') no-repeat scroll center;
+}
+
+</style>
+
+</head>
+<body>
+
+<table class="tableBorder" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" width="100%" colspan="2" valign="top">
+                            <b><a id="parent_issue_summary" href="https://issues.apache.org/jira/browse/HIVE-33">[Hive]: Add optimizer statistics in Hive</a></b>
+                <span style="font-size: 9px">(<a id="parent_issue_key" href="https://issues.apache.org/jira/browse/HIVE-33">HIVE-33</a>)</span>
+                <h3 class="formtitle"><img src="https://issues.apache.org/jira/images/icons/link_out_bot.gif" width="16" height="16" />
+                        [HIVE-1362]&nbsp;<a href="https://issues.apache.org/jira/browse/HIVE-1362">Optimizer statistics on columns in tables and partitions</a>
+            <span class="subText">
+               Created: 22/May/10                   &nbsp;Updated: 21/Mar/14
+
+                                                    &nbsp;Resolved: 07/Nov/12
+                            </span>
+            </h3>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Status:</b></td>
+        <td width="80%">Closed</td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Project:</b></td>
+        <td width="80%"><a href="https://issues.apache.org/jira/secure/BrowseProject.jspa?id=12310843">Hive</a></td>
+    </tr>
+
+        <tr>
+            <td><b>Component/s:</b></td>
+            <td>
+                                        <a title="Statistics"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310843&component=12314312"
+            >Statistics</a>                        </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Affects Version/s:</b></td>
+            <td>
+                            None
+                </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Fix Version/s:</b></td>
+            <td>
+                                        <a title="0.10.0 - released"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310843&fixfor=12320745"
+            >0.10.0</a>                        </td>
+    </tr>
+    
+    </table>
+
+<br />
+<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" valign="top" width="20%">
+            <b>Type:</b>
+        </td>
+        <td bgcolor="#ffffff" valign="top"  width="30%" >
+            Sub-task
+        </td>
+
+                    <td bgcolor="#f0f0f0">
+                <b>Priority:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap>
+                Major
+            </td>
+            </tr>
+    <tr>
+                        <td bgcolor="#f0f0f0" valign="top" width="20%">
+                <b>Reporter:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top"  width="30%" >
+                                            <a class="user-hover" rel="nzhang" id="word_reporter_nzhang" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=nzhang">Ning Zhang</a>
+                            </td>
+        
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Assignee:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap  width="30%" >
+                                            <a class="user-hover" rel="shreepadma" id="word_assignee_shreepadma" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=shreepadma">Shreepadma Venugopalan</a>
+                            </td>
+            </tr>
+    	<tr>
+		<td bgcolor="#f0f0f0" width="20%">
+			<b>Resolution:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                            Fixed
+                    </td>
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Votes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                0
+            </td>
+        
+    </tr>
+    
+        <tr>
+        <td bgcolor="#f0f0f0" width="20%">
+            <b>Labels:</b>
+        </td>
+        <td id="labels-12465176-value" class="value" bgcolor="#ffffff" valign="top" colspan="3" nowrap>
+                            None
+                    </td>
+    </tr>
+    
+    	<tr>
+        		<td bgcolor="#f0f0f0" width="20%"><b>Remaining Estimate:</b></td>
+        <td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Time Spent:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+	</tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Original Estimate:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    
+    </table>
+
+
+
+    <br />
+
+    	<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+
+                <tr>
+            <td bgcolor="#f0f0f0" width=20% valign=top>
+                <b>Attachments:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top">
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HIVE-1362-gen_thrift.1.patch.txt &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HIVE-1362-gen_thrift.2.patch.txt &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HIVE-1362-gen_thrift.3.patch.txt &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HIVE-1362-gen_thrift.4.patch.txt &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HIVE-1362-gen_thrift.5.patch.txt &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HIVE-1362-gen_thrift.6.patch.txt &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HIVE-1362.1.patch.txt &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HIVE-1362.10.patch.txt &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HIVE-1362.11.patch.txt &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HIVE-1362.2.patch.txt &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HIVE-1362.3.patch.txt &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HIVE-1362.4.patch.txt &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HIVE-1362.5.patch.txt &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HIVE-1362.6.patch.txt &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HIVE-1362.7.patch.txt &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HIVE-1362.8.patch.txt &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HIVE-1362.9.patch.txt &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HIVE-1362.D6339.1.patch &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HIVE-1362_gen-thrift.10.patch.txt &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HIVE-1362_gen-thrift.7.patch.txt &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HIVE-1362_gen-thrift.8.patch.txt &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HIVE-1362_gen-thrift.9.patch.txt &nbsp;&nbsp;&nbsp;
+                            </td>
+        </tr>
+        
+            <tr>
+            <td bgcolor="#f0f0f0" width="20%" valign="top">
+                <b>Issue Links:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" class="noPadding">
+                <table cellpadding="0" cellspacing="0" border="0" width="100%" class="blank">
+                                            <tr>
+                            <td colspan="4" bgcolor="#f0f0f0">
+                                <b>Blocker</b><br/>
+                            </td>
+                        </tr>
+                                    <tr>
+            <td>
+                blocks
+            </td>
+            <td>
+                <a href="https://issues.apache.org/jira/browse/HIVE-1938">
+                     HIVE-1938                 </a>
+            </td>
+            <td>
+                Cost Based Query optimization for Joi...
+            </td>
+            <td>
+                Open
+            </td>
+        </tr>
+                                                                            <tr>
+                            <td colspan="4" bgcolor="#f0f0f0">
+                                <b>Duplicate</b><br/>
+                            </td>
+                        </tr>
+                                                                <tr>
+            <td>
+                is duplicated by
+            </td>
+            <td>
+                <a href="https://issues.apache.org/jira/browse/HIVE-1940">
+                     <strike>HIVE-1940</strike>                 </a>
+            </td>
+            <td>
+                Query Optimization Using Column Stati...
+            </td>
+            <td>
+                Resolved
+            </td>
+        </tr>
+                                                <tr>
+                            <td colspan="4" bgcolor="#f0f0f0">
+                                <b>Incorporates</b><br/>
+                            </td>
+                        </tr>
+                                    <tr>
+            <td>
+                incorporates
+            </td>
+            <td>
+                <a href="https://issues.apache.org/jira/browse/HIVE-3686">
+                     <strike>HIVE-3686</strike>                 </a>
+            </td>
+            <td>
+                Fix compile errors introduced by the ...
+            </td>
+            <td>
+                Closed
+            </td>
+        </tr>
+                                        <tr>
+            <td>
+                is part of
+            </td>
+            <td>
+                <a href="https://issues.apache.org/jira/browse/HIVE-33">
+                     HIVE-33                 </a>
+            </td>
+            <td>
+                [Hive]: Add optimizer statistics in Hive
+            </td>
+            <td>
+                Open
+            </td>
+        </tr>
+                                                <tr>
+                            <td colspan="4" bgcolor="#f0f0f0">
+                                <b>Reference</b><br/>
+                            </td>
+                        </tr>
+                                    <tr>
+            <td>
+                relates to
+            </td>
+            <td>
+                <a href="https://issues.apache.org/jira/browse/HIVE-3516">
+                     HIVE-3516                 </a>
+            </td>
+            <td>
+                Fast incremental statistics computati...
+            </td>
+            <td>
+                Open
+            </td>
+        </tr>
+            <tr>
+            <td>
+                relates to
+            </td>
+            <td>
+                <a href="https://issues.apache.org/jira/browse/HIVE-3526">
+                     HIVE-3526                 </a>
+            </td>
+            <td>
+                Column Statistics - Add support for e...
+            </td>
+            <td>
+                Open
+            </td>
+        </tr>
+            <tr>
+            <td>
+                relates to
+            </td>
+            <td>
+                <a href="https://issues.apache.org/jira/browse/HIVE-4561">
+                     HIVE-4561                 </a>
+            </td>
+            <td>
+                Column stats :  LOW_VALUE (or HIGH_VA...
+            </td>
+            <td>
+                Patch Available
+            </td>
+        </tr>
+                                                                            <tr>
+                            <td colspan="4" bgcolor="#f0f0f0">
+                                <b>Regression</b><br/>
+                            </td>
+                        </tr>
+                                                                <tr>
+            <td>
+                is broken by
+            </td>
+            <td>
+                <a href="https://issues.apache.org/jira/browse/HIVE-3524">
+                     <strike>HIVE-3524</strike>                 </a>
+            </td>
+            <td>
+                Storing certain Exception objects thr...
+            </td>
+            <td>
+                Closed
+            </td>
+        </tr>
+                                                <tr>
+                            <td colspan="4" bgcolor="#f0f0f0">
+                                <b>Required</b><br/>
+                            </td>
+                        </tr>
+                                    <tr>
+            <td>
+                requires
+            </td>
+            <td>
+                <a href="https://issues.apache.org/jira/browse/HIVE-3678">
+                     <strike>HIVE-3678</strike>                 </a>
+            </td>
+            <td>
+                Add metastore upgrade scripts for col...
+            </td>
+            <td>
+                Closed
+            </td>
+        </tr>
+                                                                            <tr>
+                            <td colspan="4" bgcolor="#f0f0f0">
+                                <b>dependent</b><br/>
+                            </td>
+                        </tr>
+                                                                <tr>
+            <td>
+                is depended upon by
+            </td>
+            <td>
+                <a href="https://issues.apache.org/jira/browse/HIVE-3602">
+                     HIVE-3602                 </a>
+            </td>
+            <td>
+                Provide ability to roll up column sta...
+            </td>
+            <td>
+                Open
+            </td>
+        </tr>
+                                        </table>
+            </td>
+        </tr>
+    
+
+
+
+                        <tr>
+                <td bgcolor="#f0f0f0" width="20%" valign="top"><b>Hadoop Flags:</b></td>
+                <td id="customfield_12310191-12465176-value" class="value" bgcolor="#ffffff" width="80%">
+
+
+    <div class="shorten" id="customfield_12310191-field">
+        							<span>Reviewed</span>			            </div>
+</td>
+            </tr>
+            </table>
+
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Comments</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="grid" style="margin: 0;">
+                <tr id="comment-header-12870229"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="nzhang" id="word_commented_nzhang" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=nzhang">Ning Zhang</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">22/May/10</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-12870229"><td bgcolor="#ffffff">
+            <p>This is the 2nd subtask of <a href="https://issues.apache.org/jira/browse/HIVE-33" title="[Hive]: Add optimizer statistics in Hive" class="issue-link" data-issue-key="HIVE-33">HIVE-33</a> (stats in Hive tables). </p>
+
+<p>We will gather column level stats based on users' request. It also depends on <a href="https://issues.apache.org/jira/browse/HIVE-1361" title="table/partition level statistics" class="issue-link" data-issue-key="HIVE-1361"><del>HIVE-1361</del></a> in that the metastore API should suport storing and retrieving stats. </p>
+
+<p>The major milestone for this subtasks are:<br/>
+ 1) add a new HiveQL command to gather column level stats. Please see <a href="https://issues.apache.org/jira/browse/HIVE-33" title="[Hive]: Add optimizer statistics in Hive" class="issue-link" data-issue-key="HIVE-33">HIVE-33</a> for the syntax. <br/>
+ 2) add new UDFs/UDAFs to compute these statistics. </p>
+
+<p>The proposed statistics are:</p>
+<ul class="alternate" type="square">
+	<li>number of distinct values</li>
+	<li>number of NULL values</li>
+	<li>min/max k values where k could be given by user</li>
+	<li>histogram: frequency and height balanced</li>
+	<li>average size of the column</li>
+	<li>avg/sum of all values in the column if their type is numerical</li>
+	<li>percentiles of the value</li>
+</ul>
+
+        </td></tr>
+                <tr id="comment-header-12989055"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="nzhang" id="word_commented_nzhang" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=nzhang">Ning Zhang</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">01/Feb/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-12989055"><td bgcolor="#ffffff">
+            <p>Good catch Carl. Yeah, it won't work for HiveServer. </p>
+
+<p>I'm uploading a new patch taking your 2 comments. </p>
+        </td></tr>
+                <tr id="comment-header-12989057"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="nzhang" id="word_commented_nzhang" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=nzhang">Ning Zhang</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">01/Feb/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-12989057"><td bgcolor="#ffffff">
+            <p>Sorry, please ignore my previous comment. It should goes to <a href="https://issues.apache.org/jira/browse/HIVE-1937" title="DDLSemanticAnalyzer won&#39;t take newly set Hive parameters" class="issue-link" data-issue-key="HIVE-1937"><del>HIVE-1937</del></a>. </p>
+        </td></tr>
+                <tr id="comment-header-12989721"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="namit" id="word_commented_namit" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=namit">Namit Jain</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">02/Feb/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-12989721"><td bgcolor="#ffffff">
+            <p>Is anyone working on this ?</p>
+        </td></tr>
+                <tr id="comment-header-13240644"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="ashutoshc" id="word_commented_ashutoshc" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=ashutoshc">Ashutosh Chauhan</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">28/Mar/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13240644"><td bgcolor="#ffffff">
+            <p>@Namit,<br/>
+Bharath plans to work on this and has a gsoc proposal : <a href="http://www.google-melange.com/gsoc/proposal/review/google/gsoc2012/bharathv/18002" class="external-link" rel="nofollow">http://www.google-melange.com/gsoc/proposal/review/google/gsoc2012/bharathv/18002</a> </p>
+        </td></tr>
+                <tr id="comment-header-13446167"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="farlue" id="word_commented_farlue" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=farlue">Feng Lu</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">31/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13446167"><td bgcolor="#ffffff">
+            <p>A patch for computing column level top k values is attached. Review is available at <a href="https://reviews.facebook.net/D5073" class="external-link" rel="nofollow">https://reviews.facebook.net/D5073</a> .</p>
+        </td></tr>
+                <tr id="comment-header-13446188"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="cwsteinbach" id="word_commented_cwsteinbach" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=cwsteinbach">Carl Steinbach</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">31/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13446188"><td bgcolor="#ffffff">
+            <p>@Feng: Please open a new JIRA for your patch and post it there. This ticket covers the task of implementing a general framework for computing and persisting column-level statistics. It doesn't look like your patch does that. Thanks.</p>
+        </td></tr>
+                <tr id="comment-header-13446264"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="farlue" id="word_commented_farlue" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=farlue">Feng Lu</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">31/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13446264"><td bgcolor="#ffffff">
+            <p>@Carl, created a new JIRA at <a href="https://issues.apache.org/jira/browse/HIVE-3421" class="external-link" rel="nofollow">https://issues.apache.org/jira/browse/HIVE-3421</a> .</p>
+        </td></tr>
+                <tr id="comment-header-13446432"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="shreepadma" id="word_commented_shreepadma" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=shreepadma">Shreepadma Venugopalan</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">31/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13446432"><td bgcolor="#ffffff">
+            <p>This patch implements version 1 of the column statistics project in Hive. It adds support for computing and persisting statistical summary of column values in Hive Tables and Partitions. In order to support column statistics in Hive, this patch does the following,</p>
+
+<ul>
+	<li>Adds a new compute stats UDAF to compute scalar statistics for all primitive Hive data types. In version 1 of the project, we support the following scalar statistics on primitive types - estimate of number of distinct values, number of null values, number of trues/falses for boolean typed columsn, max and avg length for string and binary typed columns, max and min value for long and double typed columns. Note that version 1 of the column stats project includes support for column statistics both at the table and partition level.</li>
+</ul>
+
+
+<ul>
+	<li>Adds Metastore schema tables to persist the newly added statistics both at table and partition level.</li>
+	<li>Adds Metastore Thrift API to persist, retrieve and delete column statistics at both table and partition level.<br/>
+Please refer to the following wiki link for the details of the schema and the Thrift API changes - <a href="https://cwiki.apache.org/confluence/display/Hive/Column+Statistics+in+Hive" class="external-link" rel="nofollow">https://cwiki.apache.org/confluence/display/Hive/Column+Statistics+in+Hive</a></li>
+</ul>
+
+
+<ul>
+	<li>Extends the analyze table compute statistics statement to trigger statistics computation and persistence for one or more columns. Please note that statistics for multiple columns is computed through a single scan of the table data. Please refer to the following wiki link for the syntax changes - <a href="https://cwiki.apache.org/confluence/display/Hive/Column+Statistics+in+Hive" class="external-link" rel="nofollow">https://cwiki.apache.org/confluence/display/Hive/Column+Statistics+in+Hive</a></li>
+</ul>
+
+
+<p>One thing missing from the patch at this point is the metastore upgrade scrips for MySQL/Derby/Postgres/Oracle. I'm waiting for the review to finalize the metastore schema changes before I go ahead and add the upgrade scripts.</p>
+
+<p>In a follow on patch, as part of version 2 of the column statistics project, we will add support for computing, persisting and retrieving histograms on long and double typed column values.</p>
+        </td></tr>
+                <tr id="comment-header-13446433"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="shreepadma" id="word_commented_shreepadma" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=shreepadma">Shreepadma Venugopalan</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">31/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13446433"><td bgcolor="#ffffff">
+            <p>Review is available at : <a href="https://reviews.apache.org/r/6878/" class="external-link" rel="nofollow">https://reviews.apache.org/r/6878/</a></p>
+        </td></tr>
+                <tr id="comment-header-13462239"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="cwsteinbach" id="word_commented_cwsteinbach" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=cwsteinbach">Carl Steinbach</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">25/Sep/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13462239"><td bgcolor="#ffffff">
+            <p>@Shreepadma: please see my comments on reviewboard.</p>
+        </td></tr>
+                <tr id="comment-header-13468270"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="shreepadma" id="word_commented_shreepadma" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=shreepadma">Shreepadma Venugopalan</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">03/Oct/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13468270"><td bgcolor="#ffffff">
+            <p>I've provide a review board link shortly. </p>
+        </td></tr>
+                <tr id="comment-header-13468271"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="shreepadma" id="word_commented_shreepadma" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=shreepadma">Shreepadma Venugopalan</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">03/Oct/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13468271"><td bgcolor="#ffffff">
+            <p>Meant to say I'll provide a review board link shortly.</p>
+        </td></tr>
+                <tr id="comment-header-13468293"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="shreepadma" id="word_commented_shreepadma" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=shreepadma">Shreepadma Venugopalan</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">03/Oct/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13468293"><td bgcolor="#ffffff">
+            <p>Patch is available for review at : <a href="https://reviews.apache.org/r/6878/" class="external-link" rel="nofollow">https://reviews.apache.org/r/6878/</a></p>
+        </td></tr>
+                <tr id="comment-header-13468295"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="shreepadma" id="word_commented_shreepadma" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=shreepadma">Shreepadma Venugopalan</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">03/Oct/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13468295"><td bgcolor="#ffffff">
+            <p>Latest revision is here: <a href="https://reviews.apache.org/r/6878/diff/#index_header" class="external-link" rel="nofollow">https://reviews.apache.org/r/6878/diff/#index_header</a></p>
+        </td></tr>
+                <tr id="comment-header-13468502"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="namit" id="word_commented_namit" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=namit">Namit Jain</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">03/Oct/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13468502"><td bgcolor="#ffffff">
+            <p>Are the stats collected while the table is being scanned, or is it part of analyze only ?</p>
+        </td></tr>
+                <tr id="comment-header-13468505"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="namit" id="word_commented_namit" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=namit">Namit Jain</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">03/Oct/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13468505"><td bgcolor="#ffffff">
+            <p>Shreepadma, some comments on reviewboard</p>
+        </td></tr>
+                <tr id="comment-header-13468668"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="shreepadma" id="word_commented_shreepadma" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=shreepadma">Shreepadma Venugopalan</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">03/Oct/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13468668"><td bgcolor="#ffffff">
+            <p>@Namit: The stats is collected as part of analyze. We will look into implicit stats collection i.e., when the table is scanned/loaded in next version of this project.</p>
+        </td></tr>
+                <tr id="comment-header-13468754"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="shreepadma" id="word_commented_shreepadma" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=shreepadma">Shreepadma Venugopalan</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">03/Oct/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13468754"><td bgcolor="#ffffff">
+            <p>Latest revision which addresses Namit's comments is on review board.</p>
+        </td></tr>
+                <tr id="comment-header-13469143"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="sshankar" id="word_commented_sshankar" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=sshankar">shrikanth shankar</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">04/Oct/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13469143"><td bgcolor="#ffffff">
+            <p>I had a couple of high level comments on the patch that seem to fit better here rather than on the review board. Apologies if this violates protocol<br/>
+(1) The count_stats aggregation operator 'repeats' many existing aggregates that Hive already supports (count of nulls, count true's, max, min etc). It might make a lot more sense to just add an aggregate to return the approximate number of distinct values for a column. Any reason why stats collection cant just generate more expressions in the SQL?<br/>
+(2) There might even be value in adding a different UDAF which just returns a serialized numDV estimator. Storing this (instead of the count) could be useful in other places e.g. combining numDV estimates across partitions (A second UDAF would be needed to support aggregating these but that seems easy)</p>
+        </td></tr>
+                <tr id="comment-header-13469155"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="namit" id="word_commented_namit" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=namit">Namit Jain</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">04/Oct/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13469155"><td bgcolor="#ffffff">
+            <p>Questions on the jira ?</p>
+        </td></tr>
+                <tr id="comment-header-13469614"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="shreepadma" id="word_commented_shreepadma" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=shreepadma">Shreepadma Venugopalan</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">04/Oct/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13469614"><td bgcolor="#ffffff">
+            <p>@Shrikanth: Thank you for your comments. We can certainly add a new UDAF with the Flajolet-Martin sketch that returns a serialized numDV estimator. I've already filed a new JIRA (<a href="https://issues.apache.org/jira/browse/HIVE-3516" title="Fast incremental statistics computation on columns in Hive tables" class="issue-link" data-issue-key="HIVE-3516">HIVE-3516</a>) for the incremental stats computation work. I'll add the UDAF as part of that JIRA. </p>
+
+<p>A couple of reasons why we decided to create a new compute_stats aggregation operator instead of generating more expressions in the SQL,</p>
+
+<p>1. We felt its a lot cleaner to encapsulate the stats for a column within a single UDAF. The compute_stats UDAF returns a struct with the relevant stats depending on the data type of the column and as a result makes the parsing as well as the SQL we generate simple.</p>
+
+<p>2. Adding a new compute_stats UDAF allows the gathering of statistical summaries of the underlying data even outside of the column stats framework. One use I can think of is, it can be used to model the statistical properties of data which in turn can be used to generate data whose statistical properties mimic that of the underlying data.</p>
+
+<p>Even though max, min, total count exist as UDAFs today, we need these to be part of the histogram UDAF. Estimating quantiles for equi-height histogram is a lot more efficient if we know the range of values the column can take. We need to know the total_count to generate the histogram bins. Given that we need these stats for generating histograms, I think its a good idea to encapsulate all of these stats within the compute_stats UDAF. Thanks.</p>
+        </td></tr>
+                <tr id="comment-header-13469616"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="shreepadma" id="word_commented_shreepadma" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=shreepadma">Shreepadma Venugopalan</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">04/Oct/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13469616"><td bgcolor="#ffffff">
+            <p>@Namit: I've addressed your review comments in the latest revision to the patch. Its available on review board.</p>
+        </td></tr>
+                <tr id="comment-header-13470240"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="namit" id="word_commented_namit" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=namit">Namit Jain</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">05/Oct/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13470240"><td bgcolor="#ffffff">
+            <p>Would be easier to comment here:</p>
+
+<p>&gt;&gt; It does not interact with hive.stats.reliable.</p>
+
+<p>Can you fix that ? I mean, if you want to do it in a follow-up that's fine. But, please throw an error in that case if hive.stats.reliable<br/>
+is set to true for now.</p>
+
+<p>&gt;&gt;&gt; Why does it make sense to add a thrift API for updating statistics ? There doesn't exist a interface for updating<br/>
+row level statistics. How is the user supposed to compute these other than analyze, which anyway updates the stats.</p>
+        </td></tr>
+                <tr id="comment-header-13470592"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="shreepadma" id="word_commented_shreepadma" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=shreepadma">Shreepadma Venugopalan</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">05/Oct/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13470592"><td bgcolor="#ffffff">
+            <p>@Namit: I don't understand hive.stats.reliable very clearly. Can you please explain how hive.stats.reliable works? What are the semantics of hive.stats.reliable? Why do we need hive.stats.reliable? Thanks.</p>
+        </td></tr>
+                <tr id="comment-header-13470686"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="shreepadma" id="word_commented_shreepadma" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=shreepadma">Shreepadma Venugopalan</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">05/Oct/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13470686"><td bgcolor="#ffffff">
+            <p>I assume when you say row level statistics you are referring to table statistics. Today, table statistics is stored as part of the table_params. table_params table gets mapped to the TTable object in memory and it looks like the existing APIs sufficed. We want to have a dedicated Thrift API for column stats for the following reasons,</p>
+
+<p>1. Column statistics is a property of the column and not the table and hence doesn't belong with the table_params. Furthermore, we have seen customers with tables that are 100s-1000s of columns wide. Storing this information as a table_param is going to bloat, and it will also make the output of DESCRIBE EXTENDED unreadable.</p>
+
+<p>2. We want column statistics to be a first class metadata. In order to do so, we have to provide dedicated Thrift APIs to query and update it. We want the Thrift API to be self-documenting, i.e. if someone tells you that metastore supports column stats, you should be able to look at the Thrift IDL and figure out which method you need to use to store/retrieve column stats. Right now a lot of the API doesn't satisfy that goal since many methods are overloaded, and other features are implemented by adding new key/value properties to different catalog objects that aren't easy to document via the thrift API</p>
+
+<p>3. Additionally storing column statistics as a key/value pair in the table_params table is not space efficient. We need to repeat the keys for each one of the columns in the table for which statistics is gathered. Furthermore, by storing column stats in the table_params table we would de-normalize the schema completely and incur a performance penalty performing self-joins, though not necessarily in the metasote db, to retrieve the statistics associated with a column. </p>
+        </td></tr>
+                <tr id="comment-header-13470698"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="shreepadma" id="word_commented_shreepadma" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=shreepadma">Shreepadma Venugopalan</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">05/Oct/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13470698"><td bgcolor="#ffffff">
+            <p>@Namit: In the first version of the project, which this patch implements, the only way to trigger stats gathering is through an explicit ANALYZE command.</p>
+        </td></tr>
+                <tr id="comment-header-13470840"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="cwsteinbach" id="word_commented_cwsteinbach" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=cwsteinbach">Carl Steinbach</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">06/Oct/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13470840"><td bgcolor="#ffffff">
+            <p>@Shreepadma: More comments on RB. Thanks.</p>
+        </td></tr>
+                <tr id="comment-header-13481202"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="shreepadma" id="word_commented_shreepadma" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=shreepadma">Shreepadma Venugopalan</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">22/Oct/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13481202"><td bgcolor="#ffffff">
+            <p>Updated patch available on both JIRA and review board. </p>
+        </td></tr>
+                <tr id="comment-header-13486223"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="cwsteinbach" id="word_commented_cwsteinbach" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=cwsteinbach">Carl Steinbach</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">29/Oct/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13486223"><td bgcolor="#ffffff">
+            <p>+1. Will commit if tests pass.</p>
+
+<p>@Namit: Let me know if you need more time to review this. If so I'll hold off until you're ready. Thanks.</p>
+        </td></tr>
+                <tr id="comment-header-13486586"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="shreepadma" id="word_commented_shreepadma" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=shreepadma">Shreepadma Venugopalan</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">30/Oct/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13486586"><td bgcolor="#ffffff">
+            <p>Attached new patch rebased off the tip of current trunk.</p>
+        </td></tr>
+                <tr id="comment-header-13486620"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="namit" id="word_commented_namit" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=namit">Namit Jain</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">30/Oct/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13486620"><td bgcolor="#ffffff">
+            <p>@Carl, Can you hold off for just 1 day ? I will definitely take a look today.</p>
+        </td></tr>
+                <tr id="comment-header-13486650"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="namit" id="word_commented_namit" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=namit">Namit Jain</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">30/Oct/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13486650"><td bgcolor="#ffffff">
+            <p><a href="https://reviews.facebook.net/D6321" class="external-link" rel="nofollow">https://reviews.facebook.net/D6321</a></p>
+
+<p>Created the phabricator entry for easy review from <a href="https://issues.apache.org/jira/browse/HIVE-1362" title="Optimizer statistics on columns in tables and partitions" class="issue-link" data-issue-key="HIVE-1362"><del>HIVE-1362</del></a>.6.patch</p>
+        </td></tr>
+                <tr id="comment-header-13486653"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="namit" id="word_commented_namit" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=namit">Namit Jain</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">30/Oct/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13486653"><td bgcolor="#ffffff">
+            <p>Looks like this patch file is old.<br/>
+I couldn't see any reference to StatsSemanticAnalyzer.java.<br/>
+Can you load the latest patch file ?</p>
+
+<p>If you dont mind, can you create a phabricator entry ? I know, there is no official policy, but phabricator is much more usable.</p>
+        </td></tr>
+                <tr id="comment-header-13486661"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="shreepadma" id="word_commented_shreepadma" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=shreepadma">Shreepadma Venugopalan</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">30/Oct/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13486661"><td bgcolor="#ffffff">
+            <p>@Namit: Thanks for creating the phabricator entry. <a href="https://issues.apache.org/jira/browse/HIVE-1362" title="Optimizer statistics on columns in tables and partitions" class="issue-link" data-issue-key="HIVE-1362"><del>HIVE-1362</del></a>.6.patch is the latest patch. StatsSemanticAnalyzer is referenced in SemanticAnalyzerFactory.java. I'll try to create a phabricator entry in the future. In the past when I've tried to use it, I've had problems with it.</p>
+        </td></tr>
+                <tr id="comment-header-13486935"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="namit" id="word_commented_namit" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=namit">Namit Jain</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">30/Oct/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13486935"><td bgcolor="#ffffff">
+            <p>There is something wrong in my patch. Can you create the final patch ?<br/>
+There are a bunch of lint warnings, and we need to atleast resolve them.<br/>
+Can you create a new phabricator entry ? I will definitely take a look.<br/>
+Thanks a lot.</p>
+        </td></tr>
+                <tr id="comment-header-13486936"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="namit" id="word_commented_namit" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=namit">Namit Jain</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">30/Oct/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13486936"><td bgcolor="#ffffff">
+            <p>Anyway, you need to create it, how else will you refresh it ?</p>
+        </td></tr>
+                <tr id="comment-header-13487117"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="shreepadma" id="word_commented_shreepadma" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=shreepadma">Shreepadma Venugopalan</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">30/Oct/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13487117"><td bgcolor="#ffffff">
+            <p>@Namit: I've uploaded the final patch. I've fixed all the lint problems from the previous revision. Please note that I was just following the convention in those files and didn't realize that it would result in lint problems. </p>
+
+<p>I tried to create a phabricator review but ran into errors. Can you please use review board this time? I'll try to use Phabricator for future reviews. Thanks.</p>
+        </td></tr>
+                <tr id="comment-header-13487342"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="phabricator@reviews.facebook.net" id="word_commented_phabricator@reviews.facebook.net" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=phabricator%40reviews.facebook.net">Phabricator</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">30/Oct/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13487342"><td bgcolor="#ffffff">
+            <p>cwsteinbach requested code review of "<a href="https://issues.apache.org/jira/browse/HIVE-1362" title="Optimizer statistics on columns in tables and partitions" class="issue-link" data-issue-key="HIVE-1362"><del>HIVE-1362</del></a> <span class="error">&#91;jira&#93;</span> column level statistics".<br/>
+Reviewers: JIRA</p>
+
+<p>  <a href="https://issues.apache.org/jira/secure/attachment/12551403/HIVE-1362.7.patch.txt" class="external-link" rel="nofollow">https://issues.apache.org/jira/secure/attachment/12551403/HIVE-1362.7.patch.txt</a></p>
+
+<p>TEST PLAN<br/>
+  EMPTY</p>
+
+<p>REVISION DETAIL<br/>
+  <a href="https://reviews.facebook.net/D6339" class="external-link" rel="nofollow">https://reviews.facebook.net/D6339</a></p>
+
+<p>AFFECTED FILES<br/>
+  common/src/java/org/apache/hadoop/hive/conf/HiveConf.java<br/>
+  conf/hive-default.xml.template<br/>
+  data/files/UserVisits.dat<br/>
+  data/files/binary.txt<br/>
+  data/files/bool.txt<br/>
+  data/files/double.txt<br/>
+  data/files/employee.dat<br/>
+  data/files/employee2.dat<br/>
+  data/files/int.txt<br/>
+  metastore/if/hive_metastore.thrift<br/>
+  metastore/src/java/org/apache/hadoop/hive/metastore/HiveMetaStore.java<br/>
+  metastore/src/java/org/apache/hadoop/hive/metastore/HiveMetaStoreClient.java<br/>
+  metastore/src/java/org/apache/hadoop/hive/metastore/IMetaStoreClient.java<br/>
+  metastore/src/java/org/apache/hadoop/hive/metastore/ObjectStore.java<br/>
+  metastore/src/java/org/apache/hadoop/hive/metastore/RawStore.java<br/>
+  metastore/src/java/org/apache/hadoop/hive/metastore/Warehouse.java<br/>
+  metastore/src/model/org/apache/hadoop/hive/metastore/model/MPartitionColumnStatistics.java<br/>
+  metastore/src/model/org/apache/hadoop/hive/metastore/model/MTableColumnStatistics.java<br/>
+  metastore/src/model/package.jdo<br/>
+  metastore/src/test/org/apache/hadoop/hive/metastore/DummyRawStoreForJdoConnection.java<br/>
+  metastore/src/test/org/apache/hadoop/hive/metastore/TestHiveMetaStore.java<br/>
+  ql/build.xml<br/>
+  ql/if/queryplan.thrift<br/>
+  ql/ivy.xml<br/>
+  ql/src/java/org/apache/hadoop/hive/ql/exec/ColumnStatsTask.java<br/>
+  ql/src/java/org/apache/hadoop/hive/ql/exec/FunctionRegistry.java<br/>
+  ql/src/java/org/apache/hadoop/hive/ql/exec/Task.java<br/>
+  ql/src/java/org/apache/hadoop/hive/ql/exec/TaskFactory.java<br/>
+  ql/src/java/org/apache/hadoop/hive/ql/metadata/Hive.java<br/>
+  ql/src/java/org/apache/hadoop/hive/ql/optimizer/index/RewriteParseContextGenerator.java<br/>
+  ql/src/java/org/apache/hadoop/hive/ql/parse/BaseSemanticAnalyzer.java<br/>
+  ql/src/java/org/apache/hadoop/hive/ql/parse/Hive.g<br/>
+  ql/src/java/org/apache/hadoop/hive/ql/parse/QB.java<br/>
+  ql/src/java/org/apache/hadoop/hive/ql/parse/QBParseInfo.java<br/>
+  ql/src/java/org/apache/hadoop/hive/ql/parse/SemanticAnalyzer.java<br/>
+  ql/src/java/org/apache/hadoop/hive/ql/parse/SemanticAnalyzerFactory.java<br/>
+  ql/src/java/org/apache/hadoop/hive/ql/parse/StatsSemanticAnalyzer.java<br/>
+  ql/src/java/org/apache/hadoop/hive/ql/plan/ColumnStatsDesc.java<br/>
+  ql/src/java/org/apache/hadoop/hive/ql/plan/ColumnStatsWork.java<br/>
+  ql/src/java/org/apache/hadoop/hive/ql/plan/HiveOperation.java<br/>
+  ql/src/java/org/apache/hadoop/hive/ql/udf/generic/DoubleNumDistinctValueEstimator.java<br/>
+  ql/src/java/org/apache/hadoop/hive/ql/udf/generic/GenericUDAFComputeStats.java<br/>
+  ql/src/java/org/apache/hadoop/hive/ql/udf/generic/LongNumDistinctValueEstimator.java<br/>
+  ql/src/java/org/apache/hadoop/hive/ql/udf/generic/NumDistinctValueEstimator.java<br/>
+  ql/src/java/org/apache/hadoop/hive/ql/udf/generic/StringNumDistinctValueEstimator.java<br/>
+  ql/src/test/queries/clientnegative/columnstats_partlvl.q<br/>
+  ql/src/test/queries/clientpositive/columnstats_partlvl.q<br/>
+  ql/src/test/queries/clientpositive/columnstats_tbllvl.q<br/>
+  ql/src/test/queries/clientpositive/compute_stats_binary.q<br/>
+  ql/src/test/queries/clientpositive/compute_stats_boolean.q<br/>
+  ql/src/test/queries/clientpositive/compute_stats_double.q<br/>
+  ql/src/test/queries/clientpositive/compute_stats_long.q<br/>
+  ql/src/test/queries/clientpositive/compute_stats_string.q<br/>
+  ql/src/test/results/clientnegative/columnstats_partlvl.q.out<br/>
+  ql/src/test/results/clientpositive/columnstats_partlvl.q.out<br/>
+  ql/src/test/results/clientpositive/columnstats_tbllvl.q.out<br/>
+  ql/src/test/results/clientpositive/compute_stats_binary.q.out<br/>
+  ql/src/test/results/clientpositive/compute_stats_boolean.q.out<br/>
+  ql/src/test/results/clientpositive/compute_stats_double.q.out<br/>
+  ql/src/test/results/clientpositive/compute_stats_long.q.out<br/>
+  ql/src/test/results/clientpositive/compute_stats_string.q.out<br/>
+  ql/src/test/results/clientpositive/show_functions.q.out<br/>
+  serde/src/java/org/apache/hadoop/hive/serde2/objectinspector/primitive/PrimitiveObjectInspectorUtils.java</p>
+
+<p>MANAGE HERALD DIFFERENTIAL RULES<br/>
+  <a href="https://reviews.facebook.net/herald/view/differential/" class="external-link" rel="nofollow">https://reviews.facebook.net/herald/view/differential/</a></p>
+
+<p>WHY DID I GET THIS EMAIL?<br/>
+  <a href="https://reviews.facebook.net/herald/transcript/15051/" class="external-link" rel="nofollow">https://reviews.facebook.net/herald/transcript/15051/</a></p>
+
+<p>To: JIRA, cwsteinbach</p>
+        </td></tr>
+                <tr id="comment-header-13487345"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="cwsteinbach" id="word_commented_cwsteinbach" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=cwsteinbach">Carl Steinbach</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">30/Oct/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13487345"><td bgcolor="#ffffff">
+            <p>@Namit: I created a review request on phabricator: <a href="https://reviews.facebook.net/D6339" class="external-link" rel="nofollow">https://reviews.facebook.net/D6339</a></p>
+
+<p>@Shreepadma: I had to correct one lint error in order to get phabricator to accept this patch (non ASCII character in the GenericUDAF). Phabricator also flagged a bunch of lines that exceed the length limit, and several files that don't end with a newline. Please fix these issues and upload a new patch to JIRA. Thanks.</p>
+        </td></tr>
+                <tr id="comment-header-13487388"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="shreepadma" id="word_commented_shreepadma" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=shreepadma">Shreepadma Venugopalan</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">31/Oct/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13487388"><td bgcolor="#ffffff">
+            <p>I've uploaded a new patch to JIRA. It a) fixes the lint problems I saw on phabricator, b) Adds a new line to the files this patch adds.</p>
+        </td></tr>
+                <tr id="comment-header-13487470"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="shreepadma" id="word_commented_shreepadma" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=shreepadma">Shreepadma Venugopalan</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">31/Oct/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13487470"><td bgcolor="#ffffff">
+            <p>Forgot to add I removed the invalid ASCII character as well. However, I still have problems with phabricator. </p>
+        </td></tr>
+                <tr id="comment-header-13487967"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="namit" id="word_commented_namit" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=namit">Namit Jain</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">31/Oct/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13487967"><td bgcolor="#ffffff">
+            <p>Thanks a lot for creating a phabricator entry. I will take a look tomorrow.</p>
+        </td></tr>
+                <tr id="comment-header-13488507"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="phabricator@reviews.facebook.net" id="word_commented_phabricator@reviews.facebook.net" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=phabricator%40reviews.facebook.net">Phabricator</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">01/Nov/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13488507"><td bgcolor="#ffffff">
+            <p>njain has commented on the revision "<a href="https://issues.apache.org/jira/browse/HIVE-1362" title="Optimizer statistics on columns in tables and partitions" class="issue-link" data-issue-key="HIVE-1362"><del>HIVE-1362</del></a> <span class="error">&#91;jira&#93;</span> column level statistics".</p>
+
+<p>  I wont go over cosmetic changes &#8211;  newline at the end of the file etc.<br/>
+  Please fix those.</p>
+
+<p>  One higher level question: (SA == SemanticAnalyzer)</p>
+
+<p>  1. StatsSemanticAnalyzer - looks like a wrong name - can you rename it to AnalyzeColumnStatsSema.. given that we already have a StatsTask etc. for something totally different.<br/>
+  2. The code looks more complicated - I mean, calling SemanticAnalyzer from StatsSemanticAnalyzer, specially for non-rewritten queries. Won't it be simpler to:<br/>
+  a. Either StatsSA should extend SA<br/>
+  b. Move the logic for analyze (old) in StatsSA</p>
+
+
+<p>INLINE COMMENTS<br/>
+  ql/src/test/queries/clientnegative/columnstats_partlvl.q:13 Looks fishy - wont the test error out at the first error.<br/>
+  Subsequent errors would just be ignored</p>
+
+
+<p>  Can you add more negative tests - wrong column name.</p>
+
+<p>REVISION DETAIL<br/>
+  <a href="https://reviews.facebook.net/D6339" class="external-link" rel="nofollow">https://reviews.facebook.net/D6339</a></p>
+
+<p>To: JIRA, njain, cwsteinbach</p>
+        </td></tr>
+                <tr id="comment-header-13488543"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="phabricator@reviews.facebook.net" id="word_commented_phabricator@reviews.facebook.net" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=phabricator%40reviews.facebook.net">Phabricator</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">01/Nov/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13488543"><td bgcolor="#ffffff">
+            <p>njain has commented on the revision "<a href="https://issues.apache.org/jira/browse/HIVE-1362" title="Optimizer statistics on columns in tables and partitions" class="issue-link" data-issue-key="HIVE-1362"><del>HIVE-1362</del></a> <span class="error">&#91;jira&#93;</span> column level statistics".</p>
+
+<p>  you have a columnstatsdesc/columnstatswork etc.<br/>
+  Rename the file as columnstatssemanticanalyzer</p>
+
+<p>  I did not look into too much detail in the UDAF - I am assuming Carl has already reviewed that part</p>
+
+<p>INLINE COMMENTS<br/>
+  ql/src/java/org/apache/hadoop/hive/ql/parse/StatsSemanticAnalyzer.java:216 create a entry in ErrorMsg - similarly to all other exceptions</p>
+
+<p>REVISION DETAIL<br/>
+  <a href="https://reviews.facebook.net/D6339" class="external-link" rel="nofollow">https://reviews.facebook.net/D6339</a></p>
+
+<p>To: JIRA, njain, cwsteinbach</p>
+        </td></tr>
+                <tr id="comment-header-13488546"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="phabricator@reviews.facebook.net" id="word_commented_phabricator@reviews.facebook.net" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=phabricator%40reviews.facebook.net">Phabricator</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">01/Nov/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13488546"><td bgcolor="#ffffff">
+            <p>njain has commented on the revision "<a href="https://issues.apache.org/jira/browse/HIVE-1362" title="Optimizer statistics on columns in tables and partitions" class="issue-link" data-issue-key="HIVE-1362"><del>HIVE-1362</del></a> <span class="error">&#91;jira&#93;</span> column level statistics".</p>
+
+<p>  if u haven't done already - file a jira for upgrade scripts for other dbs.</p>
+
+<p>INLINE COMMENTS<br/>
+  ql/src/test/queries/clientpositive/columnstats_partlvl.q:10 add some tests with explain extended.<br/>
+  ql/src/java/org/apache/hadoop/hive/ql/plan/ColumnStatsWork.java:33 More stuff should be dumped in explain(extended)<br/>
+  ql/src/java/org/apache/hadoop/hive/ql/plan/ColumnStatsDesc.java:27 explain should output this</p>
+
+<p>REVISION DETAIL<br/>
+  <a href="https://reviews.facebook.net/D6339" class="external-link" rel="nofollow">https://reviews.facebook.net/D6339</a></p>
+
+<p>To: JIRA, njain, cwsteinbach</p>
+        </td></tr>
+                <tr id="comment-header-13488547"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="namit" id="word_commented_namit" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=namit">Namit Jain</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">01/Nov/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13488547"><td bgcolor="#ffffff">
+            <p>minor comments on phabricator</p>
+        </td></tr>
+                <tr id="comment-header-13489275"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="phabricator@reviews.facebook.net" id="word_commented_phabricator@reviews.facebook.net" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=phabricator%40reviews.facebook.net">Phabricator</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">02/Nov/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13489275"><td bgcolor="#ffffff">
+            <p>shreepadma has commented on the revision "<a href="https://issues.apache.org/jira/browse/HIVE-1362" title="Optimizer statistics on columns in tables and partitions" class="issue-link" data-issue-key="HIVE-1362"><del>HIVE-1362</del></a> <span class="error">&#91;jira&#93;</span> column level statistics".</p>
+
+<p>INLINE COMMENTS<br/>
+  ql/src/java/org/apache/hadoop/hive/ql/plan/ColumnStatsWork.java:33 Can you please let me know what you would like to see dumped in the explain extended?<br/>
+  ql/src/test/queries/clientnegative/columnstats_partlvl.q:13 Will add  negative test for wrong column name and move each one of the query to a separate q file.<br/>
+  ql/src/java/org/apache/hadoop/hive/ql/plan/ColumnStatsDesc.java:27 Can you please let me know what you would like to include in the explain output?<br/>
+  ql/src/java/org/apache/hadoop/hive/ql/parse/StatsSemanticAnalyzer.java:216 Can you please explain the purpose of creating an error message entry in addition to raising an exception? Throwing an exception should present all the error information that is needed.<br/>
+  ql/src/test/queries/clientpositive/columnstats_partlvl.q:10 Will add tests wil explain extended. However, I'm not sure what needs to be printed as part of explain extended output for columnstatswork. Please refer to my earlier comment on it.</p>
+
+<p>REVISION DETAIL<br/>
+  <a href="https://reviews.facebook.net/D6339" class="external-link" rel="nofollow">https://reviews.facebook.net/D6339</a></p>
+
+<p>To: JIRA, njain, cwsteinbach<br/>
+Cc: shreepadma</p>
+        </td></tr>
+                <tr id="comment-header-13489276"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="shreepadma" id="word_commented_shreepadma" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=shreepadma">Shreepadma Venugopalan</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">02/Nov/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13489276"><td bgcolor="#ffffff">
+            <p>@Namit: Thanks for your comments! I responded to most of your comments on phabricator. Thanks!</p>
+        </td></tr>
+                <tr id="comment-header-13490421"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="shreepadma" id="word_commented_shreepadma" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=shreepadma">Shreepadma Venugopalan</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">05/Nov/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13490421"><td bgcolor="#ffffff">
+            <p>@Namit: New patch that addresses your comments is available on both JIRA and phabricator. Phabricator link: <a href="https://reviews.facebook.net/D6459" class="external-link" rel="nofollow">https://reviews.facebook.net/D6459</a>. I had to create a new review request since Carl owns the old one and I can't update it. Thanks!</p>
+        </td></tr>
+                <tr id="comment-header-13490442"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="namit" id="word_commented_namit" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=namit">Namit Jain</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">05/Nov/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13490442"><td bgcolor="#ffffff">
+            <p>comments on phabricator</p>
+        </td></tr>
+                <tr id="comment-header-13490492"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="shreepadma" id="word_commented_shreepadma" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=shreepadma">Shreepadma Venugopalan</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">05/Nov/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13490492"><td bgcolor="#ffffff">
+            <p>@Namit: Updated patch is available on phabricator. Thanks.</p>
+        </td></tr>
+                <tr id="comment-header-13490814"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="shreepadma" id="word_commented_shreepadma" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=shreepadma">Shreepadma Venugopalan</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">05/Nov/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13490814"><td bgcolor="#ffffff">
+            <p>@Namit: I responded to your comment about Exceptions on phabricator. Thanks.</p>
+        </td></tr>
+                <tr id="comment-header-13491194"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="namit" id="word_commented_namit" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=namit">Namit Jain</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">06/Nov/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13491194"><td bgcolor="#ffffff">
+            <p>I think you should wrap the error even if is being thrown by a function being called.</p>
+        </td></tr>
+                <tr id="comment-header-13491200"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="namit" id="word_commented_namit" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=namit">Namit Jain</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">06/Nov/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13491200"><td bgcolor="#ffffff">
+            <p>comments</p>
+        </td></tr>
+                <tr id="comment-header-13491274"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="shreepadma" id="word_commented_shreepadma" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=shreepadma">Shreepadma Venugopalan</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">06/Nov/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13491274"><td bgcolor="#ffffff">
+            <p>@Namit: The latest patch addressed your comments. Its available both on JIRA and phabricator. Thanks.</p>
+        </td></tr>
+                <tr id="comment-header-13491339"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="namit" id="word_commented_namit" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=namit">Namit Jain</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">06/Nov/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13491339"><td bgcolor="#ffffff">
+            <p>Fine with me.</p>
+
+<p>@Carl, do you have any additional comments ?<br/>
+If not, can you take care of committing it ?</p>
+        </td></tr>
+                <tr id="comment-header-13491758"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="cwsteinbach" id="word_commented_cwsteinbach" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=cwsteinbach">Carl Steinbach</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">06/Nov/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13491758"><td bgcolor="#ffffff">
+            <p>+1. Will commit if tests pass.</p>
+        </td></tr>
+                <tr id="comment-header-13491764"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="shreepadma" id="word_commented_shreepadma" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=shreepadma">Shreepadma Venugopalan</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">06/Nov/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13491764"><td bgcolor="#ffffff">
+            <p>@Carl: Please take the latest patch from JIRA. If you have trouble applying it, let me know. Thanks.</p>
+        </td></tr>
+                <tr id="comment-header-13491792"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="shreepadma" id="word_commented_shreepadma" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=shreepadma">Shreepadma Venugopalan</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">06/Nov/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13491792"><td bgcolor="#ffffff">
+            <p>@Carl: You will see 6 failures in testParse (groupby1.q .. groupby6.q) when you run the tests. It is in the proces of being fixed by <a href="https://issues.apache.org/jira/browse/HIVE-3674" title="test case TestParse broken after recent checkin" class="issue-link" data-issue-key="HIVE-3674"><del>HIVE-3674</del></a>.</p>
+        </td></tr>
+                <tr id="comment-header-13492126"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="cwsteinbach" id="word_commented_cwsteinbach" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=cwsteinbach">Carl Steinbach</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">07/Nov/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13492126"><td bgcolor="#ffffff">
+            <p>Committed to trunk. Thanks Shreepadma!</p>
+        </td></tr>
+                <tr id="comment-header-13492156"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="namit" id="word_commented_namit" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=namit">Namit Jain</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">07/Nov/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13492156"><td bgcolor="#ffffff">
+            <p>I am getting some compile errors. Can you take a look ?</p>
+        </td></tr>
+                <tr id="comment-header-13492229"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hudson" id="word_commented_hudson" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hudson">Hudson</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">07/Nov/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13492229"><td bgcolor="#ffffff">
+            <p>Integrated in Hive-trunk-h0.21 #1778 (See <a href="https://builds.apache.org/job/Hive-trunk-h0.21/1778/" class="external-link" rel="nofollow">https://builds.apache.org/job/Hive-trunk-h0.21/1778/</a>)<br/>
+    <a href="https://issues.apache.org/jira/browse/HIVE-1362" title="Optimizer statistics on columns in tables and partitions" class="issue-link" data-issue-key="HIVE-1362"><del>HIVE-1362</del></a>. Column level scalar valued statistics on Tables and Partitions (Shreepadma Venugopalan via cws) (Revision 1406465)</p>
+
+<p>     Result = FAILURE<br/>
+cws : <a href="http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1406465" class="external-link" rel="nofollow">http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1406465</a><br/>
+Files : </p>
+<ul>
+	<li>/hive/trunk/common/src/java/org/apache/hadoop/hive/conf/HiveConf.java</li>
+	<li>/hive/trunk/conf/hive-default.xml.template</li>
+	<li>/hive/trunk/data/files/UserVisits.dat</li>
+	<li>/hive/trunk/data/files/binary.txt</li>
+	<li>/hive/trunk/data/files/bool.txt</li>
+	<li>/hive/trunk/data/files/double.txt</li>
+	<li>/hive/trunk/data/files/employee.dat</li>
+	<li>/hive/trunk/data/files/employee2.dat</li>
+	<li>/hive/trunk/data/files/employee_part.txt</li>
+	<li>/hive/trunk/data/files/int.txt</li>
+	<li>/hive/trunk/metastore/if/hive_metastore.thrift</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-cpp/ThriftHiveMetastore.cpp</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-cpp/ThriftHiveMetastore.h</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-cpp/ThriftHiveMetastore_server.skeleton.cpp</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-cpp/hive_metastore_types.cpp</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-cpp/hive_metastore_types.h</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-javabean/org/apache/hadoop/hive/metastore/api/BinaryColumnStatsData.java</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-javabean/org/apache/hadoop/hive/metastore/api/BooleanColumnStatsData.java</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-javabean/org/apache/hadoop/hive/metastore/api/ColumnStatistics.java</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-javabean/org/apache/hadoop/hive/metastore/api/ColumnStatisticsData.java</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-javabean/org/apache/hadoop/hive/metastore/api/ColumnStatisticsDesc.java</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-javabean/org/apache/hadoop/hive/metastore/api/ColumnStatisticsObj.java</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-javabean/org/apache/hadoop/hive/metastore/api/DoubleColumnStatsData.java</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-javabean/org/apache/hadoop/hive/metastore/api/EnvironmentContext.java</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-javabean/org/apache/hadoop/hive/metastore/api/InvalidInputException.java</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-javabean/org/apache/hadoop/hive/metastore/api/LongColumnStatsData.java</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-javabean/org/apache/hadoop/hive/metastore/api/Schema.java</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-javabean/org/apache/hadoop/hive/metastore/api/StringColumnStatsData.java</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-javabean/org/apache/hadoop/hive/metastore/api/ThriftHiveMetastore.java</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-php/hive_metastore/ThriftHiveMetastore.php</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-php/hive_metastore/hive_metastore_types.php</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-py/hive_metastore/ThriftHiveMetastore-remote</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-py/hive_metastore/ThriftHiveMetastore.py</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-py/hive_metastore/ttypes.py</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-rb/hive_metastore_types.rb</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-rb/thrift_hive_metastore.rb</li>
+	<li>/hive/trunk/metastore/src/java/org/apache/hadoop/hive/metastore/HiveMetaStore.java</li>
+	<li>/hive/trunk/metastore/src/java/org/apache/hadoop/hive/metastore/HiveMetaStoreClient.java</li>
+	<li>/hive/trunk/metastore/src/java/org/apache/hadoop/hive/metastore/IMetaStoreClient.java</li>
+	<li>/hive/trunk/metastore/src/java/org/apache/hadoop/hive/metastore/ObjectStore.java</li>
+	<li>/hive/trunk/metastore/src/java/org/apache/hadoop/hive/metastore/RawStore.java</li>
+	<li>/hive/trunk/metastore/src/java/org/apache/hadoop/hive/metastore/Warehouse.java</li>
+	<li>/hive/trunk/metastore/src/model/org/apache/hadoop/hive/metastore/model/MPartitionColumnStatistics.java</li>
+	<li>/hive/trunk/metastore/src/model/org/apache/hadoop/hive/metastore/model/MTableColumnStatistics.java</li>
+	<li>/hive/trunk/metastore/src/model/package.jdo</li>
+	<li>/hive/trunk/metastore/src/test/org/apache/hadoop/hive/metastore/DummyRawStoreForJdoConnection.java</li>
+	<li>/hive/trunk/metastore/src/test/org/apache/hadoop/hive/metastore/TestHiveMetaStore.java</li>
+	<li>/hive/trunk/ql/build.xml</li>
+	<li>/hive/trunk/ql/if/queryplan.thrift</li>
+	<li>/hive/trunk/ql/ivy.xml</li>
+	<li>/hive/trunk/ql/src/gen/thrift/gen-cpp/queryplan_types.cpp</li>
+	<li>/hive/trunk/ql/src/gen/thrift/gen-cpp/queryplan_types.h</li>
+	<li>/hive/trunk/ql/src/gen/thrift/gen-javabean/org/apache/hadoop/hive/ql/plan/api/StageType.java</li>
+	<li>/hive/trunk/ql/src/gen/thrift/gen-php/queryplan/queryplan_types.php</li>
+	<li>/hive/trunk/ql/src/gen/thrift/gen-py/queryplan/ttypes.py</li>
+	<li>/hive/trunk/ql/src/gen/thrift/gen-rb/queryplan_types.rb</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/ErrorMsg.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/exec/ColumnStatsTask.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/exec/FunctionRegistry.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/exec/Task.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/exec/TaskFactory.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/metadata/Hive.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/optimizer/index/RewriteParseContextGenerator.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/parse/BaseSemanticAnalyzer.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/parse/ColumnStatsSemanticAnalyzer.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/parse/DDLSemanticAnalyzer.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/parse/ExportSemanticAnalyzer.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/parse/FunctionSemanticAnalyzer.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/parse/Hive.g</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/parse/ImportSemanticAnalyzer.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/parse/QB.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/parse/QBParseInfo.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/parse/SemanticAnalyzer.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/parse/SemanticAnalyzerFactory.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/plan/ColumnStatsDesc.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/plan/ColumnStatsWork.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/plan/HiveOperation.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/udf/generic/DoubleNumDistinctValueEstimator.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/udf/generic/GenericUDAFComputeStats.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/udf/generic/LongNumDistinctValueEstimator.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/udf/generic/NumDistinctValueEstimator.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/udf/generic/StringNumDistinctValueEstimator.java</li>
+	<li>/hive/trunk/ql/src/test/queries/clientnegative/columnstats_partlvl_dp.q</li>
+	<li>/hive/trunk/ql/src/test/queries/clientnegative/columnstats_partlvl_incorrect_num_keys.q</li>
+	<li>/hive/trunk/ql/src/test/queries/clientnegative/columnstats_partlvl_invalid_values.q</li>
+	<li>/hive/trunk/ql/src/test/queries/clientnegative/columnstats_partlvl_multiple_part_clause.q</li>
+	<li>/hive/trunk/ql/src/test/queries/clientnegative/columnstats_tbllvl.q</li>
+	<li>/hive/trunk/ql/src/test/queries/clientnegative/columnstats_tbllvl_complex_type.q</li>
+	<li>/hive/trunk/ql/src/test/queries/clientnegative/columnstats_tbllvl_incorrect_column.q</li>
+	<li>/hive/trunk/ql/src/test/queries/clientpositive/columnstats_partlvl.q</li>
+	<li>/hive/trunk/ql/src/test/queries/clientpositive/columnstats_tbllvl.q</li>
+	<li>/hive/trunk/ql/src/test/queries/clientpositive/compute_stats_binary.q</li>
+	<li>/hive/trunk/ql/src/test/queries/clientpositive/compute_stats_boolean.q</li>
+	<li>/hive/trunk/ql/src/test/queries/clientpositive/compute_stats_double.q</li>
+	<li>/hive/trunk/ql/src/test/queries/clientpositive/compute_stats_long.q</li>
+	<li>/hive/trunk/ql/src/test/queries/clientpositive/compute_stats_string.q</li>
+	<li>/hive/trunk/ql/src/test/results/clientnegative/columnstats_partlvl_dp.q.out</li>
+	<li>/hive/trunk/ql/src/test/results/clientnegative/columnstats_partlvl_incorrect_num_keys.q.out</li>
+	<li>/hive/trunk/ql/src/test/results/clientnegative/columnstats_partlvl_invalid_values.q.out</li>
+	<li>/hive/trunk/ql/src/test/results/clientnegative/columnstats_partlvl_multiple_part_clause.q.out</li>
+	<li>/hive/trunk/ql/src/test/results/clientnegative/columnstats_tbllvl.q.out</li>
+	<li>/hive/trunk/ql/src/test/results/clientnegative/columnstats_tbllvl_complex_type.q.out</li>
+	<li>/hive/trunk/ql/src/test/results/clientnegative/columnstats_tbllvl_incorrect_column.q.out</li>
+	<li>/hive/trunk/ql/src/test/results/clientpositive/columnstats_partlvl.q.out</li>
+	<li>/hive/trunk/ql/src/test/results/clientpositive/columnstats_tbllvl.q.out</li>
+	<li>/hive/trunk/ql/src/test/results/clientpositive/compute_stats_binary.q.out</li>
+	<li>/hive/trunk/ql/src/test/results/clientpositive/compute_stats_boolean.q.out</li>
+	<li>/hive/trunk/ql/src/test/results/clientpositive/compute_stats_double.q.out</li>
+	<li>/hive/trunk/ql/src/test/results/clientpositive/compute_stats_long.q.out</li>
+	<li>/hive/trunk/ql/src/test/results/clientpositive/compute_stats_string.q.out</li>
+	<li>/hive/trunk/ql/src/test/results/clientpositive/show_functions.q.out</li>
+	<li>/hive/trunk/serde/src/java/org/apache/hadoop/hive/serde2/objectinspector/primitive/PrimitiveObjectInspectorUtils.java</li>
+</ul>
+
+        </td></tr>
+                <tr id="comment-header-13492495"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="shreepadma" id="word_commented_shreepadma" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=shreepadma">Shreepadma Venugopalan</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">07/Nov/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13492495"><td bgcolor="#ffffff">
+            <p><a href="https://issues.apache.org/jira/browse/HIVE-3524" title="Storing certain Exception objects thrown in HiveMetaStore.java in MetaStoreEndFunctionContext" class="issue-link" data-issue-key="HIVE-3524"><del>HIVE-3524</del></a> changed the signature of endFunction in HiveMetaStore.java. <a href="https://issues.apache.org/jira/browse/HIVE-3524" title="Storing certain Exception objects thrown in HiveMetaStore.java in MetaStoreEndFunctionContext" class="issue-link" data-issue-key="HIVE-3524"><del>HIVE-3524</del></a> was committed hours before this patch. The compile errors are due to the signature change. I'm working on a fix. Thanks.</p>
+        </td></tr>
+                <tr id="comment-header-13492498"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="shreepadma" id="word_commented_shreepadma" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=shreepadma">Shreepadma Venugopalan</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">07/Nov/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13492498"><td bgcolor="#ffffff">
+            <p>@Namit: Not sure what the protocol is but I've attach the new patch to this JIRA. Thanks.</p>
+        </td></tr>
+                <tr id="comment-header-13492505"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="shreepadma" id="word_commented_shreepadma" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=shreepadma">Shreepadma Venugopalan</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">07/Nov/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13492505"><td bgcolor="#ffffff">
+            <p>Please look at <a href="https://issues.apache.org/jira/browse/HIVE-1362" title="Optimizer statistics on columns in tables and partitions" class="issue-link" data-issue-key="HIVE-1362"><del>HIVE-1362</del></a>.11.patch.txt to fix the compile errors introduced earlier.</p>
+        </td></tr>
+                <tr id="comment-header-13492524"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="shreepadma" id="word_commented_shreepadma" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=shreepadma">Shreepadma Venugopalan</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">07/Nov/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13492524"><td bgcolor="#ffffff">
+            <p>Filed a new JIRA - <a href="https://issues.apache.org/jira/browse/HIVE-3686" title="Fix compile errors introduced by the interaction of HIVE-1362 and HIVE-3524" class="issue-link" data-issue-key="HIVE-3686"><del>HIVE-3686</del></a> to fix the compile errors.</p>
+        </td></tr>
+                <tr id="comment-header-13492869"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="shreepadma" id="word_commented_shreepadma" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=shreepadma">Shreepadma Venugopalan</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">08/Nov/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13492869"><td bgcolor="#ffffff">
+            <p><a href="https://issues.apache.org/jira/browse/HIVE-3524" title="Storing certain Exception objects thrown in HiveMetaStore.java in MetaStoreEndFunctionContext" class="issue-link" data-issue-key="HIVE-3524"><del>HIVE-3524</del></a> introduced a signature change to endFunction in HiveMetaStore.java. <a href="https://issues.apache.org/jira/browse/HIVE-3524" title="Storing certain Exception objects thrown in HiveMetaStore.java in MetaStoreEndFunctionContext" class="issue-link" data-issue-key="HIVE-3524"><del>HIVE-3524</del></a> was committed a few hours before <a href="https://issues.apache.org/jira/browse/HIVE-1362" title="Optimizer statistics on columns in tables and partitions" class="issue-link" data-issue-key="HIVE-1362"><del>HIVE-1362</del></a>. <a href="https://issues.apache.org/jira/browse/HIVE-1362" title="Optimizer statistics on columns in tables and partitions" class="issue-link" data-issue-key="HIVE-1362"><del>HIVE-1362</del></a> adds new functions to HiveMetaStore.java that call endFunction with the old signature. </p>
+        </td></tr>
+                <tr id="comment-header-13492930"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hudson" id="word_commented_hudson" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hudson">Hudson</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">08/Nov/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13492930"><td bgcolor="#ffffff">
+            <p>Integrated in Hive-trunk-h0.21 #1780 (See <a href="https://builds.apache.org/job/Hive-trunk-h0.21/1780/" class="external-link" rel="nofollow">https://builds.apache.org/job/Hive-trunk-h0.21/1780/</a>)<br/>
+    <a href="https://issues.apache.org/jira/browse/HIVE-3686" title="Fix compile errors introduced by the interaction of HIVE-1362 and HIVE-3524" class="issue-link" data-issue-key="HIVE-3686"><del>HIVE-3686</del></a>. Fix compile errors introduced by the interaction of <a href="https://issues.apache.org/jira/browse/HIVE-1362" title="Optimizer statistics on columns in tables and partitions" class="issue-link" data-issue-key="HIVE-1362"><del>HIVE-1362</del></a> and <a href="https://issues.apache.org/jira/browse/HIVE-3524" title="Storing certain Exception objects thrown in HiveMetaStore.java in MetaStoreEndFunctionContext" class="issue-link" data-issue-key="HIVE-3524"><del>HIVE-3524</del></a>. (Shreepadma Venugopalan via kevinwilfong) (Revision 1406783)</p>
+
+<p>     Result = FAILURE<br/>
+kevinwilfong : <a href="http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1406783" class="external-link" rel="nofollow">http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1406783</a><br/>
+Files : </p>
+<ul>
+	<li>/hive/trunk/metastore/src/java/org/apache/hadoop/hive/metastore/HiveMetaStore.java</li>
+</ul>
+
+        </td></tr>
+                <tr id="comment-header-13547985"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hudson" id="word_commented_hudson" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hudson">Hudson</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">09/Jan/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13547985"><td bgcolor="#ffffff">
+            <p>Integrated in Hive-trunk-hadoop2 #54 (See <a href="https://builds.apache.org/job/Hive-trunk-hadoop2/54/" class="external-link" rel="nofollow">https://builds.apache.org/job/Hive-trunk-hadoop2/54/</a>)<br/>
+    <a href="https://issues.apache.org/jira/browse/HIVE-3686" title="Fix compile errors introduced by the interaction of HIVE-1362 and HIVE-3524" class="issue-link" data-issue-key="HIVE-3686"><del>HIVE-3686</del></a>. Fix compile errors introduced by the interaction of <a href="https://issues.apache.org/jira/browse/HIVE-1362" title="Optimizer statistics on columns in tables and partitions" class="issue-link" data-issue-key="HIVE-1362"><del>HIVE-1362</del></a> and <a href="https://issues.apache.org/jira/browse/HIVE-3524" title="Storing certain Exception objects thrown in HiveMetaStore.java in MetaStoreEndFunctionContext" class="issue-link" data-issue-key="HIVE-3524"><del>HIVE-3524</del></a>. (Shreepadma Venugopalan via kevinwilfong) (Revision 1406783)<br/>
+<a href="https://issues.apache.org/jira/browse/HIVE-1362" title="Optimizer statistics on columns in tables and partitions" class="issue-link" data-issue-key="HIVE-1362"><del>HIVE-1362</del></a>. Column level scalar valued statistics on Tables and Partitions (Shreepadma Venugopalan via cws) (Revision 1406465)</p>
+
+<p>     Result = ABORTED<br/>
+kevinwilfong : <a href="http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1406783" class="external-link" rel="nofollow">http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1406783</a><br/>
+Files : </p>
+<ul>
+	<li>/hive/trunk/metastore/src/java/org/apache/hadoop/hive/metastore/HiveMetaStore.java</li>
+</ul>
+
+
+<p>cws : <a href="http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1406465" class="external-link" rel="nofollow">http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1406465</a><br/>
+Files : </p>
+<ul>
+	<li>/hive/trunk/common/src/java/org/apache/hadoop/hive/conf/HiveConf.java</li>
+	<li>/hive/trunk/conf/hive-default.xml.template</li>
+	<li>/hive/trunk/data/files/UserVisits.dat</li>
+	<li>/hive/trunk/data/files/binary.txt</li>
+	<li>/hive/trunk/data/files/bool.txt</li>
+	<li>/hive/trunk/data/files/double.txt</li>
+	<li>/hive/trunk/data/files/employee.dat</li>
+	<li>/hive/trunk/data/files/employee2.dat</li>
+	<li>/hive/trunk/data/files/employee_part.txt</li>
+	<li>/hive/trunk/data/files/int.txt</li>
+	<li>/hive/trunk/metastore/if/hive_metastore.thrift</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-cpp/ThriftHiveMetastore.cpp</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-cpp/ThriftHiveMetastore.h</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-cpp/ThriftHiveMetastore_server.skeleton.cpp</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-cpp/hive_metastore_types.cpp</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-cpp/hive_metastore_types.h</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-javabean/org/apache/hadoop/hive/metastore/api/BinaryColumnStatsData.java</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-javabean/org/apache/hadoop/hive/metastore/api/BooleanColumnStatsData.java</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-javabean/org/apache/hadoop/hive/metastore/api/ColumnStatistics.java</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-javabean/org/apache/hadoop/hive/metastore/api/ColumnStatisticsData.java</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-javabean/org/apache/hadoop/hive/metastore/api/ColumnStatisticsDesc.java</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-javabean/org/apache/hadoop/hive/metastore/api/ColumnStatisticsObj.java</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-javabean/org/apache/hadoop/hive/metastore/api/DoubleColumnStatsData.java</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-javabean/org/apache/hadoop/hive/metastore/api/EnvironmentContext.java</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-javabean/org/apache/hadoop/hive/metastore/api/InvalidInputException.java</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-javabean/org/apache/hadoop/hive/metastore/api/LongColumnStatsData.java</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-javabean/org/apache/hadoop/hive/metastore/api/Schema.java</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-javabean/org/apache/hadoop/hive/metastore/api/StringColumnStatsData.java</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-javabean/org/apache/hadoop/hive/metastore/api/ThriftHiveMetastore.java</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-php/hive_metastore/ThriftHiveMetastore.php</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-php/hive_metastore/hive_metastore_types.php</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-py/hive_metastore/ThriftHiveMetastore-remote</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-py/hive_metastore/ThriftHiveMetastore.py</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-py/hive_metastore/ttypes.py</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-rb/hive_metastore_types.rb</li>
+	<li>/hive/trunk/metastore/src/gen/thrift/gen-rb/thrift_hive_metastore.rb</li>
+	<li>/hive/trunk/metastore/src/java/org/apache/hadoop/hive/metastore/HiveMetaStore.java</li>
+	<li>/hive/trunk/metastore/src/java/org/apache/hadoop/hive/metastore/HiveMetaStoreClient.java</li>
+	<li>/hive/trunk/metastore/src/java/org/apache/hadoop/hive/metastore/IMetaStoreClient.java</li>
+	<li>/hive/trunk/metastore/src/java/org/apache/hadoop/hive/metastore/ObjectStore.java</li>
+	<li>/hive/trunk/metastore/src/java/org/apache/hadoop/hive/metastore/RawStore.java</li>
+	<li>/hive/trunk/metastore/src/java/org/apache/hadoop/hive/metastore/Warehouse.java</li>
+	<li>/hive/trunk/metastore/src/model/org/apache/hadoop/hive/metastore/model/MPartitionColumnStatistics.java</li>
+	<li>/hive/trunk/metastore/src/model/org/apache/hadoop/hive/metastore/model/MTableColumnStatistics.java</li>
+	<li>/hive/trunk/metastore/src/model/package.jdo</li>
+	<li>/hive/trunk/metastore/src/test/org/apache/hadoop/hive/metastore/DummyRawStoreForJdoConnection.java</li>
+	<li>/hive/trunk/metastore/src/test/org/apache/hadoop/hive/metastore/TestHiveMetaStore.java</li>
+	<li>/hive/trunk/ql/build.xml</li>
+	<li>/hive/trunk/ql/if/queryplan.thrift</li>
+	<li>/hive/trunk/ql/ivy.xml</li>
+	<li>/hive/trunk/ql/src/gen/thrift/gen-cpp/queryplan_types.cpp</li>
+	<li>/hive/trunk/ql/src/gen/thrift/gen-cpp/queryplan_types.h</li>
+	<li>/hive/trunk/ql/src/gen/thrift/gen-javabean/org/apache/hadoop/hive/ql/plan/api/StageType.java</li>
+	<li>/hive/trunk/ql/src/gen/thrift/gen-php/queryplan/queryplan_types.php</li>
+	<li>/hive/trunk/ql/src/gen/thrift/gen-py/queryplan/ttypes.py</li>
+	<li>/hive/trunk/ql/src/gen/thrift/gen-rb/queryplan_types.rb</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/ErrorMsg.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/exec/ColumnStatsTask.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/exec/FunctionRegistry.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/exec/Task.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/exec/TaskFactory.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/metadata/Hive.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/optimizer/index/RewriteParseContextGenerator.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/parse/BaseSemanticAnalyzer.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/parse/ColumnStatsSemanticAnalyzer.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/parse/DDLSemanticAnalyzer.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/parse/ExportSemanticAnalyzer.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/parse/FunctionSemanticAnalyzer.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/parse/Hive.g</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/parse/ImportSemanticAnalyzer.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/parse/QB.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/parse/QBParseInfo.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/parse/SemanticAnalyzer.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/parse/SemanticAnalyzerFactory.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/plan/ColumnStatsDesc.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/plan/ColumnStatsWork.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/plan/HiveOperation.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/udf/generic/DoubleNumDistinctValueEstimator.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/udf/generic/GenericUDAFComputeStats.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/udf/generic/LongNumDistinctValueEstimator.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/udf/generic/NumDistinctValueEstimator.java</li>
+	<li>/hive/trunk/ql/src/java/org/apache/hadoop/hive/ql/udf/generic/StringNumDistinctValueEstimator.java</li>
+	<li>/hive/trunk/ql/src/test/queries/clientnegative/columnstats_partlvl_dp.q</li>
+	<li>/hive/trunk/ql/src/test/queries/clientnegative/columnstats_partlvl_incorrect_num_keys.q</li>
+	<li>/hive/trunk/ql/src/test/queries/clientnegative/columnstats_partlvl_invalid_values.q</li>
+	<li>/hive/trunk/ql/src/test/queries/clientnegative/columnstats_partlvl_multiple_part_clause.q</li>
+	<li>/hive/trunk/ql/src/test/queries/clientnegative/columnstats_tbllvl.q</li>
+	<li>/hive/trunk/ql/src/test/queries/clientnegative/columnstats_tbllvl_complex_type.q</li>
+	<li>/hive/trunk/ql/src/test/queries/clientnegative/columnstats_tbllvl_incorrect_column.q</li>
+	<li>/hive/trunk/ql/src/test/queries/clientpositive/columnstats_partlvl.q</li>
+	<li>/hive/trunk/ql/src/test/queries/clientpositive/columnstats_tbllvl.q</li>
+	<li>/hive/trunk/ql/src/test/queries/clientpositive/compute_stats_binary.q</li>
+	<li>/hive/trunk/ql/src/test/queries/clientpositive/compute_stats_boolean.q</li>
+	<li>/hive/trunk/ql/src/test/queries/clientpositive/compute_stats_double.q</li>
+	<li>/hive/trunk/ql/src/test/queries/clientpositive/compute_stats_long.q</li>
+	<li>/hive/trunk/ql/src/test/queries/clientpositive/compute_stats_string.q</li>
+	<li>/hive/trunk/ql/src/test/results/clientnegative/columnstats_partlvl_dp.q.out</li>
+	<li>/hive/trunk/ql/src/test/results/clientnegative/columnstats_partlvl_incorrect_num_keys.q.out</li>
+	<li>/hive/trunk/ql/src/test/results/clientnegative/columnstats_partlvl_invalid_values.q.out</li>
+	<li>/hive/trunk/ql/src/test/results/clientnegative/columnstats_partlvl_multiple_part_clause.q.out</li>
+	<li>/hive/trunk/ql/src/test/results/clientnegative/columnstats_tbllvl.q.out</li>
+	<li>/hive/trunk/ql/src/test/results/clientnegative/columnstats_tbllvl_complex_type.q.out</li>
+	<li>/hive/trunk/ql/src/test/results/clientnegative/columnstats_tbllvl_incorrect_column.q.out</li>
+	<li>/hive/trunk/ql/src/test/results/clientpositive/columnstats_partlvl.q.out</li>
+	<li>/hive/trunk/ql/src/test/results/clientpositive/columnstats_tbllvl.q.out</li>
+	<li>/hive/trunk/ql/src/test/results/clientpositive/compute_stats_binary.q.out</li>
+	<li>/hive/trunk/ql/src/test/results/clientpositive/compute_stats_boolean.q.out</li>
+	<li>/hive/trunk/ql/src/test/results/clientpositive/compute_stats_double.q.out</li>
+	<li>/hive/trunk/ql/src/test/results/clientpositive/compute_stats_long.q.out</li>
+	<li>/hive/trunk/ql/src/test/results/clientpositive/compute_stats_string.q.out</li>
+	<li>/hive/trunk/ql/src/test/results/clientpositive/show_functions.q.out</li>
+	<li>/hive/trunk/serde/src/java/org/apache/hadoop/hive/serde2/objectinspector/primitive/PrimitiveObjectInspectorUtils.java</li>
+</ul>
+
+        </td></tr>
+                <tr id="comment-header-13550262"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="ashutoshc" id="word_commented_ashutoshc" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=ashutoshc">Ashutosh Chauhan</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">10/Jan/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13550262"><td bgcolor="#ffffff">
+            <p>This issue is fixed and released as part of 0.10.0 release. If you find an issue which seems to be related to this one, please create a new jira and link this one with new jira.</p>
+        </td></tr>
+                <tr id="comment-header-13943576"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="sershe" id="word_commented_sershe" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=sershe">Sergey Shelukhin</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13943576"><td bgcolor="#ffffff">
+            <p>This jira adds but doesn't use decimal fields in the schema... I am going to "reuse" them for <a href="https://issues.apache.org/jira/browse/HIVE-6701" title="Analyze table compute statistics for decimal columns." class="issue-link" data-issue-key="HIVE-6701">HIVE-6701</a>. We probably cannot use decimal due to derby limitations (31 precision max, Hive is 38), so between string and binary there might not be a difference that matters</p>
+        </td></tr>
+            </table>
+Generated at Sat Mar 22 13:36:48 UTC 2014 using JIRA 6.2#6252-sha1:aa343257d4ce030d9cb8c531be520be9fac1c996.
+
+</body>
+</html>

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>[#INFRA-7477] Tajo TLP: migration from Moinmoin wiki to confluence</title>
+    <meta http-equiv="Content-Type" Content="application/vnd.ms-word; charset=utf-8">
+        <style type="text/css">
+
+.tableBorder, .grid
+{
+    background-color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableBorder td, .grid td
+{
+    vertical-align: top;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+.noPadding
+{
+    padding: 0 !important;
+}
+
+h3 .subText
+{
+    font-size: 60%;
+    font-weight: normal;
+}
+
+.tabLabel
+{
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-bottom:none;
+    padding: 2px;
+    display: inline;
+}
+
+td.blank
+{
+    padding: 0;
+    margin: 0;
+}
+
+.blank td
+{
+    border: none;
+}
+
+#descriptionArea
+{
+    margin: 0;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+hr
+{
+    border-top:1px solid #aaa;
+}
+
+hr.fullcontent
+{
+  height: 15px;
+  padding: 10px 0;
+  background: #fff url('https://issues.apache.org/jira/images/icons/hr.gif') no-repeat scroll center;
+}
+
+</style>
+
+</head>
+<body>
+
+<table class="tableBorder" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" width="100%" colspan="2" valign="top">
+                            <b><a id="parent_issue_summary" href="https://issues.apache.org/jira/browse/INFRA-7473">Graduate Tajo to TLP</a></b>
+                <span style="font-size: 9px">(<a id="parent_issue_key" href="https://issues.apache.org/jira/browse/INFRA-7473">INFRA-7473</a>)</span>
+                <h3 class="formtitle"><img src="https://issues.apache.org/jira/images/icons/link_out_bot.gif" width="16" height="16" />
+                        [INFRA-7477]&nbsp;<a href="https://issues.apache.org/jira/browse/INFRA-7477">Tajo TLP: migration from Moinmoin wiki to confluence</a>
+            <span class="subText">
+               Created: 20/Mar/14                   &nbsp;Updated: 21/Mar/14
+
+                                                    &nbsp;Resolved: 21/Mar/14
+                            </span>
+            </h3>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Status:</b></td>
+        <td width="80%">Closed</td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Project:</b></td>
+        <td width="80%"><a href="https://issues.apache.org/jira/secure/BrowseProject.jspa?id=10410">Infrastructure</a></td>
+    </tr>
+
+        <tr>
+            <td><b>Component/s:</b></td>
+            <td>
+                                        <a title="Confluence"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=10410&component=12310880"
+            >Confluence</a>,                    <a title="TLP Admin"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=10410&component=10858"
+            >TLP Admin</a>                        </td>
+    </tr>
+    
+
+    
+
+        <tr>
+            <td><b>Fix Version/s:</b></td>
+            <td>
+                            None
+                </td>
+    </tr>
+    
+    </table>
+
+<br />
+<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" valign="top" width="20%">
+            <b>Type:</b>
+        </td>
+        <td bgcolor="#ffffff" valign="top"  width="30%" >
+            Sub-task
+        </td>
+
+                    <td bgcolor="#f0f0f0">
+                <b>Priority:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap>
+                Major
+            </td>
+            </tr>
+    <tr>
+                        <td bgcolor="#f0f0f0" valign="top" width="20%">
+                <b>Reporter:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top"  width="30%" >
+                                            <a class="user-hover" rel="hyunsik" id="word_reporter_hyunsik" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hyunsik">Hyunsik Choi</a>
+                            </td>
+        
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Assignee:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap  width="30%" >
+                                            <a class="user-hover" rel="ipv6guru" id="word_assignee_ipv6guru" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=ipv6guru">Gavin</a>
+                            </td>
+            </tr>
+    	<tr>
+		<td bgcolor="#f0f0f0" width="20%">
+			<b>Resolution:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                            Fixed
+                    </td>
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Votes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                0
+            </td>
+        
+    </tr>
+    
+        <tr>
+        <td bgcolor="#f0f0f0" width="20%">
+            <b>Labels:</b>
+        </td>
+        <td id="labels-12702581-value" class="value" bgcolor="#ffffff" valign="top" colspan="3" nowrap>
+                            None
+                    </td>
+    </tr>
+    
+    	<tr>
+        		<td bgcolor="#f0f0f0" width="20%"><b>Remaining Estimate:</b></td>
+        <td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Time Spent:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+	</tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Original Estimate:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    
+    </table>
+
+
+
+    <br />
+
+    	<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+
+        
+    
+
+
+
+</table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Description</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td id="descriptionArea">
+            In podling, we used Moinmoin wiki. With TLP migration, we&#39;d like to switch moinmoin into confluence.<br/>
+<br/>
+Wiki name - Apache Tajo<br/>
+Destination for commit mails - <a href='mailto:commits@tajo.apache.org'>commits@tajo.apache.org</a><br/>
+Confluence usernames of two+ community members - hyunsik, jhkim, jihoonson<br/>
+Volunteer space admins - hyunsik, jhkim, jihoonson<br/>
+<br/>
+Here is the discussion in tajo-dev.<br/>
+<a href="http://markmail.org/message/glx4pjlfnx5zx2eh">http://markmail.org/message/glx4pjlfnx5zx2eh</a>
+            <br/>
+        </td>
+    </tr>
+    </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Comments</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="grid" style="margin: 0;">
+                <tr id="comment-header-13943109"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="ipv6guru" id="word_commented_ipv6guru" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=ipv6guru">Gavin</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13943109"><td bgcolor="#ffffff">
+            Are you ok migrating content manually ?<br/>
+If so I can create the cwiki no problem now<br/>
+<br/>
+Migration automatically is not easy, we don&#39;t have a fool-proof way to migrate moon to cwiki just yet, but I can re-investigate this if needed.
+        </td></tr>
+                <tr id="comment-header-13943112"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hyunsik" id="word_commented_hyunsik" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hyunsik">Hyunsik Choi</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13943112"><td bgcolor="#ffffff">
+            Hi Gavin,<br/>
+<br/>
+Yes, I&#39;ll migrate all contents manually. Thank you in advance!
+        </td></tr>
+                <tr id="comment-header-13943454"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="ipv6guru" id="word_commented_ipv6guru" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=ipv6guru">Gavin</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13943454"><td bgcolor="#ffffff">
+            Done.<br/>
+<br/>
+<a href="https://cwiki.apache.org/confluence/display/TAJO/Apache+TAJO+Home">https://cwiki.apache.org/confluence/display/TAJO/Apache+TAJO+Home</a> <br/>
+<br/>
+Let me know if you have any questions at all.
+        </td></tr>
+            </table>
+Generated at Sat Mar 22 13:37:37 UTC 2014 using JIRA 6.2#6252-sha1:aa343257d4ce030d9cb8c531be520be9fac1c996.
+
+</body>
+</html>

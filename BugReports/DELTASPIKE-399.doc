@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>[#DELTASPIKE-399] Incorporate Solder&#39;s ResourceLoader features into DeltaSpike</title>
+    <meta http-equiv="Content-Type" Content="application/vnd.ms-word; charset=utf-8">
+        <style type="text/css">
+
+.tableBorder, .grid
+{
+    background-color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableBorder td, .grid td
+{
+    vertical-align: top;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+.noPadding
+{
+    padding: 0 !important;
+}
+
+h3 .subText
+{
+    font-size: 60%;
+    font-weight: normal;
+}
+
+.tabLabel
+{
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-bottom:none;
+    padding: 2px;
+    display: inline;
+}
+
+td.blank
+{
+    padding: 0;
+    margin: 0;
+}
+
+.blank td
+{
+    border: none;
+}
+
+#descriptionArea
+{
+    margin: 0;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+hr
+{
+    border-top:1px solid #aaa;
+}
+
+hr.fullcontent
+{
+  height: 15px;
+  padding: 10px 0;
+  background: #fff url('https://issues.apache.org/jira/images/icons/hr.gif') no-repeat scroll center;
+}
+
+</style>
+
+</head>
+<body>
+
+<table class="tableBorder" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" width="100%" colspan="2" valign="top">
+                            <h3 class="formtitle">
+                        [DELTASPIKE-399]&nbsp;<a href="https://issues.apache.org/jira/browse/DELTASPIKE-399">Incorporate Solder&#39;s ResourceLoader features into DeltaSpike</a>
+            <span class="subText">
+               Created: 07/Aug/13                   &nbsp;Updated: 20/Mar/14
+
+                                                    &nbsp;Resolved: 03/Mar/14
+                            </span>
+            </h3>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Status:</b></td>
+        <td width="80%">Closed</td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Project:</b></td>
+        <td width="80%"><a href="https://issues.apache.org/jira/secure/BrowseProject.jspa?id=12312820">DeltaSpike</a></td>
+    </tr>
+
+        <tr>
+            <td><b>Component/s:</b></td>
+            <td>
+                                        <a title="Core"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12312820&component=12317002"
+            >Core</a>                        </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Affects Version/s:</b></td>
+            <td>
+                                        <a title="0.4"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12312820&version=12319863"
+            >0.4</a>                        </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Fix Version/s:</b></td>
+            <td>
+                                        <a title="0.6"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12312820&fixfor=12320948"
+            >0.6</a>                        </td>
+    </tr>
+    
+    </table>
+
+<br />
+<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" valign="top" width="20%">
+            <b>Type:</b>
+        </td>
+        <td bgcolor="#ffffff" valign="top"  width="30%" >
+            New Feature
+        </td>
+
+                    <td bgcolor="#f0f0f0">
+                <b>Priority:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap>
+                Minor
+            </td>
+            </tr>
+    <tr>
+                        <td bgcolor="#f0f0f0" valign="top" width="20%">
+                <b>Reporter:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top"  width="30%" >
+                                            <a class="user-hover" rel="as6o" id="word_reporter_as6o" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=as6o">Aaron Siri</a>
+                            </td>
+        
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Assignee:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap  width="30%" >
+                                            <a class="user-hover" rel="johndament" id="word_assignee_johndament" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=johndament">John D. Ament</a>
+                            </td>
+            </tr>
+    	<tr>
+		<td bgcolor="#f0f0f0" width="20%">
+			<b>Resolution:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                            Fixed
+                    </td>
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Votes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                0
+            </td>
+        
+    </tr>
+    
+        <tr>
+        <td bgcolor="#f0f0f0" width="20%">
+            <b>Labels:</b>
+        </td>
+        <td id="labels-12662424-value" class="value" bgcolor="#ffffff" valign="top" colspan="3" nowrap>
+                            None
+                    </td>
+    </tr>
+    
+    	<tr>
+        		<td bgcolor="#f0f0f0" width="20%"><b>Remaining Estimate:</b></td>
+        <td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Time Spent:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+	</tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Original Estimate:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    
+    </table>
+
+
+
+    <br />
+
+    	<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+
+                <tr>
+            <td bgcolor="#f0f0f0" width=20% valign=top>
+                <b>Attachments:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top">
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        DELTASPIKE-399.patch &nbsp;&nbsp;&nbsp;
+                            </td>
+        </tr>
+        
+    
+
+
+
+</table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Description</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td id="descriptionArea">
+            Seam 3&#39;s Solder module had some nice resource loading functionality within the org.jboss.solder.resourceLoader packages.  With it you could do the following:<br/>
+<br/>
+// Load a properties file<br/>
+@Inject @Resource(&quot;app.properties&quot;)<br/>
+private Properties appProperties;<br/>
+<br/>
+or:<br/>
+<br/>
+@Inject<br/>
+private ResourceProvider resourceProvider<br/>
+<br/>
+public Properties getHostProperties() {<br/>
+&nbsp;&nbsp;&nbsp;String hostname = java.net.InetAddress.getLocalHost().getHostName();<br/>
+&nbsp;&nbsp;&nbsp;return resourceProvider.loadPropertiesBundle(hostname + &quot;.properties&quot;);<br/>
+}
+            <br/>
+        </td>
+    </tr>
+    </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Comments</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="grid" style="margin: 0;">
+                <tr id="comment-header-13735885"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="struberg" id="word_commented_struberg" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=struberg">Mark Struberg</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">10/Aug/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13735885"><td bgcolor="#ffffff">
+            <p>did you look at our ConfigSource mechanism already? This provides very similar features, but much more powerful imo. Please report back if you are missing something - txs!</p>
+        </td></tr>
+                <tr id="comment-header-13735886"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="as6o" id="word_commented_as6o" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=as6o">Aaron Siri</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">10/Aug/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13735886"><td bgcolor="#ffffff">
+            <p>Is there documentation on this anywhere?  I don't see any mention of it.</p>
+        </td></tr>
+                <tr id="comment-header-13735888"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="as6o" id="word_commented_as6o" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=as6o">Aaron Siri</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">10/Aug/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13735888"><td bgcolor="#ffffff">
+            <p>Never mind - found the docs.</p>
+        </td></tr>
+                <tr id="comment-header-13735889"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="struberg" id="word_commented_struberg" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=struberg">Mark Struberg</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">10/Aug/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13735889"><td bgcolor="#ffffff">
+            <p>great you found it. For completeness: <a href="http://deltaspike.apache.org/configuration.html" class="external-link" rel="nofollow">http://deltaspike.apache.org/configuration.html</a></p>
+        </td></tr>
+                <tr id="comment-header-13735908"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="as6o" id="word_commented_as6o" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=as6o">Aaron Siri</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">10/Aug/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13735908"><td bgcolor="#ffffff">
+            <p>The ConfigSource mechanism looks like it'd meet my needs and I'm going to give it a try but it has a specific purpose.  The @Resource/ResourceProvider support in Solder was more generic and I think would still be useful.  It easily allows for the loading of .xml files, images, etc.</p>
+        </td></tr>
+                <tr id="comment-header-13742864"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="chkal" id="word_commented_chkal" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=chkal">Christian Kaltepoth</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">17/Aug/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13742864"><td bgcolor="#ffffff">
+            <p>Actually I like the idea of having such a feature in DeltaSpike. </p>
+
+<p>I agree with Aaron that loading configuration is a very special case that should be implemented using a ConfigSource instead. But often there is a need to load other stuff from the classpath. Typically you have to use the context classloader to access such resources and this code can be very difficult to test sometimes. The ability to simply inject such resources would be a great addition to DeltaSpike IMHO.</p>
+
+<p>Just for completeness, here is the documentation of the original Solder feature:</p>
+
+<p><a href="http://docs.jboss.org/seam/3/3.1.0.Final/reference/en-US/html/solder-resourceloading.html" class="external-link" rel="nofollow">http://docs.jboss.org/seam/3/3.1.0.Final/reference/en-US/html/solder-resourceloading.html</a></p>
+        </td></tr>
+                <tr id="comment-header-13742906"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="johndament" id="word_commented_johndament" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=johndament">John D. Ament</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">17/Aug/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13742906"><td bgcolor="#ffffff">
+            <p>+1</p>
+
+<p>I'll work on porting it, leveraging our existing config sources.</p>
+        </td></tr>
+                <tr id="comment-header-13742910"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="struberg" id="word_commented_struberg" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=struberg">Mark Struberg</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">17/Aug/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13742910"><td bgcolor="#ffffff">
+            <p>sounds ok for 0.6.</p>
+        </td></tr>
+                <tr id="comment-header-13742926"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">17/Aug/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13742926"><td bgcolor="#ffffff">
+            <p>+0, but not for the name (there is already javax.annotation.Resource) and we should avoid (/reduce the number of) name clashes.</p>
+        </td></tr>
+                <tr id="comment-header-13743617"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="chkal" id="word_commented_chkal" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=chkal">Christian Kaltepoth</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">19/Aug/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13743617"><td bgcolor="#ffffff">
+            <p>I agree with Gerhard that we should avoid name clashes. What about @ClasspathResource?</p>
+
+<p>What do you think about extending what Solder provided by supporting injection of other types than URL and InputStream? We could provide an SPI to allow users to extend the types that are supported.</p>
+
+<p>Imagine this example. A user wants to load a FreeMarker template from the classpath. Wouldn't it be nice to be able to do something like this:</p>
+
+<p>@Inject<br/>
+@ClasspathResource(name="template.ftl", loader=TemplateLoader.class)<br/>
+private Template myTemplate;</p>
+
+<p>Where TemplateLoader is an implementation of an interface like this:</p>
+
+<p>public interface ResourceLoader&lt;T&gt; </p>
+{
+  T load(URL url);
+}
+
+<p>Actually I don't think the user will have to explicitly name the loader to use. This could be done automatically.</p>
+
+<p>Thoughts?</p>
+        </td></tr>
+                <tr id="comment-header-13743780"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">19/Aug/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13743780"><td bgcolor="#ffffff">
+            <p>i'm not sure about that, because you can do the same with a custom producer.<br/>
+if you inject the url into the producer, you have to write the same code (with the std. cdi-api).</p>
+        </td></tr>
+                <tr id="comment-header-13744727"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="chkal" id="word_commented_chkal" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=chkal">Christian Kaltepoth</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">20/Aug/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13744727"><td bgcolor="#ffffff">
+            <p>Yeah, I think you are right. Seems like it is even simpler then I thought. In this case we should just describe this "pattern" in the documentation so that people know how to do it the right way.</p>
+        </td></tr>
+                <tr id="comment-header-13848739"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="johndament" id="word_commented_johndament" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=johndament">John D. Ament</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">16/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13848739"><td bgcolor="#ffffff">
+            <p>I ended up calling the annotation `@ExternalResource` to avoid the name clash.  I also only added support for properties and `InputStream`s.</p>
+        </td></tr>
+                <tr id="comment-header-13848861"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">16/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13848861"><td bgcolor="#ffffff">
+            <p>#1 ExternalResourceLiteral needs to be in org.apache.deltaspike.core.api.literal<br/>
+#2 imo XMLProperties doesn't fit to what we have in other parts<br/>
+#3 rename ExternalResourceProvider#getPriority to #getOrdinal (which is the term we are using)<br/>
+#4 so far we haven't used #getCanonicalName (-&gt; please start a discussion or change it)<br/>
+#5 we don't use @author<br/>
+#6 ResourceLoaderExtension is a concept we don't use right now (we should use it everywhere or nowhere)<br/>
+#7 so far we never have InjectionPoint in a spi and it isn't used currently. since it exposes internals, we should remove it imo<br/>
+#8 using #getResources but just returning the first InputStream isn't that nice (+ if there are multiple urls, it can lead to random results)<br/>
+#9 package name "resoureLoader" violates our naming conventions and contains a typo (needs to be: resourceloader)</p>
+        </td></tr>
+                <tr id="comment-header-13851350"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="johndament" id="word_commented_johndament" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=johndament">John D. Ament</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">18/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13851350"><td bgcolor="#ffffff">
+            <p>The use of extension is pretty much needed for my working environment, and actually will help us a bit to support EARs.  I'll create a task to implement extensions for most of our functionality, as I'm coming across needs to implement it.</p>
+
+<p>#2 I don't quite follow.</p>
+
+<p>#4 we shouldn't limit API usage just because it's not what we already are using.</p>
+
+<p>#10 Please try to be concise with your code review comments and edits, I ended up receiving 14 emails.</p>
+        </td></tr>
+                <tr id="comment-header-13851473"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">18/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13851473"><td bgcolor="#ffffff">
+            <p>@ #2 XMLProperties is just a simple marker which can be part of ExternalResource itself (e.g. as format-enum to be extensible in the future). we agreed on using as few annotations as possible, because it's easier for users.<br/>
+@ #4: -1 we should be consistent<br/>
+@ #6: please start a discussion on the list and provide the whole info (e.g. why it just helps a bit. imo: if we do it, we should generate it with a maven-plugin - everything else is broken over time).<br/>
+@ #10: everybody is welcome to write as many as needed. i would be happy not to write a single one - i just found more and more the more i looked at the code.</p>
+        </td></tr>
+                <tr id="comment-header-13851912"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="chkal" id="word_commented_chkal" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=chkal">Christian Kaltepoth</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">18/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13851912"><td bgcolor="#ffffff">
+            <p>Hey John,</p>
+
+<p>first of all, thanks for starting to work on this. I really think this will be a very useful feature.</p>
+
+<p>I just had a quick look at the code and want to give some feedback.</p>
+
+<p>#1 Regarding ExternalResourceProviderComparator. As we now have some APIs that use some kind of priority/ordinal for ordering, we should think about creating an interface for this. This way we could build a single comparator that would work for all the classes that implement this interface. I'm thinking about something like <span class="error">&#91;1&#93;</span>. Thoughts?</p>
+
+<p>#2 To be honest, I'm not quite happy with the fact that the code currently tries all ExternalResourceProviders to find a matching resource. As Gerhard already pointed out, this may lead to weird effects if more than one provider returns a result. I was thinking if we could instead use some kind of prefix in the resource name to identifier which provider to use. Something like:</p>
+
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+@Inject
+@ExternalResource(<span class="code-quote">"classpath:myconfig.properties"</span>)
+<span class="code-keyword">private</span> InputStream inputStream;
+</pre>
+</div></div>
+
+<p>Spring uses a similar concept. I think this would make sense because the users typically know from which place the resource should be loaded. So we should allow them to specify it. I think this will be easy to implement if the provider API supports this concept. </p>
+
+<p>#3 We could think about adding an ExternalResourceProvider for web resources which uses ServletContext.getResource() and add it to the Servlet module.</p>
+
+
+<p><span class="error">&#91;1&#93;</span> <a href="https://github.com/togglz/togglz/blob/master/core/src/main/java/org/togglz/core/util/Weighted.java" class="external-link" rel="nofollow">https://github.com/togglz/togglz/blob/master/core/src/main/java/org/togglz/core/util/Weighted.java</a></p>
+        </td></tr>
+                <tr id="comment-header-13852960"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">19/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13852960"><td bgcolor="#ffffff">
+            <p>@christian:<br/>
+if "classpath:" is needed, it should be available as enum-value or a marker class/interface.<br/>
+... to keep it type-safe</p>
+        </td></tr>
+                <tr id="comment-header-13855077"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="johndament" id="word_commented_johndament" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=johndament">John D. Ament</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">22/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13855077"><td bgcolor="#ffffff">
+            <p><a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=chkal" class="user-hover" rel="chkal">Christian Kaltepoth</a> I'll create a separate ticket to make a priority interface/abstract class &amp; comparator.  I agree, it's something we need globally.</p>
+
+<p>When I first prototyping it, I actually used classpath: and file: to differentiate.  It definitely works more consistently, and I agree searching through is a pain.  At one point I had a `canProivde` method that indicated whether or not the value could be read.  I think the CDI-esque way would be to use a qualifier on what prefix is handled.</p>
+
+<p>Also, I think the only way to make it configurable, so app developers can add more resource providers, is to make it a string.  It can be a separate attribute,e.g. @ExternalResource(storage="file",name="myapp.properties") and @ExternalProperties(storage="classpath",name="myapp.properties")</p>
+
+<p>actually, I looked at first at doing this in the servlet module.  From what I'm seeing, servlet support isn't actually needed for any use case, you can use file to locate it.  I didn't try in every app server mind you.  Is there a scenario you can think of that requires servlet context?</p>
+
+<p><a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek" class="user-hover" rel="gpetracek">Gerhard Petracek</a> The reason @XMLProperties is a separate annotation is that it only applies to property based loading.  We can't scale well if we need to add new attributes/enum values, and we make a lot of inter-dependency by adding them unnecessarily.  For example @XMLProperties wouldn't apply if the source was a DB table.  Now, this is slightly precluded since we're dealing with inputstreams right now, so that may need to change.</p>
+        </td></tr>
+                <tr id="comment-header-13855712"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">23/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13855712"><td bgcolor="#ffffff">
+            <p>john: @XMLProperties:<br/>
+that's not correct since you have the handling in the producer -&gt; if we need something in addition you have to add a new annotation + the handling in ExternalResourceProducer#getProperties. with an enum you have to do the same (just instead the new annotation a new enum-value), but you have only one annotation users have to remember (you don't have to remember the enum, because it's given...).</p>
+
+<p>in any case: if you need something highly special and you would create a special annotation for it (for whatever reason), you can still do it - but we don't need it for the functionality we provide out-of-the-box.</p>
+
+<p>btw. it even fails with<br/>
+ mvn clean install -Ptomee-build-managed<br/>
+and<br/>
+ mvn clean install -Pjbossas-build-managed-7<br/>
+with a NullPointerException</p>
+
+<p>we are close to a new release and this ticket is highly blocking. <del>&gt; let's fix #1</del>#9 as well as the build or postpone it (= revert it for now).</p>
+        </td></tr>
+                <tr id="comment-header-13855736"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="johndament" id="word_commented_johndament" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=johndament">John D. Ament</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">23/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13855736"><td bgcolor="#ffffff">
+            <p>An app developer should not be overriding a framework provided class.  An app developer cannot add new enum values.</p>
+        </td></tr>
+                <tr id="comment-header-13855741"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">23/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13855741"><td bgcolor="#ffffff">
+            <p>with what we have right now, you can just provide a custom producer (+ a custom annotation).<br/>
+if you really need to do it (for whatever reason), you can still do it with the enum approach. there is no blocker, just because we would use an enum out-of-the-box.</p>
+        </td></tr>
+                <tr id="comment-header-13855755"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="johndament" id="word_commented_johndament" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=johndament">John D. Ament</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">23/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13855755"><td bgcolor="#ffffff">
+            <p>My preference at this point is to go the route described:</p>
+<div class="preformatted panel" style="border-width: 1px;"><div class="preformattedContent panelContent">
+<pre>@ExternalResource(storage="file",name="myapp.properties") 
+</pre>
+</div></div>
+
+<p>The storage attribute, we can provide a set of constants, to allow devs to extend it as needed.</p>
+
+<p>It seems like what you're saying</p>
+<blockquote><p>you can just provide a custom producer (+ a custom annotation).</p></blockquote>
+
+<p>Matched exactly what I did for @XMLProperties</p>
+
+
+<p>Please also recheck as most of 1-9 are now fixed, where it makes sense (and some of the things seem like we're trying to limit ourselves).</p>
+        </td></tr>
+                <tr id="comment-header-13855876"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">23/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13855876"><td bgcolor="#ffffff">
+            <p>btw. i don't see the reason for keeping the info at all.</p>
+
+<p>if you have<br/>
+@ExternalResource("xyz.properties")<br/>
+and<br/>
+@ExternalResource("xyz.xml")<br/>
+it's pretty clear and the producer can be smart enough to handle it correctly (without an additional annotation/enum/string-value/...).</p>
+
+<p>@"most is fixed already":<br/>
+i don't think so (maybe you haven't pushed everything) - esp.:<br/>
+@ #1 you saw on the mailing list that we should keep the approach we have (i never said that i like it, but it's more important to be consistent)<br/>
+@ #3 also still not aligned with the rest of ds (i would also prefer "priority", but it's more important to be consistent)<br/>
+@ #6 there is still no agreement, but doing it manually (for all parts of ds) is just broken over time<br/>
+@ #8 still not fixed and a clear issue<br/>
+@ #9 there is still a typo: resoureloader (instead of resourceloader)</p>
+        </td></tr>
+                <tr id="comment-header-13856231"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="chkal" id="word_commented_chkal" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=chkal">Christian Kaltepoth</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">24/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13856231"><td bgcolor="#ffffff">
+            <p>@ <a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=johnament" class="user-hover" rel="johnament">John Ament</a>: </p>
+
+<p>A) Regarding the Servlet module: I think it would make sense to provide an <tt>ExternalResourceProvider</tt> that uses <tt>ServletContext.getResource()</tt>. This is very useful if you want to load resources that are packed in a WAR. Say you want to load <tt>web.xml</tt> for whatever reason. You could just use:</p>
+
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+@ExternalResource(storage=<span class="code-quote">"web"</span>, name=<span class="code-quote">"WEB-INF/web.xml"</span>) 
+</pre>
+</div></div>
+
+<p>B) I like Gerhard's idea of simply inferring the format of a Properties resource from the file name. IMHO <tt>.properties</tt> should be the default as most people are using this format. So we could simply use <tt>Properties.loadFromXML()</tt> only if the name of the resource ends with <tt>.xml</tt>. I think this is a nice example for using convention over configuration.</p>
+
+<p>C) I agree with John that using a simple string as an location identifier is fine:</p>
+
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+@ExternalResource(storage=<span class="code-quote">"classpath"</span>, name=<span class="code-quote">"myapp.properties"</span>) 
+</pre>
+</div></div>
+
+<p>This way uses can provide custom <tt>ExternalResourceProvider</tt> implementations very easily. But we could provider some constants for the storage types we provide out of the box:</p>
+
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+@ExternalResource(storage=StorageType.CLASSPATH, name=<span class="code-quote">"myapp.properties"</span>) 
+</pre>
+</div></div>
+        </td></tr>
+                <tr id="comment-header-13856562"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">25/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13856562"><td bgcolor="#ffffff">
+            <p>@christian:<br/>
+"storage" as a string is the style of other containers and not cdi (and ds).<br/>
+if we really need it, we can provide a marker interface and keep the information type-safe (like with bv-groups, type-safe view-config,...).<br/>
+users will only have 1-2 implementations - so it isn't a big issue (+ it should be an edge case anyway).<br/>
+replacing an internal producer should be only the last resort and is (/should be) a clear edge case (for users).</p>
+
+<p>the point is:<br/>
+#1 for our current implementation (we provide out-of-the-box) we don't need an additional marker/information at all<br/>
+#2 if we really need it in the future, we can add it at any time<br/>
+#3 if users really hit edge cases and they replace the producer (most won't do that at all btw.), they can use a custom marker annotation<br/>
+     (but as mentioned before: we don't need it out-of-the-box)</p>
+        </td></tr>
+                <tr id="comment-header-13856877"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="chkal" id="word_commented_chkal" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=chkal">Christian Kaltepoth</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">26/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13856877"><td bgcolor="#ffffff">
+            <p>@ <a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek" class="user-hover" rel="gpetracek">Gerhard Petracek</a>:</p>
+
+<p>I'm fine with using a marker interface instead of a string to make it more type-safe. So you are talking about something like this, right?</p>
+
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+@ExternalResource(storage=Classpath.class, name=<span class="code-quote">"myapp.properties"</span>) 
+</pre>
+</div></div> 
+
+<p>With <tt>Classpath</tt> being a simple marker interface:</p>
+
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">public</span> <span class="code-keyword">interface</span> Classpath {}
+</pre>
+</div></div>
+
+<p>That's fine. But you were talking about enums before which I don't think is a good idea because users cannot extend them.</p>
+
+<p>Perhaps it would make even more sense to use an annotation instead of an attribute for the storage. Something like:</p>
+
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+@Classpath
+@ExternalResource(<span class="code-quote">"myapp.properties"</span>) 
+</pre>
+</div></div> 
+
+<p>Regarding #1 + #2: I think we need something like the <tt>storage</tt> attribute now, because the current implementation simply tries all <tt>ExternalResourceProvider</tt> and returns the first resource found, which is (like discussed before) not what we want. </p>
+
+<p>BTW: I don't get what you mean with "replacing a producer". Basically the storage attribute is used to select a <tt>ExternalResourceProvider</tt> that should be used to load the resource. So there is no need to replace anything. Users could provider alternative providers that retrieve resources from other places. And I think allowing users to add other provider implementations is a very important feature.</p>
+        </td></tr>
+                <tr id="comment-header-13857063"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">26/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13857063"><td bgcolor="#ffffff">
+            <p>@christian:<br/>
+the enum-suggestion was before the suggestion with the new attribute.<br/>
++ agreed - with such an attribute users don't have to replace the producer for std. use-cases.</p>
+
+<p>it's more like:</p>
+
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">public</span> <span class="code-keyword">interface</span> ResourceStorage {}
+<span class="code-keyword">public</span> <span class="code-keyword">interface</span> Classpath <span class="code-keyword">extends</span> ResourceStorage {} <span class="code-comment">//<span class="code-keyword">interface</span> or class
+</span>
+<span class="code-keyword">public</span> @<span class="code-keyword">interface</span> ExternalResource
+{
+    @Nonbinding
+    <span class="code-object">String</span> value();
+
+    @Nonbinding
+    <span class="code-object">Class</span>&lt;? <span class="code-keyword">extends</span> ResourceStorage&gt; storage();
+}
+</pre>
+</div></div>
+
+<p>with that you can't use other classes accidentally + your ide will suggest what you can use.</p>
+        </td></tr>
+                <tr id="comment-header-13857155"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="johndament" id="word_commented_johndament" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=johndament">John D. Ament</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">26/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13857155"><td bgcolor="#ffffff">
+            <p><a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek" class="user-hover" rel="gpetracek">Gerhard Petracek</a> I'm good with the class approach, I'll push that in this evening.</p>
+        </td></tr>
+                <tr id="comment-header-13857159"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">26/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13857159"><td bgcolor="#ffffff">
+            <p>thx john, but please don't forget to fix at least #1, #3, #8 and #9 as well</p>
+        </td></tr>
+                <tr id="comment-header-13857232"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="johndament" id="word_commented_johndament" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=johndament">John D. Ament</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">27/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13857232"><td bgcolor="#ffffff">
+            <p><a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek" class="user-hover" rel="gpetracek">Gerhard Petracek</a> those are already changed/obsolete at this point.  #8 probably won't be changed, if someone wants different behavior they can subclass.</p>
+        </td></tr>
+                <tr id="comment-header-13857240"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">27/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13857240"><td bgcolor="#ffffff">
+            <p>@john - please read/check it again:<br/>
+@ #1 and #3 are clearly inconsistent<br/>
+@ #8 if multiple results get returned by #getResources, we have to throw an exception in ClasspathResourceProvider#readClassPath (instead of just using the first result which leads to a random result)<br/>
+@ #9 the original issue is fixed, however, as mentioned earlier there is a typo (a missing 'c' in the package name - instead of resourceloader there is just resoureloader)</p>
+        </td></tr>
+                <tr id="comment-header-13857242"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">27/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13857242"><td bgcolor="#ffffff">
+            <p>@john: i've to check what you pushed some min. ago (btw. please follow our git-workflow and use a rebase instead of a merge - thx)</p>
+        </td></tr>
+                <tr id="comment-header-13857244"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">27/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13857244"><td bgcolor="#ffffff">
+            <p>with your latest push #1 and #3 are ok, but #8 (possible random result) and #9 (missing 'c' in the package name) are still open.</p>
+
+<p>+ i guess the change of 'storage' from String to Class&lt;? extends ResourceStorage&gt; will be part of you next commit.</p>
+        </td></tr>
+                <tr id="comment-header-13857439"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">27/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13857439"><td bgcolor="#ffffff">
+            <p>@latest commit:<br/>
+the 'c' in package org.apache.deltaspike.core.api.resour&gt;c&lt;eloader; is still missing<br/>
+please use the logger instead of System.out.println<br/>
+FileResourceTest fails on as7/tomee/...<br/>
+#closeInputStream swallows possible exceptions</p>
+
+<p>minor:<br/>
+imo it's easier for users to have an useful default for 'storage' (ClasspathStorage.class)<br/>
+i'm not sure about the reason for the latest split (#readStream + #readProperties - however, that's more a matter of taste)</p>
+        </td></tr>
+                <tr id="comment-header-13857443"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="struberg" id="word_commented_struberg" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=struberg">Mark Struberg</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">27/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13857443"><td bgcolor="#ffffff">
+            <p>Why not use the already existing PropertyLoader mechanism to handle multiple resource files with the same name?</p>
+        </td></tr>
+                <tr id="comment-header-13857445"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">27/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13857445"><td bgcolor="#ffffff">
+            <p>@mark: +1</p>
+        </td></tr>
+                <tr id="comment-header-13857455"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">27/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13857455"><td bgcolor="#ffffff">
+            <p>@mark: you would get different results (depending on what you use - injection of InputStream vs Properties) since PropertyLoader merges the the data of multiple sources. we would need to do the same for inputstream...</p>
+        </td></tr>
+                <tr id="comment-header-13857468"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="romain.manni-bucau" id="word_commented_romain.manni-bucau" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=romain.manni-bucau">Romain Manni-Bucau</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">27/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13857468"><td bgcolor="#ffffff">
+            <p>Guys, why not making the storage an impl of a loader? classpath would use classloader, file new File() but users can want to extend it. wdyt?</p>
+        </td></tr>
+                <tr id="comment-header-13857488"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="johndament" id="word_commented_johndament" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=johndament">John D. Ament</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">27/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13857488"><td bgcolor="#ffffff">
+            <p><a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=struberg" class="user-hover" rel="struberg">Mark Struberg</a> <a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek" class="user-hover" rel="gpetracek">Gerhard Petracek</a> <a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=romain.manni-bucau" class="user-hover" rel="romain.manni-bucau">Romain Manni-Bucau</a> The whole point to this feature is a slimmed down version of what is provided by ConfigSource's, for simpler use cases.  If someone is running into these issues, they should upgrade to use ConfigSource.</p>
+
+<p>Most of what you're describing doesn't apply to the use cases raised by the ticket.</p>
+        </td></tr>
+                <tr id="comment-header-13857493"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="johndament" id="word_commented_johndament" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=johndament">John D. Ament</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">27/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13857493"><td bgcolor="#ffffff">
+            <p><a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek" class="user-hover" rel="gpetracek">Gerhard Petracek</a> Already sent a separate email to the list about the OWB failure.  Looks like a OWB bug.</p>
+        </td></tr>
+                <tr id="comment-header-13857500"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="johndament" id="word_commented_johndament" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=johndament">John D. Ament</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">27/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13857500"><td bgcolor="#ffffff">
+            <p><a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek" class="user-hover" rel="gpetracek">Gerhard Petracek</a> that's ok about closing the input stream, since in JDK 7 it's AutoCloseable anyways.</p>
+        </td></tr>
+                <tr id="comment-header-13857503"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">27/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13857503"><td bgcolor="#ffffff">
+            <p>@romain: i thought about it as well (-&gt; we wouldn't need @StorageType)</p>
+
+<p>@john:<br/>
+if it can be done, users will do it -&gt; the worst we can do is to keep a known issue which can lead to a random behavior.<br/>
+we can limit it (actively) or implement the more complex cases as well. everything else isn't acceptable.</p>
+        </td></tr>
+                <tr id="comment-header-13857521"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">27/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13857521"><td bgcolor="#ffffff">
+            <p>@john &amp; jdk7:<br/>
+we will see jdk6 users for some time and logging an exception should be the minimum (in any case - instead of just ignoring it).</p>
+        </td></tr>
+                <tr id="comment-header-13857552"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="struberg" id="word_commented_struberg" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=struberg">Mark Struberg</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">27/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13857552"><td bgcolor="#ffffff">
+            <p>I also think we can ditch the whole StorageType annotation. I see no real use. This can be easily merged with the ExternalResourceProvider.</p>
+
+<p>Also this is currently not user friendly from a customer perspective. E.g. you would need to have core-impl as <em>compile</em> time scoped because you need the FileSystemStorage class on the compile classpath. <br/>
+The goal is to have all *impl modules just as <em>runtime</em> dependencies.</p>
+
+<p>I still miss the clear benefit over the ConfigSource mechanism.<br/>
+The main usecase is to Inject Properties, right?<br/>
+Injecting an URL or an InputStream does not make much sense, or do you have a specific use case for it?<br/>
+This is 3 lines of trivial code each and I would never do this via injection if there is no additional benefit. Or does it provide any XML parsing feature beyond just providing the input stream?</p>
+
+<p>The only remaining benefit I can see so far is that it allows to inject Properties from a file URL out of the box.<br/>
+Why not just provide this via a simple feature as auto-registered ConfigSource similar to PropertyFileConfig.<br/>
+Or just extend PropertyFileConfig to detect external resources. Simply parsing for "://" and handling it as URL in that case should be enough. </p>
+
+<p>I think it's good to have this discussion and you brought up the topic. We should really improve this part of DeltaSpike.</p>
+
+<p>I also think we might expand the ConfigSource idea by having a 'category' which allows own sets of ConfigSources for a specific category.</p>
+        </td></tr>
+                <tr id="comment-header-13857558"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">27/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13857558"><td bgcolor="#ffffff">
+            <p>@mark: +1</p>
+        </td></tr>
+                <tr id="comment-header-13857574"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="johndament" id="word_commented_johndament" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=johndament">John D. Ament</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">27/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13857574"><td bgcolor="#ffffff">
+            <p><a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=struberg" class="user-hover" rel="struberg">Mark Struberg</a> This is the key feature, not configuration:</p>
+
+<blockquote>
+<p>The @Resource/ResourceProvider support in Solder was more generic and I think would still be useful. It easily allows for the loading of .xml files, images, etc.</p></blockquote>
+
+<p>To me, configuration is an aside, and is not meant to replace the existing ConfigSource mechanisms.</p>
+
+<p>RE merging with ExternalResourceProvider, I don't see how.  Add a method indicating whether or not it can provide it?  Why not use standard CDI mechanisms to find the right class.</p>
+
+<p>RE compilation, I'm really confused.  FileSystemStorage, ClasspathStorage are both in the api JAR.  StorageType is also in the API JAR, it's SPI for creating your own storage mechanisms.</p>
+
+<p><a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek" class="user-hover" rel="gpetracek">Gerhard Petracek</a> I'll add a log at the fine level for errors while closing streams.  Even though you may compile at JDK 6, if someone's using you at 7 they'll get JDK 7 behavior (e.g. automatic closing).</p>
+        </td></tr>
+                <tr id="comment-header-13857621"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">27/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13857621"><td bgcolor="#ffffff">
+            <p>@john:<br/>
+i changed it quickly for an easier discussion -&gt; please have a look at the patch (<a href="https://issues.apache.org/jira/browse/DELTASPIKE-399" title="Incorporate Solder&#39;s ResourceLoader features into DeltaSpike" class="issue-link" data-issue-key="DELTASPIKE-399"><del>DELTASPIKE-399</del></a>_merged_interface.patch - applies on aa9cf17b224c912824ed09e359cb25d9b74ea3f3).</p>
+        </td></tr>
+                <tr id="comment-header-13857636"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="struberg" id="word_commented_struberg" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=struberg">Mark Struberg</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">27/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13857636"><td bgcolor="#ffffff">
+            <p>Forget the compile argument, had an old checkout. Resolved now.</p>
+
+<p>Regarding the InjectionPoint for dynamic look ups: this only got defined in CDI-1.1.</p>
+        </td></tr>
+                <tr id="comment-header-13857838"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">27/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13857838"><td bgcolor="#ffffff">
+            <p>@john:<br/>
+next issue: 2 tests (ClasspathResourceTest and FileResourceTest) should never use the same archive name (that causes issues, if 'deploymentExportPath' is used in arquillian.xml)</p>
+        </td></tr>
+                <tr id="comment-header-13857996"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="chkal" id="word_commented_chkal" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=chkal">Christian Kaltepoth</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">28/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13857996"><td bgcolor="#ffffff">
+            <p>@ <a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=struberg" class="user-hover" rel="struberg">Mark Struberg</a>: I agree with John that injecting a Properties object is <em>not</em> the main usecase of this feature. The idea is to be able to inject all kind of stuff like XML documents, images, other binary data, etc. But I agree that injecting an InputStream may be problematic. Either we tell users to inject Instance&lt;InputStream&gt; instead or we create some class that allows to open the InputStream several times.</p>
+        </td></tr>
+                <tr id="comment-header-13858036"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="johndament" id="word_commented_johndament" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=johndament">John D. Ament</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">28/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13858036"><td bgcolor="#ffffff">
+            <p>I fixed an issue where the patch was not closing streams that were opened, leading to memory leaks.</p>
+
+<p>Since we didn't reach a usable solution in this, I'm going to add support for multi InputStreams (via list) in case they expect multiple. (I was really hoping to not have to add this)</p>
+        </td></tr>
+                <tr id="comment-header-13858039"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">28/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13858039"><td bgcolor="#ffffff">
+            <p>+1 and the same is true for the 2nd #close if the first one fails</p>
+        </td></tr>
+                <tr id="comment-header-13858040"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="johndament" id="word_commented_johndament" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=johndament">John D. Ament</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">28/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13858040"><td bgcolor="#ffffff">
+            <p>We need to fix the CdiImplementation enum, since the OWB limitation is fixed in OWB 1.2.2.  The test will get incorrectly skipped in OWB 1.2.2.</p>
+        </td></tr>
+                <tr id="comment-header-13858041"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">28/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13858041"><td bgcolor="#ffffff">
+            <p>@john: we can change it once owb 1.2.2 is released (but not the enum-value for 1.2.x), since it doesn't need to implement this cdi 1.1 rule.</p>
+
+<p>@christian:<br/>
+if we just test the stream in the producer and return a custom InputStream as proxy instead (which knows the path and opens a real stream lazily), we could reduce the impact.</p>
+        </td></tr>
+                <tr id="comment-header-13858112"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="johndament" id="word_commented_johndament" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=johndament">John D. Ament</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">28/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13858112"><td bgcolor="#ffffff">
+            <p>Marking as resolved, I think the horse is sufficiently puree'd here.</p>
+        </td></tr>
+                <tr id="comment-header-13860108"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">02/Jan/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13860108"><td bgcolor="#ffffff">
+            <p>imo we should re-visit the name. there isn't one perfect name, however, imo it's more an 'InjectableResource' than an 'ExternalResource'.</p>
+        </td></tr>
+                <tr id="comment-header-13903856"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">18/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13903856"><td bgcolor="#ffffff">
+            <p>since people start blocking changes after a 0.x release, we can't wait for (user-)feedback after the upcoming release.</p>
+
+<p>open topics:</p>
+<ul class="alternate" type="square">
+	<li>simplified implementation</li>
+	<li>different name</li>
+</ul>
+
+        </td></tr>
+            </table>
+Generated at Sat Mar 22 13:37:30 UTC 2014 using JIRA 6.2#6252-sha1:aa343257d4ce030d9cb8c531be520be9fac1c996.
+
+</body>
+</html>

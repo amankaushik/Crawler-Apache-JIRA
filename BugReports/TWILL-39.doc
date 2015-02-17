@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>[#TWILL-39] snappy-java needs to be upgraded to 1.0.5 build is failing on Mac OS X 10.7</title>
+    <meta http-equiv="Content-Type" Content="application/vnd.ms-word; charset=utf-8">
+        <style type="text/css">
+
+.tableBorder, .grid
+{
+    background-color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableBorder td, .grid td
+{
+    vertical-align: top;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+.noPadding
+{
+    padding: 0 !important;
+}
+
+h3 .subText
+{
+    font-size: 60%;
+    font-weight: normal;
+}
+
+.tabLabel
+{
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-bottom:none;
+    padding: 2px;
+    display: inline;
+}
+
+td.blank
+{
+    padding: 0;
+    margin: 0;
+}
+
+.blank td
+{
+    border: none;
+}
+
+#descriptionArea
+{
+    margin: 0;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+hr
+{
+    border-top:1px solid #aaa;
+}
+
+hr.fullcontent
+{
+  height: 15px;
+  padding: 10px 0;
+  background: #fff url('https://issues.apache.org/jira/images/icons/hr.gif') no-repeat scroll center;
+}
+
+</style>
+
+</head>
+<body>
+
+<table class="tableBorder" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" width="100%" colspan="2" valign="top">
+                            <h3 class="formtitle">
+                        [TWILL-39]&nbsp;<a href="https://issues.apache.org/jira/browse/TWILL-39">snappy-java needs to be upgraded to 1.0.5 build is failing on Mac OS X 10.7</a>
+            <span class="subText">
+               Created: 08/Feb/14                   &nbsp;Updated: 21/Mar/14
+
+                                                    &nbsp;Resolved: 21/Mar/14
+                            </span>
+            </h3>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Status:</b></td>
+        <td width="80%">Closed</td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Project:</b></td>
+        <td width="80%"><a href="https://issues.apache.org/jira/secure/BrowseProject.jspa?id=12315020">Apache Twill</a></td>
+    </tr>
+
+        <tr>
+            <td><b>Component/s:</b></td>
+            <td>
+                            None
+                </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Affects Version/s:</b></td>
+            <td>
+                                        <a title="0.1.0-incubating"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12315020&version=12326249"
+            >0.1.0-incubating</a>                        </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Fix Version/s:</b></td>
+            <td>
+                                        <a title="0.2.0-incubating"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12315020&fixfor=12326248"
+            >0.2.0-incubating</a>                        </td>
+    </tr>
+    
+    </table>
+
+<br />
+<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" valign="top" width="20%">
+            <b>Type:</b>
+        </td>
+        <td bgcolor="#ffffff" valign="top"  width="30%" >
+            Bug
+        </td>
+
+                    <td bgcolor="#f0f0f0">
+                <b>Priority:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap>
+                Major
+            </td>
+            </tr>
+    <tr>
+                        <td bgcolor="#f0f0f0" valign="top" width="20%">
+                <b>Reporter:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top"  width="30%" >
+                                            <a class="user-hover" rel="fabianmurariu" id="word_reporter_fabianmurariu" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=fabianmurariu">Fabian Murariu</a>
+                            </td>
+        
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Assignee:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap  width="30%" >
+                                            <a class="user-hover" rel="fabianmurariu" id="word_assignee_fabianmurariu" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=fabianmurariu">Fabian Murariu</a>
+                            </td>
+            </tr>
+    	<tr>
+		<td bgcolor="#f0f0f0" width="20%">
+			<b>Resolution:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                            Fixed
+                    </td>
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Votes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                0
+            </td>
+        
+    </tr>
+    
+        <tr>
+        <td bgcolor="#f0f0f0" width="20%">
+            <b>Labels:</b>
+        </td>
+        <td id="labels-12694092-value" class="value" bgcolor="#ffffff" valign="top" colspan="3" nowrap>
+                            None
+                    </td>
+    </tr>
+    
+    	<tr>
+        		<td bgcolor="#f0f0f0" width="20%"><b>Remaining Estimate:</b></td>
+        <td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Time Spent:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+	</tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Original Estimate:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    
+    	<tr>
+
+		<td bgcolor="#f0f0f0" width="20%" valign="top">
+			<b>Environment:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" colspan="3">
+            Mac OS X 10.7+ JDK 1.7.0_45
+		</td>
+	</tr>
+    </table>
+
+
+
+    <br />
+
+    	<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+
+                <tr>
+            <td bgcolor="#f0f0f0" width=20% valign=top>
+                <b>Attachments:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top">
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        0001-upgrade-snappy-java-to-version-1.0.5-fixes-TWILL-39.patch &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        0002-pulled-dependencies-versions-up-into-maven-propertie.patch &nbsp;&nbsp;&nbsp;
+                            </td>
+        </tr>
+        
+    
+
+
+
+</table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Description</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td id="descriptionArea">
+            Happy to fix this myself<br/>
+Fails when running KafkaTest, works on snappy 1.0.5<br/>
+Caused by: java.lang.UnsatisfiedLinkError: no snappyjava in java.library.path<br/>
+	at java.lang.ClassLoader.loadLibrary(ClassLoader.java:1886)<br/>
+	at java.lang.Runtime.loadLibrary0(Runtime.java:849)<br/>
+	at java.lang.System.loadLibrary(System.java:1088)<br/>
+	at org.xerial.snappy.SnappyNativeLoader.loadLibrary(SnappyNativeLoader.java:52)<br/>
+	... 39 more
+            <br/>
+        </td>
+    </tr>
+    </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Comments</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="grid" style="margin: 0;">
+                <tr id="comment-header-13896834"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="chtyim" id="word_commented_chtyim" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=chtyim">Terence Yim</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">10/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13896834"><td bgcolor="#ffffff">
+            <p>Thanks for reporting this. You can attach a patch (git format-patch) and I am happy to apply it.</p>
+
+<p>Terence</p>
+        </td></tr>
+                <tr id="comment-header-13897671"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="fabianmurariu" id="word_commented_fabianmurariu" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=fabianmurariu">Fabian Murariu</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">11/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13897671"><td bgcolor="#ffffff">
+            <p>The first commit simply updates snappy to 1.0.5 the second pulls dependencies versions up in maven properties, I found that to be quite useful when wanting a quick overview of project dependencies</p>
+        </td></tr>
+                <tr id="comment-header-13898303"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="chtyim" id="word_commented_chtyim" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=chtyim">Terence Yim</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">11/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13898303"><td bgcolor="#ffffff">
+            <p>Looks good. Merged to master. Thanks for the fix.</p>
+        </td></tr>
+                <tr id="comment-header-13943480"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="chtyim" id="word_commented_chtyim" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=chtyim">Terence Yim</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13943480"><td bgcolor="#ffffff">
+            <p>Reopen to update version tag.</p>
+        </td></tr>
+            </table>
+Generated at Sat Mar 22 13:37:15 UTC 2014 using JIRA 6.2#6252-sha1:aa343257d4ce030d9cb8c531be520be9fac1c996.
+
+</body>
+</html>

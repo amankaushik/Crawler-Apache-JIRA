@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>[#INFRA-2481] Creating a new cwiki space ends up pointing to non-existent Home</title>
+    <meta http-equiv="Content-Type" Content="application/vnd.ms-word; charset=utf-8">
+        <style type="text/css">
+
+.tableBorder, .grid
+{
+    background-color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableBorder td, .grid td
+{
+    vertical-align: top;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+.noPadding
+{
+    padding: 0 !important;
+}
+
+h3 .subText
+{
+    font-size: 60%;
+    font-weight: normal;
+}
+
+.tabLabel
+{
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-bottom:none;
+    padding: 2px;
+    display: inline;
+}
+
+td.blank
+{
+    padding: 0;
+    margin: 0;
+}
+
+.blank td
+{
+    border: none;
+}
+
+#descriptionArea
+{
+    margin: 0;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+hr
+{
+    border-top:1px solid #aaa;
+}
+
+hr.fullcontent
+{
+  height: 15px;
+  padding: 10px 0;
+  background: #fff url('https://issues.apache.org/jira/images/icons/hr.gif') no-repeat scroll center;
+}
+
+</style>
+
+</head>
+<body>
+
+<table class="tableBorder" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" width="100%" colspan="2" valign="top">
+                            <h3 class="formtitle">
+                        [INFRA-2481]&nbsp;<a href="https://issues.apache.org/jira/browse/INFRA-2481">Creating a new cwiki space ends up pointing to non-existent Home</a>
+            <span class="subText">
+               Created: 06/Feb/10                   &nbsp;Updated: 21/Mar/14
+
+                                                    &nbsp;Resolved: 21/Mar/14
+                            </span>
+            </h3>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Status:</b></td>
+        <td width="80%">Closed</td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Project:</b></td>
+        <td width="80%"><a href="https://issues.apache.org/jira/secure/BrowseProject.jspa?id=10410">Infrastructure</a></td>
+    </tr>
+
+        <tr>
+            <td><b>Component/s:</b></td>
+            <td>
+                                        <a title="Confluence"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=10410&component=12310880"
+            >Confluence</a>                        </td>
+    </tr>
+    
+
+    
+
+        <tr>
+            <td><b>Fix Version/s:</b></td>
+            <td>
+                            None
+                </td>
+    </tr>
+    
+    </table>
+
+<br />
+<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" valign="top" width="20%">
+            <b>Type:</b>
+        </td>
+        <td bgcolor="#ffffff" valign="top"  width="30%" >
+            Bug
+        </td>
+
+                    <td bgcolor="#f0f0f0">
+                <b>Priority:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap>
+                Major
+            </td>
+            </tr>
+    <tr>
+                        <td bgcolor="#f0f0f0" valign="top" width="20%">
+                <b>Reporter:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top"  width="30%" >
+                                            <a class="user-hover" rel="ipv6guru" id="word_reporter_ipv6guru" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=ipv6guru">Gavin</a>
+                            </td>
+        
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Assignee:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap  width="30%" >
+                                            <a class="user-hover" rel="ipv6guru" id="word_assignee_ipv6guru" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=ipv6guru">Gavin</a>
+                            </td>
+            </tr>
+    	<tr>
+		<td bgcolor="#f0f0f0" width="20%">
+			<b>Resolution:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                            Fixed
+                    </td>
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Votes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                0
+            </td>
+        
+    </tr>
+    
+        <tr>
+        <td bgcolor="#f0f0f0" width="20%">
+            <b>Labels:</b>
+        </td>
+        <td id="labels-12455511-value" class="value" bgcolor="#ffffff" valign="top" colspan="3" nowrap>
+                            None
+                    </td>
+    </tr>
+    
+    	<tr>
+        		<td bgcolor="#f0f0f0" width="20%"><b>Remaining Estimate:</b></td>
+        <td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Time Spent:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+	</tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Original Estimate:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    
+    </table>
+
+
+
+    <br />
+
+    	<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+
+        
+    
+
+
+
+</table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Description</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td id="descriptionArea">
+            When creating a new cwiki, after creation a 404 occurs, as it tries to go to a non-existent &#39;Home&#39; page instead of an &#39;Index&#39; page.
+            <br/>
+        </td>
+    </tr>
+    </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Comments</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="grid" style="margin: 0;">
+                <tr id="comment-header-12885478"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="ulrich.staerk" id="word_commented_ulrich.staerk" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=ulrich.staerk">Ulrich Stärk</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">06/Jul/10</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-12885478"><td bgcolor="#ffffff">
+            Maybe some left-over from the migration to 3.2?
+        </td></tr>
+                <tr id="comment-header-12982372"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="ipv6guru" id="word_commented_ipv6guru" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=ipv6guru">Gavin</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">16/Jan/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-12982372"><td bgcolor="#ffffff">
+            Just tried again creating a new Space in the upgraded 3.4.6 and it it still occurs.
+        </td></tr>
+                <tr id="comment-header-13012932"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="pctony" id="word_commented_pctony" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=pctony">Tony Stevenson</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">30/Mar/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13012932"><td bgcolor="#ffffff">
+            Uli, Gav - Still an issue?  Or perhaps give me more info, as when I created HCatalog yesterday I didn&#39;t get a 404
+        </td></tr>
+                <tr id="comment-header-13012937"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="ulrich.staerk" id="word_commented_ulrich.staerk" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=ulrich.staerk">Ulrich Stärk</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">30/Mar/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13012937"><td bgcolor="#ffffff">
+            Still an issue. Just created a test space and it tried to redirect my to a &quot;Home&quot; page which doesn&#39;t exist because the default home page is named &quot;Index&quot;
+        </td></tr>
+                <tr id="comment-header-13413221"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="pctony" id="word_commented_pctony" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=pctony">Tony Stevenson</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">12/Jul/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13413221"><td bgcolor="#ffffff">
+            <a href="https://answers.atlassian.com/questions/69112/create-space-default-home-page-404-page-not-found">https://answers.atlassian.com/questions/69112/create-space-default-home-page-404-page-not-found</a>
+        </td></tr>
+                <tr id="comment-header-13415293"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="pctony" id="word_commented_pctony" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=pctony">Tony Stevenson</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">16/Jul/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13415293"><td bgcolor="#ffffff">
+            Transitioning to waiting for Infra
+        </td></tr>
+                <tr id="comment-header-13804173"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="ulrich.staerk" id="word_commented_ulrich.staerk" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=ulrich.staerk">Ulrich Stärk</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">24/Oct/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13804173"><td bgcolor="#ffffff">
+            Do we really care about this? This only happens when creating the space and as such only affects the creator not the users.
+        </td></tr>
+                <tr id="comment-header-13804183"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="ipv6guru" id="word_commented_ipv6guru" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=ipv6guru">Gavin</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">24/Oct/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13804183"><td bgcolor="#ffffff">
+            Consider it an itch on my behalf. Having said that, if I cant find it after the next round of upgrades, I&#39;ll think about it
+        </td></tr>
+                <tr id="comment-header-13804191"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="ulrich.staerk" id="word_commented_ulrich.staerk" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=ulrich.staerk">Ulrich Stärk</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">24/Oct/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13804191"><td bgcolor="#ffffff">
+            Alright. But we also have a script that leverages the xml rpc api to create spaces and assign permissions in trunk/confluence/createspace.pl and when using that you will never have that issue ;)<br/>
+<br/>
+Cheers,<br/>
+<br/>
+Uli
+        </td></tr>
+                <tr id="comment-header-13943466"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="ipv6guru" id="word_commented_ipv6guru" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=ipv6guru">Gavin</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13943466"><td bgcolor="#ffffff">
+            Yay! This works properly now after the last confluence upgrade.
+        </td></tr>
+            </table>
+Generated at Sat Mar 22 13:36:15 UTC 2014 using JIRA 6.2#6252-sha1:aa343257d4ce030d9cb8c531be520be9fac1c996.
+
+</body>
+</html>

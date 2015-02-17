@@ -1,0 +1,2340 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>[#HBASE-6524] Hooks for hbase tracing</title>
+    <meta http-equiv="Content-Type" Content="application/vnd.ms-word; charset=utf-8">
+        <style type="text/css">
+
+.tableBorder, .grid
+{
+    background-color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableBorder td, .grid td
+{
+    vertical-align: top;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+.noPadding
+{
+    padding: 0 !important;
+}
+
+h3 .subText
+{
+    font-size: 60%;
+    font-weight: normal;
+}
+
+.tabLabel
+{
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-bottom:none;
+    padding: 2px;
+    display: inline;
+}
+
+td.blank
+{
+    padding: 0;
+    margin: 0;
+}
+
+.blank td
+{
+    border: none;
+}
+
+#descriptionArea
+{
+    margin: 0;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+hr
+{
+    border-top:1px solid #aaa;
+}
+
+hr.fullcontent
+{
+  height: 15px;
+  padding: 10px 0;
+  background: #fff url('https://issues.apache.org/jira/images/icons/hr.gif') no-repeat scroll center;
+}
+
+</style>
+
+</head>
+<body>
+
+<table class="tableBorder" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" width="100%" colspan="2" valign="top">
+                            <b><a id="parent_issue_summary" href="https://issues.apache.org/jira/browse/HBASE-6449">Dapper like tracing</a></b>
+                <span style="font-size: 9px">(<a id="parent_issue_key" href="https://issues.apache.org/jira/browse/HBASE-6449">HBASE-6449</a>)</span>
+                <h3 class="formtitle"><img src="https://issues.apache.org/jira/images/icons/link_out_bot.gif" width="16" height="16" />
+                        [HBASE-6524]&nbsp;<a href="https://issues.apache.org/jira/browse/HBASE-6524">Hooks for hbase tracing</a>
+            <span class="subText">
+               Created: 07/Aug/12                   &nbsp;Updated: 20/Mar/14
+
+                                                    &nbsp;Resolved: 30/Aug/12
+                            </span>
+            </h3>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Status:</b></td>
+        <td width="80%">Closed</td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Project:</b></td>
+        <td width="80%"><a href="https://issues.apache.org/jira/secure/BrowseProject.jspa?id=12310753">HBase</a></td>
+    </tr>
+
+        <tr>
+            <td><b>Component/s:</b></td>
+            <td>
+                            None
+                </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Affects Version/s:</b></td>
+            <td>
+                            None
+                </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Fix Version/s:</b></td>
+            <td>
+                                        <a title="0.95.0 - First in the 0.95 &quot;Development&quot; Series of releases.  Serves as a &quot;rough cut&quot; preview of what is coming in 0.96.0.  Not for production."
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310753&fixfor=12324094"
+            >0.95.0</a>                        </td>
+    </tr>
+    
+    </table>
+
+<br />
+<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" valign="top" width="20%">
+            <b>Type:</b>
+        </td>
+        <td bgcolor="#ffffff" valign="top"  width="30%" >
+            Sub-task
+        </td>
+
+                    <td bgcolor="#f0f0f0">
+                <b>Priority:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap>
+                Major
+            </td>
+            </tr>
+    <tr>
+                        <td bgcolor="#f0f0f0" valign="top" width="20%">
+                <b>Reporter:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top"  width="30%" >
+                                            <a class="user-hover" rel="jonathan.leavitt" id="word_reporter_jonathan.leavitt" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jonathan.leavitt">Jonathan Leavitt</a>
+                            </td>
+        
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Assignee:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap  width="30%" >
+                                            <a class="user-hover" rel="jonathan.leavitt" id="word_assignee_jonathan.leavitt" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jonathan.leavitt">Jonathan Leavitt</a>
+                            </td>
+            </tr>
+    	<tr>
+		<td bgcolor="#f0f0f0" width="20%">
+			<b>Resolution:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                            Fixed
+                    </td>
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Votes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                0
+            </td>
+        
+    </tr>
+    
+        <tr>
+        <td bgcolor="#f0f0f0" width="20%">
+            <b>Labels:</b>
+        </td>
+        <td id="labels-12602090-value" class="value" bgcolor="#ffffff" valign="top" colspan="3" nowrap>
+                            None
+                    </td>
+    </tr>
+    
+    	<tr>
+        		<td bgcolor="#f0f0f0" width="20%"><b>Remaining Estimate:</b></td>
+        <td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Time Spent:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+	</tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Original Estimate:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    
+    </table>
+
+
+
+    <br />
+
+    	<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+
+                <tr>
+            <td bgcolor="#f0f0f0" width=20% valign=top>
+                <b>Attachments:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top">
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        6524-v2.txt &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/file.gif" height="16" width="16" alt="File" />
+                                        6524.addendum &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        6524v3.txt &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/image.gif" height="16" width="16" alt="PNG File" />
+                                        createTableTrace.png &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/file.gif" height="16" width="16" alt="File" />
+                                        hbase-6524.diff &nbsp;&nbsp;&nbsp;
+                            </td>
+        </tr>
+        
+            <tr>
+            <td bgcolor="#f0f0f0" width="20%" valign="top">
+                <b>Issue Links:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" class="noPadding">
+                <table cellpadding="0" cellspacing="0" border="0" width="100%" class="blank">
+                                            <tr>
+                            <td colspan="4" bgcolor="#f0f0f0">
+                                <b>Reference</b><br/>
+                            </td>
+                        </tr>
+                                                                <tr>
+            <td>
+                is related to
+            </td>
+            <td>
+                <a href="https://issues.apache.org/jira/browse/HBASE-6449">
+                     HBASE-6449                 </a>
+            </td>
+            <td>
+                Dapper like tracing
+            </td>
+            <td>
+                Patch Available
+            </td>
+        </tr>
+                                        </table>
+            </td>
+        </tr>
+    
+
+
+
+                        <tr>
+                <td bgcolor="#f0f0f0" width="20%" valign="top"><b>Hadoop Flags:</b></td>
+                <td id="customfield_12310191-12602090-value" class="value" bgcolor="#ffffff" width="80%">
+
+
+    <div class="shorten" id="customfield_12310191-field">
+        							<span>Reviewed</span>			            </div>
+</td>
+            </tr>
+                                <tr>
+                <td bgcolor="#f0f0f0" width="20%" valign="top"><b>Release Note:</b></td>
+                <td id="customfield_12310192-12602090-value" class="value" bgcolor="#ffffff" width="80%">      Adds hooks so can track rpcs using htrace
+  </td>
+            </tr>
+            </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Description</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td id="descriptionArea">
+            <p>Includes the hooks that use <a href="http://www.github.com/cloudera/htrace" class="external-link" rel="nofollow">htrace</a> library to add dapper-like tracing to hbase.</p>
+            <br/>
+        </td>
+    </tr>
+    </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Comments</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="grid" style="margin: 0;">
+                <tr id="comment-header-13430678"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jonathan.leavitt" id="word_commented_jonathan.leavitt" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jonathan.leavitt">Jonathan Leavitt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">07/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13430678"><td bgcolor="#ffffff">
+            <p>First patch for tracing hooks in hbase.</p>
+        </td></tr>
+                <tr id="comment-header-13430682"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jonathan.leavitt" id="word_commented_jonathan.leavitt" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jonathan.leavitt">Jonathan Leavitt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">07/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13430682"><td bgcolor="#ffffff">
+            <p>Here's the review board link for the patch I uploaded: <a href="https://reviews.apache.org/r/6454/" class="external-link" rel="nofollow">review board</a>.<br/>
+The library is on <a href="http://www.github.com/cloudera/htrace" class="external-link" rel="nofollow">github</a> and is in maven central.</p>
+        </td></tr>
+                <tr id="comment-header-13430694"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="stack" id="word_commented_stack" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=stack">stack</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">07/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13430694"><td bgcolor="#ffffff">
+            <p>I added comments up in rb.</p>
+        </td></tr>
+                <tr id="comment-header-13431523"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jonathan.leavitt" id="word_commented_jonathan.leavitt" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jonathan.leavitt">Jonathan Leavitt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">09/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13431523"><td bgcolor="#ffffff">
+            <p>Commented back. Doing a small release of htrace now, and will upload a new patch incorporating your and todd's suggestions. </p>
+        </td></tr>
+                <tr id="comment-header-13432031"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jonathan.leavitt" id="word_commented_jonathan.leavitt" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jonathan.leavitt">Jonathan Leavitt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">09/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13432031"><td bgcolor="#ffffff">
+            <p>uploading updated patch with changes from stack and todd</p>
+        </td></tr>
+                <tr id="comment-header-13432033"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jonathan.leavitt" id="word_commented_jonathan.leavitt" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jonathan.leavitt">Jonathan Leavitt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">09/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13432033"><td bgcolor="#ffffff">
+            <p>new patch with changes from stack and todd.</p>
+        </td></tr>
+                <tr id="comment-header-13433775"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jonathan.leavitt" id="word_commented_jonathan.leavitt" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jonathan.leavitt">Jonathan Leavitt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">14/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13433775"><td bgcolor="#ffffff">
+            <p>added some tests</p>
+        </td></tr>
+                <tr id="comment-header-13433978"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hadoopqa" id="word_commented_hadoopqa" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hadoopqa">Hadoop QA</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">14/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13433978"><td bgcolor="#ffffff">
+            <p>-1 overall.  Here are the results of testing the latest attachment <br/>
+  <a href="http://issues.apache.org/jira/secure/attachment/12540811/htracehooks1.diff" class="external-link" rel="nofollow">http://issues.apache.org/jira/secure/attachment/12540811/htracehooks1.diff</a><br/>
+  against trunk revision .</p>
+
+<p>    +1 @author.  The patch does not contain any @author tags.</p>
+
+<p>    +1 tests included.  The patch appears to include 2 new or modified tests.</p>
+
+<p>    +1 hadoop2.0.  The patch compiles against the hadoop 2.0 profile.</p>
+
+<p>    +1 javadoc.  The javadoc tool did not generate any warning messages.</p>
+
+<p>    -1 javac.  The applied patch generated 5 javac compiler warnings (more than the trunk's current 4 warnings).</p>
+
+<p>    -1 findbugs.  The patch appears to introduce 7 new Findbugs (version 1.3.9) warnings.</p>
+
+<p>    +1 release audit.  The applied patch does not increase the total number of release audit warnings.</p>
+
+<p>     -1 core tests.  The patch failed these unit tests:<br/>
+                       org.apache.hadoop.hbase.replication.TestReplication</p>
+
+<p>Test results: <a href="https://builds.apache.org/job/PreCommit-HBASE-Build/2563//testReport/" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HBASE-Build/2563//testReport/</a><br/>
+Findbugs warnings: <a href="https://builds.apache.org/job/PreCommit-HBASE-Build/2563//artifact/trunk/patchprocess/newPatchFindbugsWarningshbase-hadoop2-compat.html" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HBASE-Build/2563//artifact/trunk/patchprocess/newPatchFindbugsWarningshbase-hadoop2-compat.html</a><br/>
+Findbugs warnings: <a href="https://builds.apache.org/job/PreCommit-HBASE-Build/2563//artifact/trunk/patchprocess/newPatchFindbugsWarningshbase-server.html" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HBASE-Build/2563//artifact/trunk/patchprocess/newPatchFindbugsWarningshbase-server.html</a><br/>
+Findbugs warnings: <a href="https://builds.apache.org/job/PreCommit-HBASE-Build/2563//artifact/trunk/patchprocess/newPatchFindbugsWarningshbase-hadoop1-compat.html" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HBASE-Build/2563//artifact/trunk/patchprocess/newPatchFindbugsWarningshbase-hadoop1-compat.html</a><br/>
+Findbugs warnings: <a href="https://builds.apache.org/job/PreCommit-HBASE-Build/2563//artifact/trunk/patchprocess/newPatchFindbugsWarningshbase-common.html" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HBASE-Build/2563//artifact/trunk/patchprocess/newPatchFindbugsWarningshbase-common.html</a><br/>
+Findbugs warnings: <a href="https://builds.apache.org/job/PreCommit-HBASE-Build/2563//artifact/trunk/patchprocess/newPatchFindbugsWarningshbase-hadoop-compat.html" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HBASE-Build/2563//artifact/trunk/patchprocess/newPatchFindbugsWarningshbase-hadoop-compat.html</a><br/>
+Console output: <a href="https://builds.apache.org/job/PreCommit-HBASE-Build/2563//console" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HBASE-Build/2563//console</a></p>
+
+<p>This message is automatically generated.</p>
+        </td></tr>
+                <tr id="comment-header-13435664"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jonathan.leavitt" id="word_commented_jonathan.leavitt" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jonathan.leavitt">Jonathan Leavitt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">16/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13435664"><td bgcolor="#ffffff">
+            <p>In response to hadoop QA: </p>
+
+<p>TestReplication passes for me, so I don't think I caused the failure. <br/>
+The new findbugs come from the protobuf generated classes. </p>
+
+<p>As for the additional javac compiler warning, I am not completely sure.  When I compile myself I only get 4 warnings, not 5. The hadoop QA console output seems to suggest it is a maven problem.  I will look into this further. </p>
+
+<p>@stack: given the above, what would you recommend I do to make progress on getting this committed? </p>
+
+        </td></tr>
+                <tr id="comment-header-13436104"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jonathan.leavitt" id="word_commented_jonathan.leavitt" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jonathan.leavitt">Jonathan Leavitt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">16/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13436104"><td bgcolor="#ffffff">
+            <p>Apologies, I realized that the generated protubufs should not contribute additional findbugs warnings because they should be in findbugx-exclude.xml.  I believe I remember hsieh mentioning that changing the pbufs could affect findbug warnings, but maybe I misunderstood.  </p>
+
+<p>I did however look through all the files I changed at the findbugs warnings for those files and I was unable to find anything.  I will keep looking. </p>
+        </td></tr>
+                <tr id="comment-header-13437990"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jonathan.leavitt" id="word_commented_jonathan.leavitt" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jonathan.leavitt">Jonathan Leavitt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">20/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13437990"><td bgcolor="#ffffff">
+            <p>Final update on findbugs:<br/>
+I installed the findbugs eclipse plugin and inspected all of the files I edited. I saw no bugs introduced by any code from my patch. </p>
+
+        </td></tr>
+                <tr id="comment-header-13438135"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="stack" id="word_commented_stack" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=stack">stack</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">20/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13438135"><td bgcolor="#ffffff">
+            <p>@Jonathan Sorry for delayed review.  Thanks for looking at the findbugs and javac stuff.  Probably not you as you figured.</p>
+
+<p>On the patch:</p>
+
+<p>You change hbase-site.xml license indent.  Would suggest you don't do that.  I can fix that on commit.</p>
+
+<p>Is htrace up in  mvn central?</p>
+
+<p>Why do we create a new instance of TInfo here rather than just use the one we have (presuming hasTinfo means the request has a TInfo?)?</p>
+
+<p>+        call = new Call(id, param, this, responder, callSize, new TraceInfo(<br/>
++            request.getTinfo().getTraceId(), request.getTinfo().getParentId()));</p>
+
+<p>Should say what a spanReceiverHost is.  When I load receivers, what kind of resources are we allocating?</p>
+
+<p>Is that all it takes to add tracing?  That is pretty sweet.  I'd say this patch is close to commit.  See comments above.  You going to do a bit of a blog w/ fancy tracing pictures?    Something we could reference from the refguide?  Any more pretty pictures for us?</p>
+
+
+
+
+        </td></tr>
+                <tr id="comment-header-13438381"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jonathan.leavitt" id="word_commented_jonathan.leavitt" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jonathan.leavitt">Jonathan Leavitt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13438381"><td bgcolor="#ffffff">
+            <p>updated diff</p>
+        </td></tr>
+                <tr id="comment-header-13438391"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jonathan.leavitt" id="word_commented_jonathan.leavitt" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jonathan.leavitt">Jonathan Leavitt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13438391"><td bgcolor="#ffffff">
+            <p>@Stack</p>
+<blockquote><p>Is htrace up in mvn central?</p></blockquote>
+<p>Yes</p>
+
+<blockquote><p> Why do we create a new instance of TInfo here rather than just use the one we have (presuming hasTinfo means the request has a TInfo?)?<br/>
++ call = new Call(id, param, this, responder, callSize, new TraceInfo(<br/>
++ request.getTinfo().getTraceId(), request.getTinfo().getParentId()));</p></blockquote>
+<p>I'm trying to keep HTrace agnostic of RPC mechanism, so the TraceInfo in the request is a protobuf TraceInfo (RPCTinfo from Tracing.proto). I just convert it to the TraceInfo defined in HTrace to decrease dependency on protobufs. <br/>
+On the other hand, it's not a big deal to store the RPCTinfo in the Call, so if you think the extra overhead from crating the TraceInfo is bad, I'm happy to change it. </p>
+
+<blockquote><p>Should say what a spanReceiverHost is. When I load receivers, what kind of resources are we allocating?</p></blockquote>
+<p>Do you mean I should explain SpanReceiverHosts in HMaster? Or describe them more thoroughly in SpanReceiverHost.java? Or somewhere else? </p>
+
+<blockquote><p>Is that all it takes to add tracing? That is pretty sweet. I'd say this patch is close to commit. See comments above. You going to do a bit of a blog w/ fancy tracing pictures? Something we could reference from the refguide? Any more pretty pictures for us?</p></blockquote>
+<p>This patch is enough to add tracing for RPCs. There are still places in HBase that need to be instrumented (by that I mean wrapping any thread changes).  It would also be useful to add some more spans for interesting HBaseEvents (maybe start a new span any time we talk to HDFS). </p>
+
+<p>I will work on a blog post.  I started working on a more thorough README for <a href="https://github.com/cloudera/htrace" class="external-link" rel="nofollow">htrace</a>. After I am happy with that I can write up something more specific for the refguide if necessary. </p>
+        </td></tr>
+                <tr id="comment-header-13438417"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hadoopqa" id="word_commented_hadoopqa" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hadoopqa">Hadoop QA</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13438417"><td bgcolor="#ffffff">
+            <p>-1 overall.  Here are the results of testing the latest attachment <br/>
+  <a href="http://issues.apache.org/jira/secure/attachment/12541691/hbase-6524.diff" class="external-link" rel="nofollow">http://issues.apache.org/jira/secure/attachment/12541691/hbase-6524.diff</a><br/>
+  against trunk revision .</p>
+
+<p>    +1 @author.  The patch does not contain any @author tags.</p>
+
+<p>    +1 tests included.  The patch appears to include 2 new or modified tests.</p>
+
+<p>    +1 hadoop2.0.  The patch compiles against the hadoop 2.0 profile.</p>
+
+<p>    +1 javadoc.  The javadoc tool did not generate any warning messages.</p>
+
+<p>    -1 javac.  The applied patch generated 5 javac compiler warnings (more than the trunk's current 4 warnings).</p>
+
+<p>    -1 findbugs.  The patch appears to introduce 8 new Findbugs (version 1.3.9) warnings.</p>
+
+<p>    +1 release audit.  The applied patch does not increase the total number of release audit warnings.</p>
+
+<p>     -1 core tests.  The patch failed these unit tests:<br/>
+                       org.apache.hadoop.hbase.backup.example.TestZooKeeperTableArchiveClient<br/>
+                  org.apache.hadoop.hbase.io.encoding.TestUpgradeFromHFileV1ToEncoding</p>
+
+<p>Test results: <a href="https://builds.apache.org/job/PreCommit-HBASE-Build/2634//testReport/" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HBASE-Build/2634//testReport/</a><br/>
+Findbugs warnings: <a href="https://builds.apache.org/job/PreCommit-HBASE-Build/2634//artifact/trunk/patchprocess/newPatchFindbugsWarningshbase-hadoop2-compat.html" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HBASE-Build/2634//artifact/trunk/patchprocess/newPatchFindbugsWarningshbase-hadoop2-compat.html</a><br/>
+Findbugs warnings: <a href="https://builds.apache.org/job/PreCommit-HBASE-Build/2634//artifact/trunk/patchprocess/newPatchFindbugsWarningshbase-hadoop1-compat.html" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HBASE-Build/2634//artifact/trunk/patchprocess/newPatchFindbugsWarningshbase-hadoop1-compat.html</a><br/>
+Findbugs warnings: <a href="https://builds.apache.org/job/PreCommit-HBASE-Build/2634//artifact/trunk/patchprocess/newPatchFindbugsWarningshbase-common.html" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HBASE-Build/2634//artifact/trunk/patchprocess/newPatchFindbugsWarningshbase-common.html</a><br/>
+Findbugs warnings: <a href="https://builds.apache.org/job/PreCommit-HBASE-Build/2634//artifact/trunk/patchprocess/newPatchFindbugsWarningshbase-server.html" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HBASE-Build/2634//artifact/trunk/patchprocess/newPatchFindbugsWarningshbase-server.html</a><br/>
+Findbugs warnings: <a href="https://builds.apache.org/job/PreCommit-HBASE-Build/2634//artifact/trunk/patchprocess/newPatchFindbugsWarningshbase-hadoop-compat.html" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HBASE-Build/2634//artifact/trunk/patchprocess/newPatchFindbugsWarningshbase-hadoop-compat.html</a><br/>
+Console output: <a href="https://builds.apache.org/job/PreCommit-HBASE-Build/2634//console" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HBASE-Build/2634//console</a></p>
+
+<p>This message is automatically generated.</p>
+        </td></tr>
+                <tr id="comment-header-13438859"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="stack" id="word_commented_stack" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=stack">stack</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13438859"><td bgcolor="#ffffff">
+            <blockquote><p>.. so if you think the extra overhead from crating the TraceInfo is bad, I'm happy to change it.</p></blockquote>
+
+<p>Its fine.  Its a small object instantiation.  Better if we didn't have to do it but if it makes for cleaner hand off, its fine.</p>
+
+<blockquote><p>...or describe them more thoroughly in SpanReceiverHost.java? Or somewhere else?</p></blockquote>
+
+<p>Its fine.  The class comment in SpanReceiverHost is enough.</p>
+
+<blockquote><p>...maybe start a new span any time we talk to HDFS</p></blockquote>
+
+<p>Yeah, that sounds good.  Can do that in new JIRA?</p>
+
+<blockquote><p>I will work on a blog post.</p></blockquote>
+
+<p>I just think this a topic that will be of general interest.</p>
+
+<p>For refguide, a sentence or two w/ pointers on  how to set it all up would be great.</p>
+
+<p>I think we should commit this if its fine by you.</p>
+        </td></tr>
+                <tr id="comment-header-13438860"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="stack" id="word_commented_stack" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=stack">stack</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13438860"><td bgcolor="#ffffff">
+            <p>Do you have any more pretty graphs you can post here?</p>
+        </td></tr>
+                <tr id="comment-header-13438971"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jonathan.leavitt" id="word_commented_jonathan.leavitt" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jonathan.leavitt">Jonathan Leavitt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13438971"><td bgcolor="#ffffff">
+            <p>A trace of a createTable. </p>
+        </td></tr>
+                <tr id="comment-header-13438973"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hadoopqa" id="word_commented_hadoopqa" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hadoopqa">Hadoop QA</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13438973"><td bgcolor="#ffffff">
+            <p>-1 overall.  Here are the results of testing the latest attachment <br/>
+  <a href="http://issues.apache.org/jira/secure/attachment/12541798/createTableTrace.png" class="external-link" rel="nofollow">http://issues.apache.org/jira/secure/attachment/12541798/createTableTrace.png</a><br/>
+  against trunk revision .</p>
+
+<p>    +1 @author.  The patch does not contain any @author tags.</p>
+
+<p>    -1 tests included.  The patch doesn't appear to include any new or modified tests.<br/>
+                        Please justify why no new tests are needed for this patch.<br/>
+                        Also please list what manual steps were performed to verify this patch.</p>
+
+<p>    -1 patch.  The patch command could not apply the patch.</p>
+
+<p>Console output: <a href="https://builds.apache.org/job/PreCommit-HBASE-Build/2643//console" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HBASE-Build/2643//console</a></p>
+
+<p>This message is automatically generated.</p>
+        </td></tr>
+                <tr id="comment-header-13438980"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jonathan.leavitt" id="word_commented_jonathan.leavitt" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jonathan.leavitt">Jonathan Leavitt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13438980"><td bgcolor="#ffffff">
+            <p>@Stack. I uploaded another image.  As you may notice, the descriptions on this image are not as descriptive as they are in the first image I uploaded.  This is because the toString() on HBaseServer.Call is different with the ProtobufRpcEngine.  It now just concatenates the toString of the rpcRequestBody with the toString of the connection. Unfortunately the default protobuf toString does not give the most useful information.  You can still make out the basics of the requests.</p>
+
+<blockquote><p>Yeah, that sounds good. Can do that in new JIRA?</p></blockquote>
+<p>Yes. I think that this commit is good for including htrace in maven dependencies and the basic instrumentation, and additional instrumentation should go in other JIRAs. </p>
+
+<blockquote><p>I just think this a topic that will be of general interest.<br/>
+For refguide, a sentence or two w/ pointers on how to set it all up would be great. </p></blockquote>
+
+<p>I'll try to have some sort of blog post and ref guide stuff done today or tomorrow. </p>
+
+<blockquote><p>I think we should commit this if its fine by you.</p></blockquote>
+<p>Sounds good. </p>
+
+        </td></tr>
+                <tr id="comment-header-13439079"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="stack" id="word_commented_stack" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=stack">stack</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13439079"><td bgcolor="#ffffff">
+            <p>Committed to trunk.  Thanks for the patch Jonathan.</p>
+
+<p>Would suggest you file an issue on the protobuf toString issue.  If you add a line or two for the refguide here, I'll commit that too.  Thanks boss.</p>
+        </td></tr>
+                <tr id="comment-header-13439129"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hudson" id="word_commented_hudson" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hudson">Hudson</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13439129"><td bgcolor="#ffffff">
+            <p>Integrated in HBase-TRUNK #3251 (See <a href="https://builds.apache.org/job/HBase-TRUNK/3251/" class="external-link" rel="nofollow">https://builds.apache.org/job/HBase-TRUNK/3251/</a>)<br/>
+    <a href="https://issues.apache.org/jira/browse/HBASE-6524" title="Hooks for hbase tracing" class="issue-link" data-issue-key="HBASE-6524"><del>HBASE-6524</del></a> Hooks for hbase tracing (Revision 1375812)</p>
+
+<p>     Result = FAILURE<br/>
+stack : <br/>
+Files : </p>
+<ul>
+	<li>/hbase/trunk/hbase-server/pom.xml</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/executor/EventHandler.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/ipc/HBaseClient.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/ipc/HBaseServer.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/master/HMaster.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/master/handler/DisableTableHandler.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/master/handler/EnableTableHandler.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/protobuf/generated/FilterProtos.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/protobuf/generated/RPCProtos.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/protobuf/generated/Tracing.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/trace</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/trace/HBaseLocalFileSpanReceiver.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/trace/SpanReceiverHost.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/protobuf/RPC.proto</li>
+	<li>/hbase/trunk/hbase-server/src/main/protobuf/Tracing.proto</li>
+	<li>/hbase/trunk/hbase-server/src/test/java/org/apache/hadoop/hbase/trace</li>
+	<li>/hbase/trunk/hbase-server/src/test/java/org/apache/hadoop/hbase/trace/TestHTraceHooks.java</li>
+</ul>
+
+        </td></tr>
+                <tr id="comment-header-13439142"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hudson" id="word_commented_hudson" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hudson">Hudson</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">22/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13439142"><td bgcolor="#ffffff">
+            <p>Integrated in HBase-TRUNK-on-Hadoop-2.0.0 #141 (See <a href="https://builds.apache.org/job/HBase-TRUNK-on-Hadoop-2.0.0/141/" class="external-link" rel="nofollow">https://builds.apache.org/job/HBase-TRUNK-on-Hadoop-2.0.0/141/</a>)<br/>
+    <a href="https://issues.apache.org/jira/browse/HBASE-6524" title="Hooks for hbase tracing" class="issue-link" data-issue-key="HBASE-6524"><del>HBASE-6524</del></a> Hooks for hbase tracing (Revision 1375812)</p>
+
+<p>     Result = FAILURE<br/>
+stack : <br/>
+Files : </p>
+<ul>
+	<li>/hbase/trunk/hbase-server/pom.xml</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/executor/EventHandler.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/ipc/HBaseClient.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/ipc/HBaseServer.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/master/HMaster.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/master/handler/DisableTableHandler.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/master/handler/EnableTableHandler.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/protobuf/generated/FilterProtos.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/protobuf/generated/RPCProtos.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/protobuf/generated/Tracing.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/trace</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/trace/HBaseLocalFileSpanReceiver.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/trace/SpanReceiverHost.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/protobuf/RPC.proto</li>
+	<li>/hbase/trunk/hbase-server/src/main/protobuf/Tracing.proto</li>
+	<li>/hbase/trunk/hbase-server/src/test/java/org/apache/hadoop/hbase/trace</li>
+	<li>/hbase/trunk/hbase-server/src/test/java/org/apache/hadoop/hbase/trace/TestHTraceHooks.java</li>
+</ul>
+
+        </td></tr>
+                <tr id="comment-header-13439168"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="zhihyu@ebaysf.com" id="word_commented_zhihyu@ebaysf.com" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=zhihyu%40ebaysf.com">Ted Yu</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">22/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13439168"><td bgcolor="#ffffff">
+            <p>When I remove the patch from this JIRA, TestClusterBootOrder passed.</p>
+
+<p>With patch, TestClusterBootOrder fails.</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+testBootRegionServerFirst(org.apache.hadoop.hbase.TestClusterBootOrder)  Time elapsed: 0.002 sec  &lt;&lt;&lt; ERROR!
+java.lang.NullPointerException
+        at org.apache.hadoop.hbase.TestClusterBootOrder.tearDown(TestClusterBootOrder.java:55)
+        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+</pre>
+</div></div>
+<p>Here is the command I used:<br/>
+mvn clean -Dhadoop.profile=2.0 test -Dtest=TestClusterBootOrder#testBootRegionServerFirst</p>
+        </td></tr>
+                <tr id="comment-header-13439193"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="zhihyu@ebaysf.com" id="word_commented_zhihyu@ebaysf.com" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=zhihyu%40ebaysf.com">Ted Yu</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">22/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13439193"><td bgcolor="#ffffff">
+            <p>Hadoop 2.0 build is broken.</p>
+        </td></tr>
+                <tr id="comment-header-13439211"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jonathan.leavitt" id="word_commented_jonathan.leavitt" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jonathan.leavitt">Jonathan Leavitt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">22/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13439211"><td bgcolor="#ffffff">
+            <p>Sorry about this. I am not sure what is going wrong with hadoop 2.0.  I am looking into it. </p>
+        </td></tr>
+                <tr id="comment-header-13439238"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="stack" id="word_commented_stack" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=stack">stack</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">22/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13439238"><td bgcolor="#ffffff">
+            <p>@Jonathan Thanks for taking a look.  You clear on how to run w/ 2.0?</p>
+
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+MAVEN_OPTS=<span class="code-quote">"-Xmx3g"</span> ~/bin/mvn/bin/mvn  -Dhadoop.profile=2.0 -P localTests -Dtest=TestClusterBootOrder test
+</pre>
+</div></div> 
+        </td></tr>
+                <tr id="comment-header-13439633"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="zhihyu@ebaysf.com" id="word_commented_zhihyu@ebaysf.com" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=zhihyu%40ebaysf.com">Ted Yu</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">22/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13439633"><td bgcolor="#ffffff">
+            <p>There were 90 more failed tests introduced for hadoop 2.0 profile.</p>
+
+<p>I suggest we temporarily rollback the patch and give Jonathan enough time to iron out the 90+ test failures.</p>
+        </td></tr>
+                <tr id="comment-header-13439723"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jonathan.leavitt" id="word_commented_jonathan.leavitt" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jonathan.leavitt">Jonathan Leavitt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">22/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13439723"><td bgcolor="#ffffff">
+            <blockquote><p>There were 90 more failed tests introduced for hadoop 2.0 profile.<br/>
+I suggest we temporarily rollback the patch and give Jonathan enough time to iron out the 90+ test failures.</p></blockquote>
+<p>I think I have the fix. Stay tuned. </p>
+        </td></tr>
+                <tr id="comment-header-13439789"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jonathan.leavitt" id="word_commented_jonathan.leavitt" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jonathan.leavitt">Jonathan Leavitt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">22/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13439789"><td bgcolor="#ffffff">
+            <p>So I believe the problem was that htrace was depending on hadoop 1.0.3 and there was some problem when running it with hadoop 2 on the classpath. I removed the hadoop dependency from htrace, so now it just uses what it needs, which is better anyways. <br/>
+The only change to the patch is depending on htrace version 1.49 as opposed to 1.48.  Should I upload a new patch that just changes the dependency version, or one that has all of the hooks and depends on htrace 1.49?</p>
+
+<p>Also, the htrace maven repo won't be synced to maven central for another 2 hours, so I can't upload a patch until then.</p>
+        </td></tr>
+                <tr id="comment-header-13439800"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="stack" id="word_commented_stack" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=stack">stack</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">22/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13439800"><td bgcolor="#ffffff">
+            <p>Make new issue that changes the pom to 1.49.  We can wait 2 hours.  Thanks Jonathan.</p>
+        </td></tr>
+                <tr id="comment-header-13439802"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="zhihyu@ebaysf.com" id="word_commented_zhihyu@ebaysf.com" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=zhihyu%40ebaysf.com">Ted Yu</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">22/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13439802"><td bgcolor="#ffffff">
+            <p>Using snapshot build of htrace 1.49, I was able to run TestClusterBootOrder with hadoop 2.0 profile.<br/>
+But the test failed with:</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+testBootRegionServerFirst(org.apache.hadoop.hbase.TestClusterBootOrder)  Time elapsed: 0.263 sec  &lt;&lt;&lt; ERROR!
+java.lang.IncompatibleClassChangeError: Implementing class
+        at java.lang.<span class="code-object">ClassLoader</span>.defineClass1(Native Method)
+        at java.lang.<span class="code-object">ClassLoader</span>.defineClassCond(<span class="code-object">ClassLoader</span>.java:631)
+        at java.lang.<span class="code-object">ClassLoader</span>.defineClass(<span class="code-object">ClassLoader</span>.java:615)
+        at java.security.SecureClassLoader.defineClass(SecureClassLoader.java:141)
+        at java.net.URLClassLoader.defineClass(URLClassLoader.java:283)
+        at java.net.URLClassLoader.access$000(URLClassLoader.java:58)
+        at java.net.URLClassLoader$1.run(URLClassLoader.java:197)
+        at java.security.AccessController.doPrivileged(Native Method)
+        at java.net.URLClassLoader.findClass(URLClassLoader.java:190)
+        at java.lang.<span class="code-object">ClassLoader</span>.loadClass(<span class="code-object">ClassLoader</span>.java:306)
+        at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:301)
+        at java.lang.<span class="code-object">ClassLoader</span>.loadClass(<span class="code-object">ClassLoader</span>.java:247)
+        at java.lang.<span class="code-object">Class</span>.forName0(Native Method)
+        at java.lang.<span class="code-object">Class</span>.forName(<span class="code-object">Class</span>.java:169)
+        at org.apache.hadoop.hbase.mapreduce.MapreduceTestingShim.&lt;clinit&gt;(MapreduceTestingShim.java:45)
+        at org.apache.hadoop.hbase.HBaseTestingUtility.createDirsAndSetProperties(HBaseTestingUtility.java:475)
+        at org.apache.hadoop.hbase.HBaseTestingUtility.startMiniDFSCluster(HBaseTestingUtility.java:426)
+        at org.apache.hadoop.hbase.HBaseTestingUtility.startMiniDFSCluster(HBaseTestingUtility.java:392)
+        at org.apache.hadoop.hbase.TestClusterBootOrder.setUp(TestClusterBootOrder.java:47)
+</pre>
+</div></div>
+<p>The test passed with hadoop 1.0 profile.</p>
+        </td></tr>
+                <tr id="comment-header-13439810"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jonathan.leavitt" id="word_commented_jonathan.leavitt" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jonathan.leavitt">Jonathan Leavitt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">22/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13439810"><td bgcolor="#ffffff">
+            <p>With htrace 1.49 I run:</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">mvn clean -Dhadoop.profile=2.0 test -Dtest=TestClusterBootOrder</pre>
+</div></div>
+<p>with no problems.</p>
+
+<p>Just to make sure, I'm assuming you got htrace 1.49 snapshot from github? Can you pull and install again? </p>
+
+
+
+        </td></tr>
+                <tr id="comment-header-13439814"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="zhihyu@ebaysf.com" id="word_commented_zhihyu@ebaysf.com" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=zhihyu%40ebaysf.com">Ted Yu</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">22/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13439814"><td bgcolor="#ffffff">
+            <p>The above error might be related to local .m2 repo.<br/>
+I will wait till maven repo is populated.</p>
+
+<p>In the mean time, please run the whole test suite with hadoop 2.0 profile.</p>
+        </td></tr>
+                <tr id="comment-header-13439873"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jonathan.leavitt" id="word_commented_jonathan.leavitt" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jonathan.leavitt">Jonathan Leavitt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">22/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13439873"><td bgcolor="#ffffff">
+            <p>htrace 1.49 is available in maven now. I've run the whole test suite, and I am still failing some tests when I run with the hadoop 2.0 profile. <br/>
+I will continue to look into it, and put updates here.</p>
+        </td></tr>
+                <tr id="comment-header-13439882"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="zhihyu@ebaysf.com" id="word_commented_zhihyu@ebaysf.com" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=zhihyu%40ebaysf.com">Ted Yu</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">22/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13439882"><td bgcolor="#ffffff">
+            <p>With the following change:</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+Index: hbase-server/pom.xml
+===================================================================
+--- hbase-server/pom.xml	(revision 1376206)
++++ hbase-server/pom.xml	(working copy)
+@@ -454,7 +454,7 @@
+     &lt;dependency&gt;
+       &lt;groupId&gt;org.cloudera.htrace&lt;/groupId&gt;
+       &lt;artifactId&gt;htrace&lt;/artifactId&gt;
+-      &lt;version&gt;1.48&lt;/version&gt;
++      &lt;version&gt;1.49&lt;/version&gt;
+    &lt;/dependency&gt;
+   &lt;/dependencies&gt;
+   &lt;profiles&gt;
+</pre>
+</div></div>
+<p>I got:</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+[ERROR] Failed to execute goal on project hbase-server: Could not resolve dependencies <span class="code-keyword">for</span> project org.apache.hbase:hbase-server:jar:0.95-SNAPSHOT: Failure to find org.cloudera.htrace:htrace:jar:1.49 in http:<span class="code-comment">//repository-netty.forge.cloudbees.com/snapshot/ was cached in the local repository, resolution will not be reattempted until the update interval of cloudbees netty has elapsed or updates are forced -&gt; [Help 1]</span>
+</pre>
+</div></div>
+<p>Please list the failed tests when hadoop 2.0 profile is used.</p>
+        </td></tr>
+                <tr id="comment-header-13439886"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jonathan.leavitt" id="word_commented_jonathan.leavitt" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jonathan.leavitt">Jonathan Leavitt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">22/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13439886"><td bgcolor="#ffffff">
+            <p>@Zhihong, try running maven with -U flag (forces it to update dependencies). List of failed tests coming soon (have to rerun). </p>
+        </td></tr>
+                <tr id="comment-header-13439887"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="zhihyu@ebaysf.com" id="word_commented_zhihyu@ebaysf.com" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=zhihyu%40ebaysf.com">Ted Yu</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">22/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13439887"><td bgcolor="#ffffff">
+            <p>Using another Linux box I was able to run tests against hadoop 2.0</p>
+
+<p>Will see what tests fail.</p>
+        </td></tr>
+                <tr id="comment-header-13439924"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jonathan.leavitt" id="word_commented_jonathan.leavitt" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jonathan.leavitt">Jonathan Leavitt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">22/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13439924"><td bgcolor="#ffffff">
+            <p>So I ran the full test suite with:</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">mvn clean -Dhadoop.profile=2.0 test</pre>
+</div></div>
+<p>which yielded:</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+
+
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary:
+[INFO] 
+[INFO] HBase ............................................. SUCCESS [2.814s]
+[INFO] HBase - Common .................................... SUCCESS [8.505s]
+[INFO] HBase - Hadoop Compatibility ...................... SUCCESS [1.194s]
+[INFO] HBase - Hadoop Two Compatibility .................. SUCCESS [3.113s]
+[INFO] HBase - Server .................................... FAILURE [25:57.982s]
+[INFO] HBase - Hadoop One Compatibility .................. SKIPPED
+[INFO] HBase - Integration Tests ......................... SKIPPED
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 26:14.129s
+[INFO] Finished at: Wed Aug 22 15:39:03 PDT 2012
+[INFO] Final Memory: 90M/630M
+[INFO] ------------------------------------------------------------------------
+</pre>
+</div></div>
+<p>The failures:</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+Failed tests:   testRowCounterNoColumn(org.apache.hadoop.hbase.mapreduce.TestRowCounter)
+  testRowCounterHiddenColumn(org.apache.hadoop.hbase.mapreduce.TestRowCounter)
+  testMROnTable(org.apache.hadoop.hbase.mapreduce.TestImportTsv)
+  testMROnTableWithTimestamp(org.apache.hadoop.hbase.mapreduce.TestImportTsv)
+  testMROnTableWithCustomMapper(org.apache.hadoop.hbase.mapreduce.TestImportTsv)
+  testBulkOutputWithoutAnExistingTable(org.apache.hadoop.hbase.mapreduce.TestImportTsv)
+
+Tests in error: 
+  testRowCounterExclusiveColumn(org.apache.hadoop.hbase.mapreduce.TestRowCounter)
+  testSimpleCase(org.apache.hadoop.hbase.mapreduce.TestImportExport)
+  testWithDeletes(org.apache.hadoop.hbase.mapreduce.TestImportExport)
+
+</pre>
+</div></div>
+
+<p>So it seems I fixed most of the problems, but not all of them. will continue to investigate </p>
+        </td></tr>
+                <tr id="comment-header-13439945"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="zhihyu@ebaysf.com" id="word_commented_zhihyu@ebaysf.com" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=zhihyu%40ebaysf.com">Ted Yu</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">23/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13439945"><td bgcolor="#ffffff">
+            <p>Addendum uses 1.49 of htrace</p>
+        </td></tr>
+                <tr id="comment-header-13439954"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="zhihyu@ebaysf.com" id="word_commented_zhihyu@ebaysf.com" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=zhihyu%40ebaysf.com">Ted Yu</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">23/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13439954"><td bgcolor="#ffffff">
+            <p>I got a few test failures running test suite:</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+Running org.apache.hadoop.hbase.mapreduce.TestImportExport
+Tests run: 2, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 51.918 sec &lt;&lt;&lt; FAILURE!
+--
+Running org.apache.hadoop.hbase.client.TestHCM
+Tests run: 7, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 72.583 sec &lt;&lt;&lt; FAILURE!
+--
+Running org.apache.hadoop.hbase.client.TestAdmin
+Tests run: 40, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 129.109 sec &lt;&lt;&lt; FAILURE!
+--
+Running org.apache.hadoop.hbase.TestFullLogReconstruction
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 44.385 sec &lt;&lt;&lt; FAILURE!
+--
+Running org.apache.hadoop.hbase.backup.example.TestZooKeeperTableArchiveClient
+Tests run: 3, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 178.483 sec &lt;&lt;&lt; FAILURE!
+</pre>
+</div></div>
+<p>I ran the following:<br/>
+mvn -Dhadoop.profile=2.0 -P localTests test -Dtest=TestHCM#testRegionCaching<br/>
+and got:</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+testRegionCaching(org.apache.hadoop.hbase.client.TestHCM)  Time elapsed: 60.047 sec  &lt;&lt;&lt; ERROR!
+java.lang.Exception: test timed out after 60000 milliseconds
+        at java.util.concurrent.ConcurrentHashMap$Segment.get(ConcurrentHashMap.java:344)
+        at java.util.concurrent.ConcurrentHashMap.get(ConcurrentHashMap.java:769)
+        at org.apache.hadoop.hbase.regionserver.HRegionServer.getOnlineRegion(HRegionServer.java:2596)
+        at org.apache.hadoop.hbase.client.TestHCM.testRegionCaching(TestHCM.java:244)
+</pre>
+</div></div>
+        </td></tr>
+                <tr id="comment-header-13439956"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="zhihyu@ebaysf.com" id="word_commented_zhihyu@ebaysf.com" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=zhihyu%40ebaysf.com">Ted Yu</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">23/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13439956"><td bgcolor="#ffffff">
+            <p>Two other failed tests:</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+testCreateTableRPCTimeOut(org.apache.hadoop.hbase.client.TestAdmin)  Time elapsed: 15.187 sec  &lt;&lt;&lt; ERROR!
+org.apache.hadoop.hbase.TableNotEnabledException: Retries exhausted <span class="code-keyword">while</span> still waiting <span class="code-keyword">for</span> table: testCreateTableRPCTimeOut to be enabled
+        at org.apache.hadoop.hbase.client.HBaseAdmin.createTable(HBaseAdmin.java:460)
+        at org.apache.hadoop.hbase.client.HBaseAdmin.createTable(HBaseAdmin.java:373)
+        at org.apache.hadoop.hbase.client.TestAdmin.testCreateTableRPCTimeOut(TestAdmin.java:1125)
+</pre>
+</div></div>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+testReconstruction(org.apache.hadoop.hbase.TestFullLogReconstruction)  Time elapsed: 26.141 sec  &lt;&lt;&lt; ERROR!
+java.lang.NullPointerException
+        at org.apache.hadoop.hbase.HBaseTestingUtility.createMultiRegions(HBaseTestingUtility.java:1211)
+        at org.apache.hadoop.hbase.HBaseTestingUtility.createMultiRegions(HBaseTestingUtility.java:1142)
+        at org.apache.hadoop.hbase.HBaseTestingUtility.createMultiRegions(HBaseTestingUtility.java:1116)
+        at org.apache.hadoop.hbase.TestFullLogReconstruction.testReconstruction(TestFullLogReconstruction.java:99)
+</pre>
+</div></div>
+        </td></tr>
+                <tr id="comment-header-13439989"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="zhihyu@ebaysf.com" id="word_commented_zhihyu@ebaysf.com" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=zhihyu%40ebaysf.com">Ted Yu</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">23/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13439989"><td bgcolor="#ffffff">
+            <p>Here is the list of failed tests:</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+Failed tests:   testMultipleTables(org.apache.hadoop.hbase.backup.example.TestZooKeeperTableArchiveClient): Archived HFiles (hdfs:<span class="code-comment">//localhost:58500/user/zhihyu/hbase/.archive/otherTable/8f2bf3dfdf9ce281bec682f7160e4098/fam) should have gotten deleted, but didn't, remaining files:...
+</span>
+Tests in error:
+  testDisableInactivePeer(org.apache.hadoop.hbase.replication.TestReplication): Shutting down
+  testCreateTableRPCTimeOut(org.apache.hadoop.hbase.client.TestAdmin): Retries exhausted <span class="code-keyword">while</span> still waiting <span class="code-keyword">for</span> table: testCreateTableRPCTimeOut to be enabled
+  testGetRowVersions(org.apache.hadoop.hbase.TestMultiVersions): Shutting down
+  testScanMultipleVersions(org.apache.hadoop.hbase.TestMultiVersions): org.apache.hadoop.hbase.MasterNotRunningException: Can create a proxy to master, but it is not running
+</pre>
+</div></div>
+<p>I also saw two hanging tests:</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-quote">"main"</span> prio=10 tid=0x0000000040544800 nid=0x1e09 in <span class="code-object">Object</span>.wait() [0x00007ffc85ca6000]
+   java.lang.<span class="code-object">Thread</span>.State: TIMED_WAITING (on object monitor)
+	at java.lang.<span class="code-object">Object</span>.wait(Native Method)
+	- waiting on &lt;0x00000000a8807010&gt; (a org.apache.hadoop.hbase.util.JVMClusterUtil$MasterThread)
+	at java.lang.<span class="code-object">Thread</span>.join(<span class="code-object">Thread</span>.java:1194)
+	- locked &lt;0x00000000a8807010&gt; (a org.apache.hadoop.hbase.util.JVMClusterUtil$MasterThread)
+	at org.apache.hadoop.hbase.util.Threads.threadDumpingIsAlive(Threads.java:116)
+	at org.apache.hadoop.hbase.LocalHBaseCluster.join(LocalHBaseCluster.java:405)
+	at org.apache.hadoop.hbase.MiniHBaseCluster.join(MiniHBaseCluster.java:408)
+	at org.apache.hadoop.hbase.HBaseTestingUtility.shutdownMiniHBaseCluster(HBaseTestingUtility.java:599)
+	at org.apache.hadoop.hbase.HBaseTestingUtility.shutdownMiniCluster(HBaseTestingUtility.java:573)
+	at org.apache.hadoop.hbase.<span class="code-keyword">rest</span>.TestVersionResource.tearDownAfterClass(TestVersionResource.java:69)
+</pre>
+</div></div>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-quote">"main"</span> prio=10 tid=0x0000000040d5b800 nid=0x64df waiting on condition [0x00007f50b379b000]
+   java.lang.<span class="code-object">Thread</span>.State: TIMED_WAITING (sleeping)
+	at java.lang.<span class="code-object">Thread</span>.sleep(Native Method)
+	at org.apache.hadoop.hbase.zookeeper.ZKUtil.blockUntilAvailable(ZKUtil.java:1225)
+	at org.apache.hadoop.hbase.zookeeper.RootRegionTracker.blockUntilAvailable(RootRegionTracker.java:176)
+	at org.apache.hadoop.hbase.client.HConnectionManager$HConnectionImplementation.locateRegion(HConnectionManager.java:940)
+	at org.apache.hadoop.hbase.client.HConnectionManager$HConnectionImplementation.locateRegionInMeta(HConnectionManager.java:1056)
+	at org.apache.hadoop.hbase.client.HConnectionManager$HConnectionImplementation.locateRegion(HConnectionManager.java:955)
+	at org.apache.hadoop.hbase.client.HConnectionManager$HConnectionImplementation.locateRegionInMeta(HConnectionManager.java:1056)
+	at org.apache.hadoop.hbase.client.HConnectionManager$HConnectionImplementation.locateRegion(HConnectionManager.java:959)
+	at org.apache.hadoop.hbase.client.HConnectionManager$HConnectionImplementation.relocateRegion(HConnectionManager.java:923)
+	at org.apache.hadoop.hbase.client.HConnectionManager$HConnectionImplementation.getRegionLocation(HConnectionManager.java:834)
+	at org.apache.hadoop.hbase.client.ServerCallable.connect(ServerCallable.java:88)
+	at org.apache.hadoop.hbase.client.ScannerCallable.connect(ScannerCallable.java:95)
+	at org.apache.hadoop.hbase.client.ServerCallable.withRetries(ServerCallable.java:168)
+	at org.apache.hadoop.hbase.client.ClientScanner.nextScanner(ClientScanner.java:212)
+	at org.apache.hadoop.hbase.client.ClientScanner.&lt;init&gt;(ClientScanner.java:127)
+	at org.apache.hadoop.hbase.client.HTable.getScanner(HTable.java:649)
+	at org.apache.hadoop.hbase.replication.TestReplication.setUp(TestReplication.java:183)
+</pre>
+</div></div>
+<p>In order to clear all the above, I think more time is needed.</p>
+
+<p>Rolling back the patch would allow <a href="https://issues.apache.org/jira/browse/HBASE-6581" title="Build with hadoop.profile=3.0" class="issue-link" data-issue-key="HBASE-6581">HBASE-6581</a> to proceed.</p>
+        </td></tr>
+                <tr id="comment-header-13439991"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jonathan.leavitt" id="word_commented_jonathan.leavitt" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jonathan.leavitt">Jonathan Leavitt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">23/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13439991"><td bgcolor="#ffffff">
+            <p>Strange, I pass some of the tests that you fail (all run locally though). </p>
+
+<p>I'm still not sure exactly what's causing these errors, but it seems to me that it must have something to do with some missing dependencies or something, especially considering that tracing is never on for any of the failing tests, meaning very little htrace code is actually getting called run. I did remove the commons-logging dependency from htrace, to no avail. It seems bizarre that using hadoop 2 would cause the tests to fail.</p>
+
+<p>I'm fine with removing with the patch so I have more time to figure out exactly what's going on. </p>
+        </td></tr>
+                <tr id="comment-header-13439997"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="zhihyu@ebaysf.com" id="word_commented_zhihyu@ebaysf.com" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=zhihyu%40ebaysf.com">Ted Yu</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">23/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13439997"><td bgcolor="#ffffff">
+            <p>I actually trimmed a few tests which passed when run individually from my list posted @ 23/Aug/12 00:57</p>
+
+<p>I agree the tests in list might just be flaky. <a href="https://issues.apache.org/jira/browse/HBASE-6627" title="TestMultiVersions.testGetRowVersions is flaky" class="issue-link" data-issue-key="HBASE-6627"><del>HBASE-6627</del></a> only covers one of the TestMultiVersions tests.</p>
+
+<p>I think we should add a QA build for hadoop 2.0 so that we don't have to use trunk build to discover these failed tests.</p>
+
+<p>Thanks for your persistence, Jonathan.</p>
+        </td></tr>
+                <tr id="comment-header-13440017"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="zhihyu@ebaysf.com" id="word_commented_zhihyu@ebaysf.com" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=zhihyu%40ebaysf.com">Ted Yu</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">23/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13440017"><td bgcolor="#ffffff">
+            <p>Will revert the patch late tonight if I don't hear objection.</p>
+        </td></tr>
+                <tr id="comment-header-13440059"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="zhihyu@ebaysf.com" id="word_commented_zhihyu@ebaysf.com" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=zhihyu%40ebaysf.com">Ted Yu</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">23/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13440059"><td bgcolor="#ffffff">
+            <p>Reverted patch from trunk.</p>
+
+<p>TestHTraceHooks.java missed license header.</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
++<span class="code-keyword">import</span> org.cloudera.htrace.impl.NullSpan;
+</pre>
+</div></div>
+<p>I think the intent of putting htrace into maven repo is for wider adoption.<br/>
+I wonder if the above namespace (involving cloudera which should not be an org) would serve that purpose well.</p>
+
+<p>For HBaseLocalFileSpanReceiver.java, year is not needed in license header:</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
++ * Copyright 2010 The Apache Software Foundation
+</pre>
+</div></div>
+
+<p>Let's conduct thorough testing against hadoop 2.0 profile</p>
+        </td></tr>
+                <tr id="comment-header-13440100"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hudson" id="word_commented_hudson" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hudson">Hudson</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">23/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13440100"><td bgcolor="#ffffff">
+            <p>Integrated in HBase-TRUNK #3254 (See <a href="https://builds.apache.org/job/HBase-TRUNK/3254/" class="external-link" rel="nofollow">https://builds.apache.org/job/HBase-TRUNK/3254/</a>)<br/>
+    <a href="https://issues.apache.org/jira/browse/HBASE-6524" title="Hooks for hbase tracing" class="issue-link" data-issue-key="HBASE-6524"><del>HBASE-6524</del></a> revert due to new test failures against hadoop 2.0 (Revision 1376365)</p>
+
+<p>     Result = FAILURE<br/>
+tedyu : <br/>
+Files : </p>
+<ul>
+	<li>/hbase/trunk/hbase-server/pom.xml</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/executor/EventHandler.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/ipc/HBaseClient.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/ipc/HBaseServer.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/master/HMaster.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/master/handler/DisableTableHandler.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/master/handler/EnableTableHandler.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/protobuf/generated/FilterProtos.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/protobuf/generated/RPCProtos.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/protobuf/generated/Tracing.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/trace/HBaseLocalFileSpanReceiver.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/trace/SpanReceiverHost.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/protobuf/RPC.proto</li>
+	<li>/hbase/trunk/hbase-server/src/main/protobuf/Tracing.proto</li>
+	<li>/hbase/trunk/hbase-server/src/test/java/org/apache/hadoop/hbase/trace/TestHTraceHooks.java</li>
+</ul>
+
+        </td></tr>
+                <tr id="comment-header-13440223"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hudson" id="word_commented_hudson" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hudson">Hudson</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">23/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13440223"><td bgcolor="#ffffff">
+            <p>Integrated in HBase-TRUNK-on-Hadoop-2.0.0 #143 (See <a href="https://builds.apache.org/job/HBase-TRUNK-on-Hadoop-2.0.0/143/" class="external-link" rel="nofollow">https://builds.apache.org/job/HBase-TRUNK-on-Hadoop-2.0.0/143/</a>)<br/>
+    <a href="https://issues.apache.org/jira/browse/HBASE-6524" title="Hooks for hbase tracing" class="issue-link" data-issue-key="HBASE-6524"><del>HBASE-6524</del></a> revert due to new test failures against hadoop 2.0 (Revision 1376365)</p>
+
+<p>     Result = FAILURE<br/>
+tedyu : <br/>
+Files : </p>
+<ul>
+	<li>/hbase/trunk/hbase-server/pom.xml</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/executor/EventHandler.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/ipc/HBaseClient.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/ipc/HBaseServer.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/master/HMaster.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/master/handler/DisableTableHandler.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/master/handler/EnableTableHandler.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/protobuf/generated/FilterProtos.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/protobuf/generated/RPCProtos.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/protobuf/generated/Tracing.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/trace/HBaseLocalFileSpanReceiver.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/trace/SpanReceiverHost.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/protobuf/RPC.proto</li>
+	<li>/hbase/trunk/hbase-server/src/main/protobuf/Tracing.proto</li>
+	<li>/hbase/trunk/hbase-server/src/test/java/org/apache/hadoop/hbase/trace/TestHTraceHooks.java</li>
+</ul>
+
+        </td></tr>
+                <tr id="comment-header-13440412"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="tlipcon" id="word_commented_tlipcon" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=tlipcon">Todd Lipcon</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">23/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13440412"><td bgcolor="#ffffff">
+            <blockquote>
+<p>I think the intent of putting htrace into maven repo is for wider adoption.<br/>
+I wonder if the above namespace (involving cloudera which should not be an org) would serve that purpose well.</p></blockquote>
+
+<p>Hey Ted. We use <tt>org.cloudera</tt> here to distinguish that this is a fully open source component, distinct from other software like Cloudera Manager which uses <tt>com.cloudera</tt>. The project is open on github and we fully anticipate that, if some community springs up around contributions, we'll accept pull requests and eventually move it to the Apache Incubator. At this point, though, it would be inappropriate to publish under <tt>org.apache</tt></p>
+
+<p>Consider it the same as a project like Guava which is under Google's namespace but is still open source.</p>
+        </td></tr>
+                <tr id="comment-header-13440421"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="zhihyu@ebaysf.com" id="word_commented_zhihyu@ebaysf.com" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=zhihyu%40ebaysf.com">Ted Yu</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">23/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13440421"><td bgcolor="#ffffff">
+            <p>Thanks Todd for the explanation. I understand the support of open source from Cloudera.</p>
+
+<p><a href="http://cloudera.org" class="external-link" rel="nofollow">http://cloudera.org</a> is redirected to cloudera.com</p>
+
+<p>As for Google code, it is under com.google:</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+<span class="code-keyword">import</span> com.google.common.base.Function;
+<span class="code-keyword">import</span> com.google.protobuf.ByteString;
+</pre>
+</div></div>
+        </td></tr>
+                <tr id="comment-header-13440631"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jonathan.leavitt" id="word_commented_jonathan.leavitt" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jonathan.leavitt">Jonathan Leavitt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">23/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13440631"><td bgcolor="#ffffff">
+            <p>I'm running the test suite with hadoop 2.0 profile </p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">mvn clean  -Dhadoop.profile=2.0 -P localTests test </pre>
+</div></div>
+<p> with and without patch. So far, the same test failures are affecting both. <br/>
+Will update again once the whole suite is done running. </p>
+        </td></tr>
+                <tr id="comment-header-13440664"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jonathan.leavitt" id="word_commented_jonathan.leavitt" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jonathan.leavitt">Jonathan Leavitt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">23/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13440664"><td bgcolor="#ffffff">
+            <p>Update after running </p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">mvn clean  -Dhadoop.profile=2.0 -P localTests test</pre>
+</div></div>
+<p>with and without the patch. Many of the failed tests fail on both, and there are some failures unique to each. I would bet the results would be different if I ran the tests again. I believe that some of the tests are not completely stable for hadoop 2.0. </p>
+
+
+        </td></tr>
+                <tr id="comment-header-13440680"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="stack" id="word_commented_stack" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=stack">stack</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">23/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13440680"><td bgcolor="#ffffff">
+            <p>That could indeed be the case.  If you don't mind Jonathan, do some more runs.  If the set of flakey tests goes roughly unchanged when this patch is added, we can put it back and work on the flakeyness in other JIRAs.</p>
+        </td></tr>
+                <tr id="comment-header-13440687"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="zhihyu@ebaysf.com" id="word_commented_zhihyu@ebaysf.com" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=zhihyu%40ebaysf.com">Ted Yu</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">23/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13440687"><td bgcolor="#ffffff">
+            <p>I received the following from Jonathan:</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+with htrace:
+
+Failed tests:   testWALPlayer(org.apache.hadoop.hbase.mapreduce.TestWALPlayer): expected:&lt;0&gt; but was:&lt;1&gt;
+  testMultiRegionTable(org.apache.hadoop.hbase.mapreduce.TestTableMapReduce)
+  testMROnTableWithTimestamp(org.apache.hadoop.hbase.mapreduce.TestImportTsv)
+  testMROnTableWithCustomMapper(org.apache.hadoop.hbase.mapreduce.TestImportTsv)
+  testRowCounterExclusiveColumn(org.apache.hadoop.hbase.mapreduce.TestRowCounter)
+  testRowCounterHiddenColumn(org.apache.hadoop.hbase.mapreduce.TestRowCounter)
+
+Tests in error: 
+  testMRIncrementalLoad(org.apache.hadoop.hbase.mapreduce.TestHFileOutputFormat)
+  testMRIncrementalLoadWithSplit(org.apache.hadoop.hbase.mapreduce.TestHFileOutputFormat)
+  testExcludeMinorCompaction(org.apache.hadoop.hbase.mapreduce.TestHFileOutputFormat)
+  testMROnTable(org.apache.hadoop.hbase.mapreduce.TestImportTsv)
+  testBulkOutputWithoutAnExistingTable(org.apache.hadoop.hbase.mapreduce.TestImportTsv)
+  testRowCounterNoColumn(org.apache.hadoop.hbase.mapreduce.TestRowCounter)
+  testMultithreadedTableMapper(org.apache.hadoop.hbase.mapreduce.TestMultithreadedTableMapper)
+  testSimpleCase(org.apache.hadoop.hbase.mapreduce.TestImportExport)
+  testMetaExport(org.apache.hadoop.hbase.mapreduce.TestImportExport)
+  testWithDeletes(org.apache.hadoop.hbase.mapreduce.TestImportExport)
+  testScanOBBToOPP(org.apache.hadoop.hbase.mapreduce.TestTableInputFormatScan)
+  testGetRowVersions(org.apache.hadoop.hbase.TestMultiVersions): Shutting down
+  testScanMultipleVersions(org.apache.hadoop.hbase.TestMultiVersions): org.apache.hadoop.hbase.MasterNotRunningException: Can create a proxy to master, but it is not running
+  testMultiRegionTable(org.apache.hadoop.hbase.mapred.TestTableMapReduce): Job failed!
+  testUpgrade(org.apache.hadoop.hbase.io.encoding.TestUpgradeFromHFileV1ToEncoding): Shutting down
+</pre>
+</div></div>
+<p>As you can see, the count was much higher than 3<br/>
+Please refer to <a href="https://builds.apache.org/view/G-L/view/HBase/job/HBase-TRUNK-on-Hadoop-2.0.0/143/testReport/" class="external-link" rel="nofollow">https://builds.apache.org/view/G-L/view/HBase/job/HBase-TRUNK-on-Hadoop-2.0.0/143/testReport/</a></p>
+        </td></tr>
+                <tr id="comment-header-13440693"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jonathan.leavitt" id="word_commented_jonathan.leavitt" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jonathan.leavitt">Jonathan Leavitt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">23/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13440693"><td bgcolor="#ffffff">
+            <p>I may have some other problem then because here are the failed tests without htrace: </p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+
+
+Failed tests:  
+  testBulkOutputWithoutAnExistingTable(org.apache.hadoop.hbase.mapreduce.TestImportTsv)
+  testExcludeMinorCompaction(org.apache.hadoop.hbase.mapreduce.TestHFileOutputFormat)
+  testMRIncrementalLoadWithSplit(org.apache.hadoop.hbase.mapreduce.TestHFileOutputFormat)
+  testMROnTable(org.apache.hadoop.hbase.mapreduce.TestImportTsv)
+  testMROnTableWithCustomMapper(org.apache.hadoop.hbase.mapreduce.TestImportTsv)
+  testMultiRegionTable(org.apache.hadoop.hbase.mapreduce.TestTableMapReduce)
+  testMultipleTables(org.apache.hadoop.hbase.backup.example.TestZooKeeperTableArchiveClient): Archived HFiles (hdfs:<span class="code-comment">//localhost:56525/user/jonathan/hbase/.archive/otherTable/188a593a472f6acc10b09c919b9b0659/fam) should have gotten deleted, but didn't, remaining files:[hdfs
+</span>  testMultithreadedTableMapper(org.apache.hadoop.hbase.mapreduce.TestMultithreadedTableMapper)
+  testRowCounterExclusiveColumn(org.apache.hadoop.hbase.mapreduce.TestRowCounter)
+  testRowCounterHiddenColumn(org.apache.hadoop.hbase.mapreduce.TestRowCounter)
+  testRowCounterNoColumn(org.apache.hadoop.hbase.mapreduce.TestRowCounter)
+ testMRIncrementalLoad(org.apache.hadoop.hbase.mapreduce.TestHFileOutputFormat)
+
+Tests in error: 
+  testDisableInactivePeer(org.apache.hadoop.hbase.replication.TestReplication): Shutting down
+  testGetRowVersions(org.apache.hadoop.hbase.TestMultiVersions): Shutting down
+  testMROnTableWithTimestamp(org.apache.hadoop.hbase.mapreduce.TestImportTsv)
+  testMetaExport(org.apache.hadoop.hbase.mapreduce.TestImportExport)
+  testMultiRegionTable(org.apache.hadoop.hbase.mapred.TestTableMapReduce): Job failed!
+  testScanEmptyToAPP(org.apache.hadoop.hbase.mapreduce.TestTableInputFormatScan)
+  testScanEmptyToEmpty(org.apache.hadoop.hbase.mapreduce.TestTableInputFormatScan)
+  testScanMultipleVersions(org.apache.hadoop.hbase.TestMultiVersions): org.apache.hadoop.hbase.MasterNotRunningException: Can create a proxy to master, but it is not running
+  testScanOPPToEmpty(org.apache.hadoop.hbase.mapreduce.TestTableInputFormatScan)
+  testScanYZYToEmpty(org.apache.hadoop.hbase.mapreduce.TestTableInputFormatScan)
+  testSimpleCase(org.apache.hadoop.hbase.mapreduce.TestImportExport)
+  testWALPlayer(org.apache.hadoop.hbase.mapreduce.TestWALPlayer)
+  testWithDeletes(org.apache.hadoop.hbase.mapreduce.TestImportExport)
+</pre>
+</div></div>
+<p>Also more than 3. </p>
+        </td></tr>
+                <tr id="comment-header-13440728"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="zhihyu@ebaysf.com" id="word_commented_zhihyu@ebaysf.com" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=zhihyu%40ebaysf.com">Ted Yu</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">23/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13440728"><td bgcolor="#ffffff">
+            <p>Patch v2 changes htrace version to 1.49</p>
+
+<p>Also adds license headers to new files.</p>
+        </td></tr>
+                <tr id="comment-header-13440738"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="zhihyu@ebaysf.com" id="word_commented_zhihyu@ebaysf.com" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=zhihyu%40ebaysf.com">Ted Yu</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">23/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13440738"><td bgcolor="#ffffff">
+            <p>Here is the OS:<br/>
+Linux s-2 2.6.38-11-generic #48-Ubuntu SMP Fri Jul 29 19:02:55 UTC 2011 x86_64 x86_64 x86_64 GNU/Linux<br/>
+I got the following failures with htrace patch:</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+testGetRowVersions(org.apache.hadoop.hbase.TestMultiVersions)  Time elapsed: 201.963 sec  &lt;&lt;&lt; ERROR!
+java.io.IOException: Shutting down
+  at org.apache.hadoop.hbase.MiniHBaseCluster.init(MiniHBaseCluster.java:229)
+  at org.apache.hadoop.hbase.MiniHBaseCluster.&lt;init&gt;(MiniHBaseCluster.java:92)
+  at org.apache.hadoop.hbase.HBaseTestingUtility.startMiniHBaseCluster(HBaseTestingUtility.java:688)
+  at org.apache.hadoop.hbase.HBaseTestingUtility.startMiniHBaseCluster(HBaseTestingUtility.java:661)
+  at org.apache.hadoop.hbase.TestMultiVersions.testGetRowVersions(TestMultiVersions.java:143)
+...
+Caused by: java.lang.RuntimeException: Master not initialized after 200 seconds
+  at org.apache.hadoop.hbase.util.JVMClusterUtil.startup(JVMClusterUtil.java:208)
+  at org.apache.hadoop.hbase.LocalHBaseCluster.startup(LocalHBaseCluster.java:424)
+  at org.apache.hadoop.hbase.MiniHBaseCluster.init(MiniHBaseCluster.java:222)
+testScanMultipleVersions(org.apache.hadoop.hbase.TestMultiVersions)  Time elapsed: 70.623 sec  &lt;&lt;&lt; ERROR!
+org.apache.hadoop.hbase.MasterNotRunningException: org.apache.hadoop.hbase.MasterNotRunningException: Can create a proxy to master, but it is not running
+  at org.apache.hadoop.hbase.client.HConnectionManager$HConnectionImplementation.createMasterWithRetries(HConnectionManager.java:782)
+  at org.apache.hadoop.hbase.client.HConnectionManager$HConnectionImplementation.getKeepAliveMasterProtocol(HConnectionManager.java:1618)
+  at org.apache.hadoop.hbase.client.HConnectionManager$HConnectionImplementation.getKeepAliveMasterAdmin(HConnectionManager.java:1649)
+  at org.apache.hadoop.hbase.client.HBaseAdmin.execute(HBaseAdmin.java:2049)
+  at org.apache.hadoop.hbase.client.HBaseAdmin.createTableAsync(HBaseAdmin.java:510)
+  at org.apache.hadoop.hbase.client.HBaseAdmin.createTable(HBaseAdmin.java:397)
+  at org.apache.hadoop.hbase.TestMultiVersions.testScanMultipleVersions(TestMultiVersions.java:199)
+</pre>
+</div></div>
+<p>The test passed without patch.</p>
+        </td></tr>
+                <tr id="comment-header-13440754"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jonathan.leavitt" id="word_commented_jonathan.leavitt" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jonathan.leavitt">Jonathan Leavitt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">24/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13440754"><td bgcolor="#ffffff">
+            <p>I pass TestMultiVersions with the sometimes, and fail it sometimes. The same happens without the patch.<br/>
+Linux jsleavit 3.2.0-27-generic #43-Ubuntu SMP Fri Jul 6 14:25:57 UTC 2012 x86_64 x86_64 x86_64 GNU/Linux</p>
+        </td></tr>
+                <tr id="comment-header-13440767"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="stack" id="word_commented_stack" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=stack">stack</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">24/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13440767"><td bgcolor="#ffffff">
+            <p>Looking at the patch, its hard to see how this could cause problems: its .proto files, some generated files, and some intercession in a few locations, a test, and thats it.   Unless the calls into htrace are stalling somehow?</p>
+
+<p>Looking up on jenkins at the hadoop 2.0 build, I see where we were failing 95 unit tests after the first version of this patch went in.  Was there a run with the addendum applied?  (I don't see it.  Maybe I'm missing something).</p>
+
+
+
+        </td></tr>
+                <tr id="comment-header-13440797"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hadoopqa" id="word_commented_hadoopqa" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hadoopqa">Hadoop QA</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">24/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13440797"><td bgcolor="#ffffff">
+            <p>-1 overall.  Here are the results of testing the latest attachment <br/>
+  <a href="http://issues.apache.org/jira/secure/attachment/12542198/6524-v2.txt" class="external-link" rel="nofollow">http://issues.apache.org/jira/secure/attachment/12542198/6524-v2.txt</a><br/>
+  against trunk revision .</p>
+
+<p>    +1 @author.  The patch does not contain any @author tags.</p>
+
+<p>    +1 tests included.  The patch appears to include 3 new or modified tests.</p>
+
+<p>    +1 hadoop2.0.  The patch compiles against the hadoop 2.0 profile.</p>
+
+<p>    +1 javadoc.  The javadoc tool did not generate any warning messages.</p>
+
+<p>    -1 javac.  The applied patch generated 5 javac compiler warnings (more than the trunk's current 4 warnings).</p>
+
+<p>    -1 findbugs.  The patch appears to introduce 9 new Findbugs (version 1.3.9) warnings.</p>
+
+<p>    +1 release audit.  The applied patch does not increase the total number of release audit warnings.</p>
+
+<p>     -1 core tests.  The patch failed these unit tests:<br/>
+                       org.apache.hadoop.hbase.TestMultiVersions</p>
+
+<p>Test results: <a href="https://builds.apache.org/job/PreCommit-HBASE-Build/2674//testReport/" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HBASE-Build/2674//testReport/</a><br/>
+Findbugs warnings: <a href="https://builds.apache.org/job/PreCommit-HBASE-Build/2674//artifact/trunk/patchprocess/newPatchFindbugsWarningshbase-hadoop2-compat.html" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HBASE-Build/2674//artifact/trunk/patchprocess/newPatchFindbugsWarningshbase-hadoop2-compat.html</a><br/>
+Findbugs warnings: <a href="https://builds.apache.org/job/PreCommit-HBASE-Build/2674//artifact/trunk/patchprocess/newPatchFindbugsWarningshbase-hadoop1-compat.html" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HBASE-Build/2674//artifact/trunk/patchprocess/newPatchFindbugsWarningshbase-hadoop1-compat.html</a><br/>
+Findbugs warnings: <a href="https://builds.apache.org/job/PreCommit-HBASE-Build/2674//artifact/trunk/patchprocess/newPatchFindbugsWarningshbase-common.html" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HBASE-Build/2674//artifact/trunk/patchprocess/newPatchFindbugsWarningshbase-common.html</a><br/>
+Findbugs warnings: <a href="https://builds.apache.org/job/PreCommit-HBASE-Build/2674//artifact/trunk/patchprocess/newPatchFindbugsWarningshbase-hadoop-compat.html" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HBASE-Build/2674//artifact/trunk/patchprocess/newPatchFindbugsWarningshbase-hadoop-compat.html</a><br/>
+Findbugs warnings: <a href="https://builds.apache.org/job/PreCommit-HBASE-Build/2674//artifact/trunk/patchprocess/newPatchFindbugsWarningshbase-server.html" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HBASE-Build/2674//artifact/trunk/patchprocess/newPatchFindbugsWarningshbase-server.html</a><br/>
+Console output: <a href="https://builds.apache.org/job/PreCommit-HBASE-Build/2674//console" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HBASE-Build/2674//console</a></p>
+
+<p>This message is automatically generated.</p>
+        </td></tr>
+                <tr id="comment-header-13440835"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="zhihyu@ebaysf.com" id="word_commented_zhihyu@ebaysf.com" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=zhihyu%40ebaysf.com">Ted Yu</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">24/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13440835"><td bgcolor="#ffffff">
+            <p>Looks like TestMultiVersions is broken in trunk, as evidenced by trunk build #3260 and the above QA report.<br/>
+Here is list of failed tests with htrace patch against hadoop 2.0:</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+Failed tests:   testMultiSlaveReplication(org.apache.hadoop.hbase.replication.TestMultiSlaveReplication): Waited too much time <span class="code-keyword">for</span> put replication
+
+Tests in error:
+  testGetRowVersions(org.apache.hadoop.hbase.TestMultiVersions): Shutting down
+  testScanMultipleVersions(org.apache.hadoop.hbase.TestMultiVersions): org.apache.hadoop.hbase.MasterNotRunningException: Can create a proxy to master, but it is not running
+  testDisablingTableRegionsAssignmentDuringCleanClusterStartup(org.apache.hadoop.hbase.master.TestAssignmentManager): Problem binding to sea-lab-0/10.249.196.101:60000 : Address already in use
+  testStopDuringStart(org.apache.hadoop.hbase.master.TestMasterNoCluster): Problem binding to sea-lab-0/10.249.196.101:60000 : Address already in use
+  testFailover(org.apache.hadoop.hbase.master.TestMasterNoCluster): Problem binding to sea-lab-0/10.249.196.101:60000 : Address already in use
+  testCatalogDeploys(org.apache.hadoop.hbase.master.TestMasterNoCluster): Problem binding to sea-lab-0/10.249.196.101:60000 : Address already in use
+  testDisableInactivePeer(org.apache.hadoop.hbase.replication.TestReplication): Shutting down
+  testSimpleCase(org.apache.hadoop.hbase.mapreduce.TestImportExport)
+  testMetaExport(org.apache.hadoop.hbase.mapreduce.TestImportExport)
+  testWithDeletes(org.apache.hadoop.hbase.mapreduce.TestImportExport)
+</pre>
+</div></div>
+<blockquote><p>Unless the calls into htrace are stalling somehow?</p></blockquote>
+<p>That was my guess as well.</p>
+        </td></tr>
+                <tr id="comment-header-13440874"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="zhihyu@ebaysf.com" id="word_commented_zhihyu@ebaysf.com" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=zhihyu%40ebaysf.com">Ted Yu</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">24/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13440874"><td bgcolor="#ffffff">
+            <p>I ran through tests using freshly checked out workspace against hadoop 2.0 on another box.<br/>
+Here is list of failed tests:</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+Failed tests:   queueFailover(org.apache.hadoop.hbase.replication.TestReplication): Waited too much time <span class="code-keyword">for</span> queueFailover replication. Waited 33733ms.
+
+Tests in error:
+  loadTest[0](org.apache.hadoop.hbase.util.TestMiniClusterLoadParallel): test timed out after 120000 milliseconds
+  loadTest[1](org.apache.hadoop.hbase.util.TestMiniClusterLoadParallel): test timed out after 120000 milliseconds
+  loadTest[0](org.apache.hadoop.hbase.util.TestMiniClusterLoadSequential): test timed out after 120000 milliseconds
+  testSimpleCase(org.apache.hadoop.hbase.mapreduce.TestImportExport)
+  testMetaExport(org.apache.hadoop.hbase.mapreduce.TestImportExport)
+  testWithDeletes(org.apache.hadoop.hbase.mapreduce.TestImportExport)
+</pre>
+</div></div>
+<p>The list is shorter than the one where patch was applied.</p>
+        </td></tr>
+                <tr id="comment-header-13441185"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jonathan.leavitt" id="word_commented_jonathan.leavitt" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jonathan.leavitt">Jonathan Leavitt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">24/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13441185"><td bgcolor="#ffffff">
+            <p>Is there one test that is passing without patch consistently that fails consistently with patch? I haven't been able to find one, but I will continue to look. </p>
+<blockquote><p>Unless the calls into htrace are stalling somehow?  </p></blockquote>
+<p>As with anything, this is certainly possible, however it does not seem very likely, given that tracing is never on in any of the tests, only a very small subset of HTrace code is ever run. I will continue to look at the HTrace code, as well as run the tests so we can get to the bottom of this. </p>
+
+<p>@zhihong, it's strange that the tests that fail without patch are not a subset of the tests that fail with htrace.</p>
+        </td></tr>
+                <tr id="comment-header-13441234"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="stack" id="word_commented_stack" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=stack">stack</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">24/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13441234"><td bgcolor="#ffffff">
+            <p>We could commit it again and run tests up on jenkins and compare before and after.</p>
+        </td></tr>
+                <tr id="comment-header-13441322"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jonathan.leavitt" id="word_commented_jonathan.leavitt" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jonathan.leavitt">Jonathan Leavitt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">24/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13441322"><td bgcolor="#ffffff">
+            <p>@stack, it would be nice to see what jenkins has to say about the build. I understand though if we want to avoid committing something that is potentially causing test failures. <br/>
+I'm just having trouble pinpointing the problem when I don't have a test that hbase w. htrace is failing that hbase w.o htrace is passing. </p>
+
+<p>Also, it's worth noting that I've run TestMasterNoCluster w. htrace and hadoop 2.0 successfully a few times (run as a single test though).  </p>
+        </td></tr>
+                <tr id="comment-header-13441343"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="stack" id="word_commented_stack" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=stack">stack</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">24/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13441343"><td bgcolor="#ffffff">
+            <p>Are you game for trying it Ted?  We can always back it out again.</p>
+        </td></tr>
+                <tr id="comment-header-13441497"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jonathan.leavitt" id="word_commented_jonathan.leavitt" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jonathan.leavitt">Jonathan Leavitt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">24/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13441497"><td bgcolor="#ffffff">
+            <p>Just another quick testing update:<br/>
+I just got this output after running the full test suite with htrace and hadoop 2.0:</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+
+Results :
+
+Failed tests:   testRowCounterNoColumn(org.apache.hadoop.hbase.mapreduce.TestRowCounter)
+  testRowCounterHiddenColumn(org.apache.hadoop.hbase.mapreduce.TestRowCounter)
+  testMROnTable(org.apache.hadoop.hbase.mapreduce.TestImportTsv)
+  testMROnTableWithCustomMapper(org.apache.hadoop.hbase.mapreduce.TestImportTsv)
+  testBulkOutputWithoutAnExistingTable(org.apache.hadoop.hbase.mapreduce.TestImportTsv)
+
+Tests in error: 
+  testRowCounterExclusiveColumn(org.apache.hadoop.hbase.mapreduce.TestRowCounter)
+  testSimpleCase(org.apache.hadoop.hbase.mapreduce.TestImportExport)
+  testMetaExport(org.apache.hadoop.hbase.mapreduce.TestImportExport)
+  testWithDeletes(org.apache.hadoop.hbase.mapreduce.TestImportExport)
+  testMROnTableWithTimestamp(org.apache.hadoop.hbase.mapreduce.TestImportTsv)
+</pre>
+</div></div>
+<p>If you look at this build: <a href="https://builds.apache.org/view/G-L/view/HBase/job/HBase-TRUNK-on-Hadoop-2.0.0/144/#showFailuresLink" class="external-link" rel="nofollow">https://builds.apache.org/view/G-L/view/HBase/job/HBase-TRUNK-on-Hadoop-2.0.0/144/#showFailuresLink</a> it seems like the same tests are causing problems on both. </p>
+        </td></tr>
+                <tr id="comment-header-13441501"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="stack" id="word_commented_stack" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=stack">stack</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">24/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13441501"><td bgcolor="#ffffff">
+            <p>Lets commit.  Ted?</p>
+        </td></tr>
+                <tr id="comment-header-13443470"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="stack" id="word_commented_stack" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=stack">stack</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">28/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13443470"><td bgcolor="#ffffff">
+            <p>@Ted Commit?</p>
+        </td></tr>
+                <tr id="comment-header-13443472"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="yuzhihong@gmail.com" id="word_commented_yuzhihong@gmail.com" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=yuzhihong%40gmail.com">Ted Yu</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">28/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13443472"><td bgcolor="#ffffff">
+            <p>Fine with me.</p>
+
+<p>FYI: I didn't receive email notification on Aug 24th.</p>
+        </td></tr>
+                <tr id="comment-header-13444709"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="stack" id="word_commented_stack" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=stack">stack</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">30/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13444709"><td bgcolor="#ffffff">
+            <p>This is v2 only the pb stuff was regen'd.  There were some issues applying v2 to current trunk.</p>
+        </td></tr>
+                <tr id="comment-header-13444712"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="stack" id="word_commented_stack" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=stack">stack</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">30/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13444712"><td bgcolor="#ffffff">
+            <p>Reapplied using v3.  Lets see how it does up on jenkins.  Thanks again Jonathan.</p>
+        </td></tr>
+                <tr id="comment-header-13444805"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hudson" id="word_commented_hudson" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hudson">Hudson</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">30/Aug/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13444805"><td bgcolor="#ffffff">
+            <p>Integrated in HBase-TRUNK-on-Hadoop-2.0.0 #154 (See <a href="https://builds.apache.org/job/HBase-TRUNK-on-Hadoop-2.0.0/154/" class="external-link" rel="nofollow">https://builds.apache.org/job/HBase-TRUNK-on-Hadoop-2.0.0/154/</a>)<br/>
+    <a href="https://issues.apache.org/jira/browse/HBASE-6524" title="Hooks for hbase tracing" class="issue-link" data-issue-key="HBASE-6524"><del>HBASE-6524</del></a> Hooks for hbase tracing; REAPPLICATION (Revision 1378809)<br/>
+<a href="https://issues.apache.org/jira/browse/HBASE-6524" title="Hooks for hbase tracing" class="issue-link" data-issue-key="HBASE-6524"><del>HBASE-6524</del></a> Hooks for hbase tracing; REAPPLICATION (Revision 1378807)</p>
+
+<p>     Result = FAILURE<br/>
+stack : <br/>
+Files : </p>
+<ul>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/protobuf/generated/Tracing.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/trace/HBaseLocalFileSpanReceiver.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/trace/SpanReceiverHost.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/protobuf/Tracing.proto</li>
+	<li>/hbase/trunk/hbase-server/src/test/java/org/apache/hadoop/hbase/trace/TestHTraceHooks.java</li>
+</ul>
+
+
+<p>stack : <br/>
+Files : </p>
+<ul>
+	<li>/hbase/trunk/hbase-server/pom.xml</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/executor/EventHandler.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/ipc/HBaseClient.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/ipc/HBaseServer.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/master/HMaster.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/master/handler/DisableTableHandler.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/master/handler/EnableTableHandler.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/java/org/apache/hadoop/hbase/protobuf/generated/RPCProtos.java</li>
+	<li>/hbase/trunk/hbase-server/src/main/protobuf/RPC.proto</li>
+</ul>
+
+        </td></tr>
+                <tr id="comment-header-13449788"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="stack" id="word_commented_stack" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=stack">stack</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">06/Sep/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13449788"><td bgcolor="#ffffff">
+            <p>@Jonathan Was wondering if we need to add a bit of doc on how to make tracing work to the refguide.  In general, this is a 'cool feature' (tm) and it would be a shame if it was buried for the want of someone talking it up.</p>
+        </td></tr>
+                <tr id="comment-header-13450284"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jonathan.leavitt" id="word_commented_jonathan.leavitt" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jonathan.leavitt">Jonathan Leavitt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">07/Sep/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13450284"><td bgcolor="#ffffff">
+            <p>@stack I agree, I will write something up for the refguide, and I'm also working on a more in-depth blog post. Maybe have them done in a week or two (hopefully less depending on my motivation this weekend).</p>
+
+        </td></tr>
+                <tr id="comment-header-13456492"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jonathan.leavitt" id="word_commented_jonathan.leavitt" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jonathan.leavitt">Jonathan Leavitt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">15/Sep/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13456492"><td bgcolor="#ffffff">
+            <p>@stack: <a href="https://docs.google.com/document/d/11kM7dHetY5LYaC8rIkXfCHoxcbliTb9Xa3SZUfFhDu8/edit" class="external-link" rel="nofollow">here</a> is a link to my ref guide tracing stuff so far. The link is public and anyone can comment on it.<br/>
+Let me know how it looks.</p>
+
+        </td></tr>
+                <tr id="comment-header-13457309"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="stack" id="word_commented_stack" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=stack">stack</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">17/Sep/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13457309"><td bgcolor="#ffffff">
+            <p>Doc is great.  "(it would not be very difficult to remove this requirement)."  What would this take?  The doc. is great.  I should add it to the manual?  Can we do this for hdfs too  yet?  What about an example that enables trace over hdfs too while the Get is going on?  Good on you Jonathan.</p>
+        </td></tr>
+                <tr id="comment-header-13457579"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="stack" id="word_commented_stack" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=stack">stack</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">18/Sep/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13457579"><td bgcolor="#ffffff">
+            <p>On doc in general, I came across this recent quote "Documentation is like sex: when it is good, it is very very good; and when it is bad, it is better than nothing."</p>
+        </td></tr>
+                <tr id="comment-header-13459785"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jonathan.leavitt" id="word_commented_jonathan.leavitt" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jonathan.leavitt">Jonathan Leavitt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">20/Sep/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13459785"><td bgcolor="#ffffff">
+            <blockquote><p>Doc is great. "(it would not be very difficult to remove this requirement)." What would this take?</p></blockquote>
+<p>Well to remove the client addendum we would have to instrument the entry points into hbase. <br/>
+I will try to find one good class to instrument as the entry point in to the system.  HTable.java might work, but it doesn't include all operations, and importantly does not include all of the steps of a 'get', bx getting the HTable is a big part, right? <br/>
+Maybe HTablePool.java would work. </p>
+
+<blockquote><p>Can we do this for hdfs too yet? </p></blockquote>
+<p>Not yet. I think Matt or Todd might be working on it. I have been looking into, but it does require all of the additional instrumentation to HDFS. </p>
+
+<blockquote><p>What about an example that enables trace over hdfs too while the Get is going on?</p></blockquote>
+<p>I'm not sure what you mean by this. </p>
+
+<blockquote><p>On doc in general, I came across this recent quote "Documentation is like sex: when it is good, it is very very good; and when it is bad, it is better than nothing."</p></blockquote>
+<p>Great quote. </p>
+        </td></tr>
+                <tr id="comment-header-13459798"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="stack" id="word_commented_stack" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=stack">stack</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">20/Sep/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13459798"><td bgcolor="#ffffff">
+            <blockquote><p>What about an example that enables trace over hdfs too while the Get is going on?</p></blockquote>
+
+<p>Prerequisite is tracing in hdfs which is not done yet so ignore the above.</p>
+        </td></tr>
+                <tr id="comment-header-13459838"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="stack" id="word_commented_stack" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=stack">stack</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">20/Sep/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13459838"><td bgcolor="#ffffff">
+            <p>Ok I integrate your doc into the book?</p>
+        </td></tr>
+                <tr id="comment-header-13460247"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jonathan.leavitt" id="word_commented_jonathan.leavitt" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jonathan.leavitt">Jonathan Leavitt</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Sep/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13460247"><td bgcolor="#ffffff">
+            <p>Sounds good. <img class="emoticon" src="https://issues.apache.org/jira/images/icons/emoticons/smile.gif" height="16" width="16" align="absmiddle" alt="" border="0"/></p>
+        </td></tr>
+                <tr id="comment-header-13460265"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="stack" id="word_commented_stack" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=stack">stack</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Sep/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13460265"><td bgcolor="#ffffff">
+            <p>Committed the doc. as appendix I in the manual.  Will show next time I push the doc.  Thanks Jonathan.</p>
+        </td></tr>
+                <tr id="comment-header-13460326"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hudson" id="word_commented_hudson" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hudson">Hudson</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Sep/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13460326"><td bgcolor="#ffffff">
+            <p>Integrated in HBase-TRUNK #3364 (See <a href="https://builds.apache.org/job/HBase-TRUNK/3364/" class="external-link" rel="nofollow">https://builds.apache.org/job/HBase-TRUNK/3364/</a>)<br/>
+    <a href="https://issues.apache.org/jira/browse/HBASE-6524" title="Hooks for hbase tracing" class="issue-link" data-issue-key="HBASE-6524"><del>HBASE-6524</del></a> Hooks for hbase tracing; add documentation as an appendix (Revision 1388337)</p>
+
+<p>     Result = FAILURE<br/>
+stack : <br/>
+Files : </p>
+<ul>
+	<li>/hbase/trunk/src/docbkx/book.xml</li>
+</ul>
+
+        </td></tr>
+                <tr id="comment-header-13460447"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hudson" id="word_commented_hudson" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hudson">Hudson</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Sep/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13460447"><td bgcolor="#ffffff">
+            <p>Integrated in HBase-TRUNK-on-Hadoop-2.0.0 #185 (See <a href="https://builds.apache.org/job/HBase-TRUNK-on-Hadoop-2.0.0/185/" class="external-link" rel="nofollow">https://builds.apache.org/job/HBase-TRUNK-on-Hadoop-2.0.0/185/</a>)<br/>
+    <a href="https://issues.apache.org/jira/browse/HBASE-6524" title="Hooks for hbase tracing" class="issue-link" data-issue-key="HBASE-6524"><del>HBASE-6524</del></a> Hooks for hbase tracing; add documentation as an appendix (Revision 1388337)</p>
+
+<p>     Result = FAILURE<br/>
+stack : <br/>
+Files : </p>
+<ul>
+	<li>/hbase/trunk/src/docbkx/book.xml</li>
+</ul>
+
+        </td></tr>
+                <tr id="comment-header-13774850"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="stack" id="word_commented_stack" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=stack">stack</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">23/Sep/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13774850"><td bgcolor="#ffffff">
+            <p>Marking closed.</p>
+        </td></tr>
+            </table>
+Generated at Sat Mar 22 13:37:08 UTC 2014 using JIRA 6.2#6252-sha1:aa343257d4ce030d9cb8c531be520be9fac1c996.
+
+</body>
+</html>

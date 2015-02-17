@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>[#DELTASPIKE-450] Secured ViewConfig&#39;s are not working as documented</title>
+    <meta http-equiv="Content-Type" Content="application/vnd.ms-word; charset=utf-8">
+        <style type="text/css">
+
+.tableBorder, .grid
+{
+    background-color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableBorder td, .grid td
+{
+    vertical-align: top;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+.noPadding
+{
+    padding: 0 !important;
+}
+
+h3 .subText
+{
+    font-size: 60%;
+    font-weight: normal;
+}
+
+.tabLabel
+{
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-bottom:none;
+    padding: 2px;
+    display: inline;
+}
+
+td.blank
+{
+    padding: 0;
+    margin: 0;
+}
+
+.blank td
+{
+    border: none;
+}
+
+#descriptionArea
+{
+    margin: 0;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+hr
+{
+    border-top:1px solid #aaa;
+}
+
+hr.fullcontent
+{
+  height: 15px;
+  padding: 10px 0;
+  background: #fff url('https://issues.apache.org/jira/images/icons/hr.gif') no-repeat scroll center;
+}
+
+</style>
+
+</head>
+<body>
+
+<table class="tableBorder" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" width="100%" colspan="2" valign="top">
+                            <h3 class="formtitle">
+                        [DELTASPIKE-450]&nbsp;<a href="https://issues.apache.org/jira/browse/DELTASPIKE-450">Secured ViewConfig&#39;s are not working as documented</a>
+            <span class="subText">
+               Created: 24/Nov/13                   &nbsp;Updated: 20/Mar/14
+
+                                                    &nbsp;Resolved: 05/Dec/13
+                            </span>
+            </h3>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Status:</b></td>
+        <td width="80%">Closed</td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Project:</b></td>
+        <td width="80%"><a href="https://issues.apache.org/jira/secure/BrowseProject.jspa?id=12312820">DeltaSpike</a></td>
+    </tr>
+
+        <tr>
+            <td><b>Component/s:</b></td>
+            <td>
+                                        <a title="Core"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12312820&component=12317002"
+            >Core</a>,                    <a title="Security-Module"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12312820&component=12317203"
+            >Security-Module</a>                        </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Affects Version/s:</b></td>
+            <td>
+                                        <a title="0.5"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12312820&version=12320947"
+            >0.5</a>                        </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Fix Version/s:</b></td>
+            <td>
+                            None
+                </td>
+    </tr>
+    
+    </table>
+
+<br />
+<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" valign="top" width="20%">
+            <b>Type:</b>
+        </td>
+        <td bgcolor="#ffffff" valign="top"  width="30%" >
+            Bug
+        </td>
+
+                    <td bgcolor="#f0f0f0">
+                <b>Priority:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap>
+                Major
+            </td>
+            </tr>
+    <tr>
+                        <td bgcolor="#f0f0f0" valign="top" width="20%">
+                <b>Reporter:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top"  width="30%" >
+                                            <a class="user-hover" rel="JohnSchneider" id="word_reporter_JohnSchneider" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=JohnSchneider">John Schneider</a>
+                            </td>
+        
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Assignee:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap  width="30%" >
+                                            <a class="user-hover" rel="gpetracek" id="word_assignee_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                            </td>
+            </tr>
+    	<tr>
+		<td bgcolor="#f0f0f0" width="20%">
+			<b>Resolution:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                            Invalid
+                    </td>
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Votes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                0
+            </td>
+        
+    </tr>
+    
+        <tr>
+        <td bgcolor="#f0f0f0" width="20%">
+            <b>Labels:</b>
+        </td>
+        <td id="labels-12680907-value" class="value" bgcolor="#ffffff" valign="top" colspan="3" nowrap>
+                            None
+                    </td>
+    </tr>
+    
+    	<tr>
+        		<td bgcolor="#f0f0f0" width="20%"><b>Remaining Estimate:</b></td>
+        <td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Time Spent:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+	</tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Original Estimate:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    
+    	<tr>
+
+		<td bgcolor="#f0f0f0" width="20%" valign="top">
+			<b>Environment:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" colspan="3">
+            Glassfish 4 / Weld 2.0.4
+		</td>
+	</tr>
+    </table>
+
+
+
+    <br />
+
+    	<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+
+                <tr>
+            <td bgcolor="#f0f0f0" width=20% valign=top>
+                <b>Attachments:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top">
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/zip.gif" height="16" width="16" alt="Zip Archive" />
+                                        test.zip &nbsp;&nbsp;&nbsp;
+                            </td>
+        </tr>
+        
+    
+
+
+
+</table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Description</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td id="descriptionArea">
+            I believe this is the documented method for securing pages, but the following view configuration does not invoke an AccessDecisionVoter.<br/>
+@View(navigation = NavigationMode.REDIRECT)<br/>
+public interface Pages extends ViewConfig {<br/>
+<br/>
+&nbsp;&nbsp;class LogIn implements Pages {}<br/>
+<br/>
+&nbsp;&nbsp;@Secured(value = ApplicationAccessDecisionVoter.class, errorView = LogIn.class)<br/>
+&nbsp;&nbsp;class Manage implements Pages {}<br/>
+}<br/>
+<br/>
+I also tried with a @Sterotype @Secured annotation which I&#39;ve confirmed to be working perfectly when placed on a CDI business method. <br/>
+<br/>
+@Retention(RetentionPolicy.RUNTIME)<br/>
+@Target({ElementType.TYPE, ElementType.METHOD, ElementType.FIELD})<br/>
+@Documented<br/>
+@Stereotype<br/>
+@Secured(value = ApplicationAccessDecisionVoter.class, errorView = LogIn.class)<br/>
+public @interface LoggedIn {<br/>
+}<br/>
+<br/>
+@View(navigation = NavigationMode.REDIRECT)<br/>
+public interface Pages extends ViewConfig {<br/>
+&nbsp;&nbsp;class LogIn implements Pages {}<br/>
+<br/>
+&nbsp;&nbsp;@LoggedIn<br/>
+&nbsp;&nbsp;class Manage implements Pages {}<br/>
+}
+            <br/>
+        </td>
+    </tr>
+    </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Comments</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="grid" style="margin: 0;">
+                <tr id="comment-header-13839369"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">04/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13839369"><td bgcolor="#ffffff">
+            <p>it works here (e.g. see <a href="https://github.com/os890/tomee_mf_stack_001/tree/codi2ds" class="external-link" rel="nofollow">https://github.com/os890/tomee_mf_stack_001/tree/codi2ds</a> )</p>
+
+<p>please reopen it, if there are still issue/s and provide a small demo-app which illustrates the issue/s.</p>
+        </td></tr>
+                <tr id="comment-header-13839608"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="JohnSchneider" id="word_commented_JohnSchneider" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=JohnSchneider">John Schneider</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">05/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13839608"><td bgcolor="#ffffff">
+            <p>I've reproduced the issue with a very simple project.  I will attach it as requested.</p>
+        </td></tr>
+                <tr id="comment-header-13839631"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="JohnSchneider" id="word_commented_JohnSchneider" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=JohnSchneider">John Schneider</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">05/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13839631"><td bgcolor="#ffffff">
+            <p>Test project attached that reproduces the issue in my environment - Glassfish 4, Weld 2.0.4, Mojarra 2.2.5 Snapshot.  Here is the output from Glassfish when deploying the app:</p>
+
+<p>INFO: visiting unvisited references<br/>
+INFO: visiting unvisited references<br/>
+INFO: visiting unvisited references<br/>
+INFO: visiting unvisited references<br/>
+INFO: visiting unvisited references<br/>
+INFO: visiting unvisited references<br/>
+INFO: visiting unvisited references<br/>
+INFO: visiting unvisited references<br/>
+INFO: visiting unvisited references<br/>
+INFO: visiting unvisited references<br/>
+INFO: visiting unvisited references<br/>
+INFO: class: org.apache.deltaspike.core.impl.exception.control.extension.ExceptionControlExtension activated=true<br/>
+INFO: class: org.apache.deltaspike.jsf.impl.scope.mapped.MappedJsf2ScopeExtension activated=true<br/>
+INFO: class: org.apache.deltaspike.jsf.impl.config.view.ViewConfigExtension activated=true<br/>
+INFO: class: org.apache.deltaspike.core.impl.config.ConfigurationExtension activated=true<br/>
+INFO: class: org.apache.deltaspike.jsf.impl.scope.view.ViewScopedExtension activated=true<br/>
+INFO: class: org.apache.deltaspike.security.impl.extension.SecurityExtension activated=true<br/>
+INFO: class: org.apache.deltaspike.core.impl.message.MessageBundleExtension activated=true<br/>
+INFO: class: org.apache.deltaspike.core.impl.exclude.extension.ExcludeExtension activated=true<br/>
+INFO: class: org.apache.deltaspike.core.impl.exclude.CustomProjectStageBeanFilter activated=true<br/>
+INFO: class: org.apache.deltaspike.core.impl.exclude.GlobalAlternative activated=true<br/>
+INFO: class: org.apache.deltaspike.core.impl.jmx.MBeanExtension activated=true<br/>
+INFO: Computed the following DeltaSpike ProjectStage: Production<br/>
+WARNING: The following warnings have been detected: WARNING: Parameter 1 of type T from public void org.apache.deltaspike.core.util.context.ContextualInstanceInfo.setContextualInstance(T) is not resolvable to a concrete type.<br/>
+WARNING: Parameter 1 of type javax.enterprise.context.spi.CreationalContext&lt;T&gt; from public void org.apache.deltaspike.core.util.context.ContextualInstanceInfo.setCreationalContext(javax.enterprise.context.spi.CreationalContext&lt;T&gt;) is not resolvable to a concrete type.</p>
+
+<p>INFO: class: org.apache.deltaspike.servlet.impl.event.EventBridgeContextListener activated=true<br/>
+INFO: class: org.apache.deltaspike.servlet.impl.event.EventBridgeSessionListener activated=true<br/>
+INFO: Initializing Mojarra 2.2.5 (-SNAPSHOT 20131127-0846 <a href="https://svn.java.net/svn/mojarra~svn/branches/MOJARRA_2_2X_ROLLING@12684" class="external-link" rel="nofollow">https://svn.java.net/svn/mojarra~svn/branches/MOJARRA_2_2X_ROLLING@12684</a>) for context '/test'<br/>
+INFO: class: org.apache.deltaspike.jsf.impl.listener.request.DeltaSpikeFacesContextFactory activated=true<br/>
+WARNING: WELD-001529 An InjectionTarget is created for a class org.apache.deltaspike.jsf.impl.listener.request.DeltaSpikeFacesContextFactory which does not have any appropriate constructor.<br/>
+INFO: class: org.apache.deltaspike.jsf.impl.listener.request.DeltaSpikeLifecycleFactoryWrapper activated=true<br/>
+WARNING: WELD-001529 An InjectionTarget is created for a class org.apache.deltaspike.jsf.impl.listener.request.DeltaSpikeLifecycleFactoryWrapper which does not have any appropriate constructor.<br/>
+INFO: class: org.apache.deltaspike.jsf.impl.listener.phase.JsfRequestLifecyclePhaseListener activated=true<br/>
+INFO: class: org.apache.deltaspike.jsf.impl.listener.phase.DeltaSpikePhaseListener activated=true<br/>
+INFO: class: org.apache.deltaspike.jsf.impl.navigation.DeltaSpikeNavigationHandler activated=true<br/>
+INFO: class: org.apache.deltaspike.jsf.impl.listener.action.DeltaSpikeActionListener activated=true<br/>
+INFO: class: org.apache.deltaspike.jsf.impl.view.DeltaSpikeViewHandler activated=true<br/>
+INFO: class: org.apache.deltaspike.jsf.impl.security.SecurityAwareViewHandler activated=true<br/>
+INFO: class: org.apache.deltaspike.servlet.impl.event.EventBridgeFilter activated=true<br/>
+INFO: Loading application <span class="error">&#91;test&#93;</span> at <span class="error">&#91;/test&#93;</span><br/>
+INFO: test was successfully deployed in 1,654 milliseconds.</p>
+        </td></tr>
+                <tr id="comment-header-13839994"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">05/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13839994"><td bgcolor="#ffffff">
+            <p>this example can't work.</p>
+
+<p>@View(navigation = NavigationMode.REDIRECT)<br/>
+public interface Pages extends ViewConfig {</p>
+
+<p>	@Secured(ApplicationAccessDecisionVoter.class)<br/>
+	class Index implements Pages {}<br/>
+}<br/>
+leads to: /pages/index.xhtml<br/>
+however, the project just contains /index.xhtml</p>
+        </td></tr>
+                <tr id="comment-header-13840112"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="JohnSchneider" id="word_commented_JohnSchneider" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=JohnSchneider">John Schneider</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">05/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13840112"><td bgcolor="#ffffff">
+            <p>I didn't realize that the top level interface containing all the views would represent a folder.  I tried keeping the Pages interface with the Page classes within it, but moving the View annotation off the interface and onto each page class, but that didn't work either. This means that for every top level page I have in my apps (which are most of them) have to be defined as a public class, each in their own file.  This is a whole lot of extra class files.  Is there any known workaround?</p>
+        </td></tr>
+                <tr id="comment-header-13840135"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">05/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13840135"><td bgcolor="#ffffff">
+            <p>the simple default-rule:<br/>
+nesting leads to the path and inheritance to metadata-inheritance.</p>
+
+<p>-&gt; if you have no own folder and you want to keep the interface to group the configs, you can use e.g.:</p>
+
+<p>@Folder(name = "/")<br/>
+@View(navigation = NavigationMode.REDIRECT)<br/>
+public interface Pages extends ViewConfig {<br/>
+  @Secured(ApplicationAccessDecisionVoter.class)<br/>
+  class Index implements Pages {}<br/>
+}</p>
+        </td></tr>
+            </table>
+Generated at Sat Mar 22 13:34:45 UTC 2014 using JIRA 6.2#6252-sha1:aa343257d4ce030d9cb8c531be520be9fac1c996.
+
+</body>
+</html>

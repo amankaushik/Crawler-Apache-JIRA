@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>[#WW-3308] javassist trouble on JBoss 5.1</title>
+    <meta http-equiv="Content-Type" Content="application/vnd.ms-word; charset=utf-8">
+        <style type="text/css">
+
+.tableBorder, .grid
+{
+    background-color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableBorder td, .grid td
+{
+    vertical-align: top;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+.noPadding
+{
+    padding: 0 !important;
+}
+
+h3 .subText
+{
+    font-size: 60%;
+    font-weight: normal;
+}
+
+.tabLabel
+{
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-bottom:none;
+    padding: 2px;
+    display: inline;
+}
+
+td.blank
+{
+    padding: 0;
+    margin: 0;
+}
+
+.blank td
+{
+    border: none;
+}
+
+#descriptionArea
+{
+    margin: 0;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+hr
+{
+    border-top:1px solid #aaa;
+}
+
+hr.fullcontent
+{
+  height: 15px;
+  padding: 10px 0;
+  background: #fff url('https://issues.apache.org/jira/images/icons/hr.gif') no-repeat scroll center;
+}
+
+</style>
+
+</head>
+<body>
+
+<table class="tableBorder" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" width="100%" colspan="2" valign="top">
+                            <h3 class="formtitle">
+                        [WW-3308]&nbsp;<a href="https://issues.apache.org/jira/browse/WW-3308">javassist trouble on JBoss 5.1</a>
+            <span class="subText">
+               Created: 30/Oct/09                   &nbsp;Updated: 21/Mar/14
+
+                                                    &nbsp;Resolved: 06/Jan/10
+                            </span>
+            </h3>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Status:</b></td>
+        <td width="80%">Closed</td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Project:</b></td>
+        <td width="80%"><a href="https://issues.apache.org/jira/secure/BrowseProject.jspa?id=12311041">Struts 2</a></td>
+    </tr>
+
+        <tr>
+            <td><b>Component/s:</b></td>
+            <td>
+                                        <a title="Other"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12311041&component=12313321"
+            >Other</a>                        </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Affects Version/s:</b></td>
+            <td>
+                                        <a title="2.1.8 - cold weather "
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12311041&version=12314676"
+            >2.1.8</a>                        </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Fix Version/s:</b></td>
+            <td>
+                                        <a title="2.2.1 - The latest version of 2.2.x"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12311041&fixfor=12315170"
+            >2.2.1</a>                        </td>
+    </tr>
+    
+    </table>
+
+<br />
+<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" valign="top" width="20%">
+            <b>Type:</b>
+        </td>
+        <td bgcolor="#ffffff" valign="top"  width="30%" >
+            Bug
+        </td>
+
+                    <td bgcolor="#f0f0f0">
+                <b>Priority:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap>
+                Critical
+            </td>
+            </tr>
+    <tr>
+                        <td bgcolor="#f0f0f0" valign="top" width="20%">
+                <b>Reporter:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top"  width="30%" >
+                                            <a class="user-hover" rel="zemnon" id="word_reporter_zemnon" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=zemnon">Mykyta Kostovskyy</a>
+                            </td>
+        
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Assignee:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap  width="30%" >
+                                            <a class="user-hover" rel="lukaszlenart" id="word_assignee_lukaszlenart" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=lukaszlenart">Lukasz Lenart</a>
+                            </td>
+            </tr>
+    	<tr>
+		<td bgcolor="#f0f0f0" width="20%">
+			<b>Resolution:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                            Fixed
+                    </td>
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Votes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                0
+            </td>
+        
+    </tr>
+    
+        <tr>
+        <td bgcolor="#f0f0f0" width="20%">
+            <b>Labels:</b>
+        </td>
+        <td id="labels-12453390-value" class="value" bgcolor="#ffffff" valign="top" colspan="3" nowrap>
+                            None
+                    </td>
+    </tr>
+    
+    	<tr>
+        		<td bgcolor="#f0f0f0" width="20%"><b>Remaining Estimate:</b></td>
+        <td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Time Spent:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+	</tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Original Estimate:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    
+    	<tr>
+
+		<td bgcolor="#f0f0f0" width="20%" valign="top">
+			<b>Environment:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" colspan="3">
+            <p>JBoss 5.1 GA, Struts 2.1.8</p>
+		</td>
+	</tr>
+    </table>
+
+
+
+    <br />
+
+    	<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+
+        
+    
+
+
+
+                        <tr>
+                <td bgcolor="#f0f0f0" width="20%" valign="top"><b>Flags:</b></td>
+                <td id="customfield_12310250-12453390-value" class="value" bgcolor="#ffffff" width="80%">
+
+
+    <div class="shorten" id="customfield_12310250-field">
+        							<span>Important</span>			            </div>
+</td>
+            </tr>
+            </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Description</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td id="descriptionArea">
+            <p>While deploying application that contains Struts 2.1.8 get the following error:<br/>
+17:28:34,437 ERROR <span class="error">&#91;BasicLazyInitializer&#93;</span> Javassist Enhancement failed: hello.Message<br/>
+java.lang.RuntimeException: java.lang.IllegalArgumentException: Can not set static javassist.util.proxy.MethodFilter field hello.Message_$$_javassist_14._method_filter to org.hibernate.proxy.pojo.javassist.JavassistLazyInitializer$1<br/>
+	at javassist.util.proxy.ProxyFactory.setField(ProxyFactory.java:358)<br/>
+	at javassist.util.proxy.ProxyFactory.createClass3(ProxyFactory.java:341)<br/>
+	at javassist.util.proxy.ProxyFactory.createClass2(ProxyFactory.java:314)<br/>
+	at javassist.util.proxy.ProxyFactory.createClass(ProxyFactory.java:273)<br/>
+	at org.hibernate.proxy.pojo.javassist.JavassistLazyInitializer.getProxyFactory(JavassistLazyInitializer.java:162)<br/>
+	at org.hibernate.proxy.pojo.javassist.JavassistProxyFactory.postInstantiate(JavassistProxyFactory.java:66)<br/>
+	at org.hibernate.tuple.entity.PojoEntityTuplizer.buildProxyFactory(PojoEntityTuplizer.java:183)<br/>
+	at org.hibernate.tuple.entity.AbstractEntityTuplizer.&lt;init&gt;(AbstractEntityTuplizer.java:158)<br/>
+	at org.hibernate.tuple.entity.PojoEntityTuplizer.&lt;init&gt;(PojoEntityTuplizer.java:76)<br/>
+	at org.hibernate.tuple.entity.EntityEntityModeToTuplizerMapping.&lt;init&gt;(EntityEntityModeToTuplizerMapping.java:80)<br/>
+	at org.hibernate.tuple.entity.EntityMetamodel.&lt;init&gt;(EntityMetamodel.java:325)<br/>
+	at org.hibernate.persister.entity.AbstractEntityPersister.&lt;init&gt;(AbstractEntityPersister.java:457)<br/>
+	at org.hibernate.persister.entity.SingleTableEntityPersister.&lt;init&gt;(SingleTableEntityPersister.java:131)<br/>
+	at org.hibernate.persister.PersisterFactory.createClassPersister(PersisterFactory.java:84)<br/>
+	at org.hibernate.impl.SessionFactoryImpl.&lt;init&gt;(SessionFactoryImpl.java:261)<br/>
+	at org.hibernate.cfg.Configuration.buildSessionFactory(Configuration.java:1327)<br/>
+	at org.hibernate.cfg.AnnotationConfiguration.buildSessionFactory(AnnotationConfiguration.java:867)<br/>
+	at org.hibernate.ejb.Ejb3Configuration.buildEntityManagerFactory(Ejb3Configuration.java:669)<br/>
+	at org.hibernate.ejb.HibernatePersistence.createContainerEntityManagerFactory(HibernatePersistence.java:132)<br/>
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:224)<br/>
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:291)<br/>
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1369)<br/>
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1335)<br/>
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:473)<br/>
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory$1.run(AbstractAutowireCapableBeanFactory.java:409)<br/>
+	at java.security.AccessController.doPrivileged(Native Method)<br/>
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:380)<br/>
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:264)<br/>
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)<br/>
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:261)<br/>
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:185)<br/>
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:164)<br/>
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:423)<br/>
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:728)<br/>
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:380)<br/>
+	at org.springframework.web.context.ContextLoader.createWebApplicationContext(ContextLoader.java:255)<br/>
+	at org.springframework.web.context.ContextLoader.initWebApplicationContext(ContextLoader.java:199)<br/>
+	at org.springframework.web.context.ContextLoaderListener.contextInitialized(ContextLoaderListener.java:45)<br/>
+	at org.apache.catalina.core.StandardContext.listenerStart(StandardContext.java:3910)<br/>
+	at org.apache.catalina.core.StandardContext.start(StandardContext.java:4393)<br/>
+	at org.jboss.web.tomcat.service.deployers.TomcatDeployment.performDeployInternal(TomcatDeployment.java:310)<br/>
+	at org.jboss.web.tomcat.service.deployers.TomcatDeployment.performDeploy(TomcatDeployment.java:142)<br/>
+	at org.jboss.web.deployers.AbstractWarDeployment.start(AbstractWarDeployment.java:461)<br/>
+	at org.jboss.web.deployers.WebModule.startModule(WebModule.java:118)<br/>
+	at org.jboss.web.deployers.WebModule.start(WebModule.java:97)<br/>
+	at sun.reflect.GeneratedMethodAccessor381.invoke(Unknown Source)<br/>
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)<br/>
+	at java.lang.reflect.Method.invoke(Method.java:597)<br/>
+	at org.jboss.mx.interceptor.ReflectedDispatcher.invoke(ReflectedDispatcher.java:157)<br/>
+	at org.jboss.mx.server.Invocation.dispatch(Invocation.java:96)<br/>
+	at org.jboss.mx.server.Invocation.invoke(Invocation.java:88)<br/>
+	at org.jboss.mx.server.AbstractMBeanInvoker.invoke(AbstractMBeanInvoker.java:264)<br/>
+	at org.jboss.mx.server.MBeanServerImpl.invoke(MBeanServerImpl.java:668)<br/>
+	at org.jboss.system.microcontainer.ServiceProxy.invoke(ServiceProxy.java:206)<br/>
+	at $Proxy38.start(Unknown Source)<br/>
+	at org.jboss.system.microcontainer.StartStopLifecycleAction.installAction(StartStopLifecycleAction.java:42)<br/>
+	at org.jboss.system.microcontainer.StartStopLifecycleAction.installAction(StartStopLifecycleAction.java:37)<br/>
+	at org.jboss.dependency.plugins.action.SimpleControllerContextAction.simpleInstallAction(SimpleControllerContextAction.java:62)<br/>
+	at org.jboss.dependency.plugins.action.AccessControllerContextAction.install(AccessControllerContextAction.java:71)<br/>
+	at org.jboss.dependency.plugins.AbstractControllerContextActions.install(AbstractControllerContextActions.java:51)<br/>
+	at org.jboss.dependency.plugins.AbstractControllerContext.install(AbstractControllerContext.java:348)<br/>
+	at org.jboss.system.microcontainer.ServiceControllerContext.install(ServiceControllerContext.java:286)<br/>
+	at org.jboss.dependency.plugins.AbstractController.install(AbstractController.java:1631)<br/>
+	at org.jboss.dependency.plugins.AbstractController.incrementState(AbstractController.java:934)<br/>
+	at org.jboss.dependency.plugins.AbstractController.resolveContexts(AbstractController.java:1082)<br/>
+	at org.jboss.dependency.plugins.AbstractController.resolveContexts(AbstractController.java:984)<br/>
+	at org.jboss.dependency.plugins.AbstractController.change(AbstractController.java:822)<br/>
+	at org.jboss.dependency.plugins.AbstractController.change(AbstractController.java:553)<br/>
+	at org.jboss.system.ServiceController.doChange(ServiceController.java:688)<br/>
+	at org.jboss.system.ServiceController.start(ServiceController.java:460)<br/>
+	at org.jboss.system.deployers.ServiceDeployer.start(ServiceDeployer.java:163)<br/>
+	at org.jboss.system.deployers.ServiceDeployer.deploy(ServiceDeployer.java:99)<br/>
+	at org.jboss.system.deployers.ServiceDeployer.deploy(ServiceDeployer.java:46)<br/>
+	at org.jboss.deployers.spi.deployer.helpers.AbstractSimpleRealDeployer.internalDeploy(AbstractSimpleRealDeployer.java:62)<br/>
+	at org.jboss.deployers.spi.deployer.helpers.AbstractRealDeployer.deploy(AbstractRealDeployer.java:50)<br/>
+	at org.jboss.deployers.plugins.deployers.DeployerWrapper.deploy(DeployerWrapper.java:171)<br/>
+	at org.jboss.deployers.plugins.deployers.DeployersImpl.doDeploy(DeployersImpl.java:1439)<br/>
+	at org.jboss.deployers.plugins.deployers.DeployersImpl.doInstallParentFirst(DeployersImpl.java:1157)<br/>
+	at org.jboss.deployers.plugins.deployers.DeployersImpl.doInstallParentFirst(DeployersImpl.java:1178)<br/>
+	at org.jboss.deployers.plugins.deployers.DeployersImpl.install(DeployersImpl.java:1098)<br/>
+	at org.jboss.dependency.plugins.AbstractControllerContext.install(AbstractControllerContext.java:348)<br/>
+	at org.jboss.dependency.plugins.AbstractController.install(AbstractController.java:1631)<br/>
+	at org.jboss.dependency.plugins.AbstractController.incrementState(AbstractController.java:934)<br/>
+	at org.jboss.dependency.plugins.AbstractController.resolveContexts(AbstractController.java:1082)<br/>
+	at org.jboss.dependency.plugins.AbstractController.resolveContexts(AbstractController.java:984)<br/>
+	at org.jboss.dependency.plugins.AbstractController.change(AbstractController.java:822)<br/>
+	at org.jboss.dependency.plugins.AbstractController.change(AbstractController.java:553)<br/>
+	at org.jboss.deployers.plugins.deployers.DeployersImpl.process(DeployersImpl.java:781)<br/>
+	at org.jboss.deployers.plugins.main.MainDeployerImpl.process(MainDeployerImpl.java:702)<br/>
+	at org.jboss.system.server.profileservice.repository.MainDeployerAdapter.process(MainDeployerAdapter.java:117)<br/>
+	at org.jboss.system.server.profileservice.hotdeploy.HDScanner.scan(HDScanner.java:362)<br/>
+	at org.jboss.system.server.profileservice.hotdeploy.HDScanner.run(HDScanner.java:255)<br/>
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:441)<br/>
+	at java.util.concurrent.FutureTask$Sync.innerRunAndReset(FutureTask.java:317)<br/>
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:150)<br/>
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$101(ScheduledThreadPoolExecutor.java:98)<br/>
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.runPeriodic(ScheduledThreadPoolExecutor.java:181)<br/>
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:205)<br/>
+	at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:886)<br/>
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:908)<br/>
+	at java.lang.Thread.run(Thread.java:619)<br/>
+Caused by: java.lang.IllegalArgumentException: Can not set static javassist.util.proxy.MethodFilter field hello.Message_$$_javassist_14._method_filter to org.hibernate.proxy.pojo.javassist.JavassistLazyInitializer$1<br/>
+	at sun.reflect.UnsafeFieldAccessorImpl.throwSetIllegalArgumentException(UnsafeFieldAccessorImpl.java:146)<br/>
+	at sun.reflect.UnsafeFieldAccessorImpl.throwSetIllegalArgumentException(UnsafeFieldAccessorImpl.java:150)<br/>
+	at sun.reflect.UnsafeStaticObjectFieldAccessorImpl.set(UnsafeStaticObjectFieldAccessorImpl.java:61)<br/>
+	at java.lang.reflect.Field.set(Field.java:657)<br/>
+	at javassist.util.proxy.ProxyFactory.setField(ProxyFactory.java:354)<br/>
+	... 100 more</p>
+
+
+<p>This is due to the fact, that xworks-core-2.1.6.jar that is a part of Struts 2.1.8 is delivered with javassist code inside, that conflicts with the one inside of JBoss.</p>
+
+<p>Please help to resolve the problem, since Struts 2.1.8 does not work with previous versions of xworks.</p>
+            <br/>
+        </td>
+    </tr>
+    </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Comments</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="grid" style="margin: 0;">
+                <tr id="comment-header-12825802"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="lukaszlenart" id="word_commented_lukaszlenart" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=lukaszlenart">Lukasz Lenart</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">02/Nov/09</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-12825802"><td bgcolor="#ffffff">
+            <p>Could you try to remove javaassist from xwork-2.1.6 (what comes with it) and try again?</p>
+
+
+<p>Regards<br/>
+&#8211;<br/>
+Lukasz</p>
+        </td></tr>
+                <tr id="comment-header-12824460"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="zemnon" id="word_commented_zemnon" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=zemnon">Mykyta Kostovskyy</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">02/Nov/09</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-12824460"><td bgcolor="#ffffff">
+            <p>Thanks for the tip Lukasz,</p>
+
+<p>I suppose this works stable on my environment after I have removed javassist package from xwork-core jar file. However porbably for compatibility process this has to be permanently removed from xwork-core package that is public available.</p>
+
+<p>Thank you for your help.</p>
+
+<p>Best regards,<br/>
+Mykyta</p>
+        </td></tr>
+                <tr id="comment-header-12825771"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="lukaszlenart" id="word_commented_lukaszlenart" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=lukaszlenart">Lukasz Lenart</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">02/Nov/09</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-12825771"><td bgcolor="#ffffff">
+            <p>Thanks to Nicola de Saint-Aubert how found the solution for JBoss 4.2 and it also worked for you!</p>
+
+
+<p>Regards<br/>
+&#8211;<br/>
+Lukasz</p>
+        </td></tr>
+                <tr id="comment-header-12824697"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="lukaszlenart" id="word_commented_lukaszlenart" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=lukaszlenart">Lukasz Lenart</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">25/Nov/09</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-12824697"><td bgcolor="#ffffff">
+            <p>Are you using Hibernate also?</p>
+
+<p>jboss:javassist is Ognl core dependency so it can't be removed from xwork or struts itself, then it breaks other non-jboss users applications</p>
+        </td></tr>
+                <tr id="comment-header-12824682"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="zemnon" id="word_commented_zemnon" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=zemnon">Mykyta Kostovskyy</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">26/Nov/09</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-12824682"><td bgcolor="#ffffff">
+            <p>Well, I am using struts with JBoss 5 and new version of xworks contains javassist which is also included in the JBoss itself. So on one of the places it has to be removed to avoid the conflict.</p>
+
+<p>let me know if you have any questions and I would be glad to help.</p>
+        </td></tr>
+                <tr id="comment-header-12825545"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="lukaszlenart" id="word_commented_lukaszlenart" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=lukaszlenart">Lukasz Lenart</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">11/Dec/09</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-12825545"><td bgcolor="#ffffff">
+            <p>Ok, javasist was excluded from shading in xwork, take a look on <a href="http://jira.opensymphony.com/browse/XW-732" class="external-link" rel="nofollow">http://jira.opensymphony.com/browse/XW-732</a></p>
+
+<p>Regards<br/>
+&#8211;<br/>
+Lukasz</p>
+        </td></tr>
+                <tr id="comment-header-12825551"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="lukaszlenart" id="word_commented_lukaszlenart" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=lukaszlenart">Lukasz Lenart</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">22/Dec/09</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-12825551"><td bgcolor="#ffffff">
+            <p>I excluded Javassist from Ognl, you can try to download latest snapshot and make a test<br/>
+<a href="http://cloud.github.com/downloads/jkuhnert/ognl/ognl-3.0-SNAPSHOT.jar" class="external-link" rel="nofollow">http://cloud.github.com/downloads/jkuhnert/ognl/ognl-3.0-SNAPSHOT.jar</a></p>
+
+<p>Regards<br/>
+&#8211;<br/>
+Lukasz</p>
+        </td></tr>
+                <tr id="comment-header-12825558"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="lukaszlenart" id="word_commented_lukaszlenart" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=lukaszlenart">Lukasz Lenart</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">22/Dec/09</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-12825558"><td bgcolor="#ffffff">
+            <p>To clarify</p>
+
+<p>Javassist is still needed by Ognl - you have to provide it by your self (version 3.7.ga at least) or by container (e.g. JBoss). Is marked as 'provided' dependency in Ognl pom.</p>
+
+<p>Regards<br/>
+&#8211;<br/>
+Lukasz</p>
+        </td></tr>
+                <tr id="comment-header-12820209"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="zemnon" id="word_commented_zemnon" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=zemnon">Mykyta Kostovskyy</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">22/Dec/09</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-12820209"><td bgcolor="#ffffff">
+            <p>Thanks a lot Lukasz for your help. I suppose now it should work fine with jboss 5. I will give a try. Thanks for your help.</p>
+        </td></tr>
+                <tr id="comment-header-12823577"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="fagnermoura" id="word_commented_fagnermoura" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=fagnermoura">Fagner Moura</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">31/Dec/09</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-12823577"><td bgcolor="#ffffff">
+            <p>How to exclude javassist or ognl package(s) from xwork-core2.1.6 ?</p>
+
+<p>i have the same problem whit the same environment.. </p>
+
+<p>19:19:42,762 ERROR <span class="error">&#91;BasicLazyInitializer&#93;</span> Javassist Enhancement failed: br.com.t<br/>
+icred.security.model.Role<br/>
+java.lang.RuntimeException: java.lang.IllegalArgumentException<br/>
+        at javassist.util.proxy.ProxyFactory.setField(ProxyFactory.java:358)<br/>
+        at javassist.util.proxy.ProxyFactory.createClass3(ProxyFactory.java:341)</p>
+
+<p>        at javassist.util.proxy.ProxyFactory.createClass2(ProxyFactory.java:314)</p>
+
+<p>        at javassist.util.proxy.ProxyFactory.createClass(ProxyFactory.java:273)<br/>
+        at org.hibernate.proxy.pojo.javassist.JavassistLazyInitializer.getProxyF<br/>
+actory(JavassistLazyInitializer.java:162)<br/>
+        at org.hibernate.proxy.pojo.javassist.JavassistProxyFactory.postInstanti<br/>
+ate(JavassistProxyFactory.java:66)<br/>
+        at org.hibernate.tuple.entity.PojoEntityTuplizer.buildProxyFactory(PojoE<br/>
+ntityTuplizer.java:183)<br/>
+        at org.hibernate.tuple.entity.AbstractEntityTuplizer.&lt;init&gt;(AbstractEnti<br/>
+tyTuplizer.java:158)<br/>
+        at org.hibernate.tuple.entity.PojoEntityTuplizer.&lt;init&gt;(PojoEntityTupliz<br/>
+er.java:76)<br/>
+        at org.hibernate.tuple.entity.EntityEntityModeToTuplizerMapping.&lt;init&gt;(E<br/>
+ntityEntityModeToTuplizerMapping.java:80)<br/>
+        at org.hibernate.tuple.entity.EntityMetamodel.&lt;init&gt;(EntityMetamodel.jav<br/>
+a:325)<br/>
+        at org.hibernate.persister.entity.AbstractEntityPersister.&lt;init&gt;(Abstrac<br/>
+tEntityPersister.java:457)<br/>
+        at org.hibernate.persister.entity.SingleTableEntityPersister.&lt;init&gt;(Sing<br/>
+leTableEntityPersister.java:131)<br/>
+        at org.hibernate.persister.PersisterFactory.createClassPersister(Persist<br/>
+erFactory.java:84)<br/>
+        at org.hibernate.impl.SessionFactoryImpl.&lt;init&gt;(SessionFactoryImpl.java:<br/>
+261)<br/>
+        at org.hibernate.cfg.Configuration.buildSessionFactory(Configuration.jav<br/>
+a:1327)<br/>
+        at org.hibernate.cfg.AnnotationConfiguration.buildSessionFactory(Annotat<br/>
+ionConfiguration.java:867)<br/>
+        at org.hibernate.ejb.Ejb3Configuration.buildEntityManagerFactory(Ejb3Con<br/>
+figuration.java:669)<br/>
+        at org.hibernate.ejb.HibernatePersistence.createContainerEntityManagerFa<br/>
+ctory(HibernatePersistence.java:132)<br/>
+        at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.cr<br/>
+eateNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:224)<br/>
+        at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPro<br/>
+pertiesSet(AbstractEntityManagerFactoryBean.java:291)<br/>
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBean<br/>
+Factory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1369)<br/>
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBean<br/>
+Factory.initializeBean(AbstractAutowireCapableBeanFactory.java:1335)<br/>
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBean<br/>
+Factory.doCreateBean(AbstractAutowireCapableBeanFactory.java:473)<br/>
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBean<br/>
+Factory$1.run(AbstractAutowireCapableBeanFactory.java:409)<br/>
+        at java.security.AccessController.doPrivileged(Native Method)<br/>
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBean<br/>
+Factory.createBean(AbstractAutowireCapableBeanFactory.java:380)<br/>
+        at org.springframework.beans.factory.support.AbstractBeanFactory$1.getOb<br/>
+ject(AbstractBeanFactory.java:264)</p>
+        </td></tr>
+                <tr id="comment-header-12824858"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="fagnermoura" id="word_commented_fagnermoura" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=fagnermoura">Fagner Moura</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">01/Jan/10</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-12824858"><td bgcolor="#ffffff">
+            <p>i remove javassist  and ongl package manually from xwork-core 2.1.6 then works. </p>
+
+<p>when a version will be released with this fix?</p>
+        </td></tr>
+                <tr id="comment-header-12825947"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="lukaszlenart" id="word_commented_lukaszlenart" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=lukaszlenart">Lukasz Lenart</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">06/Jan/10</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-12825947"><td bgcolor="#ffffff">
+            <p>As soon as Xwork will be moved into right place in Struts2 project <img class="emoticon" src="https://issues.apache.org/jira/images/icons/emoticons/wink.gif" height="16" width="16" align="absmiddle" alt="" border="0"/> Xwork is now part of Struts2.</p>
+
+
+<p>Regards<br/>
+&#8211;<br/>
+Lukasz</p>
+        </td></tr>
+                <tr id="comment-header-13941863"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="raja_rani" id="word_commented_raja_rani" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=raja_rani">pad</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">20/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13941863"><td bgcolor="#ffffff">
+            <p>Lukasz, I am using struts2.2 and jboss 5.1 server, and having the error like above can you please guide me I am totally lost.Here is my stack trace</p>
+
+<ul class="alternate" type="square">
+	<li>ERROR <span class="error">&#91;org.hibernate.proxy.pojo.BasicLazyInitializer&#93;</span> Javassist Enhancement failed: com.sherwin.sunriseSunset.dto.ProdMstr<br/>
+java.lang.RuntimeException: java.lang.IllegalArgumentException<br/>
+	at javassist.util.proxy.ProxyFactory.setField(ProxyFactory.java:358)<br/>
+	at javassist.util.proxy.ProxyFactory.createClass3(ProxyFactory.java:341)<br/>
+	at javassist.util.proxy.ProxyFactory.createClass2(ProxyFactory.java:314)<br/>
+	at javassist.util.proxy.ProxyFactory.createClass(ProxyFactory.java:273)<br/>
+	at org.hibernate.proxy.pojo.javassist.JavassistLazyInitializer.getProxyFactory(JavassistLazyInitializer.java:162)<br/>
+	at org.hibernate.proxy.pojo.javassist.JavassistProxyFactory.postInstantiate(JavassistProxyFactory.java:66)<br/>
+	at org.hibernate.tuple.entity.PojoEntityTuplizer.buildProxyFactory(PojoEntityTuplizer.java:183)<br/>
+	at org.hibernate.tuple.entity.AbstractEntityTuplizer.&lt;init&gt;(AbstractEntityTuplizer.java:158)<br/>
+	at org.hibernate.tuple.entity.PojoEntityTuplizer.&lt;init&gt;(PojoEntityTuplizer.java:76)<br/>
+	at org.hibernate.tuple.entity.EntityEntityModeToTuplizerMapping.&lt;init&gt;(EntityEntityModeToTuplizerMapping.java:80)<br/>
+	at org.hibernate.tuple.entity.EntityMetamodel.&lt;init&gt;(EntityMetamodel.java:325)<br/>
+	at org.hibernate.persister.entity.AbstractEntityPersister.&lt;init&gt;(AbstractEntityPersister.java:457)<br/>
+	at org.hibernate.persister.entity.SingleTableEntityPersister.&lt;init&gt;(SingleTableEntityPersister.java:131)<br/>
+	at org.hibernate.persister.PersisterFactory.createClassPersister(PersisterFactory.java:84)<br/>
+	at org.hibernate.impl.SessionFactoryImpl.&lt;init&gt;(SessionFactoryImpl.java:261)<br/>
+	at org.hibernate.cfg.Configuration.buildSessionFactory(Configuration.java:1327)<br/>
+	at com.sherwin.sunriseSunset.dao.HibernateSessionFactory.&lt;clinit&gt;(HibernateSessionFactory.java:51)<br/>
+	at com.sherwin.sunriseSunset.dao.BaseHibernateDAO.getSession(BaseHibernateDAO.java:32)<br/>
+	at com.sherwin.sunriseSunset.dao.ProdKeyDAO.searchByProductNumber(ProdKeyDAO.java:164)<br/>
+	at com.sherwin.sunriseSunset.services.SSReportService.searchByProductNumber(SSReportService.java:204)<br/>
+	at com.sherwin.sunriseSunset.action.ProductSearchAction.searchProduct(ProductSearchAction.java:50)<br/>
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)<br/>
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)<br/>
+	at java.lang.reflect.Method.invoke(Method.java:592)<br/>
+	at com.opensymphony.xwork2.DefaultActionInvocation.invokeAction(DefaultActionInvocation.java:452)<br/>
+	at com.opensymphony.xwork2.DefaultActionInvocation.invokeActionOnly(DefaultActionInvocation.java:291)<br/>
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:254)<br/>
+	at com.opensymphony.xwork2.interceptor.DefaultWorkflowInterceptor.doIntercept(DefaultWorkflowInterceptor.java:176)<br/>
+	at com.opensymphony.xwork2.interceptor.MethodFilterInterceptor.intercept(MethodFilterInterceptor.java:98)<br/>
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:248)<br/>
+	at com.opensymphony.xwork2.validator.ValidationInterceptor.doIntercept(ValidationInterceptor.java:263)<br/>
+	at org.apache.struts2.interceptor.validation.AnnotationValidationInterceptor.doIntercept(AnnotationValidationInterceptor.java:68)<br/>
+	at com.opensymphony.xwork2.interceptor.MethodFilterInterceptor.intercept(MethodFilterInterceptor.java:98)<br/>
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:248)<br/>
+	at com.opensymphony.xwork2.interceptor.ConversionErrorInterceptor.intercept(ConversionErrorInterceptor.java:133)<br/>
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:248)<br/>
+	at com.opensymphony.xwork2.interceptor.ParametersInterceptor.doIntercept(ParametersInterceptor.java:207)<br/>
+	at com.opensymphony.xwork2.interceptor.MethodFilterInterceptor.intercept(MethodFilterInterceptor.java:98)<br/>
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:248)<br/>
+	at com.opensymphony.xwork2.interceptor.ParametersInterceptor.doIntercept(ParametersInterceptor.java:207)<br/>
+	at com.opensymphony.xwork2.interceptor.MethodFilterInterceptor.intercept(MethodFilterInterceptor.java:98)<br/>
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:248)<br/>
+	at com.opensymphony.xwork2.interceptor.StaticParametersInterceptor.intercept(StaticParametersInterceptor.java:190)<br/>
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:248)<br/>
+	at org.apache.struts2.interceptor.MultiselectInterceptor.intercept(MultiselectInterceptor.java:75)<br/>
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:248)<br/>
+	at org.apache.struts2.interceptor.CheckboxInterceptor.intercept(CheckboxInterceptor.java:94)<br/>
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:248)<br/>
+	at org.apache.struts2.interceptor.FileUploadInterceptor.intercept(FileUploadInterceptor.java:243)<br/>
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:248)<br/>
+	at com.opensymphony.xwork2.interceptor.ModelDrivenInterceptor.intercept(ModelDrivenInterceptor.java:100)<br/>
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:248)<br/>
+	at com.opensymphony.xwork2.interceptor.ScopedModelDrivenInterceptor.intercept(ScopedModelDrivenInterceptor.java:141)<br/>
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:248)<br/>
+	at org.apache.struts2.interceptor.debugging.DebuggingInterceptor.intercept(DebuggingInterceptor.java:267)<br/>
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:248)<br/>
+	at com.opensymphony.xwork2.interceptor.ChainingInterceptor.intercept(ChainingInterceptor.java:142)<br/>
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:248)<br/>
+	at com.opensymphony.xwork2.interceptor.PrepareInterceptor.doIntercept(PrepareInterceptor.java:166)<br/>
+	at com.opensymphony.xwork2.interceptor.MethodFilterInterceptor.intercept(MethodFilterInterceptor.java:98)<br/>
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:248)<br/>
+	at com.opensymphony.xwork2.interceptor.I18nInterceptor.intercept(I18nInterceptor.java:176)<br/>
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:248)<br/>
+	at org.apache.struts2.interceptor.ServletConfigInterceptor.intercept(ServletConfigInterceptor.java:164)<br/>
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:248)<br/>
+	at com.opensymphony.xwork2.interceptor.AliasInterceptor.intercept(AliasInterceptor.java:190)<br/>
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:248)<br/>
+	at com.opensymphony.xwork2.interceptor.ExceptionMappingInterceptor.intercept(ExceptionMappingInterceptor.java:187)<br/>
+	at com.opensymphony.xwork2.DefaultActionInvocation.invoke(DefaultActionInvocation.java:248)<br/>
+	at org.apache.struts2.impl.StrutsActionProxy.execute(StrutsActionProxy.java:52)<br/>
+	at org.apache.struts2.dispatcher.Dispatcher.serviceAction(Dispatcher.java:485)<br/>
+	at org.apache.struts2.dispatcher.ng.ExecuteOperations.executeAction(ExecuteOperations.java:77)<br/>
+	at org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter.doFilter(StrutsPrepareAndExecuteFilter.java:91)<br/>
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)<br/>
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)<br/>
+	at org.jboss.web.tomcat.filters.ReplyHeaderFilter.doFilter(ReplyHeaderFilter.java:96)<br/>
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:235)<br/>
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)<br/>
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:235)<br/>
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:191)<br/>
+	at org.jboss.web.tomcat.security.SecurityAssociationValve.invoke(SecurityAssociationValve.java:190)<br/>
+	at org.jboss.web.tomcat.security.JaccContextValve.invoke(JaccContextValve.java:92)<br/>
+	at org.jboss.web.tomcat.security.SecurityContextEstablishmentValve.process(SecurityContextEstablishmentValve.java:126)<br/>
+	at org.jboss.web.tomcat.security.SecurityContextEstablishmentValve.invoke(SecurityContextEstablishmentValve.java:70)<br/>
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:127)<br/>
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:102)<br/>
+	at org.jboss.web.tomcat.service.jca.CachedConnectionValve.invoke(CachedConnectionValve.java:158)<br/>
+	at org.apache.catalina.authenticator.SingleSignOn.invoke(SingleSignOn.java:402)<br/>
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:109)<br/>
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:330)<br/>
+	at org.apache.coyote.http11.Http11Processor.process(Http11Processor.java:829)<br/>
+	at org.apache.coyote.http11.Http11Protocol$Http11ConnectionHandler.process(Http11Protocol.java:598)<br/>
+	at org.apache.tomcat.util.net.JIoEndpoint$Worker.run(JIoEndpoint.java:447)<br/>
+	at java.lang.Thread.run(Thread.java:595)<br/>
+Caused by: java.lang.IllegalArgumentException<br/>
+	at sun.reflect.UnsafeStaticObjectFieldAccessorImpl.set(UnsafeStaticObjectFieldAccessorImpl.java:61)<br/>
+	at java.lang.reflect.Field.set(Field.java:657)<br/>
+	at javassist.util.proxy.ProxyFactory.setField(ProxyFactory.java:354)</li>
+</ul>
+
+        </td></tr>
+                <tr id="comment-header-13942050"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="lukaszlenart" id="word_commented_lukaszlenart" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=lukaszlenart">Lukasz Lenart</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">20/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13942050"><td bgcolor="#ffffff">
+            <p>As I said - you must have duplicated javassist.jar library - JBoss provides one, Hibernate as well and Struts another one (as OGNL dependency) - you must eliminate at least this one from Struts (if you use Maven, exclude it)</p>
+        </td></tr>
+                <tr id="comment-header-13942084"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="raja_rani" id="word_commented_raja_rani" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=raja_rani">pad</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">20/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13942084"><td bgcolor="#ffffff">
+            <p>these are the jars I am using in my project<br/>
+Activation.jar<br/>
+Commons-lang.jar—commons-lang/2.3<br/>
+Commons-validator.jar  ---commons-validator/1.1.4<br/>
+Poi-3.2-Final.jar<br/>
+Displaytag.jar---1.2,Displaytag-export-poi.jar<br/>
+Displaytag-portlet.jar<br/>
+Hibernate.jar---3.6.9<br/>
+Dom4j.jar---Hibernate.jar3.6.9<br/>
+Antlr.jar---Hibernate.jar3.6.9<br/>
+Cglib.jar  --Hibernate.jar-3.6.9<br/>
+Commons-collections.jar ---Hibernate.jar3.6.9<br/>
+Jta.jar  ---Hibernate.jar3.6.9<br/>
+Jstl.jar ---1.1.2<br/>
+Standard.jar ---1.1.2<br/>
+Log4j.jar   ----1.2.16<br/>
+Ojdbc5.jar<br/>
+Struts2—2.2.1<br/>
+Commons-beanutils.jar  &#8212; Struts2—2.2.1<br/>
+Commons-collection.jar &#8212; Struts2—2.2.1<br/>
+Commons-digester.jar &#8212; Struts2—2.2.1<br/>
+Commons-fileupload.jar &#8212; Struts2—2.2.1<br/>
+Commons-io.jar &#8212; Struts2—2.2.1<br/>
+Commons-logging.jar--- Struts2—2.2.1<br/>
+Commons-logging-api.jar--- Struts2—2.2.1<br/>
+Freemarker.jar--- Struts2—2.2.1<br/>
+Ognl.jar--- Struts2—2.2.1<br/>
+Struts2-core.jar &#8212; Struts2—2.2.1<br/>
+Struts-json-plugin.jar &#8212; Struts2—2.2.1<br/>
+Xwork-core.jar &#8212; Struts2—2.2.1<br/>
+Struts-dojo-plugin.jar &#8212; Struts2—2.2.1</p>
+        </td></tr>
+                <tr id="comment-header-13942101"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="raja_rani" id="word_commented_raja_rani" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=raja_rani">pad</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">20/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13942101"><td bgcolor="#ffffff">
+            <p>Also I tried using the ognl.jar that you have give above , but still the same error</p>
+        </td></tr>
+                <tr id="comment-header-13942280"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="lukaszlenart" id="word_commented_lukaszlenart" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=lukaszlenart">Lukasz Lenart</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">20/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13942280"><td bgcolor="#ffffff">
+            <p>Ok, so you use Struts 2.2.1! It isn't the same as 2.2 <img class="emoticon" src="https://issues.apache.org/jira/images/icons/emoticons/wink.gif" height="16" width="16" align="absmiddle" alt="" border="0"/> So there is no javassist.jar included with this version - so it isn't Struts problem. </p>
+
+<p>Looking at this:</p>
+<div class="preformatted panel" style="border-width: 1px;"><div class="preformattedContent panelContent">
+<pre>Caused by: java.lang.IllegalArgumentException
+at sun.reflect.UnsafeStaticObjectFieldAccessorImpl.set(UnsafeStaticObjectFieldAccessorImpl.java:61)
+</pre>
+</div></div>
+
+<p>looks like you want to use static setter - check <tt>ProdMstr</tt> class</p>
+        </td></tr>
+                <tr id="comment-header-13943091"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="raja_rani" id="word_commented_raja_rani" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=raja_rani">pad</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13943091"><td bgcolor="#ffffff">
+            <p>Thank you for the answer, can you please tell how to determine which filed is static.<br/>
+here is my table structure<br/>
+PROD_ID	NUMBER(10,0)<br/>
+CREATE_DUMMY_DE	CHAR(1 BYTE)<br/>
+CREATED_DTIME	DATE<br/>
+DISPLAY_COLOR	NUMBER(10,0)<br/>
+LAST_UPDATE_DTIME	DATE<br/>
+PROD_NAME	VARCHAR2(40 BYTE)<br/>
+PROD_NO	VARCHAR2(40 BYTE)<br/>
+PROD_TYPE_CD	NUMBER(5,0)<br/>
+SHELF_LIFE	NUMBER<br/>
+SUNRISE_DATE	DATE<br/>
+SUNSET_DATE	DATE<br/>
+UNIT_COST	NUMBER<br/>
+UOM_CD	NUMBER(5,0)<br/>
+PROD_DESC	VARCHAR2(255 BYTE)<br/>
+LAST_REPORTED_DEMAND_DATE	DATE</p>
+
+
+<p>and here is my dto class</p>
+
+<p>I have getter setters for the following in my dto<br/>
+       private Long prodId;<br/>
+       private String createDummyDe;<br/>
+	private Date createdDtime;<br/>
+	private Long displayColor;<br/>
+	private Date lastUpdateDtime;<br/>
+	private String prodName;<br/>
+	private String prodNo;<br/>
+	private Long shelfLife;<br/>
+	private Date sunriseDate;<br/>
+	private Date sunsetDate;<br/>
+	private Long unitCost;</p>
+
+
+<p>The only difference is I don't have all the field in the table in my dto or hbm.xml file I let the once which I am not using.</p>
+
+<p>Thank you so much for answering my question.</p>
+        </td></tr>
+                <tr id="comment-header-13943094"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="raja_rani" id="word_commented_raja_rani" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=raja_rani">pad</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13943094"><td bgcolor="#ffffff">
+            <p>I left the once which I am not using , is that a problem, do I have to include all the fields.</p>
+        </td></tr>
+                <tr id="comment-header-13943098"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="lukaszlenart" id="word_commented_lukaszlenart" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=lukaszlenart">Lukasz Lenart</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13943098"><td bgcolor="#ffffff">
+            <p>check setters, there will be word <tt>static</tt></p>
+        </td></tr>
+                <tr id="comment-header-13943101"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="raja_rani" id="word_commented_raja_rani" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=raja_rani">pad</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13943101"><td bgcolor="#ffffff">
+            <p>public class ProdMstr {</p>
+
+<p>	// Fields</p>
+
+<p>	private Long prodId;<br/>
+    private String createDummyDe;<br/>
+	private Date createdDtime;<br/>
+	private Long displayColor;<br/>
+	private Date lastUpdateDtime;<br/>
+	private String prodName;<br/>
+	private String prodNo;<br/>
+	private Long shelfLife;<br/>
+	private Date sunriseDate;<br/>
+	private Date sunsetDate;<br/>
+	private Long unitCost;</p>
+
+
+
+<p>	// Constructors</p>
+
+<p>	/** default constructor */<br/>
+	public ProdMstr() {<br/>
+	}</p>
+
+<p>	/** minimal constructor */<br/>
+	public ProdMstr(Long prodId) </p>
+{
+		this.prodId = prodId;
+	}<br/>
+<br/>
+	/** full constructor */<br/>
+	public ProdMstr(Long prodId, <br/>
+			String createDummyDe, Date createdDtime, Long displayColor,<br/>
+			Date lastUpdateDtime, String prodName, String prodNo,<br/>
+			Long shelfLife, Date sunriseDate, Date sunsetDate, Long unitCost<br/>
+			) {
+		this.prodId = prodId;
+		this.createDummyDe = createDummyDe;
+		this.createdDtime = createdDtime;
+		this.displayColor = displayColor;
+		this.lastUpdateDtime = lastUpdateDtime;
+		this.prodName = prodName;
+		this.prodNo = prodNo;
+		this.shelfLife = shelfLife;
+		this.sunriseDate = sunriseDate;
+		this.sunsetDate = sunsetDate;
+		this.unitCost = unitCost;
+		
+	}<br/>
+<br/>
+	// Property accessors<br/>
+	<br/>
+	public Long getProdId() {
+		return this.prodId;
+	}<br/>
+<br/>
+	public void setProdId(Long prodId) {
+		this.prodId = prodId;
+	}
+
+
+<p>	public String getCreateDummyDe() </p>
+{
+		return this.createDummyDe;
+	}
+
+<p>	public void setCreateDummyDe(String createDummyDe) </p>
+{
+		this.createDummyDe = createDummyDe;
+	}
+
+<p>	public Date getCreatedDtime() </p>
+{
+		return this.createdDtime;
+	}
+
+<p>	public void setCreatedDtime(Date createdDtime) </p>
+{
+		this.createdDtime = createdDtime;
+	}
+
+<p>	public Long getDisplayColor() </p>
+{
+		return this.displayColor;
+	}
+
+<p>	public void setDisplayColor(Long displayColor) </p>
+{
+		this.displayColor = displayColor;
+	}
+
+<p>	public Date getLastUpdateDtime() </p>
+{
+		return this.lastUpdateDtime;
+	}
+
+<p>	public void setLastUpdateDtime(Date lastUpdateDtime) </p>
+{
+		this.lastUpdateDtime = lastUpdateDtime;
+	}
+
+<p>	public String getProdName() </p>
+{
+		return this.prodName;
+	}
+
+<p>	public void setProdName(String prodName) </p>
+{
+		this.prodName = prodName;
+	}
+
+<p>	public String getProdNo() </p>
+{
+		return this.prodNo;
+	}
+
+<p>	public void setProdNo(String prodNo) </p>
+{
+		this.prodNo = prodNo;
+	}
+
+<p>	public Long getShelfLife() </p>
+{
+		return this.shelfLife;
+	}
+
+<p>	public void setShelfLife(Long shelfLife) </p>
+{
+		this.shelfLife = shelfLife;
+	}
+
+<p>	public Date getSunriseDate() </p>
+{
+		return this.sunriseDate;
+	}
+
+<p>	public void setSunriseDate(Date sunriseDate) </p>
+{
+		this.sunriseDate = sunriseDate;
+	}
+
+<p>	public Date getSunsetDate() </p>
+{
+		return this.sunsetDate;
+	}
+
+<p>	public void setSunsetDate(Date sunsetDate) </p>
+{
+		this.sunsetDate = sunsetDate;
+	}
+
+<p>	public Long getUnitCost() </p>
+{
+		return this.unitCost;
+	}
+
+<p>	public void setUnitCost(Long unitCost) </p>
+{
+		this.unitCost = unitCost;
+	}
+
+
+
+<p>}</p>
+
+
+<p>I don't have static </p>
+
+<p>thanks for quick reply</p>
+        </td></tr>
+                <tr id="comment-header-13943104"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="lukaszlenart" id="word_commented_lukaszlenart" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=lukaszlenart">Lukasz Lenart</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13943104"><td bgcolor="#ffffff">
+            <p>So then, I have no idea what can be wrong.</p>
+        </td></tr>
+                <tr id="comment-header-13943145"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="raja_rani" id="word_commented_raja_rani" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=raja_rani">pad</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13943145"><td bgcolor="#ffffff">
+            <p>I checked all of my dtos I don't have static filed any where</p>
+        </td></tr>
+            </table>
+Generated at Sat Mar 22 13:36:40 UTC 2014 using JIRA 6.2#6252-sha1:aa343257d4ce030d9cb8c531be520be9fac1c996.
+
+</body>
+</html>

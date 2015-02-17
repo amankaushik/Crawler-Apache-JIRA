@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>[#HDFS-4944] WebHDFS cannot create a file path containing characters that must be URI-encoded, such as space.</title>
+    <meta http-equiv="Content-Type" Content="application/vnd.ms-word; charset=utf-8">
+        <style type="text/css">
+
+.tableBorder, .grid
+{
+    background-color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableBorder td, .grid td
+{
+    vertical-align: top;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+.noPadding
+{
+    padding: 0 !important;
+}
+
+h3 .subText
+{
+    font-size: 60%;
+    font-weight: normal;
+}
+
+.tabLabel
+{
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-bottom:none;
+    padding: 2px;
+    display: inline;
+}
+
+td.blank
+{
+    padding: 0;
+    margin: 0;
+}
+
+.blank td
+{
+    border: none;
+}
+
+#descriptionArea
+{
+    margin: 0;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+hr
+{
+    border-top:1px solid #aaa;
+}
+
+hr.fullcontent
+{
+  height: 15px;
+  padding: 10px 0;
+  background: #fff url('https://issues.apache.org/jira/images/icons/hr.gif') no-repeat scroll center;
+}
+
+</style>
+
+</head>
+<body>
+
+<table class="tableBorder" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" width="100%" colspan="2" valign="top">
+                            <h3 class="formtitle">
+                        [HDFS-4944]&nbsp;<a href="https://issues.apache.org/jira/browse/HDFS-4944">WebHDFS cannot create a file path containing characters that must be URI-encoded, such as space.</a>
+            <span class="subText">
+               Created: 29/Jun/13                   &nbsp;Updated: 21/Mar/14
+
+                                                    &nbsp;Resolved: 30/Jun/13
+                            </span>
+            </h3>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Status:</b></td>
+        <td width="80%">Closed</td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Project:</b></td>
+        <td width="80%"><a href="https://issues.apache.org/jira/secure/BrowseProject.jspa?id=12310942">Hadoop HDFS</a></td>
+    </tr>
+
+        <tr>
+            <td><b>Component/s:</b></td>
+            <td>
+                                        <a title="webhdfs - WebHDFS: HTTP REST API for HDFS"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310942&component=12319200"
+            >webhdfs</a>                        </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Affects Version/s:</b></td>
+            <td>
+                                        <a title="1.3.0 - 1.3.0 release"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310942&version=12324328"
+            >1.3.0</a>                        </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Fix Version/s:</b></td>
+            <td>
+                                        <a title="3.0.0 - hadoop-3.0.0 release"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310942&fixfor=12320356"
+            >3.0.0</a>,                    <a title="2.1.0-beta - 2.1.0-beta release"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310942&fixfor=12324031"
+            >2.1.0-beta</a>,                    <a title="1.3.0 - 1.3.0 release"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310942&fixfor=12324328"
+            >1.3.0</a>                        </td>
+    </tr>
+    
+    </table>
+
+<br />
+<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" valign="top" width="20%">
+            <b>Type:</b>
+        </td>
+        <td bgcolor="#ffffff" valign="top"  width="30%" >
+            Bug
+        </td>
+
+                    <td bgcolor="#f0f0f0">
+                <b>Priority:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap>
+                Major
+            </td>
+            </tr>
+    <tr>
+                        <td bgcolor="#f0f0f0" valign="top" width="20%">
+                <b>Reporter:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top"  width="30%" >
+                                            <a class="user-hover" rel="cnauroth" id="word_reporter_cnauroth" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=cnauroth">Chris Nauroth</a>
+                            </td>
+        
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Assignee:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap  width="30%" >
+                                            <a class="user-hover" rel="cnauroth" id="word_assignee_cnauroth" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=cnauroth">Chris Nauroth</a>
+                            </td>
+            </tr>
+    	<tr>
+		<td bgcolor="#f0f0f0" width="20%">
+			<b>Resolution:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                            Fixed
+                    </td>
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Votes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                0
+            </td>
+        
+    </tr>
+    
+        <tr>
+        <td bgcolor="#f0f0f0" width="20%">
+            <b>Labels:</b>
+        </td>
+        <td id="labels-12655465-value" class="value" bgcolor="#ffffff" valign="top" colspan="3" nowrap>
+                            None
+                    </td>
+    </tr>
+    
+    	<tr>
+        		<td bgcolor="#f0f0f0" width="20%"><b>Remaining Estimate:</b></td>
+        <td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Time Spent:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+	</tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Original Estimate:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    
+    </table>
+
+
+
+    <br />
+
+    	<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+
+                <tr>
+            <td bgcolor="#f0f0f0" width=20% valign=top>
+                <b>Attachments:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top">
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HDFS-4944-branch-1.1.patch &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HDFS-4944.1.patch &nbsp;&nbsp;&nbsp;
+                            </td>
+        </tr>
+        
+            <tr>
+            <td bgcolor="#f0f0f0" width="20%" valign="top">
+                <b>Issue Links:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" class="noPadding">
+                <table cellpadding="0" cellspacing="0" border="0" width="100%" class="blank">
+                                            <tr>
+                            <td colspan="4" bgcolor="#f0f0f0">
+                                <b>Reference</b><br/>
+                            </td>
+                        </tr>
+                                                                <tr>
+            <td>
+                is related to
+            </td>
+            <td>
+                <a href="https://issues.apache.org/jira/browse/HDFS-6140">
+                     <strike>HDFS-6140</strike>                 </a>
+            </td>
+            <td>
+                WebHDFS cannot create a file with spa...
+            </td>
+            <td>
+                Resolved
+            </td>
+        </tr>
+                                        </table>
+            </td>
+        </tr>
+    
+
+
+
+                        <tr>
+                <td bgcolor="#f0f0f0" width="20%" valign="top"><b>Hadoop Flags:</b></td>
+                <td id="customfield_12310191-12655465-value" class="value" bgcolor="#ffffff" width="80%">
+
+
+    <div class="shorten" id="customfield_12310191-field">
+        							<span>Reviewed</span>			            </div>
+</td>
+            </tr>
+                                <tr>
+                <td bgcolor="#f0f0f0" width="20%" valign="top"><b>Target Version/s:</b></td>
+                <td id="customfield_12310320-12655465-value" class="value" bgcolor="#ffffff" width="80%">    <div class="shorten" id="customfield_12310320-field">
+                                    <a href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&amp;mode=hide&amp;sorter/order=ASC&amp;sorter/field=priority&amp;pid=12310942&amp;customfield_12310320=12320356" title="3.0.0 - hadoop-3.0.0 release">3.0.0</a>,                                                 <a href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&amp;mode=hide&amp;sorter/order=ASC&amp;sorter/field=priority&amp;pid=12310942&amp;customfield_12310320=12324031" title="2.1.0-beta - 2.1.0-beta release">2.1.0-beta</a>,                                                 <a href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&amp;mode=hide&amp;sorter/order=ASC&amp;sorter/field=priority&amp;pid=12310942&amp;customfield_12310320=12324328" title="1.3.0 - 1.3.0 release">1.3.0</a>                        </div>
+</td>
+            </tr>
+            </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Description</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td id="descriptionArea">
+            <p>On branch-1, WebHDFS cannot create a file containing spaces.  It fails with a URI syntax error while trying to create a <tt>java.net.URI</tt> pointing to the newly created file in the HTTP created response.  This bug does not impact trunk, because the trunk code calls a different <tt>java.net.URI</tt> constructor, which automatically takes care of the required URI encoding.</p>
+            <br/>
+        </td>
+    </tr>
+    </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Comments</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="grid" style="margin: 0;">
+                <tr id="comment-header-13696060"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="cnauroth" id="word_commented_cnauroth" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=cnauroth">Chris Nauroth</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">29/Jun/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13696060"><td bgcolor="#ffffff">
+            <p>I've attached patches for both branch-1 and trunk.  The branch-1 patch fixes the bug by switching to a different <tt>java.net.URI</tt> constructor that takes care of the URI encoding for us.  I've also added a unit test for creating a file that contains spaces.</p>
+
+<p>The trunk patch just adds the unit test.  Trunk doesn't have the bug, but I'd like to keep the unit test there as a safeguard against regressions.</p>
+        </td></tr>
+                <tr id="comment-header-13696075"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hadoopqa" id="word_commented_hadoopqa" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hadoopqa">Hadoop QA</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">29/Jun/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13696075"><td bgcolor="#ffffff">
+            <p><font color="green">+1 overall</font>.  Here are the results of testing the latest attachment <br/>
+  <a href="http://issues.apache.org/jira/secure/attachment/12590154/HDFS-4944.1.patch" class="external-link" rel="nofollow">http://issues.apache.org/jira/secure/attachment/12590154/HDFS-4944.1.patch</a><br/>
+  against trunk revision .</p>
+
+<p>    <font color="green">+1 @author</font>.  The patch does not contain any @author tags.</p>
+
+<p>    <font color="green">+1 tests included</font>.  The patch appears to include 1 new or modified test files.</p>
+
+<p>    <font color="green">+1 javac</font>.  The applied patch does not increase the total number of javac compiler warnings.</p>
+
+<p>    <font color="green">+1 javadoc</font>.  The javadoc tool did not generate any warning messages.</p>
+
+<p>    <font color="green">+1 eclipse:eclipse</font>.  The patch built with eclipse:eclipse.</p>
+
+<p>    <font color="green">+1 findbugs</font>.  The patch does not introduce any new Findbugs (version 1.3.9) warnings.</p>
+
+<p>    <font color="green">+1 release audit</font>.  The applied patch does not increase the total number of release audit warnings.</p>
+
+<p>    <font color="green">+1 core tests</font>.  The patch passed unit tests in hadoop-hdfs-project/hadoop-hdfs.</p>
+
+<p>    <font color="green">+1 contrib tests</font>.  The patch passed contrib unit tests.</p>
+
+<p>Test results: <a href="https://builds.apache.org/job/PreCommit-HDFS-Build/4579//testReport/" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HDFS-Build/4579//testReport/</a><br/>
+Console output: <a href="https://builds.apache.org/job/PreCommit-HDFS-Build/4579//console" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HDFS-Build/4579//console</a></p>
+
+<p>This message is automatically generated.</p>
+        </td></tr>
+                <tr id="comment-header-13696127"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="szetszwo" id="word_commented_szetszwo" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=szetszwo">Tsz Wo Nicholas Sze</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">29/Jun/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13696127"><td bgcolor="#ffffff">
+            <p>+1 both patches look good.  Thanks, Chris.</p>
+        </td></tr>
+                <tr id="comment-header-13696262"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hudson" id="word_commented_hudson" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hudson">Hudson</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">30/Jun/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13696262"><td bgcolor="#ffffff">
+            <p>Integrated in Hadoop-trunk-Commit #4022 (See <a href="https://builds.apache.org/job/Hadoop-trunk-Commit/4022/" class="external-link" rel="nofollow">https://builds.apache.org/job/Hadoop-trunk-Commit/4022/</a>)<br/>
+    <a href="https://issues.apache.org/jira/browse/HDFS-4944" title="WebHDFS cannot create a file path containing characters that must be URI-encoded, such as space." class="issue-link" data-issue-key="HDFS-4944"><del>HDFS-4944</del></a>. WebHDFS cannot create a file path containing characters that must be URI-encoded, such as space. Contributed by Chris Nauroth. (Revision 1498055)</p>
+
+<p>     Result = SUCCESS<br/>
+cnauroth : <a href="http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1498055" class="external-link" rel="nofollow">http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1498055</a><br/>
+Files : </p>
+<ul>
+	<li>/hadoop/common/trunk/hadoop-hdfs-project/hadoop-hdfs/CHANGES.txt</li>
+	<li>/hadoop/common/trunk/hadoop-hdfs-project/hadoop-hdfs/src/test/java/org/apache/hadoop/hdfs/web/TestWebHdfsFileSystemContract.java</li>
+</ul>
+
+        </td></tr>
+                <tr id="comment-header-13696264"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="cnauroth" id="word_commented_cnauroth" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=cnauroth">Chris Nauroth</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">30/Jun/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13696264"><td bgcolor="#ffffff">
+            <p>Thanks for the review, Nicholas.  I committed to trunk, branch-2, branch-2.1-beta, and branch-1.</p>
+        </td></tr>
+                <tr id="comment-header-13696315"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hudson" id="word_commented_hudson" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hudson">Hudson</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">30/Jun/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13696315"><td bgcolor="#ffffff">
+            <p>Integrated in Hadoop-Yarn-trunk #256 (See <a href="https://builds.apache.org/job/Hadoop-Yarn-trunk/256/" class="external-link" rel="nofollow">https://builds.apache.org/job/Hadoop-Yarn-trunk/256/</a>)<br/>
+    <a href="https://issues.apache.org/jira/browse/HDFS-4944" title="WebHDFS cannot create a file path containing characters that must be URI-encoded, such as space." class="issue-link" data-issue-key="HDFS-4944"><del>HDFS-4944</del></a>. WebHDFS cannot create a file path containing characters that must be URI-encoded, such as space. Contributed by Chris Nauroth. (Revision 1498055)</p>
+
+<p>     Result = SUCCESS<br/>
+cnauroth : <a href="http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1498055" class="external-link" rel="nofollow">http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1498055</a><br/>
+Files : </p>
+<ul>
+	<li>/hadoop/common/trunk/hadoop-hdfs-project/hadoop-hdfs/CHANGES.txt</li>
+	<li>/hadoop/common/trunk/hadoop-hdfs-project/hadoop-hdfs/src/test/java/org/apache/hadoop/hdfs/web/TestWebHdfsFileSystemContract.java</li>
+</ul>
+
+        </td></tr>
+                <tr id="comment-header-13696327"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hudson" id="word_commented_hudson" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hudson">Hudson</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">30/Jun/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13696327"><td bgcolor="#ffffff">
+            <p>Integrated in Hadoop-Hdfs-trunk #1446 (See <a href="https://builds.apache.org/job/Hadoop-Hdfs-trunk/1446/" class="external-link" rel="nofollow">https://builds.apache.org/job/Hadoop-Hdfs-trunk/1446/</a>)<br/>
+    <a href="https://issues.apache.org/jira/browse/HDFS-4944" title="WebHDFS cannot create a file path containing characters that must be URI-encoded, such as space." class="issue-link" data-issue-key="HDFS-4944"><del>HDFS-4944</del></a>. WebHDFS cannot create a file path containing characters that must be URI-encoded, such as space. Contributed by Chris Nauroth. (Revision 1498055)</p>
+
+<p>     Result = FAILURE<br/>
+cnauroth : <a href="http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1498055" class="external-link" rel="nofollow">http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1498055</a><br/>
+Files : </p>
+<ul>
+	<li>/hadoop/common/trunk/hadoop-hdfs-project/hadoop-hdfs/CHANGES.txt</li>
+	<li>/hadoop/common/trunk/hadoop-hdfs-project/hadoop-hdfs/src/test/java/org/apache/hadoop/hdfs/web/TestWebHdfsFileSystemContract.java</li>
+</ul>
+
+        </td></tr>
+                <tr id="comment-header-13696336"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hudson" id="word_commented_hudson" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hudson">Hudson</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">30/Jun/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13696336"><td bgcolor="#ffffff">
+            <p>Integrated in Hadoop-Mapreduce-trunk #1473 (See <a href="https://builds.apache.org/job/Hadoop-Mapreduce-trunk/1473/" class="external-link" rel="nofollow">https://builds.apache.org/job/Hadoop-Mapreduce-trunk/1473/</a>)<br/>
+    <a href="https://issues.apache.org/jira/browse/HDFS-4944" title="WebHDFS cannot create a file path containing characters that must be URI-encoded, such as space." class="issue-link" data-issue-key="HDFS-4944"><del>HDFS-4944</del></a>. WebHDFS cannot create a file path containing characters that must be URI-encoded, such as space. Contributed by Chris Nauroth. (Revision 1498055)</p>
+
+<p>     Result = FAILURE<br/>
+cnauroth : <a href="http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1498055" class="external-link" rel="nofollow">http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1498055</a><br/>
+Files : </p>
+<ul>
+	<li>/hadoop/common/trunk/hadoop-hdfs-project/hadoop-hdfs/CHANGES.txt</li>
+	<li>/hadoop/common/trunk/hadoop-hdfs-project/hadoop-hdfs/src/test/java/org/apache/hadoop/hdfs/web/TestWebHdfsFileSystemContract.java</li>
+</ul>
+
+        </td></tr>
+            </table>
+Generated at Sat Mar 22 13:33:45 UTC 2014 using JIRA 6.2#6252-sha1:aa343257d4ce030d9cb8c531be520be9fac1c996.
+
+</body>
+</html>

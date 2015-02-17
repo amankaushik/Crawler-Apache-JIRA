@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>[#INFRA-3590] add OFBiz to sonar</title>
+    <meta http-equiv="Content-Type" Content="application/vnd.ms-word; charset=utf-8">
+        <style type="text/css">
+
+.tableBorder, .grid
+{
+    background-color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableBorder td, .grid td
+{
+    vertical-align: top;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+.noPadding
+{
+    padding: 0 !important;
+}
+
+h3 .subText
+{
+    font-size: 60%;
+    font-weight: normal;
+}
+
+.tabLabel
+{
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-bottom:none;
+    padding: 2px;
+    display: inline;
+}
+
+td.blank
+{
+    padding: 0;
+    margin: 0;
+}
+
+.blank td
+{
+    border: none;
+}
+
+#descriptionArea
+{
+    margin: 0;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+hr
+{
+    border-top:1px solid #aaa;
+}
+
+hr.fullcontent
+{
+  height: 15px;
+  padding: 10px 0;
+  background: #fff url('https://issues.apache.org/jira/images/icons/hr.gif') no-repeat scroll center;
+}
+
+</style>
+
+</head>
+<body>
+
+<table class="tableBorder" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" width="100%" colspan="2" valign="top">
+                            <h3 class="formtitle">
+                        [INFRA-3590]&nbsp;<a href="https://issues.apache.org/jira/browse/INFRA-3590">add OFBiz to sonar</a>
+            <span class="subText">
+               Created: 18/Apr/11                   &nbsp;Updated: 21/Mar/14
+
+                                                    &nbsp;Resolved: 14/Jun/11
+                            </span>
+            </h3>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Status:</b></td>
+        <td width="80%">Closed</td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Project:</b></td>
+        <td width="80%"><a href="https://issues.apache.org/jira/secure/BrowseProject.jspa?id=10410">Infrastructure</a></td>
+    </tr>
+
+        <tr>
+            <td><b>Component/s:</b></td>
+            <td>
+                                        <a title="Analysis - Component for the Sonar installation at http://analysis.apache.org"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=10410&component=12314205"
+            >Analysis</a>                        </td>
+    </tr>
+    
+
+    
+
+        <tr>
+            <td><b>Fix Version/s:</b></td>
+            <td>
+                            None
+                </td>
+    </tr>
+    
+    </table>
+
+<br />
+<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" valign="top" width="20%">
+            <b>Type:</b>
+        </td>
+        <td bgcolor="#ffffff" valign="top"  width="30%" >
+            Task
+        </td>
+
+                    <td bgcolor="#f0f0f0">
+                <b>Priority:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap>
+                Major
+            </td>
+            </tr>
+    <tr>
+                        <td bgcolor="#f0f0f0" valign="top" width="20%">
+                <b>Reporter:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top"  width="30%" >
+                                            <a class="user-hover" rel="erwan" id="word_reporter_erwan" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=erwan">Erwan de FERRIERES</a>
+                            </td>
+        
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Assignee:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap  width="30%" >
+                                            <a class="user-hover" rel="olamy" id="word_assignee_olamy" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=olamy">Olivier Lamy (*$^¨%`£)</a>
+                            </td>
+            </tr>
+    	<tr>
+		<td bgcolor="#f0f0f0" width="20%">
+			<b>Resolution:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                            Incomplete
+                    </td>
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Votes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                0
+            </td>
+        
+    </tr>
+    
+        <tr>
+        <td bgcolor="#f0f0f0" width="20%">
+            <b>Labels:</b>
+        </td>
+        <td id="labels-12504540-value" class="value" bgcolor="#ffffff" valign="top" colspan="3" nowrap>
+                            None
+                    </td>
+    </tr>
+    
+    	<tr>
+        		<td bgcolor="#f0f0f0" width="20%"><b>Remaining Estimate:</b></td>
+        <td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Time Spent:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+	</tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Original Estimate:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    
+    </table>
+
+
+
+    <br />
+
+    	<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+
+        
+            <tr>
+            <td bgcolor="#f0f0f0" width="20%" valign="top">
+                <b>Issue Links:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" class="noPadding">
+                <table cellpadding="0" cellspacing="0" border="0" width="100%" class="blank">
+                                            <tr>
+                            <td colspan="4" bgcolor="#f0f0f0">
+                                <b>Blocker</b><br/>
+                            </td>
+                        </tr>
+                                                                <tr>
+            <td>
+                is blocked by
+            </td>
+            <td>
+                <a href="https://issues.apache.org/jira/browse/OFBIZ-4757">
+                     OFBIZ-4757                 </a>
+            </td>
+            <td>
+                Cobertura target fails
+            </td>
+            <td>
+                Reopened
+            </td>
+        </tr>
+            <tr>
+            <td>
+                is blocked by
+            </td>
+            <td>
+                <a href="https://issues.apache.org/jira/browse/OFBIZ-4794">
+                     <strike>OFBIZ-4794</strike>                 </a>
+            </td>
+            <td>
+                set different ports for testing in a ...
+            </td>
+            <td>
+                Closed
+            </td>
+        </tr>
+                                                <tr>
+                            <td colspan="4" bgcolor="#f0f0f0">
+                                <b>Reference</b><br/>
+                            </td>
+                        </tr>
+                                    <tr>
+            <td>
+                relates to
+            </td>
+            <td>
+                <a href="https://issues.apache.org/jira/browse/OFBIZ-4773">
+                     OFBIZ-4773                 </a>
+            </td>
+            <td>
+                Migrate to JACOCO for code coverage a...
+            </td>
+            <td>
+                Open
+            </td>
+        </tr>
+                                                                    </table>
+            </td>
+        </tr>
+    
+
+
+
+                        <tr>
+                <td bgcolor="#f0f0f0" width="20%" valign="top"><b>Review Date:</b></td>
+                <td id="customfield_12310820-12504540-value" class="value" bgcolor="#ffffff" width="80%">          <span title="06/Feb/14"><time datetime="2014-02-06">06/Feb/14</time></span>
+    </td>
+            </tr>
+            </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Description</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td id="descriptionArea">
+            svn url : <a href="http://svn.apache.org/repos/asf/ofbiz/trunk">http://svn.apache.org/repos/asf/ofbiz/trunk</a><br/>
+jdk version : jdk1.6<br/>
+<br/>
+use the ant task : sonar
+            <br/>
+        </td>
+    </tr>
+    </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Comments</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="grid" style="margin: 0;">
+                <tr id="comment-header-13028968"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="olamy" id="word_commented_olamy" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=olamy">Olivier Lamy (*$^¨%`£)</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">04/May/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13028968"><td bgcolor="#ffffff">
+            Erwan I wonder if you could have a look here <a href="http://docs.codehaus.org/display/SONAR/Analyse+with+ANT">http://docs.codehaus.org/display/SONAR/Analyse+with+ANT</a> and add the necessary target in your project ?
+        </td></tr>
+                <tr id="comment-header-13029136"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="erwan" id="word_commented_erwan" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=erwan">Erwan de FERRIERES</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">05/May/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13029136"><td bgcolor="#ffffff">
+            Hi Olivier,<br/>
+<br/>
+there is already the sonar task. Is there anything wrong with it ?<br/>
+<br/>
+use it with {code}ant sonar{code}
+        </td></tr>
+                <tr id="comment-header-13029263"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="olamy" id="word_commented_olamy" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=olamy">Olivier Lamy (*$^¨%`£)</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">05/May/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13029263"><td bgcolor="#ffffff">
+            oups my bad :-)<br/>
+I wonder if there is a need of a particular ant version.<br/>
+See the log here [<a href="https://analysis.apache.org/jenkins/job/ofbiz/1/console">https://analysis.apache.org/jenkins/job/ofbiz/1/console</a>]<br/>
+<br/>
+Disclaimer : I&#39;m not ant expert :-)
+        </td></tr>
+                <tr id="comment-header-13029265"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="olamy" id="word_commented_olamy" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=olamy">Olivier Lamy (*$^¨%`£)</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">05/May/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13029265"><td bgcolor="#ffffff">
+            And I will need you add some stuff in your build.xml<br/>
+<br/>
+{code:xml}<br/>
+&nbsp;&nbsp;&lt;property key=&quot;sonar.jdbc.url&quot; <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value=&quot;jdbc:<a href="mysql://localhost:3306/sonar?useUnicode=true&amp;characterEncoding=utf8">mysql://localhost:3306/sonar?useUnicode=true&amp;amp;characterEncoding=utf8</a>&quot; /&gt;<br/>
+&nbsp;&nbsp;&lt;property key=&quot;sonar.jdbc.driverClassName&quot; value=&quot;com.mysql.jdbc.Driver&quot; /&gt;<br/>
+&nbsp;&nbsp;&lt;property key=&quot;sonar.jdbc.username&quot; value=&quot;${sonar.jdbc.username}&quot; /&gt;<br/>
+&nbsp;&nbsp;&lt;property key=&quot;sonar.jdbc.password&quot; value=&quot;${sonar.jdbc.password}&quot; /&gt;<br/>
+<br/>
+&nbsp;&nbsp;&lt;!-- SERVER ON A REMOTE HOST --&gt;<br/>
+&nbsp;&nbsp;&lt;property key=&quot;sonar.host.url&quot; value=&quot;${sonar.host.url}&quot; /&gt;<br/>
+{code}
+        </td></tr>
+                <tr id="comment-header-13029965"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="erwan" id="word_commented_erwan" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=erwan">Erwan de FERRIERES</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">06/May/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13029965"><td bgcolor="#ffffff">
+            Hi Olivier,<br/>
+<br/>
+I&#39;ve just corrected the errors you found, and added the properties @ rev 1100240<br/>
+<br/>
+Could you please use the full-sonar task instead of just sonar ?<br/>
+<br/>
+Thanks,
+        </td></tr>
+                <tr id="comment-header-13029982"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="olamy" id="word_commented_olamy" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=olamy">Olivier Lamy (*$^¨%`£)</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">06/May/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13029982"><td bgcolor="#ffffff">
+            better but still tests issues : <a href="https://analysis.apache.org/jenkins/job/ofbiz/3/console">https://analysis.apache.org/jenkins/job/ofbiz/3/console</a><br/>
+<br/>
+I wonder if your script can ignore test failures ?
+        </td></tr>
+                <tr id="comment-header-13030063"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="erwan" id="word_commented_erwan" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=erwan">Erwan de FERRIERES</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">06/May/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13030063"><td bgcolor="#ffffff">
+            Error is coming because the port 8080 is already used on this machine...
+        </td></tr>
+                <tr id="comment-header-13030099"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="olamy" id="word_commented_olamy" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=olamy">Olivier Lamy (*$^¨%`£)</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">06/May/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13030099"><td bgcolor="#ffffff">
+            any way to change the port tru a property ? or using a random port ?
+        </td></tr>
+                <tr id="comment-header-13032053"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jacques.le.roux" id="word_commented_jacques.le.roux" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jacques.le.roux">Jacques Le Roux</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">11/May/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13032053"><td bgcolor="#ffffff">
+            As I already suggested on the OFBiz dev ML, we could also set another default port in the test-container.xml file.
+        </td></tr>
+                <tr id="comment-header-13033036"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="erwan" id="word_commented_erwan" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=erwan">Erwan de FERRIERES</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">13/May/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13033036"><td bgcolor="#ffffff">
+            Olivier,<br/>
+<br/>
+Are the 18080 and 18443 port numbers ok for you ?<br/>
+I&#39;m waiting the go from the other devs to make the change.<br/>
+<br/>
+Cheers,
+        </td></tr>
+                <tr id="comment-header-13033059"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="olamy" id="word_commented_olamy" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=olamy">Olivier Lamy (*$^¨%`£)</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">13/May/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13033059"><td bgcolor="#ffffff">
+            yup should be ok.<br/>
+btw I would prefer to use a random port.<br/>
+will it be possible to configure tru a property passed to the build ? (ie -Dtest.port )
+        </td></tr>
+                <tr id="comment-header-13041371"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="ipv6guru" id="word_commented_ipv6guru" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=ipv6guru">Gavin</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">31/May/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13041371"><td bgcolor="#ffffff">
+            ping?
+        </td></tr>
+                <tr id="comment-header-13049194"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="pctony" id="word_commented_pctony" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=pctony">Tony Stevenson</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">14/Jun/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13049194"><td bgcolor="#ffffff">
+            Ok, <br/>
+<br/>
+I am closing this as it has been left un-updated for over a month (aside from Gav&#39;s request for an update)
+        </td></tr>
+                <tr id="comment-header-13858156"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jacques.le.roux" id="word_commented_jacques.le.roux" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jacques.le.roux">Jacques Le Roux</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">28/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13858156"><td bgcolor="#ffffff">
+            With soon the introduction of the portoffset -D parameter for the run-tests ant target in OFBiz, I will reopen this issue after I will have resolved some pending issues on OFBiz side, namely at least<br/>
+* Cobertura target fails <a href="https://issues.apache.org/jira/browse/OFBIZ-4757" title="Cobertura target fails" class="issue-link" data-issue-key="OFBIZ-4757">OFBIZ-4757</a><br/>
+* As reported by Olivier, OFBIz-Jenkins-Sonar fails <a href="https://analysis.apache.org/jenkins/job/ofbiz/,">https://analysis.apache.org/jenkins/job/ofbiz/,</a> I will have a look ASAP
+        </td></tr>
+                <tr id="comment-header-13858158"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jacques.le.roux" id="word_commented_jacques.le.roux" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jacques.le.roux">Jacques Le Roux</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">28/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13858158"><td bgcolor="#ffffff">
+            If ever Cobertura issue is to long/hard to resolve, I will consider migrating to Jacoco, that&#39;s what <a href="https://issues.apache.org/jira/browse/OFBIZ-4773" title="Migrate to JACOCO for code coverage analysis" class="issue-link" data-issue-key="OFBIZ-4773">OFBIZ-4773</a> is about
+        </td></tr>
+                <tr id="comment-header-13858160"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jacques.le.roux" id="word_commented_jacques.le.roux" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jacques.le.roux">Jacques Le Roux</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">28/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13858160"><td bgcolor="#ffffff">
+            OK for <br/>
+&gt;OFBIz-Jenkins-Sonar fails <a href="https://analysis.apache.org/jenkins/job/ofbiz/,">https://analysis.apache.org/jenkins/job/ofbiz/,</a> <br/>
+<br/>
+the error is<br/>
+<br/>
+[java] org.ofbiz.base.start.StartupException: Cannot start() org.ofbiz.base.container.NamingServiceContainer (Unable to locate naming service (Port already in use: 1099; nested exception is: <br/>
+[java] java.net.BindException: Address already in use))<br/>
+<br/>
+The Jenkins script should be changed to shift all the ports (hence 1099 one) using the -Dportoffset parameter. Currently Jenkins uses<br/>
+<br/>
+[workspace] $ /x1/jenkins/jenkins-master/jenkins-home/tools/hudson.tasks.Ant_AntInstallation/ant-1.8.2/bin/ant -Dportoffset= -Dsonar.jdbc.password=sonar4ASF -Dsonar.host.url=<a href="https://analysis.apache.org">https://analysis.apache.org</a> -Dsonar.jdbc.username=sonar full-sonar<br/>
+<br/>
+Should be (for instance to shift the ports +1)<br/>
+<br/>
+[workspace] $ /x1/jenkins/jenkins-master/jenkins-home/tools/hudson.tasks.Ant_AntInstallation/ant-1.8.2/bin/ant -Dportoffset=1 -Dsonar.jdbc.password=sonar4ASF -Dsonar.host.url=<a href="https://analysis.apache.org">https://analysis.apache.org</a> -Dsonar.jdbc.username=sonar full-sonar<br/>
+<br/>
+I guess this will not be enough, since the cobertura target still fails, but it&#39;s at least a 1st step in the right direction... no hurry...
+        </td></tr>
+                <tr id="comment-header-13858161"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jacques.le.roux" id="word_commented_jacques.le.roux" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jacques.le.roux">Jacques Le Roux</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">28/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13858161"><td bgcolor="#ffffff">
+            I re-open for Olivier to have a look on the Jenkins side (I have no access there)<br/>
+<br/>
+I don&#39;t know how the portoffset should be passed to the run-tests target, here is how, for instance, I use it locally:<br/>
+<br/>
+ant run-tests -Dportoffset=1
+        </td></tr>
+                <tr id="comment-header-13858225"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="ipv6guru" id="word_commented_ipv6guru" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=ipv6guru">Gavin</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">29/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13858225"><td bgcolor="#ffffff">
+            I ran it again with -Dportoffset=1 ; fails at corbutura now by the looks of it.<br/>
+<br/>
+<a href="https://analysis.apache.org/jenkins/job/ofbiz/678/console">https://analysis.apache.org/jenkins/job/ofbiz/678/console</a> <br/>
+<br/>
+(command run was:<br/>
+<br/>
+[workspace] $ /x1/jenkins/jenkins-master/jenkins-home/tools/hudson.tasks.Ant_AntInstallation/ant-1.8.2/bin/ant -Dportoffset=1 -Dsonar.jdbc.password=sonar4ASF -Dsonar.host.url=<a href="https://analysis.apache.org">https://analysis.apache.org</a> -Dsonar.jdbc.username=sonar full-sonar<br/>
+Buildfile: /x1/jenkins/jenkins-master/jenkins-home/jobs/ofbiz/workspace/build.xml<br/>
+<br/>
+)<br/>
+
+        </td></tr>
+                <tr id="comment-header-13858226"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="ipv6guru" id="word_commented_ipv6guru" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=ipv6guru">Gavin</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">29/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13858226"><td bgcolor="#ffffff">
+            checking the full console output for &#39;port=&#39; gives us:<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[java] 2013-12-29 03:01:55,670 (main) [  CatalinaContainer.java:522:INFO ] Creating connector for address=&#39;0.0.0.0&#39; port=&#39;8011&#39; protocol=&#39;ajp&#39;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[java] 2013-12-29 03:01:55,961 (main) [  CatalinaContainer.java:522:INFO ] Creating connector for address=&#39;0.0.0.0&#39; port=&#39;8081&#39; protocol=&#39;http&#39;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[java] 2013-12-29 03:01:56,657 (main) [  CatalinaContainer.java:522:INFO ] Creating connector for address=&#39;0.0.0.0&#39; port=&#39;8444&#39; protocol=&#39;https&#39;<br/>
+<br/>
+<br/>
+whereas a previous run used:<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[java] 2013-12-28 12:41:56,958 (main) [  CatalinaContainer.java:522:INFO ] Creating connector for address=&#39;0.0.0.0&#39; port=&#39;8010&#39; protocol=&#39;ajp&#39;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[java] 2013-12-28 12:41:57,104 (main) [  CatalinaContainer.java:522:INFO ] Creating connector for address=&#39;0.0.0.0&#39; port=&#39;8080&#39; protocol=&#39;http&#39;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[java] 2013-12-28 12:41:57,152 (main) [  CatalinaContainer.java:522:INFO ] Creating connector for address=&#39;0.0.0.0&#39; port=&#39;8443&#39; protocol=&#39;https&#39;<br/>
+<br/>
+So I&#39;d say tat confirms portoffset=1 is working fine.<br/>
+<br/>
+Lets move on to corbutura, what needs looking at?
+        </td></tr>
+                <tr id="comment-header-13858325"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jacques.le.roux" id="word_commented_jacques.le.roux" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jacques.le.roux">Jacques Le Roux</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">29/Dec/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13858325"><td bgcolor="#ffffff">
+            Hi Gavin,<br/>
+<br/>
+Yes I mucked up with Cobertura in OFBiz build. Next run should be better. Cut I don&#39;t know how Jenkins is running Cobertura in OFBiz context. <br/>
+As ant -p shows, in OFBIz we have those Sonar related targets:<br/>
+cobertura-report--------------Generate a HTML code coverage report with cobertura, can be found in runtime/logs/cobertura-report<br/>
+cobertura-report-xml--------- Generate a XML file from the cobertura report, this will be used by sonar<br/>
+run-tests-with-cobertura------Download Cobertura and perform code coverage (same as run-tests). You will need a valid Internet connection to download cobertura<br/>
+sonar-------------------------Sonar code analysis. You need a Sonar instance running to use it. More info on <a href="http://www.sonarsource.org/">http://www.sonarsource.org/</a><br/>
+<br/>
+I have had a look 3 months ago (previously Erwan was taking care of it), but not sure what the situation is at the moment... I will have a look again next week, WIP...
+        </td></tr>
+                <tr id="comment-header-13889143"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="ipv6guru" id="word_commented_ipv6guru" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=ipv6guru">Gavin</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">03/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13889143"><td bgcolor="#ffffff">
+            hey [~jacques.le.roux] zny more progress ?
+        </td></tr>
+                <tr id="comment-header-13889300"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jacques.le.roux" id="word_commented_jacques.le.roux" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jacques.le.roux">Jacques Le Roux</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">03/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13889300"><td bgcolor="#ffffff">
+            Hi Gavin,<br/>
+<br/>
+[~ipv6guru], unfortunately did not get enough time to look at it since.
+        </td></tr>
+                <tr id="comment-header-13943473"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="ipv6guru" id="word_commented_ipv6guru" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=ipv6guru">Gavin</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13943473"><td bgcolor="#ffffff">
+            Feedback timeout.<br/>
+<br/>
+In addition I have disabled the Ofbiz Sonar build until it is looked at as it hasn&#39;t passed in a very long time.
+        </td></tr>
+            </table>
+Generated at Sat Mar 22 13:33:17 UTC 2014 using JIRA 6.2#6252-sha1:aa343257d4ce030d9cb8c531be520be9fac1c996.
+
+</body>
+</html>

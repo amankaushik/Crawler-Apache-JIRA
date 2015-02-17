@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>[#OFBIZ-4952] BIRT Web Viewer Integration</title>
+    <meta http-equiv="Content-Type" Content="application/vnd.ms-word; charset=utf-8">
+        <style type="text/css">
+
+.tableBorder, .grid
+{
+    background-color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableBorder td, .grid td
+{
+    vertical-align: top;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+.noPadding
+{
+    padding: 0 !important;
+}
+
+h3 .subText
+{
+    font-size: 60%;
+    font-weight: normal;
+}
+
+.tabLabel
+{
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-bottom:none;
+    padding: 2px;
+    display: inline;
+}
+
+td.blank
+{
+    padding: 0;
+    margin: 0;
+}
+
+.blank td
+{
+    border: none;
+}
+
+#descriptionArea
+{
+    margin: 0;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+hr
+{
+    border-top:1px solid #aaa;
+}
+
+hr.fullcontent
+{
+  height: 15px;
+  padding: 10px 0;
+  background: #fff url('https://issues.apache.org/jira/images/icons/hr.gif') no-repeat scroll center;
+}
+
+</style>
+
+</head>
+<body>
+
+<table class="tableBorder" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" width="100%" colspan="2" valign="top">
+                            <h3 class="formtitle">
+                        [OFBIZ-4952]&nbsp;<a href="https://issues.apache.org/jira/browse/OFBIZ-4952">BIRT Web Viewer Integration</a>
+            <span class="subText">
+               Created: 04/Jul/12                   &nbsp;Updated: 20/Mar/14
+
+                                                    &nbsp;Resolved: 19/Mar/14
+                            </span>
+            </h3>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Status:</b></td>
+        <td width="80%">Closed</td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Project:</b></td>
+        <td width="80%"><a href="https://issues.apache.org/jira/secure/BrowseProject.jspa?id=12310500">OFBiz</a></td>
+    </tr>
+
+        <tr>
+            <td><b>Component/s:</b></td>
+            <td>
+                                        <a title="framework - All issues related to the various framework components. In other words the Entity Engine, Service Engine, Widgets, and all others in the framework."
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310500&component=12311145"
+            >framework</a>                        </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Affects Version/s:</b></td>
+            <td>
+                                        <a title="SVN trunk - Changes going into the current SVN trunk"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310500&version=12311928"
+            >SVN trunk</a>                        </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Fix Version/s:</b></td>
+            <td>
+                                        <a title="SVN trunk - Changes going into the current SVN trunk"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310500&fixfor=12311928"
+            >SVN trunk</a>                        </td>
+    </tr>
+    
+    </table>
+
+<br />
+<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" valign="top" width="20%">
+            <b>Type:</b>
+        </td>
+        <td bgcolor="#ffffff" valign="top"  width="30%" >
+            New Feature
+        </td>
+
+                    <td bgcolor="#f0f0f0">
+                <b>Priority:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap>
+                Major
+            </td>
+            </tr>
+    <tr>
+                        <td bgcolor="#f0f0f0" valign="top" width="20%">
+                <b>Reporter:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top"  width="30%" >
+                                            <a class="user-hover" rel="chatree" id="word_reporter_chatree" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=chatree">Chatree Srichart</a>
+                            </td>
+        
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Assignee:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap  width="30%" >
+                                            <a class="user-hover" rel="jacques.le.roux" id="word_assignee_jacques.le.roux" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jacques.le.roux">Jacques Le Roux</a>
+                            </td>
+            </tr>
+    	<tr>
+		<td bgcolor="#f0f0f0" width="20%">
+			<b>Resolution:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                            Implemented
+                    </td>
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Votes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                0
+            </td>
+        
+    </tr>
+    
+        <tr>
+        <td bgcolor="#f0f0f0" width="20%">
+            <b>Labels:</b>
+        </td>
+        <td id="labels-12597457-value" class="value" bgcolor="#ffffff" valign="top" colspan="3" nowrap>
+                            birt, viewer                    </td>
+    </tr>
+    
+    	<tr>
+        		<td bgcolor="#f0f0f0" width="20%"><b>Remaining Estimate:</b></td>
+        <td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            0.05h
+            		</td>
+    </tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Time Spent:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+	</tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Original Estimate:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            0.05h
+            		</td>
+    </tr>
+    
+    	<tr>
+
+		<td bgcolor="#f0f0f0" width="20%" valign="top">
+			<b>Environment:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" colspan="3">
+            <p>Ubuntu 12.04</p>
+		</td>
+	</tr>
+    </table>
+
+
+
+    <br />
+
+    	<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+
+                <tr>
+            <td bgcolor="#f0f0f0" width=20% valign=top>
+                <b>Attachments:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top">
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        OFBIZ-4952 error stack.log &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/image.gif" height="16" width="16" alt="JPEG File" />
+                                        birt_viewer.jpg &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/image.gif" height="16" width="16" alt="PNG File" />
+                                        birt_web_content.png &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        birt_web_viewer.patch &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        birt_web_viewer.patch &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        birt_web_viewer.patch &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        birt_web_viewer.patch &nbsp;&nbsp;&nbsp;
+                            </td>
+        </tr>
+        
+    
+
+
+
+</table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Description</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td id="descriptionArea">
+            <p>Hello all,</p>
+
+<p>I have created a patch to solve a viewer servlet problem and uncomment the viewer servlet in the birt webapp. To do this will allow a user to use BIRT Web Viewer to render a report by coping a webcontent directory from birt-runtime-x_x_x/WebViewerExample directory and paste into the birt webapp directory ($OFBIZ_HOME/specialpurpose/example/webapp/birt).</p>
+
+<p>These are URLs to render example reports using BIRT Web Viewer.<br/>
+<a href="http://localhost:8080/birt/frameset?__report=component://example/webapp/birt/report/example.rptdesign" class="external-link" rel="nofollow">http://localhost:8080/birt/frameset?__report=component://example/webapp/birt/report/example.rptdesign</a><br/>
+<a href="http://localhost:8080/birt/frameset?__report=component://example/webapp/birt/report/chart.rptdesign" class="external-link" rel="nofollow">http://localhost:8080/birt/frameset?__report=component://example/webapp/birt/report/chart.rptdesign</a></p>
+
+<p>Regards,<br/>
+Chatree Srichart</p>
+            <br/>
+        </td>
+    </tr>
+    </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Comments</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="grid" style="margin: 0;">
+                <tr id="comment-header-13419786"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jacques.le.roux" id="word_commented_jacques.le.roux" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jacques.le.roux">Jacques Le Roux</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Jul/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13419786"><td bgcolor="#ffffff">
+            <p>Birt has been moved to specialpupose since...</p>
+        </td></tr>
+                <tr id="comment-header-13419976"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="chatree" id="word_commented_chatree" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=chatree">Chatree Srichart</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">22/Jul/12</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13419976"><td bgcolor="#ffffff">
+            <p>Hi Jacques,</p>
+
+<p>I have already created a new patch for the birt component in specialpurpose directory.</p>
+
+<p>For testing the example URLs will be:<br/>
+<a href="http://localhost:8080/birt/frameset?__report=component://birt/webapp/birt/report/example.rptdesign" class="external-link" rel="nofollow">http://localhost:8080/birt/frameset?__report=component://birt/webapp/birt/report/example.rptdesign</a><br/>
+<a href="http://localhost:8080/birt/frameset?__report=component://birt/webapp/birt/report/chart.rptdesign" class="external-link" rel="nofollow">http://localhost:8080/birt/frameset?__report=component://birt/webapp/birt/report/chart.rptdesign</a></p>
+
+<p>Regards,<br/>
+Chatree Srichart</p>
+        </td></tr>
+                <tr id="comment-header-13749040"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jacques.le.roux" id="word_commented_jacques.le.roux" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jacques.le.roux">Jacques Le Roux</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">23/Aug/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13749040"><td bgcolor="#ffffff">
+            <p>Hi Chatree,</p>
+
+<p>I have applied your patch, and apart a small issue it went well. But when I use the URLs above I get this error:</p>
+<hr />
+<p>HTTP Status 500 - File &quot;/webcontent/birt/pages/layout/FramesetFragment.jsp&quot; not found</p>
+
+<p>type Exception report</p>
+
+<p>message File &quot;/webcontent/birt/pages/layout/FramesetFragment.jsp&quot; not found</p>
+
+<p>description The server encountered an internal error that prevented it from fulfilling this request.</p>
+
+<p>exception</p>
+
+<p>javax.servlet.ServletException: File &quot;/webcontent/birt/pages/layout/FramesetFragment.jsp&quot; not found<br/>
+	org.apache.jasper.servlet.JspServlet.handleMissingResource(JspServlet.java:412)<br/>
+	org.apache.jasper.servlet.JspServlet.serviceJspFile(JspServlet.java:379)<br/>
+	org.apache.jasper.servlet.JspServlet.service(JspServlet.java:334)<br/>
+	javax.servlet.http.HttpServlet.service(HttpServlet.java:722)<br/>
+	org.eclipse.birt.report.presentation.aggregation.layout.FramesetFragment.service(FramesetFragment.java:98)<br/>
+	org.eclipse.birt.report.servlet.ViewerServlet.__doGet(ViewerServlet.java:181)<br/>
+	org.eclipse.birt.report.servlet.BirtSoapMessageDispatcherServlet.doGet(BirtSoapMessageDispatcherServlet.java:160)<br/>
+	javax.servlet.http.HttpServlet.service(HttpServlet.java:621)<br/>
+	org.apache.axis.transport.http.AxisServletBase.service(AxisServletBase.java:327)<br/>
+	javax.servlet.http.HttpServlet.service(HttpServlet.java:722)<br/>
+	org.eclipse.birt.report.servlet.BirtSoapMessageDispatcherServlet.service(BirtSoapMessageDispatcherServlet.java:122)<br/>
+	org.eclipse.birt.report.filter.ViewerFilter.doFilter(ViewerFilter.java:68)<br/>
+	org.ofbiz.webapp.control.ContextFilter.doFilter(ContextFilter.java:314)</p>
+
+<p>note The full stack trace of the root cause is available in the Apache Tomcat/7.0.42 logs.</p>
+<hr />
+
+<p>And the attached stack</p>
+
+
+<p>Did I miss something or did you miss to add a file  (FramesetFragment.jsp?) or is it related to changes since (see the stack)?</p>
+        </td></tr>
+                <tr id="comment-header-13749316"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="chatree" id="word_commented_chatree" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=chatree">Chatree Srichart</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">24/Aug/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13749316"><td bgcolor="#ffffff">
+            <p>Hi Jacques,</p>
+
+<p>I have just tested my patch again and it still works fine.<br/>
+I used BIRT Runtime 3.7.2 which contains FramesetFragment.jsp file.</p>
+
+<p>You can download the birt rumtime here.<br/>
+<a href="http://www.eclipse.org/downloads/download.php?file=/birt/downloads/drops/R-R1-3_7_2-201202141408/birt-runtime-3_7_2.zip" class="external-link" rel="nofollow">http://www.eclipse.org/downloads/download.php?file=/birt/downloads/drops/R-R1-3_7_2-201202141408/birt-runtime-3_7_2.zip</a></p>
+
+<p>I tested these URLs:<br/>
+<a href="http://localhost:8080/birt/frameset?__report=component://birt/webapp/birt/report/example.rptdesign" class="external-link" rel="nofollow">http://localhost:8080/birt/frameset?__report=component://birt/webapp/birt/report/example.rptdesign</a><br/>
+<a href="http://localhost:8080/birt/frameset?__report=component://birt/webapp/birt/report/chart.rptdesign" class="external-link" rel="nofollow">http://localhost:8080/birt/frameset?__report=component://birt/webapp/birt/report/chart.rptdesign</a></p>
+
+<p>Best Regards,<br/>
+Chatree Sricharat</p>
+        </td></tr>
+                <tr id="comment-header-13749317"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="chatree" id="word_commented_chatree" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=chatree">Chatree Srichart</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">24/Aug/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13749317"><td bgcolor="#ffffff">
+            <p>Screenshot to show that FramesetFragment.jsp is in the webcontent directory.</p>
+        </td></tr>
+                <tr id="comment-header-13749348"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jacques.le.roux" id="word_commented_jacques.le.roux" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jacques.le.roux">Jacques Le Roux</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">24/Aug/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13749348"><td bgcolor="#ffffff">
+            <p>I downloaded the Birt runtime, but what should I do with it? I have never used Birt apart some test as user in OFBiz, so I'm a bit lost. </p>
+
+<p>Also before committing I will need to resolve <a href="https://issues.apache.org/jira/browse/OFBIZ-5267" title="Net before overhead report generates an error" class="issue-link" data-issue-key="OFBIZ-5267"><del>OFBIZ-5267</del></a>. Because the solution of uncommenting the Birt webapps as suggested in <a href="https://issues.apache.org/jira/browse/OFBIZ-5297" title="Order Report Issue" class="issue-link" data-issue-key="OFBIZ-5297"><del>OFBIZ-5297</del></a> breaks the contextual help for those applications.</p>
+        </td></tr>
+                <tr id="comment-header-13749349"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jacques.le.roux" id="word_commented_jacques.le.roux" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jacques.le.roux">Jacques Le Roux</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">24/Aug/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13749349"><td bgcolor="#ffffff">
+            <p>Patch updated, only change related to <a href="https://issues.apache.org/jira/browse/OFBIZ-5053" title="correct BIRT_VIEWER_SCRIPTLIB_DIR configuration" class="issue-link" data-issue-key="OFBIZ-5053"><del>OFBIZ-5053</del></a> already commited</p>
+        </td></tr>
+                <tr id="comment-header-13749351"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="chatree" id="word_commented_chatree" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=chatree">Chatree Srichart</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">24/Aug/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13749351"><td bgcolor="#ffffff">
+            <p>As I mention in the description, after you unzip birt-runtime-3_7_2.zip file, you will have "webcontent" directory in birt-runtime-3_7_2/WebViewerExample. Then, you copy the "webcontent" directory and paste into the birt webapp directory ($OFBIZ_HOME/specialpurpose/birt/webapp/birt).</p>
+
+<p>So, you can now use the BIRT viewer.<br/>
+<a href="http://localhost:8080/birt/frameset?__report=component://birt/webapp/birt/report/example.rptdesign" class="external-link" rel="nofollow">http://localhost:8080/birt/frameset?__report=component://birt/webapp/birt/report/example.rptdesign</a><br/>
+<a href="http://localhost:8080/birt/frameset?__report=component://birt/webapp/birt/report/chart.rptdesign" class="external-link" rel="nofollow">http://localhost:8080/birt/frameset?__report=component://birt/webapp/birt/report/chart.rptdesign</a></p>
+
+<p>I am not sure if the patch will solve other problems. This path is just helpful if a user want to use BIRT web viwer.</p>
+
+<p>Best Regards,<br/>
+Chatree Srichart</p>
+        </td></tr>
+                <tr id="comment-header-13749369"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="taher" id="word_commented_taher" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=taher">Taher Alkhateeb</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">24/Aug/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13749369"><td bgcolor="#ffffff">
+            <p>Hi everyone, and thank you for the efforts.</p>
+
+<p>I am not sure why exactly are we integrating birt web viewer in the first place? BIRT is already integrated with our screens, forms, and multiple different report outputs including HTML and PDF. The web viewer is just another user interface to generate BIRT reports from. I see no need to introduce it in OFBiz.</p>
+
+<p>For example, if you go to eclipse's website to review the definition of the web viewer, you will find the following "overview" section of the web viewer:</p>
+
+<blockquote>
+<p>This Viewer is an AJAX based Java EE application that illustrates using the BIRT engine to generate and render report content.</p>
+
+<p>The Web Viewer can be used to generate and render reports, and also supports more interactive features such as table of contents, exporting report content to several formats, client and server side printing, as well as report pagination.�The features available will depend on what servlet mapping is used, the settings available in the web.xml file and what values are passed as parameters.</p></blockquote>
+
+<p>All of the above is already available and functioning in OFBiz! Perhaps you guys can further illustrate the added value of this integration?</p>
+        </td></tr>
+                <tr id="comment-header-13749528"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jacques.le.roux" id="word_commented_jacques.le.roux" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jacques.le.roux">Jacques Le Roux</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">25/Aug/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13749528"><td bgcolor="#ffffff">
+            <p>== ADD INFO on external issue ==</p>
+
+<p>Chatree and all, about </p>
+
+<p>&gt;I am not sure if the patch will solve other problems. This path is just helpful if a user want to use BIRT web viwer.</p>
+
+<p>To be clear, one thing in your patch (disregarding it's usefulness, as Taher pointed out) that would be a blocker is the birt to order components dependency, through the order controller call. </p>
+
+<p>On the other hand, the only solution so far, is to use the commented out webapps in Birt ofbiz-component.xml file. But those break the contextual help. <br/>
+So I will implemented a way to make the birt to order dependency a loose coupling. This, by introducing a if-present attribute to the include element in controller.  Basically, when used, it will check for component presence (only component so far). And if not it will throw a warning rather than an error and a stack. The idea is to prevent showing errors in future releases, where specialpurpose will (so far) contain only the ecommerce component. The warning message will suggest to checkout the relevant specialpurpose component/s from trunk if necessary or to simply neglect the warning. This will be implemented through <a href="https://issues.apache.org/jira/browse/OFBIZ-5267" title="Net before overhead report generates an error" class="issue-link" data-issue-key="OFBIZ-5267"><del>OFBIZ-5267</del></a>...</p>
+        </td></tr>
+                <tr id="comment-header-13749996"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jacques.le.roux" id="word_commented_jacques.le.roux" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jacques.le.roux">Jacques Le Roux</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">26/Aug/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13749996"><td bgcolor="#ffffff">
+            <p><a href="https://issues.apache.org/jira/browse/OFBIZ-5267" title="Net before overhead report generates an error" class="issue-link" data-issue-key="OFBIZ-5267"><del>OFBIZ-5267</del></a> ready to test</p>
+        </td></tr>
+                <tr id="comment-header-13756998"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jacques.le.roux" id="word_commented_jacques.le.roux" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jacques.le.roux">Jacques Le Roux</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">03/Sep/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13756998"><td bgcolor="#ffffff">
+            <p>Hi Chatree,</p>
+
+<p>Could you explain why you implemented the Birt Web Viewer? What it added to you?</p>
+
+<p>Thanks!</p>
+        </td></tr>
+                <tr id="comment-header-13761247"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="chatree" id="word_commented_chatree" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=chatree">Chatree Srichart</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">08/Sep/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13761247"><td bgcolor="#ffffff">
+            <p>Hi Jacques,</p>
+
+<p>For the user point of view, BIRT Web Viewer provides many options to play over the report:</p>
+<ul class="alternate" type="square">
+	<li>Showing table of content</li>
+	<li>Changing report's parameters over AJAX dialog</li>
+	<li>Exporting data by selecting required columns</li>
+	<li>Exporting report with many options</li>
+	<li>Printing report</li>
+	<li>AJAX pagination</li>
+</ul>
+
+
+<p>For the developer point if view, they can test the report that they are working on by just specify report's path on the address bar, don't need to create request map, view map, screen for testing. For testing, they might change values of parameters often, so that they don't need to wait the whole page reloaded anytime they change the parameter's values.</p>
+
+<p>Sure, these features could be done by OFBiz screen but there is no one implement it yet. If so, he/she might need to spend so much of power to do to get it work the same as BIRT Web Viewer works.</p>
+
+<p>Best Regards,<br/>
+Chatree Srichart</p>
+        </td></tr>
+                <tr id="comment-header-13761692"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jacques.le.roux" id="word_commented_jacques.le.roux" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jacques.le.roux">Jacques Le Roux</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">09/Sep/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13761692"><td bgcolor="#ffffff">
+            <p>Hi Chatree,</p>
+
+<p>After fixing 2 issues in your patch (attached a new patch)</p>
+<ul>
+	<li>we now uses the if-present attribute when including birt controller</li>
+	<li>you added and also removed ViewerServletRequest.java</li>
+</ul>
+
+
+<p>this sounds interesting indeed, notably the export and print features. But should we not provide an easier way for users than typing the whole urls? Did you already think about it?</p>
+        </td></tr>
+                <tr id="comment-header-13772056"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jacques.le.roux" id="word_commented_jacques.le.roux" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jacques.le.roux">Jacques Le Roux</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">19/Sep/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13772056"><td bgcolor="#ffffff">
+            <p>Hi Chatree,</p>
+
+<p>Did you get a chance to thing about an easier way for users than typing an url?</p>
+        </td></tr>
+                <tr id="comment-header-13772959"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="chatree" id="word_commented_chatree" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=chatree">Chatree Srichart</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">20/Sep/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13772959"><td bgcolor="#ffffff">
+            <p>Hi Jacques,</p>
+
+<p>I am sorry for the late reply. Could you have a look at the attached image which is what I am thinking about? I don't think this is a good design but it might be easier for user to view the report file.</p>
+
+<p>Best Regards,<br/>
+Chatree Srichart</p>
+        </td></tr>
+                <tr id="comment-header-13772962"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="chatree" id="word_commented_chatree" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=chatree">Chatree Srichart</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">20/Sep/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13772962"><td bgcolor="#ffffff">
+            <p>Users can type a report location in a text box then press a view button. Then BIRT Viewer page will be displayed as iframe at the bottom.</p>
+        </td></tr>
+                <tr id="comment-header-13772966"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jacques.le.roux" id="word_commented_jacques.le.roux" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jacques.le.roux">Jacques Le Roux</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">20/Sep/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13772966"><td bgcolor="#ffffff">
+            <p>Chatree,</p>
+
+<p>This sounds already quite easier, the component:// part should be abstracted. From where this form would be accessible? Also why not opening a new browser tab or window?</p>
+        </td></tr>
+                <tr id="comment-header-13772969"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jacques.le.roux" id="word_commented_jacques.le.roux" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jacques.le.roux">Jacques Le Roux</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">20/Sep/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13772969"><td bgcolor="#ffffff">
+            <p>Are Birt reports <br/>
+<a href="https://localhost:8443/accounting/control/paymentReportHtml" class="external-link" rel="nofollow">https://localhost:8443/accounting/control/paymentReportHtml</a> <br/>
+<a href="https://localhost:8443/facility/control/RenderInventoryReportHtml" class="external-link" rel="nofollow">https://localhost:8443/facility/control/RenderInventoryReportHtml</a><br/>
+"rendered in an iframe"?</p>
+
+<p>Because I don't see any iframe tags in sources, but I read in the Birt online help: </p>
+
+<blockquote>
+<p>1. HTML tab<br/>
+When you click on this tab. It will show the complete report in an iframe.</p>
+
+<p>2. PDF tab<br/>
+When you click on this tab. It will render the report in a pdf format </p></blockquote>
+        </td></tr>
+                <tr id="comment-header-13772970"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="chatree" id="word_commented_chatree" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=chatree">Chatree Srichart</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">20/Sep/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13772970"><td bgcolor="#ffffff">
+            <p>Hi Jacques,</p>
+
+<p>I haven't implemented it yet. I think opening a new browser tab or window might bring a user out of perception. If you think it would be better then fine. I am quite busy at the moment. I will fine out a change to implement it.</p>
+
+<p>Best Regards,<br/>
+Chatree Srichart</p>
+        </td></tr>
+                <tr id="comment-header-13772979"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jacques.le.roux" id="word_commented_jacques.le.roux" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jacques.le.roux">Jacques Le Roux</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">20/Sep/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13772979"><td bgcolor="#ffffff">
+            <p>I have no pb with an iframe, do it as it seems better for you, looking forward...</p>
+        </td></tr>
+                <tr id="comment-header-13772983"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="chatree" id="word_commented_chatree" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=chatree">Chatree Srichart</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">20/Sep/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13772983"><td bgcolor="#ffffff">
+            <p>The BIRT online help is not up to date. I used to show an example BIRT report within iframe. However, The HTML report is a HTML page by itself.</p>
+        </td></tr>
+                <tr id="comment-header-13891968"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jacques.le.roux" id="word_commented_jacques.le.roux" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jacques.le.roux">Jacques Le Roux</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">05/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13891968"><td bgcolor="#ffffff">
+            <p>Chatree,</p>
+
+<p>I'd be interested to continue on this, but would it be possible to update some libs used by Birt before? Namely</p>
+
+<p>org.eclipse.core.jobs_3.5.101.v20120113-1953.jar<br/>
+org.eclipse.core.resources_3.7.101.v20120125-1505.jar<br/>
+org.eclipse.equinox.registry_3.5.101.R37x_v20110810-1611.jar<br/>
+org.eclipse.osgi_3.7.2.v20120110-1415.jar<br/>
+saaj.jar</p>
+        </td></tr>
+                <tr id="comment-header-13892274"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="chatree" id="word_commented_chatree" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=chatree">Chatree Srichart</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">05/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13892274"><td bgcolor="#ffffff">
+            <p>Hi Jacques,</p>
+
+<p>In my experience, some of jar files are related. If we update some of them, they might conflict to others. What I did was I updated all jar files which were from the same version of BIRT runtime .</p>
+
+<p>I don't know whether the files you want to update are related to others or not. So, the safe way is to update all files which are from the same version of BIRT runtime .</p>
+
+<p>I am glad to know you would be interested to continue on BIRT.</p>
+
+<p>Best Regards,<br/>
+Chatree Srichart</p>
+        </td></tr>
+                <tr id="comment-header-13892287"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jacques.le.roux" id="word_commented_jacques.le.roux" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jacques.le.roux">Jacques Le Roux</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">05/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13892287"><td bgcolor="#ffffff">
+            <p>Yes this sounds that the way to go indeed. Could you handle it in another Jira issue?</p>
+        </td></tr>
+                <tr id="comment-header-13892292"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="chatree" id="word_commented_chatree" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=chatree">Chatree Srichart</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">05/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13892292"><td bgcolor="#ffffff">
+            <p>Sure. I will take care of that.</p>
+        </td></tr>
+                <tr id="comment-header-13892337"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jacques.le.roux" id="word_commented_jacques.le.roux" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jacques.le.roux">Jacques Le Roux</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">05/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13892337"><td bgcolor="#ffffff">
+            <p>Great, thanks Chatree!</p>
+        </td></tr>
+                <tr id="comment-header-13894302"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jacques.le.roux" id="word_commented_jacques.le.roux" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jacques.le.roux">Jacques Le Roux</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">07/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13894302"><td bgcolor="#ffffff">
+            <p>OK I will review this in a week or 2, should be ok.</p>
+        </td></tr>
+                <tr id="comment-header-13894389"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="chatree" id="word_commented_chatree" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=chatree">Chatree Srichart</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">07/Feb/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13894389"><td bgcolor="#ffffff">
+            <p>Thanks Jacques!</p>
+        </td></tr>
+                <tr id="comment-header-13936123"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jacques.le.roux" id="word_commented_jacques.le.roux" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jacques.le.roux">Jacques Le Roux</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">15/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13936123"><td bgcolor="#ffffff">
+            <p>Hi Chatree</p>
+
+<p>I will commit your patch next week. Could you collect the information you gave me into a wiki page, to explain to users how this is supposed to work and such?</p>
+
+<p>Thanks</p>
+        </td></tr>
+                <tr id="comment-header-13936151"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="chatree" id="word_commented_chatree" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=chatree">Chatree Srichart</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">15/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13936151"><td bgcolor="#ffffff">
+            <p>Sure! Could I write on this page? <a href="https://cwiki.apache.org/confluence/display/OFBIZ/Using+BIRT+with+OFBiz" class="external-link" rel="nofollow">https://cwiki.apache.org/confluence/display/OFBIZ/Using+BIRT+with+OFBiz</a></p>
+        </td></tr>
+                <tr id="comment-header-13936155"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jacques.le.roux" id="word_commented_jacques.le.roux" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jacques.le.roux">Jacques Le Roux</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">15/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13936155"><td bgcolor="#ffffff">
+            <p>Well spotted, this sounds like the right place. Ha, something you need is a contributor access. I will create your access, I need your information to complete <a href="https://cwiki.apache.org/confluence/display/OFBADMIN/Apache+OFBiz+Contributors" class="external-link" rel="nofollow">https://cwiki.apache.org/confluence/display/OFBADMIN/Apache+OFBiz+Contributors</a></p>
+
+<p>Thanks!</p>
+        </td></tr>
+                <tr id="comment-header-13936162"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="chatree" id="word_commented_chatree" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=chatree">Chatree Srichart</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">15/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13936162"><td bgcolor="#ffffff">
+            <p>Well, my information is:</p>
+
+<p>Name: Chatree Srichart<br/>
+email: chatree.srichart@gmail.com<br/>
+Company: -<br/>
+Location: Chiang Mai, Thailand<br/>
+Wiki username: chatree</p>
+
+<p>Thanks!</p>
+
+<p>Best Regards,</p>
+        </td></tr>
+                <tr id="comment-header-13936180"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jacques.le.roux" id="word_commented_jacques.le.roux" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jacques.le.roux">Jacques Le Roux</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">15/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13936180"><td bgcolor="#ffffff">
+            <p>Done, you have write access to wiki <img class="emoticon" src="https://issues.apache.org/jira/images/icons/emoticons/smile.gif" height="16" width="16" align="absmiddle" alt="" border="0"/></p>
+        </td></tr>
+                <tr id="comment-header-13936181"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="chatree" id="word_commented_chatree" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=chatree">Chatree Srichart</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">15/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13936181"><td bgcolor="#ffffff">
+            <p>Thank You</p>
+
+<p>Best Regards,</p>
+        </td></tr>
+                <tr id="comment-header-13937348"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jacques.le.roux" id="word_commented_jacques.le.roux" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jacques.le.roux">Jacques Le Roux</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">16/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13937348"><td bgcolor="#ffffff">
+            <p>Hi Chatree, </p>
+
+<p>Please let me know when done, I will then review and commit, thanks!</p>
+        </td></tr>
+                <tr id="comment-header-13937930"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="chatree" id="word_commented_chatree" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=chatree">Chatree Srichart</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">17/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13937930"><td bgcolor="#ffffff">
+            <p>Hi Jacques,</p>
+
+<p>I have already written on wiki. <a href="https://cwiki.apache.org/confluence/display/OFBIZ/Using+BIRT+with+OFBiz" class="external-link" rel="nofollow">https://cwiki.apache.org/confluence/display/OFBIZ/Using+BIRT+with+OFBiz</a><br/>
+Could you please verify if it correct? Please let me know if I missed something.</p>
+
+<p>Best Regards,</p>
+        </td></tr>
+                <tr id="comment-header-13940872"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jacques.le.roux" id="word_commented_jacques.le.roux" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jacques.le.roux">Jacques Le Roux</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">19/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13940872"><td bgcolor="#ffffff">
+            <p>Thanks Chatree,</p>
+
+<p>your patch is in trunk at r1579356+1579359 <br/>
+(I forgot to commit the unversioned files, hence the 2 commits)</p>
+
+<p>I have slightly changed the documenation in the wiki page.</p>
+        </td></tr>
+                <tr id="comment-header-13941611"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="chatree" id="word_commented_chatree" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=chatree">Chatree Srichart</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">20/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13941611"><td bgcolor="#ffffff">
+            <p>Thanks Jacques,</p>
+
+<p>Enjoy on BIRT!</p>
+
+<p>Best Regards,</p>
+        </td></tr>
+            </table>
+Generated at Sat Mar 22 13:34:02 UTC 2014 using JIRA 6.2#6252-sha1:aa343257d4ce030d9cb8c531be520be9fac1c996.
+
+</body>
+</html>

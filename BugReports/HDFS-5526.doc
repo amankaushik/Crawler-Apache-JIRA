@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>[#HDFS-5526] Datanode cannot roll back to previous layout version</title>
+    <meta http-equiv="Content-Type" Content="application/vnd.ms-word; charset=utf-8">
+        <style type="text/css">
+
+.tableBorder, .grid
+{
+    background-color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableBorder td, .grid td
+{
+    vertical-align: top;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+.noPadding
+{
+    padding: 0 !important;
+}
+
+h3 .subText
+{
+    font-size: 60%;
+    font-weight: normal;
+}
+
+.tabLabel
+{
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-bottom:none;
+    padding: 2px;
+    display: inline;
+}
+
+td.blank
+{
+    padding: 0;
+    margin: 0;
+}
+
+.blank td
+{
+    border: none;
+}
+
+#descriptionArea
+{
+    margin: 0;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+hr
+{
+    border-top:1px solid #aaa;
+}
+
+hr.fullcontent
+{
+  height: 15px;
+  padding: 10px 0;
+  background: #fff url('https://issues.apache.org/jira/images/icons/hr.gif') no-repeat scroll center;
+}
+
+</style>
+
+</head>
+<body>
+
+<table class="tableBorder" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" width="100%" colspan="2" valign="top">
+                            <h3 class="formtitle">
+                        [HDFS-5526]&nbsp;<a href="https://issues.apache.org/jira/browse/HDFS-5526">Datanode cannot roll back to previous layout version</a>
+            <span class="subText">
+               Created: 19/Nov/13                   &nbsp;Updated: 21/Mar/14
+
+                                                    &nbsp;Resolved: 02/Dec/13
+                            </span>
+            </h3>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Status:</b></td>
+        <td width="80%">Closed</td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Project:</b></td>
+        <td width="80%"><a href="https://issues.apache.org/jira/secure/BrowseProject.jspa?id=12310942">Hadoop HDFS</a></td>
+    </tr>
+
+        <tr>
+            <td><b>Component/s:</b></td>
+            <td>
+                                        <a title="datanode"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310942&component=12312927"
+            >datanode</a>                        </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Affects Version/s:</b></td>
+            <td>
+                            None
+                </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Fix Version/s:</b></td>
+            <td>
+                                        <a title="3.0.0 - hadoop-3.0.0 release"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310942&fixfor=12320356"
+            >3.0.0</a>,                    <a title="0.23.10 - 0.23.10 release"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310942&fixfor=12324660"
+            >0.23.10</a>,                    <a title="2.3.0 - 2.3.0 release"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310942&fixfor=12325255"
+            >2.3.0</a>                        </td>
+    </tr>
+    
+    </table>
+
+<br />
+<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" valign="top" width="20%">
+            <b>Type:</b>
+        </td>
+        <td bgcolor="#ffffff" valign="top"  width="30%" >
+            Bug
+        </td>
+
+                    <td bgcolor="#f0f0f0">
+                <b>Priority:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap>
+                Blocker
+            </td>
+            </tr>
+    <tr>
+                        <td bgcolor="#f0f0f0" valign="top" width="20%">
+                <b>Reporter:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top"  width="30%" >
+                                            <a class="user-hover" rel="szetszwo" id="word_reporter_szetszwo" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=szetszwo">Tsz Wo Nicholas Sze</a>
+                            </td>
+        
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Assignee:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap  width="30%" >
+                                            <a class="user-hover" rel="kihwal" id="word_assignee_kihwal" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=kihwal">Kihwal Lee</a>
+                            </td>
+            </tr>
+    	<tr>
+		<td bgcolor="#f0f0f0" width="20%">
+			<b>Resolution:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                            Fixed
+                    </td>
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Votes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                0
+            </td>
+        
+    </tr>
+    
+        <tr>
+        <td bgcolor="#f0f0f0" width="20%">
+            <b>Labels:</b>
+        </td>
+        <td id="labels-12679867-value" class="value" bgcolor="#ffffff" valign="top" colspan="3" nowrap>
+                            None
+                    </td>
+    </tr>
+    
+    	<tr>
+        		<td bgcolor="#f0f0f0" width="20%"><b>Remaining Estimate:</b></td>
+        <td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Time Spent:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+	</tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Original Estimate:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    
+    </table>
+
+
+
+    <br />
+
+    	<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+
+                <tr>
+            <td bgcolor="#f0f0f0" width=20% valign=top>
+                <b>Attachments:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top">
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HDFS-5526.patch &nbsp;&nbsp;&nbsp;
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HDFS-5526.patch &nbsp;&nbsp;&nbsp;
+                            </td>
+        </tr>
+        
+            <tr>
+            <td bgcolor="#f0f0f0" width="20%" valign="top">
+                <b>Issue Links:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" class="noPadding">
+                <table cellpadding="0" cellspacing="0" border="0" width="100%" class="blank">
+                                            <tr>
+                            <td colspan="4" bgcolor="#f0f0f0">
+                                <b>Reference</b><br/>
+                            </td>
+                        </tr>
+                                                                <tr>
+            <td>
+                is related to
+            </td>
+            <td>
+                <a href="https://issues.apache.org/jira/browse/HDFS-6137">
+                     HDFS-6137                 </a>
+            </td>
+            <td>
+                Datanode cannot rollback because Layo...
+            </td>
+            <td>
+                Open
+            </td>
+        </tr>
+                                        </table>
+            </td>
+        </tr>
+    
+
+
+
+                        <tr>
+                <td bgcolor="#f0f0f0" width="20%" valign="top"><b>Hadoop Flags:</b></td>
+                <td id="customfield_12310191-12679867-value" class="value" bgcolor="#ffffff" width="80%">
+
+
+    <div class="shorten" id="customfield_12310191-field">
+        							<span>Reviewed</span>			            </div>
+</td>
+            </tr>
+                                <tr>
+                <td bgcolor="#f0f0f0" width="20%" valign="top"><b>Target Version/s:</b></td>
+                <td id="customfield_12310320-12679867-value" class="value" bgcolor="#ffffff" width="80%">    <div class="shorten" id="customfield_12310320-field">
+                                    <a href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&amp;mode=hide&amp;sorter/order=ASC&amp;sorter/field=priority&amp;pid=12310942&amp;customfield_12310320=12324660" title="0.23.10 - 0.23.10 release">0.23.10</a>,                                                 <a href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&amp;mode=hide&amp;sorter/order=ASC&amp;sorter/field=priority&amp;pid=12310942&amp;customfield_12310320=12325255" title="2.3.0 - 2.3.0 release">2.3.0</a>                        </div>
+</td>
+            </tr>
+            </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Description</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td id="descriptionArea">
+            <p>Current trunk layout version is -48.<br/>
+Hadoop v2.2.0 layout version is -47.</p>
+
+<p>If a cluster is upgraded from v2.2.0 (-47) to trunk (-48), the datanodes cannot start with -rollback.  It will fail with IncorrectVersionException.</p>
+            <br/>
+        </td>
+    </tr>
+    </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Comments</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="grid" style="margin: 0;">
+                <tr id="comment-header-13826113"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="szetszwo" id="word_commented_szetszwo" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=szetszwo">Tsz Wo Nicholas Sze</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">19/Nov/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13826113"><td bgcolor="#ffffff">
+            <p>The problem is that ./current/VERSION is not rolled back.  Below is a test case:</p>
+<ol>
+	<li>format using v2.2.0
+	<ul>
+		<li>./current/VERSION
+<div class="preformatted panel" style="border-width: 1px;"><div class="preformattedContent panelContent">
+<pre>#Mon Nov 18 18:26:32 PST 2013
+storageID=DS-955224766-xx.xx.xx.xx-50010-1384827992929
+clusterID=CID-7692ad34-b0d1-4e81-a08e-c714010a8355
+cTime=0
+storageType=DATA_NODE
+layoutVersion=-47
+</pre>
+</div></div></li>
+		<li>./previous
+<div class="preformatted panel" style="border-width: 1px;"><div class="preformattedContent panelContent">
+<pre>&lt;not exist&gt;
+</pre>
+</div></div></li>
+		<li>./current/BP-1970701609-xx.xx.xx.xx-1384827972355/current/VERSION
+<div class="preformatted panel" style="border-width: 1px;"><div class="preformattedContent panelContent">
+<pre>#Mon Nov 18 18:26:33 PST 2013
+namespaceID=737643680
+cTime=0
+blockpoolID=BP-1970701609-xx.xx.xx.xx-1384827972355
+layoutVersion=-47
+</pre>
+</div></div></li>
+		<li>./current/BP-1970701609-xx.xx.xx.xx-1384827972355/previous
+<div class="preformatted panel" style="border-width: 1px;"><div class="preformattedContent panelContent">
+<pre>&lt;not exist&gt;
+</pre>
+</div></div></li>
+	</ul>
+	</li>
+	<li>upgrade to trunk with layout version -48
+	<ul>
+		<li>./current/VERSION
+<div class="preformatted panel" style="border-width: 1px;"><div class="preformattedContent panelContent">
+<pre>#Mon Nov 18 18:34:30 PST 2013
+storageID=DS-955224766-xx.xx.xx.xx-50010-1384827992929
+clusterID=CID-7692ad34-b0d1-4e81-a08e-c714010a8355
+cTime=0
+storageType=DATA_NODE
+layoutVersion=-48
+</pre>
+</div></div></li>
+		<li>./previous
+<div class="preformatted panel" style="border-width: 1px;"><div class="preformattedContent panelContent">
+<pre>&lt;not exist&gt;
+</pre>
+</div></div></li>
+		<li>./current/BP-1970701609-xx.xx.xx.xx-1384827972355/current/VERSION
+<div class="preformatted panel" style="border-width: 1px;"><div class="preformattedContent panelContent">
+<pre>#Mon Nov 18 18:34:30 PST 2013
+namespaceID=737643680
+cTime=1384828466206
+blockpoolID=BP-1970701609-xx.xx.xx.xx-1384827972355
+layoutVersion=-48
+</pre>
+</div></div></li>
+		<li>./current/BP-1970701609-xx.xx.xx.xx-1384827972355/previous/VERSION
+<div class="preformatted panel" style="border-width: 1px;"><div class="preformattedContent panelContent">
+<pre>#Mon Nov 18 18:26:33 PST 2013
+namespaceID=737643680
+cTime=0
+blockpoolID=BP-1970701609-xx.xx.xx.xx-1384827972355
+layoutVersion=-47
+</pre>
+</div></div></li>
+	</ul>
+	</li>
+	<li>rollback to -47 will fail with IncorrectVersionException
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+2013-11-18 18:41:56,420 FATAL datanode.DataNode (BPServiceActor.java:run(706)) - Initialization failed <span class="code-keyword">for</span> block pool Block pool BP-1970701609-xx.xx.xx.xx-1384827972355 (storage id ) service to localhost/xx.xx.xx.xx:8020
+org.apache.hadoop.hdfs.server.common.IncorrectVersionException: Unexpected version of storage directory /Users/szetszwo/hadoop/_local_cluster/data1. Reported: -48. Expecting = -47.
+</pre>
+</div></div></li>
+</ol>
+
+        </td></tr>
+                <tr id="comment-header-13826631"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="kihwal" id="word_commented_kihwal" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=kihwal">Kihwal Lee</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">19/Nov/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13826631"><td bgcolor="#ffffff">
+            <p>It looks like <tt>recoverTransitionRead()</tt> is done for individual block pool storage from <tt>DataNode.initStorage()</tt>, but never done for <tt>DataStorage</tt> itself. That also explains why it's lacking "previous" after upgrade.</p>
+        </td></tr>
+                <tr id="comment-header-13826661"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="kihwal" id="word_commented_kihwal" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=kihwal">Kihwal Lee</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">19/Nov/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13826661"><td bgcolor="#ffffff">
+            <p>Well, it is being called for <tt>DataStorage</tt> when <tt>recoverTransitionRead()</tt> is called for the first block pool that is being initialized. </p>
+
+<p><tt>DataStorage.doUpgrade()</tt> will simply write the new version and return. So "previous" won't be created. In <tt>DataStorage.doRollback()</tt>, the comment says,<br/>
+"Do nothing, if previous directory does not exist" and that's what it does.  </p>
+        </td></tr>
+                <tr id="comment-header-13826821"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="kihwal" id="word_commented_kihwal" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=kihwal">Kihwal Lee</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">19/Nov/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13826821"><td bgcolor="#ffffff">
+            <p>What about adding the following in the beginning of <tt>DataStorage.doRollback()</tt>? This is similar to what is in <tt>DataStorage.doUpgrade()</tt>. Since the VERSION file is not read yet in rollback (if it does it blows up as you reported), <tt>this.layoutVersion</tt> will be 0. So instead, it is checking the software layout version and see whether it is using the same layout version as the name node.</p>
+
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">
+    <span class="code-keyword">if</span> (LayoutVersion.supports(Feature.FEDERATION, HdfsConstants.LAYOUT_VERSION)
+        &amp;&amp; HdfsConstants.LAYOUT_VERSION == nsInfo.getLayoutVersion()) {
+      clusterID = nsInfo.getClusterID();
+      layoutVersion = nsInfo.getLayoutVersion();
+      writeProperties(sd);
+      <span class="code-keyword">return</span>;
+    }
+</pre>
+</div></div>
+        </td></tr>
+                <tr id="comment-header-13826825"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="szetszwo" id="word_commented_szetszwo" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=szetszwo">Tsz Wo Nicholas Sze</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">19/Nov/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13826825"><td bgcolor="#ffffff">
+            <p>Kihwal, you are right that there is no backup copy of ./current/VERSION and so it cannot be rolled back.</p>
+        </td></tr>
+                <tr id="comment-header-13826908"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="kihwal" id="word_commented_kihwal" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=kihwal">Kihwal Lee</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">19/Nov/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13826908"><td bgcolor="#ffffff">
+            <p>Simply doing what I suggested breaks TestDFSRollback.  The existence of previous directory needs to be checked first.  I am attaching a candidate patch.</p>
+        </td></tr>
+                <tr id="comment-header-13826977"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="szetszwo" id="word_commented_szetszwo" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=szetszwo">Tsz Wo Nicholas Sze</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">19/Nov/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13826977"><td bgcolor="#ffffff">
+            <p>Would storageID and cTime be preserved?  BTW, do you know why cTime=0 in my test case above?</p>
+        </td></tr>
+                <tr id="comment-header-13827055"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="kihwal" id="word_commented_kihwal" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=kihwal">Kihwal Lee</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">19/Nov/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13827055"><td bgcolor="#ffffff">
+            <blockquote><p>Would storageID and cTime be preserved?</p></blockquote>
+<p>I think so. The slight difficulty is at loading current/VERSION without blowing up. After reading in, it needs to override a couple of fields and call writeProperties().</p>
+
+<blockquote><p>BTW, do you know why cTime=0 in my test case above?</p></blockquote>
+<p>DataStorage's cTime is set to 0 when the node is formatted, but that of BlockPoolSliceStorage is supposed to be set to the one from nsInfo. So my guess is, when NNStorage is formatted cTime is 0.  NNStorage.newNamespaceInfo() is setting it to 0 and this must be used for formatting.</p>
+        </td></tr>
+                <tr id="comment-header-13827072"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hadoopqa" id="word_commented_hadoopqa" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hadoopqa">Hadoop QA</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">19/Nov/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13827072"><td bgcolor="#ffffff">
+            <p><font color="red">-1 overall</font>.  Here are the results of testing the latest attachment <br/>
+  <a href="http://issues.apache.org/jira/secure/attachment/12614686/HDFS-5526.patch" class="external-link" rel="nofollow">http://issues.apache.org/jira/secure/attachment/12614686/HDFS-5526.patch</a><br/>
+  against trunk revision .</p>
+
+<p>    <font color="green">+1 @author</font>.  The patch does not contain any @author tags.</p>
+
+<p>    <font color="red">-1 tests included</font>.  The patch doesn't appear to include any new or modified tests.<br/>
+                        Please justify why no new tests are needed for this patch.<br/>
+                        Also please list what manual steps were performed to verify this patch.</p>
+
+<p>    <font color="green">+1 javac</font>.  The applied patch does not increase the total number of javac compiler warnings.</p>
+
+<p>    <font color="green">+1 javadoc</font>.  The javadoc tool did not generate any warning messages.</p>
+
+<p>    <font color="green">+1 eclipse:eclipse</font>.  The patch built with eclipse:eclipse.</p>
+
+<p>    <font color="green">+1 findbugs</font>.  The patch does not introduce any new Findbugs (version 1.3.9) warnings.</p>
+
+<p>    <font color="green">+1 release audit</font>.  The applied patch does not increase the total number of release audit warnings.</p>
+
+<p>    <font color="green">+1 core tests</font>.  The patch passed unit tests in hadoop-hdfs-project/hadoop-hdfs.</p>
+
+<p>    <font color="green">+1 contrib tests</font>.  The patch passed contrib unit tests.</p>
+
+<p>Test results: <a href="https://builds.apache.org/job/PreCommit-HDFS-Build/5491//testReport/" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HDFS-Build/5491//testReport/</a><br/>
+Console output: <a href="https://builds.apache.org/job/PreCommit-HDFS-Build/5491//console" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HDFS-Build/5491//console</a></p>
+
+<p>This message is automatically generated.</p>
+        </td></tr>
+                <tr id="comment-header-13827156"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="szetszwo" id="word_commented_szetszwo" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=szetszwo">Tsz Wo Nicholas Sze</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">20/Nov/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13827156"><td bgcolor="#ffffff">
+            <p>I like the simplicity of the patch &#8211; it only changes the rollback code but not upgrade.  However, the VERSION file is overwritten but not restored during rollback.  I worry if it is possible that the new VERSION file is different from the original VERSION file.  For example, the ctime or some ids may have been changed in some unexpected way without being noticed.  How can we make sure the new and the original VERSION files are the same?</p>
+        </td></tr>
+                <tr id="comment-header-13827227"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="vinayrpet" id="word_commented_vinayrpet" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=vinayrpet">Vinayakumar B</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">20/Nov/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13827227"><td bgcolor="#ffffff">
+            <blockquote><p>For example, the ctime or some ids may have been changed in some unexpected way without being noticed</p></blockquote>
+<p>Overwriting the version file in datanode current directory is only during format and upgrade.<br/>
+But during upgrade only clusterId and layoutVersion are overwritten, ctime is never modified. clusterId and layoutVersion are never going to change dynamically. right?</p>
+<div class="preformatted panel" style="border-width: 1px;"><div class="preformattedContent panelContent">
+<pre>    if (LayoutVersion.supports(Feature.FEDERATION, layoutVersion)) {
+      clusterID = nsInfo.getClusterID();
+      layoutVersion = nsInfo.getLayoutVersion();
+      writeProperties(sd);
+      return;
+    }</pre>
+</div></div>
+
+
+<p>Hi <a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=kihwal" class="user-hover" rel="kihwal">Kihwal Lee</a>, Patch looks really simple. +1<br/>
+do you think we need to update this comment now..?</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">   * Do nothing, <span class="code-keyword">if</span> previous directory does not exist.</pre>
+</div></div>
+        </td></tr>
+                <tr id="comment-header-13827242"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="szetszwo" id="word_commented_szetszwo" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=szetszwo">Tsz Wo Nicholas Sze</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">20/Nov/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13827242"><td bgcolor="#ffffff">
+            <p>&gt; But during upgrade only clusterId and layoutVersion are overwritten, ctime is never modified. clusterId and layoutVersion are never going to change dynamically. right?</p>
+
+<p>You are right but we also need to consider some error cases such as connecting a DN to a wrong cluster, moving the storage to another DN, rolling back to a wrong version, upgrading again without rollback, etc.  We need to make sure all the error cases will fail.  I think it is the hard part.</p>
+        </td></tr>
+                <tr id="comment-header-13827256"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="vinayrpet" id="word_commented_vinayrpet" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=vinayrpet">Vinayakumar B</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">20/Nov/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13827256"><td bgcolor="#ffffff">
+            <p>Yes you are right nicholas. We dont have any clue whether we have upgraded or not. One thing is Version file will be overwritten if the layoutVersion is latest or ctime is latest., But that namenode also should be part of the same cluster otherwise upgrade will not happen. </p>
+
+<p>One more thing, ./current/VERSION will be overwritten everytime DN restarted after upgrade because of the following check.</p>
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-java">    <span class="code-comment">// <span class="code-keyword">do</span> upgrade
+</span>    <span class="code-keyword">if</span> (<span class="code-keyword">this</span>.layoutVersion &gt; HdfsConstants.LAYOUT_VERSION
+        || <span class="code-keyword">this</span>.cTime &lt; nsInfo.getCTime()) {
+      doUpgrade(sd, nsInfo);  <span class="code-comment">// upgrade
+</span>      <span class="code-keyword">return</span>;
+    }</pre>
+</div></div>
+<p>because, ./current/VERSION file ctime is always same. and upgraded NN will have higher ctime.</p>
+        </td></tr>
+                <tr id="comment-header-13827810"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="kihwal" id="word_commented_kihwal" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=kihwal">Kihwal Lee</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">20/Nov/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13827810"><td bgcolor="#ffffff">
+            <p>I think we need to clarify the role of the VERSION files.  Layout version and ctime checks are also in the block pool slice level, which is represented by <tt>BlockPoolSliceStorage</tt>.  So, I think not all fields in the VERSION file written by <tt>DataStorage</tt> - the volume-level storage - is useful.  </p>
+
+<p>VERSION properties in <tt>DataStorage</tt> : &lt;volume&gt;/current/VERSION</p>
+<ul class="alternate" type="square">
+	<li>layoutVersion</li>
+	<li>storageType</li>
+	<li>namespaceID</li>
+	<li>clusterID</li>
+	<li>cTime</li>
+	<li>storageID</li>
+</ul>
+
+
+<p>VERSION properties in <tt>BlockPoolSliceStorage</tt> : &lt;volume&gt;/current/&lt;blockpool&gt;/current/VERSION</p>
+<ul class="alternate" type="square">
+	<li>layoutVersion</li>
+	<li>namespaceID</li>
+	<li>blockpoolID</li>
+	<li>cTime</li>
+</ul>
+
+
+<p>For <tt>DataStorage</tt>, the critical information to maintain during post-federation upgrade/rollback are</p>
+<ul class="alternate" type="square">
+	<li>namespaceID (not used post federation)</li>
+	<li>storageID</li>
+	<li>storageType - automatically set</li>
+	<li>clusterID</li>
+</ul>
+
+
+<p><tt>cTime</tt> at <tt>DataStorage</tt> level doesn't seem to make sense. It will be compared against the one in <tt>nsInfo</tt> from the name node for the first block pool that is initialized. If the initialization order changes, <tt>DataStorage</tt> may fail to initialize. I don't know whether it's by design or not, but as you (Vinay) said, <tt>DataStorage.upgrade</tt> will always run during DN startup after the first upgrade. This prevents the initialization failure during normal start-up and upgrade. Rollback is different since it doesn't go through this code path. </p>
+
+<p>Since upgrade in <tt>DataStorage</tt> level does not involve actual data, <tt>cTime</tt> change within the same layout version has no meaning and it shouldn't make any changes. I propose removing cTime check for post-federation upgrades. Validation should be only performed against <tt>clusterID</tt> and <tt>layoutVersion</tt>. Upgrade action (post-federation, not 1.x to 2.x upgrades) be taken only when the layout version is changed.</p>
+
+<p>For post-federation rollback, it should only update </p>
+{layoutVersion}
+<p>. There is no need to save the old layout version. The layout version is invalid (i.e. talked to a NN running wrong version), the rollback at <tt>BlockPoolSliceStorage</tt> will fail. If the error is corrected and the datanode is restarted with "-rollback", it should not be stuck in an invalid state. It means, the rollback at <tt>DataStorage</tt> level should accept whatever the first name node is saying. Again, this is safe since correctness is checked in  <tt>BlockPoolSliceStorage</tt> level.</p>
+
+<p>I will submit an update patch soon.</p>
+        </td></tr>
+                <tr id="comment-header-13827872"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="vinayrpet" id="word_commented_vinayrpet" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=vinayrpet">Vinayakumar B</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">20/Nov/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13827872"><td bgcolor="#ffffff">
+            <p>Thanks for the detailed explanation Kihwal. It make sense that ctime has nothing to do with DataStorage for Post-federation versions.</p>
+        </td></tr>
+                <tr id="comment-header-13828090"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="kihwal" id="word_commented_kihwal" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=kihwal">Kihwal Lee</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">20/Nov/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13828090"><td bgcolor="#ffffff">
+            <p>The new patch fixes the rollback function of <tt>DataStorage</tt>.  TestDFSRollback is modified to reproduce the issue reported in this jira. Without the fix, the test fails. The patch adds a method to read in VERSION except <tt>layoutVersion</tt> in order to bypass the check enforced by <tt>Storage.setLayoutVersion()</tt>. This method is used to read in and write back other properties such as <tt>clusterID</tt> and <tt>StorageID</tt> with the rolled back layout version.</p>
+
+<p>In <tt>doUpgrade()</tt>, overriding of <tt>clusterID</tt> is removed.  It has no effect, because the stored cluster ID is checked against the one provided by name node before <tt>doUpgrade()</tt> is called.</p>
+        </td></tr>
+                <tr id="comment-header-13828092"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="kihwal" id="word_commented_kihwal" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=kihwal">Kihwal Lee</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">20/Nov/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13828092"><td bgcolor="#ffffff">
+            <p>Adding 0.23 as a target. Since 0.23 is post-federation, rollback after upgrading to 2.x will fail without this fix.</p>
+        </td></tr>
+                <tr id="comment-header-13828224"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="szetszwo" id="word_commented_szetszwo" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=szetszwo">Tsz Wo Nicholas Sze</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">20/Nov/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13828224"><td bgcolor="#ffffff">
+            <p>If I understand the patch correctly, it regenerates the ./current/VERSION file by first reading it from the storage and then overwrite layoutVersion.  If a new field is added to the ./current/VERSION file in a future release (e.g. <a href="https://issues.apache.org/jira/browse/HDFS-2832" title="Enable support for heterogeneous storages in HDFS - DN as a collection of storages" class="issue-link" data-issue-key="HDFS-2832"><del>HDFS-2832</del></a> adds DatanodeUuid), then rollback will preserve it in the VERSION file.</p>
+        </td></tr>
+                <tr id="comment-header-13828239"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="kihwal" id="word_commented_kihwal" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=kihwal">Kihwal Lee</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">20/Nov/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13828239"><td bgcolor="#ffffff">
+            <blockquote><p>If a new field is added to the ./current/VERSION file in a future release (e.g. <a href="https://issues.apache.org/jira/browse/HDFS-2832" title="Enable support for heterogeneous storages in HDFS - DN as a collection of storages" class="issue-link" data-issue-key="HDFS-2832"><del>HDFS-2832</del></a> adds DatanodeUuid), then rollback will preserve it in the VERSION file.</p></blockquote>
+<ul class="alternate" type="square">
+	<li>When rolling back from post-<a href="https://issues.apache.org/jira/browse/HDFS-2832" title="Enable support for heterogeneous storages in HDFS - DN as a collection of storages" class="issue-link" data-issue-key="HDFS-2832"><del>HDFS-2832</del></a> to pre-<a href="https://issues.apache.org/jira/browse/HDFS-2832" title="Enable support for heterogeneous storages in HDFS - DN as a collection of storages" class="issue-link" data-issue-key="HDFS-2832"><del>HDFS-2832</del></a>, the new field will disappear. This is because the old datanode code won't load or write the extra field.</li>
+	<li>When rolling back from post-<a href="https://issues.apache.org/jira/browse/HDFS-2832" title="Enable support for heterogeneous storages in HDFS - DN as a collection of storages" class="issue-link" data-issue-key="HDFS-2832"><del>HDFS-2832</del></a> to another post-<a href="https://issues.apache.org/jira/browse/HDFS-2832" title="Enable support for heterogeneous storages in HDFS - DN as a collection of storages" class="issue-link" data-issue-key="HDFS-2832"><del>HDFS-2832</del></a> version, the added field will be preserved, assuming <tt>setPropertiesFromFields()</tt> and <tt>setFieldsFromProperties()</tt> are properly modified to support the new field.</li>
+</ul>
+
+        </td></tr>
+                <tr id="comment-header-13828262"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hadoopqa" id="word_commented_hadoopqa" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hadoopqa">Hadoop QA</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">20/Nov/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13828262"><td bgcolor="#ffffff">
+            <p><font color="red">-1 overall</font>.  Here are the results of testing the latest attachment <br/>
+  <a href="http://issues.apache.org/jira/secure/attachment/12614985/HDFS-5526.patch" class="external-link" rel="nofollow">http://issues.apache.org/jira/secure/attachment/12614985/HDFS-5526.patch</a><br/>
+  against trunk revision .</p>
+
+<p>    <font color="green">+1 @author</font>.  The patch does not contain any @author tags.</p>
+
+<p>    <font color="green">+1 tests included</font>.  The patch appears to include 1 new or modified test files.</p>
+
+<p>    <font color="green">+1 javac</font>.  The applied patch does not increase the total number of javac compiler warnings.</p>
+
+<p>    <font color="green">+1 javadoc</font>.  The javadoc tool did not generate any warning messages.</p>
+
+<p>    <font color="red">-1 eclipse:eclipse</font>.  The patch failed to build with eclipse:eclipse.</p>
+
+<p>    <font color="green">+1 findbugs</font>.  The patch does not introduce any new Findbugs (version 1.3.9) warnings.</p>
+
+<p>    <font color="green">+1 release audit</font>.  The applied patch does not increase the total number of release audit warnings.</p>
+
+<p>    <font color="red">-1 core tests</font>.  The patch failed these unit tests in hadoop-hdfs-project/hadoop-hdfs:</p>
+
+<p>                  org.apache.hadoop.hdfs.server.balancer.TestBalancerWithNodeGroup</p>
+
+<p>    <font color="green">+1 contrib tests</font>.  The patch passed contrib unit tests.</p>
+
+<p>Test results: <a href="https://builds.apache.org/job/PreCommit-HDFS-Build/5508//testReport/" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HDFS-Build/5508//testReport/</a><br/>
+Console output: <a href="https://builds.apache.org/job/PreCommit-HDFS-Build/5508//console" class="external-link" rel="nofollow">https://builds.apache.org/job/PreCommit-HDFS-Build/5508//console</a></p>
+
+<p>This message is automatically generated.</p>
+        </td></tr>
+                <tr id="comment-header-13828331"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="szetszwo" id="word_commented_szetszwo" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=szetszwo">Tsz Wo Nicholas Sze</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Nov/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13828331"><td bgcolor="#ffffff">
+            <p>Okay, let me test it.  Will post the results.</p>
+        </td></tr>
+                <tr id="comment-header-13828341"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="szetszwo" id="word_commented_szetszwo" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=szetszwo">Tsz Wo Nicholas Sze</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Nov/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13828341"><td bgcolor="#ffffff">
+            <p>+1 the patch works as expected.  Thanks a lot, Kihwal!</p>
+        </td></tr>
+                <tr id="comment-header-13828373"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="vinayrpet" id="word_commented_vinayrpet" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=vinayrpet">Vinayakumar B</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Nov/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13828373"><td bgcolor="#ffffff">
+            <p>+1 patch looks pretty good. Thanks Kihwal</p>
+        </td></tr>
+                <tr id="comment-header-13831562"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="kihwal" id="word_commented_kihwal" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=kihwal">Kihwal Lee</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">25/Nov/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13831562"><td bgcolor="#ffffff">
+            <p><a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=szetszwo" class="user-hover" rel="szetszwo">Tsz Wo Nicholas Sze</a>, I've committed this to branch-2, branch-0.23 and trunk. Please pull into other branches as see fit and resolve this jira.</p>
+        </td></tr>
+                <tr id="comment-header-13831565"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="kihwal" id="word_commented_kihwal" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=kihwal">Kihwal Lee</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">25/Nov/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13831565"><td bgcolor="#ffffff">
+            <p>I made a typo in the checkin commen, so commit messages are not showing up here.</p>
+        </td></tr>
+                <tr id="comment-header-13831570"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hudson" id="word_commented_hudson" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hudson">Hudson</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">25/Nov/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13831570"><td bgcolor="#ffffff">
+            <p>SUCCESS: Integrated in Hadoop-trunk-Commit #4789 (See <a href="https://builds.apache.org/job/Hadoop-trunk-Commit/4789/" class="external-link" rel="nofollow">https://builds.apache.org/job/Hadoop-trunk-Commit/4789/</a>)<br/>
+<a href="https://issues.apache.org/jira/browse/HDFS-5526" title="Datanode cannot roll back to previous layout version" class="issue-link" data-issue-key="HDFS-5526"><del>HDFS-5526</del></a>. Datanode cannot roll back to previous layout version. Contributed by Kihwal Lee. (kihwal: <a href="http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1545322" class="external-link" rel="nofollow">http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1545322</a>)</p>
+<ul>
+	<li>/hadoop/common/trunk/hadoop-hdfs-project/hadoop-hdfs/CHANGES.txt</li>
+	<li>/hadoop/common/trunk/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/datanode/DataStorage.java</li>
+	<li>/hadoop/common/trunk/hadoop-hdfs-project/hadoop-hdfs/src/test/java/org/apache/hadoop/hdfs/TestDFSRollback.java</li>
+</ul>
+
+        </td></tr>
+                <tr id="comment-header-13832224"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="szetszwo" id="word_commented_szetszwo" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=szetszwo">Tsz Wo Nicholas Sze</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">26/Nov/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13832224"><td bgcolor="#ffffff">
+            <p>Kihwal, I tested this with <a href="https://issues.apache.org/jira/browse/HDFS-2832" title="Enable support for heterogeneous storages in HDFS - DN as a collection of storages" class="issue-link" data-issue-key="HDFS-2832"><del>HDFS-2832</del></a> after the commit.  It worked well.  Thanks!</p>
+        </td></tr>
+                <tr id="comment-header-13832482"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hudson" id="word_commented_hudson" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hudson">Hudson</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">26/Nov/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13832482"><td bgcolor="#ffffff">
+            <p>FAILURE: Integrated in Hadoop-Yarn-trunk #403 (See <a href="https://builds.apache.org/job/Hadoop-Yarn-trunk/403/" class="external-link" rel="nofollow">https://builds.apache.org/job/Hadoop-Yarn-trunk/403/</a>)<br/>
+<a href="https://issues.apache.org/jira/browse/HDFS-5526" title="Datanode cannot roll back to previous layout version" class="issue-link" data-issue-key="HDFS-5526"><del>HDFS-5526</del></a>. Datanode cannot roll back to previous layout version. Contributed by Kihwal Lee. (kihwal: <a href="http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1545322" class="external-link" rel="nofollow">http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1545322</a>)</p>
+<ul>
+	<li>/hadoop/common/trunk/hadoop-hdfs-project/hadoop-hdfs/CHANGES.txt</li>
+	<li>/hadoop/common/trunk/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/datanode/DataStorage.java</li>
+	<li>/hadoop/common/trunk/hadoop-hdfs-project/hadoop-hdfs/src/test/java/org/apache/hadoop/hdfs/TestDFSRollback.java</li>
+</ul>
+
+        </td></tr>
+                <tr id="comment-header-13832563"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hudson" id="word_commented_hudson" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hudson">Hudson</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">26/Nov/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13832563"><td bgcolor="#ffffff">
+            <p>FAILURE: Integrated in Hadoop-Hdfs-trunk #1594 (See <a href="https://builds.apache.org/job/Hadoop-Hdfs-trunk/1594/" class="external-link" rel="nofollow">https://builds.apache.org/job/Hadoop-Hdfs-trunk/1594/</a>)<br/>
+<a href="https://issues.apache.org/jira/browse/HDFS-5526" title="Datanode cannot roll back to previous layout version" class="issue-link" data-issue-key="HDFS-5526"><del>HDFS-5526</del></a>. Datanode cannot roll back to previous layout version. Contributed by Kihwal Lee. (kihwal: <a href="http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1545322" class="external-link" rel="nofollow">http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1545322</a>)</p>
+<ul>
+	<li>/hadoop/common/trunk/hadoop-hdfs-project/hadoop-hdfs/CHANGES.txt</li>
+	<li>/hadoop/common/trunk/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/datanode/DataStorage.java</li>
+	<li>/hadoop/common/trunk/hadoop-hdfs-project/hadoop-hdfs/src/test/java/org/apache/hadoop/hdfs/TestDFSRollback.java</li>
+</ul>
+
+        </td></tr>
+                <tr id="comment-header-13832574"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hudson" id="word_commented_hudson" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hudson">Hudson</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">26/Nov/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13832574"><td bgcolor="#ffffff">
+            <p>FAILURE: Integrated in Hadoop-Mapreduce-trunk #1620 (See <a href="https://builds.apache.org/job/Hadoop-Mapreduce-trunk/1620/" class="external-link" rel="nofollow">https://builds.apache.org/job/Hadoop-Mapreduce-trunk/1620/</a>)<br/>
+<a href="https://issues.apache.org/jira/browse/HDFS-5526" title="Datanode cannot roll back to previous layout version" class="issue-link" data-issue-key="HDFS-5526"><del>HDFS-5526</del></a>. Datanode cannot roll back to previous layout version. Contributed by Kihwal Lee. (kihwal: <a href="http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1545322" class="external-link" rel="nofollow">http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1545322</a>)</p>
+<ul>
+	<li>/hadoop/common/trunk/hadoop-hdfs-project/hadoop-hdfs/CHANGES.txt</li>
+	<li>/hadoop/common/trunk/hadoop-hdfs-project/hadoop-hdfs/src/main/java/org/apache/hadoop/hdfs/server/datanode/DataStorage.java</li>
+	<li>/hadoop/common/trunk/hadoop-hdfs-project/hadoop-hdfs/src/test/java/org/apache/hadoop/hdfs/TestDFSRollback.java</li>
+</ul>
+
+        </td></tr>
+                <tr id="comment-header-13943409"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="szetszwo" id="word_commented_szetszwo" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=szetszwo">Tsz Wo Nicholas Sze</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">21/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13943409"><td bgcolor="#ffffff">
+            <p>Hi <a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=kihwal" class="user-hover" rel="kihwal">Kihwal Lee</a>, this did not completely solve the problem.  If a user upgrade from an old version without this patch, say hadoop-2.0.5-alpha, to trunk, then the datanode cannot rollback.  The old version will compare layout version and then throw IncorrectVersionException.  Could you take a look <a href="https://issues.apache.org/jira/browse/HDFS-6137" title="Datanode cannot rollback because LayoutVersion incorrect" class="issue-link" data-issue-key="HDFS-6137">HDFS-6137</a>?</p>
+        </td></tr>
+            </table>
+Generated at Sat Mar 22 13:36:09 UTC 2014 using JIRA 6.2#6252-sha1:aa343257d4ce030d9cb8c531be520be9fac1c996.
+
+</body>
+</html>

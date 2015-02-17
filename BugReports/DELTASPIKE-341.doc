@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>[#DELTASPIKE-341] Provide Integration between Faces Exceptions and Exception Handling</title>
+    <meta http-equiv="Content-Type" Content="application/vnd.ms-word; charset=utf-8">
+        <style type="text/css">
+
+.tableBorder, .grid
+{
+    background-color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableBorder td, .grid td
+{
+    vertical-align: top;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+.noPadding
+{
+    padding: 0 !important;
+}
+
+h3 .subText
+{
+    font-size: 60%;
+    font-weight: normal;
+}
+
+.tabLabel
+{
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-bottom:none;
+    padding: 2px;
+    display: inline;
+}
+
+td.blank
+{
+    padding: 0;
+    margin: 0;
+}
+
+.blank td
+{
+    border: none;
+}
+
+#descriptionArea
+{
+    margin: 0;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+hr
+{
+    border-top:1px solid #aaa;
+}
+
+hr.fullcontent
+{
+  height: 15px;
+  padding: 10px 0;
+  background: #fff url('https://issues.apache.org/jira/images/icons/hr.gif') no-repeat scroll center;
+}
+
+</style>
+
+</head>
+<body>
+
+<table class="tableBorder" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" width="100%" colspan="2" valign="top">
+                            <h3 class="formtitle">
+                        [DELTASPIKE-341]&nbsp;<a href="https://issues.apache.org/jira/browse/DELTASPIKE-341">Provide Integration between Faces Exceptions and Exception Handling</a>
+            <span class="subText">
+               Created: 10/Apr/13                   &nbsp;Updated: 20/Mar/14
+
+                                                    &nbsp;Resolved: 15/Feb/14
+                            </span>
+            </h3>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Status:</b></td>
+        <td width="80%">Closed</td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Project:</b></td>
+        <td width="80%"><a href="https://issues.apache.org/jira/secure/BrowseProject.jspa?id=12312820">DeltaSpike</a></td>
+    </tr>
+
+        <tr>
+            <td><b>Component/s:</b></td>
+            <td>
+                            None
+                </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Affects Version/s:</b></td>
+            <td>
+                            None
+                </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Fix Version/s:</b></td>
+            <td>
+                                        <a title="0.6"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12312820&fixfor=12320948"
+            >0.6</a>                        </td>
+    </tr>
+    
+    </table>
+
+<br />
+<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" valign="top" width="20%">
+            <b>Type:</b>
+        </td>
+        <td bgcolor="#ffffff" valign="top"  width="30%" >
+            Improvement
+        </td>
+
+                    <td bgcolor="#f0f0f0">
+                <b>Priority:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap>
+                Major
+            </td>
+            </tr>
+    <tr>
+                        <td bgcolor="#f0f0f0" valign="top" width="20%">
+                <b>Reporter:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top"  width="30%" >
+                                            <a class="user-hover" rel="cody.lerum" id="word_reporter_cody.lerum" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=cody.lerum">Cody Lerum</a>
+                            </td>
+        
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Assignee:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap  width="30%" >
+                                            <a class="user-hover" rel="tandraschko" id="word_assignee_tandraschko" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=tandraschko">Thomas Andraschko</a>
+                            </td>
+            </tr>
+    	<tr>
+		<td bgcolor="#f0f0f0" width="20%">
+			<b>Resolution:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                            Fixed
+                    </td>
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Votes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                0
+            </td>
+        
+    </tr>
+    
+        <tr>
+        <td bgcolor="#f0f0f0" width="20%">
+            <b>Labels:</b>
+        </td>
+        <td id="labels-12641933-value" class="value" bgcolor="#ffffff" valign="top" colspan="3" nowrap>
+                            None
+                    </td>
+    </tr>
+    
+    	<tr>
+        		<td bgcolor="#f0f0f0" width="20%"><b>Remaining Estimate:</b></td>
+        <td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Time Spent:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+	</tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Original Estimate:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    
+    </table>
+
+
+
+    <br />
+
+    	<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+
+        
+    
+
+
+
+</table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Description</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td id="descriptionArea">
+            Just an ExceptionHandlerFactory and ExceptionHandlerWrapper which fire and remove events so that DS core exceptional handling can intercept.
+            <br/>
+        </td>
+    </tr>
+    </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Comments</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="grid" style="margin: 0;">
+                <tr id="comment-header-13628307"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="cody.lerum" id="word_commented_cody.lerum" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=cody.lerum">Cody Lerum</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">10/Apr/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13628307"><td bgcolor="#ffffff">
+            <p>fire the ExceptionToCatchEvent with an @Jsf qualifier.</p>
+        </td></tr>
+                <tr id="comment-header-13673180"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="cody.lerum" id="word_commented_cody.lerum" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=cody.lerum">Cody Lerum</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">03/Jun/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13673180"><td bgcolor="#ffffff">
+            <p>Working example impl - <a href="https://gist.github.com/codylerum/5698723" class="external-link" rel="nofollow">https://gist.github.com/codylerum/5698723</a></p>
+
+<p>Needs to be registered via an entry in faces-config.xml like below</p>
+
+<div class="code panel" style="border-width: 1px;"><div class="codeContent panelContent">
+<pre class="code-xml">
+<span class="code-tag">&lt;factory&gt;</span>
+   <span class="code-tag">&lt;exception-handler-factory&gt;</span>com.foo.JsfExceptionHandlerFactory<span class="code-tag">&lt;/exception-handler-factory&gt;</span>
+<span class="code-tag">&lt;/factory&gt;</span>
+</pre>
+</div></div>
+        </td></tr>
+                <tr id="comment-header-13806094"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">26/Oct/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13806094"><td bgcolor="#ffffff">
+            <p>with using org.apache.deltaspike.core.spi.activation.Deactivatable, we don't need a config entry per default.</p>
+        </td></tr>
+                <tr id="comment-header-13806980"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="lightguard" id="word_commented_lightguard" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=lightguard">Jason Porter</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">28/Oct/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13806980"><td bgcolor="#ffffff">
+            <p>Cody, if you have a working example with the Deactivatable code, that would be a great addition to add to some documentation.</p>
+        </td></tr>
+                <tr id="comment-header-13807000"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="cody.lerum" id="word_commented_cody.lerum" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=cody.lerum">Cody Lerum</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">28/Oct/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13807000"><td bgcolor="#ffffff">
+            <p>I don't have anything using Deactivatable</p>
+        </td></tr>
+            </table>
+Generated at Sat Mar 22 13:34:21 UTC 2014 using JIRA 6.2#6252-sha1:aa343257d4ce030d9cb8c531be520be9fac1c996.
+
+</body>
+</html>

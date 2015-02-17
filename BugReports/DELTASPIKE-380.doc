@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>[#DELTASPIKE-380] NPE in PartialBeanLifecycle if javassist not on classpath</title>
+    <meta http-equiv="Content-Type" Content="application/vnd.ms-word; charset=utf-8">
+        <style type="text/css">
+
+.tableBorder, .grid
+{
+    background-color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableBorder td, .grid td
+{
+    vertical-align: top;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+.noPadding
+{
+    padding: 0 !important;
+}
+
+h3 .subText
+{
+    font-size: 60%;
+    font-weight: normal;
+}
+
+.tabLabel
+{
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-bottom:none;
+    padding: 2px;
+    display: inline;
+}
+
+td.blank
+{
+    padding: 0;
+    margin: 0;
+}
+
+.blank td
+{
+    border: none;
+}
+
+#descriptionArea
+{
+    margin: 0;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+hr
+{
+    border-top:1px solid #aaa;
+}
+
+hr.fullcontent
+{
+  height: 15px;
+  padding: 10px 0;
+  background: #fff url('https://issues.apache.org/jira/images/icons/hr.gif') no-repeat scroll center;
+}
+
+</style>
+
+</head>
+<body>
+
+<table class="tableBorder" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" width="100%" colspan="2" valign="top">
+                            <h3 class="formtitle">
+                        [DELTASPIKE-380]&nbsp;<a href="https://issues.apache.org/jira/browse/DELTASPIKE-380">NPE in PartialBeanLifecycle if javassist not on classpath</a>
+            <span class="subText">
+               Created: 06/Jun/13                   &nbsp;Updated: 20/Mar/14
+
+                                                    &nbsp;Resolved: 11/Sep/13
+                            </span>
+            </h3>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Status:</b></td>
+        <td width="80%">Closed</td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Project:</b></td>
+        <td width="80%"><a href="https://issues.apache.org/jira/secure/BrowseProject.jspa?id=12312820">DeltaSpike</a></td>
+    </tr>
+
+        <tr>
+            <td><b>Component/s:</b></td>
+            <td>
+                                        <a title="PartialBean"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12312820&component=12320565"
+            >PartialBean</a>                        </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Affects Version/s:</b></td>
+            <td>
+                                        <a title="0.4"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12312820&version=12319863"
+            >0.4</a>                        </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Fix Version/s:</b></td>
+            <td>
+                                        <a title="0.5"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12312820&fixfor=12320947"
+            >0.5</a>                        </td>
+    </tr>
+    
+    </table>
+
+<br />
+<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" valign="top" width="20%">
+            <b>Type:</b>
+        </td>
+        <td bgcolor="#ffffff" valign="top"  width="30%" >
+            Bug
+        </td>
+
+                    <td bgcolor="#f0f0f0">
+                <b>Priority:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap>
+                Major
+            </td>
+            </tr>
+    <tr>
+                        <td bgcolor="#f0f0f0" valign="top" width="20%">
+                <b>Reporter:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top"  width="30%" >
+                                            <a class="user-hover" rel="jharting" id="word_reporter_jharting" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jharting">Jozef Hartinger</a>
+                            </td>
+        
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Assignee:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap  width="30%" >
+                                            <a class="user-hover" rel="struberg" id="word_assignee_struberg" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=struberg">Mark Struberg</a>
+                            </td>
+            </tr>
+    	<tr>
+		<td bgcolor="#f0f0f0" width="20%">
+			<b>Resolution:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                            Fixed
+                    </td>
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Votes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                0
+            </td>
+        
+    </tr>
+    
+        <tr>
+        <td bgcolor="#f0f0f0" width="20%">
+            <b>Labels:</b>
+        </td>
+        <td id="labels-12651328-value" class="value" bgcolor="#ffffff" valign="top" colspan="3" nowrap>
+                            None
+                    </td>
+    </tr>
+    
+    	<tr>
+        		<td bgcolor="#f0f0f0" width="20%"><b>Remaining Estimate:</b></td>
+        <td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Time Spent:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+	</tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Original Estimate:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    
+    </table>
+
+
+
+    <br />
+
+    	<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+
+                <tr>
+            <td bgcolor="#f0f0f0" width=20% valign=top>
+                <b>Attachments:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top">
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        DELTASPIKE-380.patch &nbsp;&nbsp;&nbsp;
+                            </td>
+        </tr>
+        
+            <tr>
+            <td bgcolor="#f0f0f0" width="20%" valign="top">
+                <b>Issue Links:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" class="noPadding">
+                <table cellpadding="0" cellspacing="0" border="0" width="100%" class="blank">
+                                            <tr>
+                            <td colspan="4" bgcolor="#f0f0f0">
+                                <b>Duplicate</b><br/>
+                            </td>
+                        </tr>
+                                    <tr>
+            <td>
+                duplicates
+            </td>
+            <td>
+                <a href="https://issues.apache.org/jira/browse/DELTASPIKE-343">
+                     <strike>DELTASPIKE-343</strike>                 </a>
+            </td>
+            <td>
+                NPE in PartialBeanAsAbstractClassTest...
+            </td>
+            <td>
+                Closed
+            </td>
+        </tr>
+                                                                    </table>
+            </td>
+        </tr>
+    
+
+
+
+</table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Description</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td id="descriptionArea">
+            I am getting <br/>
+<br/>
+java.lang.NullPointerException<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;at org.apache.deltaspike.partialbean.impl.PartialBeanLifecycle.&lt;init&gt;(PartialBeanLifecycle.java:73)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;at org.apache.deltaspike.partialbean.impl.PartialBeanBindingExtension.createPartialBean(PartialBeanBindingExtension.java:142)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;at org.apache.deltaspike.partialbean.impl.PartialBeanBindingExtension.createBeans(PartialBeanBindingExtension.java:109)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;at java.lang.reflect.Method.invoke(Method.java:601)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;at org.jboss.weld.injection.MethodInjectionPoint.invokeOnInstanceWithSpecialValue(MethodInjectionPoint.java:93)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;at org.jboss.weld.event.ObserverMethodImpl.sendEvent(ObserverMethodImpl.java:274)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;at org.jboss.weld.event.ExtensionObserverMethodImpl.sendEvent(ExtensionObserverMethodImpl.java:121)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;at org.jboss.weld.event.ObserverMethodImpl.sendEvent(ObserverMethodImpl.java:261)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;at org.jboss.weld.event.ObserverMethodImpl.notify(ObserverMethodImpl.java:240)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;at org.jboss.weld.event.ObserverNotifier.notifyObserver(ObserverNotifier.java:171)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;at org.jboss.weld.event.ObserverNotifier.notifyObservers(ObserverNotifier.java:130)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;at org.jboss.weld.event.ObserverNotifier.fireEvent(ObserverNotifier.java:104)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;at org.jboss.weld.bootstrap.events.AbstractContainerEvent.fire(AbstractContainerEvent.java:63)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;at org.jboss.weld.bootstrap.events.AbstractDefinitionContainerEvent.fire(AbstractDefinitionContainerEvent.java:35)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;at org.jboss.weld.bootstrap.events.AfterBeanDiscoveryImpl.fire(AfterBeanDiscoveryImpl.java:58)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;at org.jboss.weld.bootstrap.WeldBootstrap.deployBeans(WeldBootstrap.java:516)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;at org.jboss.as.weld.WeldStartService.start(WeldStartService.java:64)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;at org.jboss.msc.service.ServiceControllerImpl$StartTask.startService(ServiceControllerImpl.java:1974)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;at org.jboss.msc.service.ServiceControllerImpl$StartTask.run(ServiceControllerImpl.java:1907)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;at java.lang.Thread.run(Thread.java:722)<br/>
+<br/>
+<br/>
+when javassist is not on the classpath. The corresponding code is:<br/>
+<br/>
+<br/>
+Object proxyFactory = ClassUtils.tryToInstantiateClassForName(&quot;javassist.util.proxy.ProxyFactory&quot;);<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Method setSuperclassMethod = proxyFactory.getClass().getDeclaredMethod(&quot;setSuperclass&quot;, Class.class);<br/>
+<br/>
+<br/>
+proxyFactory is null when javassist is not on classpath.<br/>
+<br/>
+Also note that tests for partial beans do not bundle javassist within the test archive which they should! Otherwise those tests won&#39;t pass on a container that does not implicitly add javassist to the classpath (e.g. WildFly).
+            <br/>
+        </td>
+    </tr>
+    </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Comments</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="grid" style="margin: 0;">
+                <tr id="comment-header-13681439"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">12/Jun/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13681439"><td bgcolor="#ffffff">
+            <p>javassist is available for tests ( see <a href="https://git-wip-us.apache.org/repos/asf?p=deltaspike.git;a=blob;f=deltaspike/modules/partial-bean/impl/pom.xml;h=36b05913ec182fc8d7381995a8efbf8ecd07fe76;hb=HEAD" class="external-link" rel="nofollow">https://git-wip-us.apache.org/repos/asf?p=deltaspike.git;a=blob;f=deltaspike/modules/partial-bean/impl/pom.xml;h=36b05913ec182fc8d7381995a8efbf8ecd07fe76;hb=HEAD</a> )</p>
+        </td></tr>
+                <tr id="comment-header-13681455"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jharting" id="word_commented_jharting" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jharting">Jozef Hartinger</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">12/Jun/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13681455"><td bgcolor="#ffffff">
+            <p>It may be available to the test itself but is not part of the tested web archive and therefore not available to DeltaSpike in the incontainer mode.</p>
+
+<p><a href="https://git-wip-us.apache.org/repos/asf?p=deltaspike.git;a=blob;f=deltaspike/modules/partial-bean/impl/src/test/java/org/apache/deltaspike/test/core/api/partialbean/uc003/PartialBeanAsAbstractClassWithInterceptorTest.java;h=40fadde3313eb4c8ba0cab0511719d3c5abbddd7;hb=HEAD" class="external-link" rel="nofollow">https://git-wip-us.apache.org/repos/asf?p=deltaspike.git;a=blob;f=deltaspike/modules/partial-bean/impl/src/test/java/org/apache/deltaspike/test/core/api/partialbean/uc003/PartialBeanAsAbstractClassWithInterceptorTest.java;h=40fadde3313eb4c8ba0cab0511719d3c5abbddd7;hb=HEAD</a></p>
+        </td></tr>
+                <tr id="comment-header-13681462"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">12/Jun/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13681462"><td bgcolor="#ffffff">
+            <p>it also fails in the standalone test-mode with weld 2.x (it works with owb and weld 1.x)</p>
+        </td></tr>
+                <tr id="comment-header-13681472"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="gpetracek" id="word_commented_gpetracek" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=gpetracek">Gerhard Petracek</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">12/Jun/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13681472"><td bgcolor="#ffffff">
+            <p>i see what you mean, we need a better error message</p>
+        </td></tr>
+                <tr id="comment-header-13752829"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="struberg" id="word_commented_struberg" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=struberg">Mark Struberg</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">28/Aug/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13752829"><td bgcolor="#ffffff">
+            <p>we need to add javassist to the @Deployment for some containers. Otherwise quite a few tests fail.</p>
+        </td></tr>
+                <tr id="comment-header-13755942"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="jharting" id="word_commented_jharting" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=jharting">Jozef Hartinger</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">02/Sep/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13755942"><td bgcolor="#ffffff">
+            <p>Path that fixes the test for WildFly (Weld 2 incontainer). The patch depends on <a href="https://issues.apache.org/jira/browse/DELTASPIKE-408" title="WildFly test profile" class="issue-link" data-issue-key="DELTASPIKE-408"><del>DELTASPIKE-408</del></a></p>
+        </td></tr>
+                <tr id="comment-header-13764213"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="struberg" id="word_commented_struberg" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=struberg">Mark Struberg</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">11/Sep/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13764213"><td bgcolor="#ffffff">
+            <p>applied for jozef as he is not avail right now.</p>
+        </td></tr>
+            </table>
+Generated at Sat Mar 22 13:36:21 UTC 2014 using JIRA 6.2#6252-sha1:aa343257d4ce030d9cb8c531be520be9fac1c996.
+
+</body>
+</html>

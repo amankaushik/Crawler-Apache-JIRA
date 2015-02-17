@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>[#HIVE-5363] HIVE-3978 broke the command line option --auxpath</title>
+    <meta http-equiv="Content-Type" Content="application/vnd.ms-word; charset=utf-8">
+        <style type="text/css">
+
+.tableBorder, .grid
+{
+    background-color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableBorder td, .grid td
+{
+    vertical-align: top;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+.noPadding
+{
+    padding: 0 !important;
+}
+
+h3 .subText
+{
+    font-size: 60%;
+    font-weight: normal;
+}
+
+.tabLabel
+{
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-bottom:none;
+    padding: 2px;
+    display: inline;
+}
+
+td.blank
+{
+    padding: 0;
+    margin: 0;
+}
+
+.blank td
+{
+    border: none;
+}
+
+#descriptionArea
+{
+    margin: 0;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+hr
+{
+    border-top:1px solid #aaa;
+}
+
+hr.fullcontent
+{
+  height: 15px;
+  padding: 10px 0;
+  background: #fff url('https://issues.apache.org/jira/images/icons/hr.gif') no-repeat scroll center;
+}
+
+</style>
+
+</head>
+<body>
+
+<table class="tableBorder" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" width="100%" colspan="2" valign="top">
+                            <h3 class="formtitle">
+                        [HIVE-5363]&nbsp;<a href="https://issues.apache.org/jira/browse/HIVE-5363">HIVE-3978 broke the command line option --auxpath</a>
+            <span class="subText">
+               Created: 25/Sep/13                   &nbsp;Updated: 21/Mar/14
+
+                                                    &nbsp;Resolved: 27/Sep/13
+                            </span>
+            </h3>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Status:</b></td>
+        <td width="80%">Closed</td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Project:</b></td>
+        <td width="80%"><a href="https://issues.apache.org/jira/secure/BrowseProject.jspa?id=12310843">Hive</a></td>
+    </tr>
+
+        <tr>
+            <td><b>Component/s:</b></td>
+            <td>
+                            None
+                </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Affects Version/s:</b></td>
+            <td>
+                            None
+                </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Fix Version/s:</b></td>
+            <td>
+                                        <a title="0.12.0 - released"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310843&fixfor=12324312"
+            >0.12.0</a>                        </td>
+    </tr>
+    
+    </table>
+
+<br />
+<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" valign="top" width="20%">
+            <b>Type:</b>
+        </td>
+        <td bgcolor="#ffffff" valign="top"  width="30%" >
+            Improvement
+        </td>
+
+                    <td bgcolor="#f0f0f0">
+                <b>Priority:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap>
+                Blocker
+            </td>
+            </tr>
+    <tr>
+                        <td bgcolor="#f0f0f0" valign="top" width="20%">
+                <b>Reporter:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top"  width="30%" >
+                                            <a class="user-hover" rel="brocknoland" id="word_reporter_brocknoland" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=brocknoland">Brock Noland</a>
+                            </td>
+        
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Assignee:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap  width="30%" >
+                                            <a class="user-hover" rel="brocknoland" id="word_assignee_brocknoland" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=brocknoland">Brock Noland</a>
+                            </td>
+            </tr>
+    	<tr>
+		<td bgcolor="#f0f0f0" width="20%">
+			<b>Resolution:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                            Fixed
+                    </td>
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Votes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                0
+            </td>
+        
+    </tr>
+    
+        <tr>
+        <td bgcolor="#f0f0f0" width="20%">
+            <b>Labels:</b>
+        </td>
+        <td id="labels-12670572-value" class="value" bgcolor="#ffffff" valign="top" colspan="3" nowrap>
+                            None
+                    </td>
+    </tr>
+    
+    	<tr>
+        		<td bgcolor="#f0f0f0" width="20%"><b>Remaining Estimate:</b></td>
+        <td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Time Spent:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+	</tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Original Estimate:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    
+    </table>
+
+
+
+    <br />
+
+    	<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+
+                <tr>
+            <td bgcolor="#f0f0f0" width=20% valign=top>
+                <b>Attachments:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top">
+                                                            <img src="https://issues.apache.org/jira/images/icons/attach/text.gif" height="16" width="16" alt="Text File" />
+                                        HIVE-5363.patch &nbsp;&nbsp;&nbsp;
+                            </td>
+        </tr>
+        
+            <tr>
+            <td bgcolor="#f0f0f0" width="20%" valign="top">
+                <b>Issue Links:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" class="noPadding">
+                <table cellpadding="0" cellspacing="0" border="0" width="100%" class="blank">
+                                            <tr>
+                            <td colspan="4" bgcolor="#f0f0f0">
+                                <b>Reference</b><br/>
+                            </td>
+                        </tr>
+                                    <tr>
+            <td>
+                relates to
+            </td>
+            <td>
+                <a href="https://issues.apache.org/jira/browse/HIVE-2269">
+                     <strike>HIVE-2269</strike>                 </a>
+            </td>
+            <td>
+                Hive --auxpath option can&#39;t handle mu...
+            </td>
+            <td>
+                Resolved
+            </td>
+        </tr>
+                                        <tr>
+            <td>
+                is related to
+            </td>
+            <td>
+                <a href="https://issues.apache.org/jira/browse/HIVE-5410">
+                     <strike>HIVE-5410</strike>                 </a>
+            </td>
+            <td>
+                Hive command line option --auxpath st...
+            </td>
+            <td>
+                Closed
+            </td>
+        </tr>
+                                                <tr>
+                            <td colspan="4" bgcolor="#f0f0f0">
+                                <b>Regression</b><br/>
+                            </td>
+                        </tr>
+                                                                <tr>
+            <td>
+                is broken by
+            </td>
+            <td>
+                <a href="https://issues.apache.org/jira/browse/HIVE-3978">
+                     <strike>HIVE-3978</strike>                 </a>
+            </td>
+            <td>
+                HIVE_AUX_JARS_PATH should have : inst...
+            </td>
+            <td>
+                Closed
+            </td>
+        </tr>
+                                        </table>
+            </td>
+        </tr>
+    
+
+
+
+</table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Description</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td id="descriptionArea">
+            <p><a href="https://issues.apache.org/jira/browse/HIVE-3978" title="HIVE_AUX_JARS_PATH should have : instead of , as separator since it gets appended to HADOOP_CLASSPATH" class="issue-link" data-issue-key="HIVE-3978"><del>HIVE-3978</del></a> changed the seperator for HIVE_AUX_JARS_PATH to : from ,. However, it's expected that it's , later on in the script, specifically here:</p>
+
+<div class="preformatted panel" style="border-width: 1px;"><div class="preformattedContent panelContent">
+<pre>  AUX_CLASSPATH=${HIVE_AUX_JARS_PATH}
+  AUX_PARAM=file://${HIVE_AUX_JARS_PATH}
+  AUX_PARAM=`echo $AUX_PARAM | sed 's/,/,file:\/\//g'
+</pre>
+</div></div>
+            <br/>
+        </td>
+    </tr>
+    </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Comments</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="grid" style="margin: 0;">
+                <tr id="comment-header-13778072"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="brocknoland" id="word_commented_brocknoland" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=brocknoland">Brock Noland</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">25/Sep/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13778072"><td bgcolor="#ffffff">
+            <p>FYI <a href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=thejas" class="user-hover" rel="thejas">Thejas M Nair</a> </p>
+        </td></tr>
+                <tr id="comment-header-13778075"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="brocknoland" id="word_commented_brocknoland" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=brocknoland">Brock Noland</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">25/Sep/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13778075"><td bgcolor="#ffffff">
+            <p>This looks like the fix to me. Does that look right?</p>
+        </td></tr>
+                <tr id="comment-header-13778141"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="thejas" id="word_commented_thejas" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=thejas">Thejas M Nair</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">25/Sep/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13778141"><td bgcolor="#ffffff">
+            <p>+1 . Yes, I will include this in 0.12 </p>
+        </td></tr>
+                <tr id="comment-header-13779444"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="thejas" id="word_commented_thejas" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=thejas">Thejas M Nair</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">27/Sep/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13779444"><td bgcolor="#ffffff">
+            <p>Patch committed to 0.12 branch and trunk.<br/>
+Brock, Thanks for the contribution!</p>
+        </td></tr>
+                <tr id="comment-header-13779614"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hudson" id="word_commented_hudson" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hudson">Hudson</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">27/Sep/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13779614"><td bgcolor="#ffffff">
+            <p>FAILURE: Integrated in Hive-trunk-h0.21 #2361 (See <a href="https://builds.apache.org/job/Hive-trunk-h0.21/2361/" class="external-link" rel="nofollow">https://builds.apache.org/job/Hive-trunk-h0.21/2361/</a>)<br/>
+<a href="https://issues.apache.org/jira/browse/HIVE-5363" title="HIVE-3978 broke the command line option --auxpath" class="issue-link" data-issue-key="HIVE-5363"><del>HIVE-5363</del></a>: <a href="https://issues.apache.org/jira/browse/HIVE-3978" title="HIVE_AUX_JARS_PATH should have : instead of , as separator since it gets appended to HADOOP_CLASSPATH" class="issue-link" data-issue-key="HIVE-3978"><del>HIVE-3978</del></a> broke the command line option --auxpath (Brock Noland via Thejas Nair) (thejas: <a href="http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1526745" class="external-link" rel="nofollow">http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1526745</a>)</p>
+<ul>
+	<li>/hive/trunk/bin/hive</li>
+</ul>
+
+        </td></tr>
+                <tr id="comment-header-13779621"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hudson" id="word_commented_hudson" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hudson">Hudson</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">27/Sep/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13779621"><td bgcolor="#ffffff">
+            <p>FAILURE: Integrated in Hive-trunk-hadoop2 #459 (See <a href="https://builds.apache.org/job/Hive-trunk-hadoop2/459/" class="external-link" rel="nofollow">https://builds.apache.org/job/Hive-trunk-hadoop2/459/</a>)<br/>
+<a href="https://issues.apache.org/jira/browse/HIVE-5363" title="HIVE-3978 broke the command line option --auxpath" class="issue-link" data-issue-key="HIVE-5363"><del>HIVE-5363</del></a>: <a href="https://issues.apache.org/jira/browse/HIVE-3978" title="HIVE_AUX_JARS_PATH should have : instead of , as separator since it gets appended to HADOOP_CLASSPATH" class="issue-link" data-issue-key="HIVE-3978"><del>HIVE-3978</del></a> broke the command line option --auxpath (Brock Noland via Thejas Nair) (thejas: <a href="http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1526745" class="external-link" rel="nofollow">http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1526745</a>)</p>
+<ul>
+	<li>/hive/trunk/bin/hive</li>
+</ul>
+
+        </td></tr>
+                <tr id="comment-header-13780257"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hudson" id="word_commented_hudson" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hudson">Hudson</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">27/Sep/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13780257"><td bgcolor="#ffffff">
+            <p>FAILURE: Integrated in Hive-trunk-hadoop2-ptest #117 (See <a href="https://builds.apache.org/job/Hive-trunk-hadoop2-ptest/117/" class="external-link" rel="nofollow">https://builds.apache.org/job/Hive-trunk-hadoop2-ptest/117/</a>)<br/>
+<a href="https://issues.apache.org/jira/browse/HIVE-5363" title="HIVE-3978 broke the command line option --auxpath" class="issue-link" data-issue-key="HIVE-5363"><del>HIVE-5363</del></a>: <a href="https://issues.apache.org/jira/browse/HIVE-3978" title="HIVE_AUX_JARS_PATH should have : instead of , as separator since it gets appended to HADOOP_CLASSPATH" class="issue-link" data-issue-key="HIVE-3978"><del>HIVE-3978</del></a> broke the command line option --auxpath (Brock Noland via Thejas Nair) (thejas: <a href="http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1526745" class="external-link" rel="nofollow">http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1526745</a>)</p>
+<ul>
+	<li>/hive/trunk/bin/hive</li>
+</ul>
+
+        </td></tr>
+                <tr id="comment-header-13780389"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hudson" id="word_commented_hudson" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hudson">Hudson</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">27/Sep/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13780389"><td bgcolor="#ffffff">
+            <p>SUCCESS: Integrated in Hive-trunk-hadoop1-ptest #183 (See <a href="https://builds.apache.org/job/Hive-trunk-hadoop1-ptest/183/" class="external-link" rel="nofollow">https://builds.apache.org/job/Hive-trunk-hadoop1-ptest/183/</a>)<br/>
+<a href="https://issues.apache.org/jira/browse/HIVE-5363" title="HIVE-3978 broke the command line option --auxpath" class="issue-link" data-issue-key="HIVE-5363"><del>HIVE-5363</del></a>: <a href="https://issues.apache.org/jira/browse/HIVE-3978" title="HIVE_AUX_JARS_PATH should have : instead of , as separator since it gets appended to HADOOP_CLASSPATH" class="issue-link" data-issue-key="HIVE-3978"><del>HIVE-3978</del></a> broke the command line option --auxpath (Brock Noland via Thejas Nair) (thejas: <a href="http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1526745" class="external-link" rel="nofollow">http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1526745</a>)</p>
+<ul>
+	<li>/hive/trunk/bin/hive</li>
+</ul>
+
+        </td></tr>
+                <tr id="comment-header-13784514"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hudson" id="word_commented_hudson" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hudson">Hudson</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">02/Oct/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13784514"><td bgcolor="#ffffff">
+            <p>FAILURE: Integrated in Hive-branch-0.12-hadoop1 #3 (See <a href="https://builds.apache.org/job/Hive-branch-0.12-hadoop1/3/" class="external-link" rel="nofollow">https://builds.apache.org/job/Hive-branch-0.12-hadoop1/3/</a>)<br/>
+<a href="https://issues.apache.org/jira/browse/HIVE-5410" title="Hive command line option --auxpath still does not work post HIVE-5363" class="issue-link" data-issue-key="HIVE-5410"><del>HIVE-5410</del></a> : Hive command line option --auxpath still does not work post <a href="https://issues.apache.org/jira/browse/HIVE-5363" title="HIVE-3978 broke the command line option --auxpath" class="issue-link" data-issue-key="HIVE-5363"><del>HIVE-5363</del></a> (Brock Noland via Thejas Nair) (thejas: <a href="http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1528635" class="external-link" rel="nofollow">http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1528635</a>)</p>
+<ul>
+	<li>/hive/branches/branch-0.12/bin/hive</li>
+</ul>
+
+        </td></tr>
+                <tr id="comment-header-13784774"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hudson" id="word_commented_hudson" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hudson">Hudson</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">03/Oct/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13784774"><td bgcolor="#ffffff">
+            <p>FAILURE: Integrated in Hive-trunk-hadoop2 #470 (See <a href="https://builds.apache.org/job/Hive-trunk-hadoop2/470/" class="external-link" rel="nofollow">https://builds.apache.org/job/Hive-trunk-hadoop2/470/</a>)<br/>
+<a href="https://issues.apache.org/jira/browse/HIVE-5410" title="Hive command line option --auxpath still does not work post HIVE-5363" class="issue-link" data-issue-key="HIVE-5410"><del>HIVE-5410</del></a> : Hive command line option --auxpath still does not work post <a href="https://issues.apache.org/jira/browse/HIVE-5363" title="HIVE-3978 broke the command line option --auxpath" class="issue-link" data-issue-key="HIVE-5363"><del>HIVE-5363</del></a> (Brock Noland via Thejas Nair) (thejas: <a href="http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1528634" class="external-link" rel="nofollow">http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1528634</a>)</p>
+<ul>
+	<li>/hive/trunk/bin/hive</li>
+</ul>
+
+        </td></tr>
+                <tr id="comment-header-13784780"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hudson" id="word_commented_hudson" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hudson">Hudson</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">03/Oct/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13784780"><td bgcolor="#ffffff">
+            <p>FAILURE: Integrated in Hive-trunk-h0.21 #2374 (See <a href="https://builds.apache.org/job/Hive-trunk-h0.21/2374/" class="external-link" rel="nofollow">https://builds.apache.org/job/Hive-trunk-h0.21/2374/</a>)<br/>
+<a href="https://issues.apache.org/jira/browse/HIVE-5410" title="Hive command line option --auxpath still does not work post HIVE-5363" class="issue-link" data-issue-key="HIVE-5410"><del>HIVE-5410</del></a> : Hive command line option --auxpath still does not work post <a href="https://issues.apache.org/jira/browse/HIVE-5363" title="HIVE-3978 broke the command line option --auxpath" class="issue-link" data-issue-key="HIVE-5363"><del>HIVE-5363</del></a> (Brock Noland via Thejas Nair) (thejas: <a href="http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1528634" class="external-link" rel="nofollow">http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1528634</a>)</p>
+<ul>
+	<li>/hive/trunk/bin/hive</li>
+</ul>
+
+        </td></tr>
+                <tr id="comment-header-13785033"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hudson" id="word_commented_hudson" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hudson">Hudson</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">03/Oct/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13785033"><td bgcolor="#ffffff">
+            <p>ABORTED: Integrated in Hive-branch-0.12-hadoop2 #2 (See <a href="https://builds.apache.org/job/Hive-branch-0.12-hadoop2/2/" class="external-link" rel="nofollow">https://builds.apache.org/job/Hive-branch-0.12-hadoop2/2/</a>)<br/>
+<a href="https://issues.apache.org/jira/browse/HIVE-5410" title="Hive command line option --auxpath still does not work post HIVE-5363" class="issue-link" data-issue-key="HIVE-5410"><del>HIVE-5410</del></a> : Hive command line option --auxpath still does not work post <a href="https://issues.apache.org/jira/browse/HIVE-5363" title="HIVE-3978 broke the command line option --auxpath" class="issue-link" data-issue-key="HIVE-5363"><del>HIVE-5363</del></a> (Brock Noland via Thejas Nair) (thejas: <a href="http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1528635" class="external-link" rel="nofollow">http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1528635</a>)</p>
+<ul>
+	<li>/hive/branches/branch-0.12/bin/hive</li>
+</ul>
+
+        </td></tr>
+                <tr id="comment-header-13785662"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hudson" id="word_commented_hudson" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hudson">Hudson</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">04/Oct/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13785662"><td bgcolor="#ffffff">
+            <p>FAILURE: Integrated in Hive-trunk-hadoop2-ptest #123 (See <a href="https://builds.apache.org/job/Hive-trunk-hadoop2-ptest/123/" class="external-link" rel="nofollow">https://builds.apache.org/job/Hive-trunk-hadoop2-ptest/123/</a>)<br/>
+<a href="https://issues.apache.org/jira/browse/HIVE-5410" title="Hive command line option --auxpath still does not work post HIVE-5363" class="issue-link" data-issue-key="HIVE-5410"><del>HIVE-5410</del></a> : Hive command line option --auxpath still does not work post <a href="https://issues.apache.org/jira/browse/HIVE-5363" title="HIVE-3978 broke the command line option --auxpath" class="issue-link" data-issue-key="HIVE-5363"><del>HIVE-5363</del></a> (Brock Noland via Thejas Nair) (thejas: <a href="http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1528634" class="external-link" rel="nofollow">http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1528634</a>)</p>
+<ul>
+	<li>/hive/trunk/bin/hive</li>
+</ul>
+
+        </td></tr>
+                <tr id="comment-header-13785840"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="hudson" id="word_commented_hudson" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=hudson">Hudson</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">04/Oct/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13785840"><td bgcolor="#ffffff">
+            <p>SUCCESS: Integrated in Hive-trunk-hadoop1-ptest #189 (See <a href="https://builds.apache.org/job/Hive-trunk-hadoop1-ptest/189/" class="external-link" rel="nofollow">https://builds.apache.org/job/Hive-trunk-hadoop1-ptest/189/</a>)<br/>
+<a href="https://issues.apache.org/jira/browse/HIVE-5410" title="Hive command line option --auxpath still does not work post HIVE-5363" class="issue-link" data-issue-key="HIVE-5410"><del>HIVE-5410</del></a> : Hive command line option --auxpath still does not work post <a href="https://issues.apache.org/jira/browse/HIVE-5363" title="HIVE-3978 broke the command line option --auxpath" class="issue-link" data-issue-key="HIVE-5363"><del>HIVE-5363</del></a> (Brock Noland via Thejas Nair) (thejas: <a href="http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1528634" class="external-link" rel="nofollow">http://svn.apache.org/viewcvs.cgi/?root=Apache-SVN&amp;view=rev&amp;rev=1528634</a>)</p>
+<ul>
+	<li>/hive/trunk/bin/hive</li>
+</ul>
+
+        </td></tr>
+                <tr id="comment-header-13795875"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="ashutoshc" id="word_commented_ashutoshc" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=ashutoshc">Ashutosh Chauhan</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">16/Oct/13</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13795875"><td bgcolor="#ffffff">
+            <p>This issue has been fixed and released as part of 0.12 release. If you find further issues, please create a new jira and link it to this one.</p>
+        </td></tr>
+            </table>
+Generated at Sat Mar 22 13:33:24 UTC 2014 using JIRA 6.2#6252-sha1:aa343257d4ce030d9cb8c531be520be9fac1c996.
+
+</body>
+</html>

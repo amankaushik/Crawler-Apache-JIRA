@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>[#CXF-352] Update WS-A MessageID and WS-RM  Acknowledgement headers in resent messages</title>
+    <meta http-equiv="Content-Type" Content="application/vnd.ms-word; charset=utf-8">
+        <style type="text/css">
+
+.tableBorder, .grid
+{
+    background-color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableBorder td, .grid td
+{
+    vertical-align: top;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+.noPadding
+{
+    padding: 0 !important;
+}
+
+h3 .subText
+{
+    font-size: 60%;
+    font-weight: normal;
+}
+
+.tabLabel
+{
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-bottom:none;
+    padding: 2px;
+    display: inline;
+}
+
+td.blank
+{
+    padding: 0;
+    margin: 0;
+}
+
+.blank td
+{
+    border: none;
+}
+
+#descriptionArea
+{
+    margin: 0;
+    padding: 2px;
+    border: 1px solid #ccc;
+}
+
+hr
+{
+    border-top:1px solid #aaa;
+}
+
+hr.fullcontent
+{
+  height: 15px;
+  padding: 10px 0;
+  background: #fff url('https://issues.apache.org/jira/images/icons/hr.gif') no-repeat scroll center;
+}
+
+</style>
+
+</head>
+<body>
+
+<table class="tableBorder" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" width="100%" colspan="2" valign="top">
+                            <h3 class="formtitle">
+                        [CXF-352]&nbsp;<a href="https://issues.apache.org/jira/browse/CXF-352">Update WS-A MessageID and WS-RM  Acknowledgement headers in resent messages</a>
+            <span class="subText">
+               Created: 04/Jan/07                   &nbsp;Updated: 22/Mar/14
+
+                                                    &nbsp;Resolved: 22/Mar/14
+                            </span>
+            </h3>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Status:</b></td>
+        <td width="80%">Closed</td>
+    </tr>
+    <tr>
+        <td width="20%"><b>Project:</b></td>
+        <td width="80%"><a href="https://issues.apache.org/jira/secure/BrowseProject.jspa?id=12310511">CXF</a></td>
+    </tr>
+
+        <tr>
+            <td><b>Component/s:</b></td>
+            <td>
+                                        <a title="WS-* Components"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310511&component=12311392"
+            >WS-* Components</a>                        </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Affects Version/s:</b></td>
+            <td>
+                            None
+                </td>
+    </tr>
+    
+
+        <tr>
+            <td><b>Fix Version/s:</b></td>
+            <td>
+                                        <a title="3.0.0"
+                href="https://issues.apache.org/jira/secure/IssueNavigator.jspa?reset=true&mode=hide&sorter/order=ASC&sorter/field=priority&pid=12310511&fixfor=12325944"
+            >3.0.0</a>                        </td>
+    </tr>
+    
+    </table>
+
+<br />
+<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td bgcolor="#f0f0f0" valign="top" width="20%">
+            <b>Type:</b>
+        </td>
+        <td bgcolor="#ffffff" valign="top"  width="30%" >
+            Task
+        </td>
+
+                    <td bgcolor="#f0f0f0">
+                <b>Priority:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap>
+                Major
+            </td>
+            </tr>
+    <tr>
+                        <td bgcolor="#f0f0f0" valign="top" width="20%">
+                <b>Reporter:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top"  width="30%" >
+                                            <a class="user-hover" rel="asmyth" id="word_reporter_asmyth" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=asmyth">Andrea Smyth</a>
+                            </td>
+        
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Assignee:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" nowrap  width="30%" >
+                                            <a class="user-hover" rel="dsosnoski" id="word_assignee_dsosnoski" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=dsosnoski">Dennis Sosnoski</a>
+                            </td>
+            </tr>
+    	<tr>
+		<td bgcolor="#f0f0f0" width="20%">
+			<b>Resolution:</b>
+		</td>
+		<td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                            Fixed
+                    </td>
+                    <td bgcolor="#f0f0f0" width="20%">
+                <b>Votes:</b>
+            </td>
+            <td bgcolor="#ffffff" valign="top" width="30%" nowrap>
+                2
+            </td>
+        
+    </tr>
+    
+        <tr>
+        <td bgcolor="#f0f0f0" width="20%">
+            <b>Labels:</b>
+        </td>
+        <td id="labels-12359781-value" class="value" bgcolor="#ffffff" valign="top" colspan="3" nowrap>
+                            None
+                    </td>
+    </tr>
+    
+    	<tr>
+        		<td bgcolor="#f0f0f0" width="20%"><b>Remaining Estimate:</b></td>
+        <td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Time Spent:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+	</tr>
+    <tr>
+                <td bgcolor="#f0f0f0" width="20%"><b>Original Estimate:</b></td>
+		<td bgcolor="#ffffff" valign="top" nowrap width="80%" colspan="3">
+                            Not Specified
+            		</td>
+    </tr>
+    
+    </table>
+
+
+
+    <br />
+
+    	<table class="grid" cellpadding="0" cellspacing="0" border="0" width="100%">
+            
+
+        
+    
+
+
+
+</table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Description</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td id="descriptionArea">
+            <p>Currently a message is resent as is. This implies use of the originally assigned messageID, and works because we are by default tolerant against duplicate messageIDs .  To be strictly compliant, the resent  message should be given a new ID. Once we are updating the headers, we may also either remove any pre-existing SequenceAcknowledgement header (it  may be out-of-date, but that does not cause any harm) or, for  efficiency, replace it with an up-to-date SequenceAcknowledgement.<br/>
+Requires re-running the message through a selective chain of  interceptors or else a manual approach to updating the headers in question. and subsequently re-marshalling the messge.</p>
+            <br/>
+        </td>
+    </tr>
+    </table>
+
+    <br/>
+
+    <table cellpadding="2" cellspacing="0" border="0" width="100%" align="center">
+    <tr>
+        <td bgcolor="#bbbbbb" width="1%" nowrap align="center">
+            &nbsp;<font color="#ffffff"><b>Comments</b></font>&nbsp;
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="grid" style="margin: 0;">
+                <tr id="comment-header-12985438"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="dsosnoski" id="word_commented_dsosnoski" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=dsosnoski">Dennis Sosnoski</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">23/Jan/11</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-12985438"><td bgcolor="#ffffff">
+            <p>This is an old issue, and in the interim some aspects of WS-RM have been clarified. WS-RM must <b>not</b> change the WS-A MessageID in resent messages (see <a href="http://www.ws-i.org/Profiles/ReliableSecureProfile-1.0-2010-11-09.html#retransmission" class="external-link" rel="nofollow">http://www.ws-i.org/Profiles/ReliableSecureProfile-1.0-2010-11-09.html#retransmission</a>), since it is the same message being resent. But it needs to replace the SequenceAcknowledgement if present, and also must run the message through security processing again (if applicable). Resending a secured message with the same Timestamp is totally broken behavior.</p>
+
+<p>So the existing retransmission behavior works only for unsecured messages, and only for WS-RM implementations which are tolerant of bad SequenceAcknowledgement values.</p>
+        </td></tr>
+                <tr id="comment-header-13943807"><td bgcolor="#f0f0f0">
+            Comment by  
+                                                        <a class="user-hover" rel="dsosnoski" id="word_commented_dsosnoski" href="https://issues.apache.org/jira/secure/ViewProfile.jspa?name=dsosnoski">Dennis Sosnoski</a>
+                                        <font size="-2">
+            [
+                <font color="#336699">22/Mar/14</font>
+
+                            ]
+            </font>
+
+        </td></tr>
+        <tr id="comment-body-13943807"><td bgcolor="#ffffff">
+            <p>Fixed as part of the RM restructuring that went into 3.0.0 m2.</p>
+        </td></tr>
+            </table>
+Generated at Sat Mar 22 13:37:00 UTC 2014 using JIRA 6.2#6252-sha1:aa343257d4ce030d9cb8c531be520be9fac1c996.
+
+</body>
+</html>
